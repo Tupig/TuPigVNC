@@ -12,6 +12,8 @@ jobs:
   build-windows-msvc:
     runs-on: windows-latest
     timeout-minutes: 60
+    permissions:
+      contents: write
     env:
       VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg-cache
     steps:
