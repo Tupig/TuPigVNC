@@ -21,6 +21,7 @@
 #include <core/UpdateChecker.h>
 
 #include <windows.h>
+#include <shellapi.h>
 #include <winhttp.h>
 
 #include <cstdio>
