@@ -1,37 +1,37 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: 缺陷报告
+about: 创建报告以帮助我们改进
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**描述缺陷**
+清晰、简洁地描述该缺陷是什么。
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**复现步骤**
+复现该问题的操作步骤：
+1. 打开“……”
+2. 点击“……”
+3. 向下滚动至“……”
+4. 观察错误
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**预期行为**
+清晰、简洁地描述你期望发生的结果。
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**截图**
+如适用，请添加截图以帮助说明问题。
 
-**Client (please complete the following information):**
- - OS: [e.g. Windows 8.1]
- - VNC client: [e.g. TuPigVNC, or UltraVNC]
- - VNC client version: [e.g. 1.8.0]
- - Client downloaded from: [e.g. my Linux distribution]
+**客户端（请填写以下信息）：**
+ - 操作系统：[例如 Windows 11]
+ - VNC 客户端：[例如 TuPigVNC 或 UltraVNC]
+ - VNC 客户端版本：[例如 0.0.1]
+ - 客户端来源：[例如 GitHub Releases、Linux 发行版]
 
-**Server (please complete the following information):**
- - OS: [e.g. Windows 8.1]
- - VNC server: [e.g. TuPigVNC, or UltraVNC]
- - VNC server version: [e.g. 1.8.0]
- - Server downloaded from: [e.g. my Linux distribution]
- - Server was started using: [e.g. `vncserver`]
+**服务器（请填写以下信息）：**
+ - 操作系统：[例如 Windows 11]
+ - VNC 服务器：[例如 TuPigVNC 或 UltraVNC]
+ - VNC 服务器版本：[例如 0.0.1]
+ - 服务器来源：[例如 GitHub Releases、Linux 发行版]
+ - 服务器启动方式：[例如 `vncserver`]
 
-**Additional context**
-Add any other context about the problem here.
+**补充信息**
+在此添加关于该问题的其他任何上下文。
