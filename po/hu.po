@@ -1,5 +1,5 @@
-# Hungarian translation for TigerVNC.
-# Copyright (C) 2017, 2019 the TigerVNC Team (msgids)
+# Hungarian translation for TuPigVNC.
+# Copyright (C) 2017, 2019 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 #
 # Balázs Úr <ur.balazs@fsf.hu>, 2017, 2019.
@@ -329,16 +329,16 @@ msgid "Connect"
 msgstr "Kapcsolódás"
 
 #: vncviewer/ServerDialog.cxx:137 vncviewer/ServerDialog.cxx:171
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "TigerVNC-beállítás (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "TuPigVNC-beállítás (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:138
-msgid "Select a TigerVNC configuration file"
-msgstr "Válasszon egy TigerVNC-beállítófájlt"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Válasszon egy TuPigVNC-beállítófájlt"
 
 #: vncviewer/ServerDialog.cxx:172
-msgid "Save the TigerVNC configuration to file"
-msgstr "A TigerVNC-beállítás mentése fájlba"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "A TuPigVNC-beállítás mentése fájlba"
 
 #: vncviewer/ServerDialog.cxx:197
 #, c-format
@@ -498,8 +498,8 @@ msgstr "Kapcsolat&információk…"
 
 #: vncviewer/Viewport.cxx:1237
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC viewer..."
-msgstr "A &TigerVNC megjelenítő névjegye…"
+msgid "About &TuPigVNC viewer..."
+msgstr "A &TuPigVNC megjelenítő névjegye…"
 
 #: vncviewer/Viewport.cxx:1240
 msgctxt "ContextMenu|"
@@ -611,19 +611,19 @@ msgstr "Ismeretlen %s paraméter a(z) %d. sornál a(z) %s fájlban"
 #: vncviewer/vncviewer.cxx:100
 #, c-format
 msgid ""
-"TigerVNC Viewer %d-bit v%s\n"
+"TuPigVNC Viewer %d-bit v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC Team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC Team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC megjelenítő: %d bites, %s verzió\n"
+"TuPigVNC megjelenítő: %d bites, %s verzió\n"
 "Összeállítva: %s\n"
-"Copyright (C) 1999-%d TigerVNC csapat és sokan mások (lásd: README.rst)\n"
-"Nézze meg a https://www.tigervnc.org oldalt a TigerVNC információiért."
+"Copyright (C) 1999-%d TuPigVNC csapat és sokan mások (lásd: README.rst)\n"
+"Nézze meg a https://github.com/TuPig/TuPigVNC oldalt a TuPigVNC információiért."
 
 #: vncviewer/vncviewer.cxx:127
-msgid "About TigerVNC Viewer"
-msgstr "A TigerVNC megjelenítő névjegye"
+msgid "About TuPigVNC Viewer"
+msgstr "A TuPigVNC megjelenítő névjegye"
 
 #: vncviewer/vncviewer.cxx:140
 msgid "Internal FLTK error. Exiting."
@@ -631,17 +631,17 @@ msgstr "Belső FLTK hiba. Kilépés."
 
 #: vncviewer/vncviewer.cxx:158 vncviewer/vncviewer.cxx:170
 #, c-format
-msgid "Error starting new TigerVNC Viewer: %s"
-msgstr "Hiba az új TigerVNC megjelenítő indításakor: %s"
+msgid "Error starting new TuPigVNC Viewer: %s"
+msgstr "Hiba az új TuPigVNC megjelenítő indításakor: %s"
 
 #: vncviewer/vncviewer.cxx:179
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC Viewer will now exit."
-msgstr "%d befejezési szignál érkezett. A TigerVNC megjelenítő most ki fog lépni."
+msgid "Termination signal %d has been received. TuPigVNC Viewer will now exit."
+msgstr "%d befejezési szignál érkezett. A TuPigVNC megjelenítő most ki fog lépni."
 
 #: vncviewer/vncviewer.cxx:271 vncviewer/vncviewer.desktop.in.in:3
-msgid "TigerVNC Viewer"
-msgstr "TigerVNC megjelenítő"
+msgid "TuPigVNC Viewer"
+msgstr "TuPigVNC megjelenítő"
 
 #: vncviewer/vncviewer.cxx:280
 msgid "Yes"

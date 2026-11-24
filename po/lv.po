@@ -1,5 +1,5 @@
 # Latvian translation of tigervnc.
-# Copyright (C) 2026 the TigerVNC Team (msgids)
+# Copyright (C) 2026 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 # Rihards Priedītis <rprieditis@gmail.com>, 2026.
 #
@@ -140,13 +140,13 @@ msgstr "Nospiediet %sM, lai atvērtu konteksta izvēlni"
 
 #: vncviewer/DesktopWindow.cxx:312
 #, c-format
-msgid "%s - TigerVNC (keyboard grabbed)"
-msgstr "%s - TigerVNC (tastatūra pārtverta)"
+msgid "%s - TuPigVNC (keyboard grabbed)"
+msgstr "%s - TuPigVNC (tastatūra pārtverta)"
 
 #: vncviewer/DesktopWindow.cxx:314
 #, c-format
-msgid "%s - TigerVNC"
-msgstr "%s - TigerVNC"
+msgid "%s - TuPigVNC"
+msgstr "%s - TuPigVNC"
 
 #: vncviewer/DesktopWindow.cxx:705
 msgid "Adjusting window size to avoid accidental full-screen request"
@@ -231,8 +231,8 @@ msgid "Monitor index %d does not exist"
 msgstr "Monitora indekss %d neeksistē"
 
 #: vncviewer/OptionsDialog.cxx:70
-msgid "TigerVNC options"
-msgstr "TigerVNC opcijas"
+msgid "TuPigVNC options"
+msgstr "TuPigVNC opcijas"
 
 #: vncviewer/OptionsDialog.cxx:104 vncviewer/ServerDialog.cxx:110
 #: vncviewer/vncviewer.cxx:397
@@ -552,12 +552,12 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:175 vncviewer/ServerDialog.cxx:215
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "TigerVNC konfigurācija (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "TuPigVNC konfigurācija (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:176
-msgid "Select a TigerVNC configuration file"
-msgstr "Izvēlieties TigerVNC konfigurācijas failu"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Izvēlieties TuPigVNC konfigurācijas failu"
 
 #: vncviewer/ServerDialog.cxx:198 vncviewer/vncviewer.cxx:517
 #, c-format
@@ -571,8 +571,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:216
-msgid "Save the TigerVNC configuration to file"
-msgstr "Saglabāt TigerVNC konfigurāciju failā"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "Saglabāt TuPigVNC konfigurāciju failā"
 
 #: vncviewer/ServerDialog.cxx:242
 #, c-format
@@ -735,8 +735,8 @@ msgstr "Savienojuma &informācija..."
 
 #: vncviewer/Viewport.cxx:935
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC..."
-msgstr "Par &TigerVNC..."
+msgid "About &TuPigVNC..."
+msgstr "Par &TuPigVNC..."
 
 #: vncviewer/Viewport.cxx:1027
 msgid "VNC connection info"
@@ -788,8 +788,8 @@ msgstr "Neizdevās pārtvert ierīci %i"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
 #: vncviewer/vncviewer.desktop.in.in:2
-msgid "TigerVNC"
-msgstr "TigerVNC"
+msgid "TuPigVNC"
+msgstr "TuPigVNC"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:4
@@ -801,26 +801,26 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Virtual Network Computing (VNC) ir attālās attēlošanas sistēma, kas ļauj skatīt virtuālu darbvirsmas vidi, kas darbojas citā tīkla datorā, un mijiedarboties ar to. Izmantojot VNC, varat palaist grafiskas lietotnes attālā datorā un uz savu lokālo ierīci sūtīt tikai šo lietotņu attēlu. Šajā pakotnē ir klients, kas ļauj savienoties ar citām darbvirsmām, kurās darbojas VNC serveris. VNC ir neatkarīgs no platformas un atbalsta dažādas operētājsistēmas un arhitektūras gan kā serveri, gan kā klienti."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC ir ātrdarbīga VNC versija, kuras pamatā ir RealVNC 4 un X.org koda bāzes. TigerVNC sākās kā nākamās paaudzes TightVNC izstrādes projekts Unix un Linux platformām, taču 2009. gada sākumā tas atdalījās no sava sākotnējā projekta, lai TightVNC varētu koncentrēties uz Windows platformām. TigerVNC atbalsta Tight kodējuma variantu, kas ir ievērojami paātrināts, izmantojot JPEG kodeku libjpeg-turbo."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC ir ātrdarbīga VNC versija, kuras pamatā ir RealVNC 4 un X.org koda bāzes. TuPigVNC sākās kā nākamās paaudzes TightVNC izstrādes projekts Unix un Linux platformām, taču 2009. gada sākumā tas atdalījās no sava sākotnējā projekta, lai TightVNC varētu koncentrēties uz Windows platformām. TuPigVNC atbalsta Tight kodējuma variantu, kas ir ievērojami paātrināts, izmantojot JPEG kodeku libjpeg-turbo."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC connection to a CentOS machine"
-msgstr "TigerVNC savienojums ar CentOS datoru"
+msgid "TuPigVNC connection to a CentOS machine"
+msgstr "TuPigVNC savienojums ar CentOS datoru"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC connection to a macOS machine"
-msgstr "TigerVNC savienojums ar macOS datoru"
+msgid "TuPigVNC connection to a macOS machine"
+msgstr "TuPigVNC savienojums ar macOS datoru"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC connection to a Windows machine"
-msgstr "TigerVNC savienojums ar Windows datoru"
+msgid "TuPigVNC connection to a Windows machine"
+msgstr "TuPigVNC savienojums ar Windows datoru"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:46
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:48
-msgid "The TigerVNC team"
-msgstr "TigerVNC komanda"
+msgid "The TuPigVNC team"
+msgstr "TuPigVNC komanda"
 
 #: vncviewer/parameters.cxx:386 vncviewer/parameters.cxx:411
 #: vncviewer/parameters.cxx:428 vncviewer/parameters.cxx:468
@@ -937,19 +937,19 @@ msgstr "X Input 2.2 (vai jaunāks) nav pieejams. Skāriena žesti netiks atbalst
 #: vncviewer/vncviewer.cxx:103
 #, c-format
 msgid ""
-"TigerVNC v%s\n"
+"TuPigVNC v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC v%s\n"
+"TuPigVNC v%s\n"
 "Būvēts: %s\n"
-"Autortiesības © 1999-%d TigerVNC komanda un daudzi citi (skatiet README.rst)\n"
-"Informāciju par TigerVNC skatiet https://www.tigervnc.org."
+"Autortiesības © 1999-%d TuPigVNC komanda un daudzi citi (skatiet README.rst)\n"
+"Informāciju par TuPigVNC skatiet https://github.com/TuPig/TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:173
-msgid "About TigerVNC"
-msgstr "Par TigerVNC"
+msgid "About TuPigVNC"
+msgstr "Par TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:195
 msgid "Internal FLTK error. Exiting."
@@ -973,8 +973,8 @@ msgstr "Kļūda, sākot jaunu savienojumu: %s"
 
 #: vncviewer/vncviewer.cxx:266
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC will now exit."
-msgstr "Saņemts beigšanas signāls %d. TigerVNC tagad beigs darbu."
+msgid "Termination signal %d has been received. TuPigVNC will now exit."
+msgstr "Saņemts beigšanas signāls %d. TuPigVNC tagad beigs darbu."
 
 #: vncviewer/vncviewer.cxx:395
 msgid "Yes"
@@ -1042,14 +1042,14 @@ msgid ""
 "Options:\n"
 "\n"
 "  -display Xdisplay  - Specifies the X display for the viewer window\n"
-"  -geometry geometry - Initial position of the main TigerVNC window. See the\n"
+"  -geometry geometry - Initial position of the main TuPigVNC window. See the\n"
 "                       man page for details.\n"
 msgstr ""
 "\n"
 "Opcijas:\n"
 "\n"
 "  -display Xdisplejs  - norāda X displeju skatītāja logam\n"
-"  -geometry ģeometrija - galvenā TigerVNC loga sākotnējā pozīcija. Sīkāk\n"
+"  -geometry ģeometrija - galvenā TuPigVNC loga sākotnējā pozīcija. Sīkāk\n"
 "                       skatiet rokasgrāmatas lapā.\n"
 
 #: vncviewer/vncviewer.cxx:472
@@ -1083,8 +1083,8 @@ msgstr "~/.vnc ir novecojis; ceļus, uz kuriem migrēt, skatiet 'man vncviewer'.
 
 #: vncviewer/vncviewer.cxx:557
 #, c-format
-msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TigerVNC location."
-msgstr "%%APPDATA%%\\vnc ir novecojis; lūdzu, pārejiet uz atrašanās vietu %%APPDATA%%\\TigerVNC."
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC location."
+msgstr "%%APPDATA%%\\vnc ir novecojis; lūdzu, pārejiet uz atrašanās vietu %%APPDATA%%\\TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:562
 #, c-format

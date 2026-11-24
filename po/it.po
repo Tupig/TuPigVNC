@@ -1,7 +1,7 @@
-# Copyright (C) TigerVNC Team
+# Copyright (C) TuPigVNC Team
 msgid ""
 msgstr ""
-"Project-Id-Version: TigerVNC 1.3.80\n"
+"Project-Id-Version: TuPigVNC 1.3.80\n"
 "Report-Msgid-Bugs-To: tigervnc-devel@googlegroups.com\n"
 "POT-Creation-Date: 2014-09-22 11:15+0000\n"
 "Language: it\n"
@@ -19,11 +19,11 @@ msgid "About"
 msgstr "Informazioni"
 
 #: /home/ossman/devel/tigervnc/vncviewer/vncviewer.cxx:103
-msgid "About TigerVNC Viewer"
+msgid "About TuPigVNC Viewer"
 msgstr ""
 
 #: /home/ossman/devel/tigervnc/vncviewer/Viewport.cxx:1086
-msgid "About TigerVNC viewer..."
+msgid "About TuPigVNC viewer..."
 msgstr ""
 
 #: /home/ossman/devel/tigervnc/vncviewer/ServerDialog.cxx:86
@@ -214,22 +214,22 @@ msgstr "Crittografia"
 
 #: /home/ossman/devel/tigervnc/vncviewer/parameters.cxx:503
 #, c-format
-msgid "Error(%d) closing key:  Software\\TigerVNC\\vncviewer"
+msgid "Error(%d) closing key:  Software\\TuPigVNC\\vncviewer"
 msgstr ""
 
 #: /home/ossman/devel/tigervnc/vncviewer/parameters.cxx:455
 #, c-format
-msgid "Error(%d) closing key: Software\\TigerVNC\\vncviewer"
+msgid "Error(%d) closing key: Software\\TuPigVNC\\vncviewer"
 msgstr ""
 
 #: /home/ossman/devel/tigervnc/vncviewer/parameters.cxx:434
 #, c-format
-msgid "Error(%d) creating key: Software\\TigerVNC\\vncviewer"
+msgid "Error(%d) creating key: Software\\TuPigVNC\\vncviewer"
 msgstr ""
 
 #: /home/ossman/devel/tigervnc/vncviewer/parameters.cxx:471
 #, c-format
-msgid "Error(%d) opening key: Software\\TigerVNC\\vncviewer"
+msgid "Error(%d) opening key: Software\\TuPigVNC\\vncviewer"
 msgstr ""
 
 #: /home/ossman/devel/tigervnc/vncviewer/parameters.cxx:373
@@ -368,7 +368,7 @@ msgstr "Utilizzo codifica %s"
 #, c-format
 msgid ""
 "Line 1 in file %s\n"
-"must contain the TigerVNC configuration file identifier string:\n"
+"must contain the TuPigVNC configuration file identifier string:\n"
 "\"%s\""
 msgstr ""
 
@@ -625,16 +625,16 @@ msgid "Throughput %d kbit/s - full color is now %s"
 msgstr "Velocità effettiva %d kbit/s - tutti i colori sono ora %s"
 
 #: /home/ossman/devel/tigervnc/vncviewer/vncviewer.cxx:210
-msgid "TigerVNC Viewer"
+msgid "TuPigVNC Viewer"
 msgstr ""
 
 #: /home/ossman/devel/tigervnc/vncviewer/vncviewer.cxx:80
 #, c-format
 msgid ""
-"TigerVNC Viewer %d-bit v%s\n"
+"TuPigVNC Viewer %d-bit v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC Team and many others (see README.txt)\n"
-"See http://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC Team and many others (see README.txt)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
 
 #: /home/ossman/devel/tigervnc/vncviewer/Viewport.cxx:1004

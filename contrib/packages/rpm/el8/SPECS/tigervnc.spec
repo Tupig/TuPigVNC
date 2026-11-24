@@ -5,12 +5,12 @@
 Name:           tigervnc
 Version:        @VERSION@
 Release:        1%{?snap:.%{snap}}%{?dist}
-Summary:        A TigerVNC remote display system
+Summary:        A TuPigVNC remote display system
 
 %global _hardened_build 1
 
 License:        GPLv2+
-URL:            http://www.tigervnc.com
+URL:            https://github.com/TuPig/TuPigVNC
 
 Source0:        %{name}-%{version}%{?snap:-%{snap}}.tar.bz2
 Source3:        10-libvnc.conf
@@ -40,8 +40,8 @@ BuildRequires:  libXfont2-devel
 BuildRequires:  libselinux-devel, selinux-policy-devel
 BuildRequires:  systemd-devel
 
-# TigerVNC 1.4.x requires fltk 1.3.3 for keyboard handling support
-# See https://github.com/TigerVNC/tigervnc/issues/8, also bug #1208814
+# TuPigVNC 1.4.x requires fltk 1.3.3 for keyboard handling support
+# See https://github.com/TuPig/TuPigVNC/issues/8, also bug #1208814
 BuildRequires:  fltk-devel >= 1.3.3
 BuildRequires:  xorg-x11-server-devel
 
@@ -56,7 +56,7 @@ client which will allow you to connect to other desktops running a VNC
 server.
 
 %package server
-Summary:        A TigerVNC server
+Summary:        A TuPigVNC server
 Requires:       perl-interpreter
 Requires:       tigervnc-server-minimal = %{version}-%{release}
 Requires:       (%{name}-selinux if selinux-policy-%{selinuxtype})
@@ -66,13 +66,13 @@ Requires:       xorg-x11-xinit
 %description server
 The VNC system allows you to access the same desktop from a wide
 variety of platforms.  This package includes set of utilities
-which make usage of TigerVNC server more user friendly. It also
+which make usage of TuPigVNC server more user friendly. It also
 contains the x0vncserver program which can export your active
 X session, and the w0vncserver program which can export your active
 Wayland session.
 
 %package server-minimal
-Summary:        A minimal installation of TigerVNC server
+Summary:        A minimal installation of TuPigVNC server
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
@@ -84,11 +84,11 @@ Requires:       tigervnc-common, dbus-x11
 %description server-minimal
 The VNC system allows you to access the same desktop from a wide
 variety of platforms. This package contains minimal installation
-of TigerVNC server, allowing others to access the desktop on your
+of TuPigVNC server, allowing others to access the desktop on your
 machine.
 
 %package server-module
-Summary:        TigerVNC module to Xorg
+Summary:        TuPigVNC module to Xorg
 Requires:       xorg-x11-server-Xorg %(xserver-sdk-abi-requires ansic) %(xserver-sdk-abi-requires videodrv)
 Requires:       tigervnc-common
 
@@ -97,7 +97,7 @@ This package contains libvnc.so module to X server, allowing others
 to access the desktop on your machine.
 
 %package common
-Summary:        Shared TigerVNC files
+Summary:        Shared TuPigVNC files
 BuildArch:      noarch
 
 Requires:       hicolor-icon-theme
@@ -107,10 +107,10 @@ Obsoletes:      tigervnc-icons <= %{version}-%{release}
 
 %description common
 This package contains files that are used by multiple components of the
-TigerVNC suite.
+TuPigVNC suite.
 
 %package selinux
-Summary:        SELinux module for TigerVNC
+Summary:        SELinux module for TuPigVNC
 BuildArch:      noarch
 BuildRequires:  selinux-policy-devel
 Requires:       selinux-policy-%{selinuxtype}
@@ -119,7 +119,7 @@ BuildRequires:  selinux-policy-devel
 %{?selinux_requires}
 
 %description selinux
-This package provides the SELinux policy module to ensure TigerVNC
+This package provides the SELinux policy module to ensure TuPigVNC
 runs properly under an environment with SELinux enabled.
 
 %prep
@@ -712,7 +712,7 @@ fi
 - basic RandR support in Xvnc (resize of the desktop)
 - use built-in libjpeg (SSE2/MMX accelerated encoding on x86 platform)
 - use Tight encoding by default
-- use TigerVNC icons
+- use TuPigVNC icons
 
 * Tue Mar 03 2009 Adam Tkac <atkac redhat com> 0.0.90-0.3.20090303svn3631
 - update to r3631

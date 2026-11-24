@@ -1,6 +1,6 @@
 /* Copyright (C) 2002-2005 RealVNC Ltd.  All Rights Reserved.
  * Copyright (C) 2005 Martin Koegler
- * Copyright (C) 2010 TigerVNC Team
+ * Copyright (C) 2010 TuPigVNC Team
  * Copyright (C) 2012-2025 Pierre Ossman for Cendio AB
  *
  * This is free software; you can redistribute it and/or modify

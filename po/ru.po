@@ -1,5 +1,5 @@
 # Russian translation for tigervnc.
-# Copyright © 2016 the TigerVNC Team (msgids)
+# Copyright © 2016 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 # PuppyRus linux team <www.puppyrus.org>.
 # Constantin Kaplinsky <const@tightvnc.com>, 2011.
@@ -242,8 +242,8 @@ msgid "Unexpected character '%c'"
 msgstr "Неожиданный символ «%c»"
 
 #: vncviewer/OptionsDialog.cxx:64
-msgid "TigerVNC options"
-msgstr "Параметры TigerVNC"
+msgid "TuPigVNC options"
+msgstr "Параметры TuPigVNC"
 
 #: vncviewer/OptionsDialog.cxx:97 vncviewer/ServerDialog.cxx:107
 #: vncviewer/vncviewer.cxx:397
@@ -483,12 +483,12 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:176 vncviewer/ServerDialog.cxx:216
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "Настройки TigerVNC (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "Настройки TuPigVNC (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:177
-msgid "Select a TigerVNC configuration file"
-msgstr "Выбрать файл настроек TigerVNC"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Выбрать файл настроек TuPigVNC"
 
 #: vncviewer/ServerDialog.cxx:199 vncviewer/vncviewer.cxx:517
 #, c-format
@@ -502,8 +502,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:217
-msgid "Save the TigerVNC configuration to file"
-msgstr "Сохранить настройки TigerVNC в файл"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "Сохранить настройки TuPigVNC в файл"
 
 #: vncviewer/ServerDialog.cxx:243
 #, c-format
@@ -660,8 +660,8 @@ msgstr "Сведен&ия о соединении…"
 
 #: vncviewer/Viewport.cxx:734
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC viewer..."
-msgstr "О &TigerVNC…"
+msgid "About &TuPigVNC viewer..."
+msgstr "О &TuPigVNC…"
 
 #: vncviewer/Viewport.cxx:830
 msgid "VNC connection info"
@@ -712,8 +712,8 @@ msgid "Failure grabbing device %i"
 msgstr "Не удалось перехватить устройство %i"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
-msgid "TigerVNC Viewer"
-msgstr "TigerVNC Viewer"
+msgid "TuPigVNC Viewer"
+msgstr "TuPigVNC Viewer"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:5
@@ -725,26 +725,26 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Virtual Network Computing (VNC) — система удалённого рабочего стола, которая позволяет просматривать и взаимодействовать по сети с виртуальным окружением, запущенном на другом компьютере.С помощью VNC вы можете запускать графические приложения на удалённой машине и получать отображение этих приложений на локальной машине. Этот пакет содержит клиентскую часть, которая позволяет подключиться к другим рабочим столам, запущенным сервером VNC. VNC не зависит от платформы и поддерживает различные операционные системы и архитектуры как для серверов так и для клиентов."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC — высокоскоростная версия VNC, в основе лежит код RealVNC 4 и X.org. TigerVNC начиналась как разработка следующего поколения TightVNC для платформ Unix и Linux, но отделилась от родительского проекта в начале 2009 года для того, чтобы TightVNC смогла сфокусироваться на платформе Windows. TigerVNC поддерживает вариант кодирования Tight, который был значительно ускорен с помощью кодека libjpeg-turbo JPEG."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC — высокоскоростная версия VNC, в основе лежит код RealVNC 4 и X.org. TuPigVNC начиналась как разработка следующего поколения TightVNC для платформ Unix и Linux, но отделилась от родительского проекта в начале 2009 года для того, чтобы TightVNC смогла сфокусироваться на платформе Windows. TuPigVNC поддерживает вариант кодирования Tight, который был значительно ускорен с помощью кодека libjpeg-turbo JPEG."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC viewer connection to a CentOS machine"
-msgstr "Подключение TigerVNC viewer к машине CentOS"
+msgid "TuPigVNC viewer connection to a CentOS machine"
+msgstr "Подключение TuPigVNC viewer к машине CentOS"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC viewer connection to a macOS machine"
-msgstr "Подключение TigerVNC viewer к машине macOS"
+msgid "TuPigVNC viewer connection to a macOS machine"
+msgstr "Подключение TuPigVNC viewer к машине macOS"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC viewer connection to a Windows machine"
-msgstr "Подключение TigerVNC viewer к машине Windows"
+msgid "TuPigVNC viewer connection to a Windows machine"
+msgstr "Подключение TuPigVNC viewer к машине Windows"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:46
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:48
-msgid "The TigerVNC team"
-msgstr "Команда TigerVNC"
+msgid "The TuPigVNC team"
+msgstr "Команда TuPigVNC"
 
 #: vncviewer/parameters.cxx:319 vncviewer/parameters.cxx:344
 #: vncviewer/parameters.cxx:361 vncviewer/parameters.cxx:401
@@ -861,15 +861,15 @@ msgstr "Расширение X Input 2.2 (или новее) недоступн�
 #: vncviewer/vncviewer.cxx:104
 #, c-format
 msgid ""
-"TigerVNC viewer v%s\n"
+"TuPigVNC viewer v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC viewer v%s\n"
+"TuPigVNC viewer v%s\n"
 "Сборка от: %s\n"
-"Copyright (C) 1999-%d, команда TigerVNC и многие другие (см. README.rst)\n"
-"Информация о TigerVNC на сайте https://www.tigervnc.org"
+"Copyright (C) 1999-%d, команда TuPigVNC и многие другие (см. README.rst)\n"
+"Информация о TuPigVNC на сайте https://github.com/TuPig/TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:158
 #, c-format
@@ -883,8 +883,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/vncviewer.cxx:174
-msgid "About TigerVNC Viewer"
-msgstr "О TigerVNC viewer"
+msgid "About TuPigVNC Viewer"
+msgstr "О TuPigVNC viewer"
 
 #: vncviewer/vncviewer.cxx:195
 msgid "Internal FLTK error. Exiting."
@@ -903,17 +903,17 @@ msgstr ""
 
 #: vncviewer/vncviewer.cxx:245 vncviewer/vncviewer.cxx:257
 #, c-format
-msgid "Error starting new TigerVNC Viewer: %s"
-msgstr "Не удалось запустить новый TigerVNC Viewer: %s"
+msgid "Error starting new TuPigVNC Viewer: %s"
+msgstr "Не удалось запустить новый TuPigVNC Viewer: %s"
 
 #: vncviewer/vncviewer.cxx:266
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC viewer will now exit."
-msgstr "Получен сигнал завершения работы %d. TigerVNC viewer будет закрыт."
+msgid "Termination signal %d has been received. TuPigVNC viewer will now exit."
+msgstr "Получен сигнал завершения работы %d. TuPigVNC viewer будет закрыт."
 
 #: vncviewer/vncviewer.cxx:391 vncviewer/vncviewer.desktop.in.in:3
-msgid "TigerVNC viewer"
-msgstr "TigerVNC viewer"
+msgid "TuPigVNC viewer"
+msgstr "TuPigVNC viewer"
 
 #: vncviewer/vncviewer.cxx:395
 msgid "Yes"
@@ -1024,8 +1024,8 @@ msgstr "Каталог ~/.vnc устарел, по «man vncviewer» можно 
 
 #: vncviewer/vncviewer.cxx:557
 #, c-format
-msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TigerVNC location."
-msgstr "%%APPDATA%%\\vnc устарел, используйте %%APPDATA%%\\TigerVNC."
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC location."
+msgstr "%%APPDATA%%\\vnc устарел, используйте %%APPDATA%%\\TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:562
 #, c-format

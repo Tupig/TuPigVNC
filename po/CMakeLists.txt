@@ -78,7 +78,7 @@ if (GETTEXT_XGETTEXT_EXECUTABLE)
       --keyword=C_:1c,2
       --keyword=N_
       --keyword=NC_:1c,2
-      "--copyright-holder=TigerVNC team and many others \(see README.rst\)"
+      "--copyright-holder=TuPigVNC team and many others \(see README.rst\)"
       --msgid-bugs-address=tigervnc-devel@googlegroups.com
       --sort-by-file
       --add-location

@@ -1,6 +1,6 @@
 /* Copyright (C) 2002-2005 RealVNC Ltd.  All Rights Reserved.
  * Copyright (C) 2004 Red Hat Inc.
- * Copyright (C) 2010 TigerVNC Team
+ * Copyright (C) 2010 TuPigVNC Team
  * Copyright 2014-2024 Pierre Ossman for Cendio AB
  * 
  * This is free software; you can redistribute it and/or modify

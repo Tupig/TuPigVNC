@@ -1,5 +1,5 @@
 # Finnish messages for tigervnc.
-# Copyright © 2019 the TigerVNC Team (msgids)
+# Copyright © 2019 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 # Jorma Karvonen <karvonen.jorma@gmail.com>, 2015.
 # Lauri Nurmi <lanurmi@iki.fi>, 2019, 2021.
@@ -241,8 +241,8 @@ msgid "Unexpected character '%c'"
 msgstr "Odottamaton merkki ”%c”"
 
 #: vncviewer/OptionsDialog.cxx:64
-msgid "TigerVNC options"
-msgstr "TigerVNC-asetukset"
+msgid "TuPigVNC options"
+msgstr "TuPigVNC-asetukset"
 
 #: vncviewer/OptionsDialog.cxx:97 vncviewer/ServerDialog.cxx:107
 #: vncviewer/vncviewer.cxx:397
@@ -483,12 +483,12 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:176 vncviewer/ServerDialog.cxx:216
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "TigerVNC-asetukset (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "TuPigVNC-asetukset (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:177
-msgid "Select a TigerVNC configuration file"
-msgstr "Valitse TigerVNC-asetustiedosto"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Valitse TuPigVNC-asetustiedosto"
 
 #: vncviewer/ServerDialog.cxx:199 vncviewer/vncviewer.cxx:517
 #, c-format
@@ -502,8 +502,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:217
-msgid "Save the TigerVNC configuration to file"
-msgstr "Tallenna TigerVNC-asetukset tiedostoon"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "Tallenna TuPigVNC-asetukset tiedostoon"
 
 #: vncviewer/ServerDialog.cxx:243
 #, c-format
@@ -660,8 +660,8 @@ msgstr "Yh&teyden tiedot..."
 
 #: vncviewer/Viewport.cxx:734
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC viewer..."
-msgstr "Tietoa &TigerVNC:stä..."
+msgid "About &TuPigVNC viewer..."
+msgstr "Tietoa &TuPigVNC:stä..."
 
 #: vncviewer/Viewport.cxx:830
 msgid "VNC connection info"
@@ -712,8 +712,8 @@ msgid "Failure grabbing device %i"
 msgstr "Häiriö laitteeseen %i tarttumisessa"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
-msgid "TigerVNC Viewer"
-msgstr "TigerVNC-katselin"
+msgid "TuPigVNC Viewer"
+msgstr "TuPigVNC-katselin"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:5
@@ -725,26 +725,26 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Virtual Network Computing (VNC) on etänäyttöjärjestelmä, jonka avulla voi katsella ja ohjata toisessa verkon koneessa toimivaa virtuaalista työpöytäympäristöä. VNC:n avulla voi suorittaa graafisia sovelluksia etäkoneella ja lähettää näistä sovelluksista vain näytön paikalliseen laitteeseen. Tämä paketti sisältää asiakasohjelman, jolla voi muodostaa yhteyden muihin työpöytiin, joilla on VNC-palvelin. VNC on alustariippumaton ja tukee erilaisia käyttöjärjestelmiä ja arkkitehtuureja sekä palvelimina että asiakasohjelmina."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC on RealVNC 4- ja X.org koodikantoihin perustuva nopea versio VNC:stä. TigerVNC aloitettiin uuteen sukupolveen tähtäävänä TightVNC:n kehitystyönä Unix- ja Linux-alustoilla, mutta se erosi emoprojektistaan vuoden 2009 alussa, jotta TightVNC voisi keskittyä Windows-alustoihin. TigerVNC tukee Tight-koodauksen muunnosta, jota libjpeg-turbo-JPEG-koodekin käyttö nopeuttaa huomattavasti."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC on RealVNC 4- ja X.org koodikantoihin perustuva nopea versio VNC:stä. TuPigVNC aloitettiin uuteen sukupolveen tähtäävänä TightVNC:n kehitystyönä Unix- ja Linux-alustoilla, mutta se erosi emoprojektistaan vuoden 2009 alussa, jotta TightVNC voisi keskittyä Windows-alustoihin. TuPigVNC tukee Tight-koodauksen muunnosta, jota libjpeg-turbo-JPEG-koodekin käyttö nopeuttaa huomattavasti."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC viewer connection to a CentOS machine"
-msgstr "TigerVNC-katselimen yhteys CentOS-koneeseen"
+msgid "TuPigVNC viewer connection to a CentOS machine"
+msgstr "TuPigVNC-katselimen yhteys CentOS-koneeseen"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC viewer connection to a macOS machine"
-msgstr "TigerVNC-katselimen yhteys macOS-koneeseen"
+msgid "TuPigVNC viewer connection to a macOS machine"
+msgstr "TuPigVNC-katselimen yhteys macOS-koneeseen"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC viewer connection to a Windows machine"
-msgstr "TigerVNC-katselimen yhteys Windows-koneeseen"
+msgid "TuPigVNC viewer connection to a Windows machine"
+msgstr "TuPigVNC-katselimen yhteys Windows-koneeseen"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:46
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:48
-msgid "The TigerVNC team"
-msgstr "TigerVNC-ryhmä"
+msgid "The TuPigVNC team"
+msgstr "TuPigVNC-ryhmä"
 
 #: vncviewer/parameters.cxx:319 vncviewer/parameters.cxx:344
 #: vncviewer/parameters.cxx:361 vncviewer/parameters.cxx:401
@@ -861,15 +861,15 @@ msgstr "X Input 2.2 (tai uudempi) ei ole saatavilla. Kosketuseleitä ei tueta."
 #: vncviewer/vncviewer.cxx:104
 #, c-format
 msgid ""
-"TigerVNC viewer v%s\n"
+"TuPigVNC viewer v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC-katselin v%s\n"
+"TuPigVNC-katselin v%s\n"
 "Koontihetki: %s\n"
-"Copyright © 1999-%d TigerVNC-ryhmä ja monet muut (ks. README.rst)\n"
-"Lisätietoja TigerVNC:stä osoitteessa https://www.tigervnc.org."
+"Copyright © 1999-%d TuPigVNC-ryhmä ja monet muut (ks. README.rst)\n"
+"Lisätietoja TuPigVNC:stä osoitteessa https://github.com/TuPig/TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:158
 #, c-format
@@ -883,8 +883,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/vncviewer.cxx:174
-msgid "About TigerVNC Viewer"
-msgstr "Tietoa &TigerVNC:stä"
+msgid "About TuPigVNC Viewer"
+msgstr "Tietoa &TuPigVNC:stä"
 
 #: vncviewer/vncviewer.cxx:195
 msgid "Internal FLTK error. Exiting."
@@ -903,17 +903,17 @@ msgstr ""
 
 #: vncviewer/vncviewer.cxx:245 vncviewer/vncviewer.cxx:257
 #, c-format
-msgid "Error starting new TigerVNC Viewer: %s"
-msgstr "Virhe käynnistettäessä uutta TigerVNC-katselinta: %s"
+msgid "Error starting new TuPigVNC Viewer: %s"
+msgstr "Virhe käynnistettäessä uutta TuPigVNC-katselinta: %s"
 
 #: vncviewer/vncviewer.cxx:266
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC viewer will now exit."
-msgstr "Päättämissignaali %d on vastaanotettu. TigerVNC-katselin sulkeutuu."
+msgid "Termination signal %d has been received. TuPigVNC viewer will now exit."
+msgstr "Päättämissignaali %d on vastaanotettu. TuPigVNC-katselin sulkeutuu."
 
 #: vncviewer/vncviewer.cxx:391 vncviewer/vncviewer.desktop.in.in:3
-msgid "TigerVNC viewer"
-msgstr "TigerVNC-katselin"
+msgid "TuPigVNC viewer"
+msgstr "TuPigVNC-katselin"
 
 #: vncviewer/vncviewer.cxx:395
 msgid "Yes"
@@ -1022,8 +1022,8 @@ msgstr "~/.vnc on vanhentunut, katso ”man vncviewer” sisältää lisätietoa
 
 #: vncviewer/vncviewer.cxx:557
 #, c-format
-msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TigerVNC location."
-msgstr "%%APPDATA%%\\vnc on vanhentunut, vaihda sijainniksi %%APPDATA%%\\TigerVNC."
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC location."
+msgstr "%%APPDATA%%\\vnc on vanhentunut, vaihda sijainniksi %%APPDATA%%\\TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:562
 #, c-format
@@ -1284,17 +1284,17 @@ msgstr "Etätyöpöytäkatselin"
 #~ msgid "Encoding normal character: The size of the buffer dest is to small, it needs to be more than %d bytes bigger."
 #~ msgstr "Normaalin merkin koodaus: Puskurikohteen koko on liian pieni, sen on oltava yli %d tavua suurempi."
 
-#~ msgid "Error(%d) closing key:  Software\\TigerVNC\\vncviewer"
-#~ msgstr "Virhe(%d) suljettaessa avainta:  Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) closing key:  Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Virhe(%d) suljettaessa avainta:  Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) closing key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Virhe(%d) suljettaessa avainta: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) closing key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Virhe(%d) suljettaessa avainta: Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) creating key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Virhe(%d) luotaessa avainta: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) creating key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Virhe(%d) luotaessa avainta: Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) opening key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Virhe(%d) avattaessa avainta: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) opening key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Virhe(%d) avattaessa avainta: Software\\TuPigVNC\\vncviewer"
 
 #~ msgid "Error(%d) reading %s from Registry."
 #~ msgstr "Virhe(%d) luettaessa %s Windows-rekisteristä."
@@ -1307,11 +1307,11 @@ msgstr "Etätyöpöytäkatselin"
 
 #~ msgid ""
 #~ "Line 1 in file %s\n"
-#~ "must contain the TigerVNC configuration file identifier string:\n"
+#~ "must contain the TuPigVNC configuration file identifier string:\n"
 #~ "\"%s\""
 #~ msgstr ""
 #~ "Riviin 1 tiedostossa %s\n"
-#~ "on sisällyttävä TigerVNC-asetustiedostotunnistemerkkijono:\n"
+#~ "on sisällyttävä TuPigVNC-asetustiedostotunnistemerkkijono:\n"
 #~ "”%s”"
 
 #~ msgid "Multiple characters given for key code %d (0x%04x): '%s'"

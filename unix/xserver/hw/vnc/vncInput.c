@@ -117,20 +117,20 @@ void vncInitInputDevice(void)
 	vncKeyboardDev = AddInputDevice(serverClient, vncKeyboardProc, TRUE);
 
 	if (vncPointerDev == NULL || vncKeyboardDev == NULL)
-		FatalError(_("Failed to create TigerVNC input devices\n"));
+		FatalError(_("Failed to create TuPigVNC input devices\n"));
 
 	xiclass = MakeAtom(XI_MOUSE, sizeof(XI_MOUSE) - 1, TRUE);
-	AssignTypeAndName(vncPointerDev, xiclass, "TigerVNC pointer");
+	AssignTypeAndName(vncPointerDev, xiclass, "TuPigVNC pointer");
 	xiclass = MakeAtom(XI_KEYBOARD, sizeof(XI_KEYBOARD) - 1, TRUE);
-	AssignTypeAndName(vncKeyboardDev, xiclass, "TigerVNC keyboard");
+	AssignTypeAndName(vncKeyboardDev, xiclass, "TuPigVNC keyboard");
 
 	if (ActivateDevice(vncPointerDev, TRUE) != Success ||
 	    ActivateDevice(vncKeyboardDev, TRUE) != Success)
-		FatalError(_("Failed to create TigerVNC input devices\n"));
+		FatalError(_("Failed to create TuPigVNC input devices\n"));
 
 	if (!EnableDevice(vncPointerDev, TRUE) ||
 	    !EnableDevice(vncKeyboardDev, TRUE))
-		FatalError(_("Failed to create TigerVNC input devices\n"));
+		FatalError(_("Failed to create TuPigVNC input devices\n"));
 
 	vncPrepareInputDevices();
 }

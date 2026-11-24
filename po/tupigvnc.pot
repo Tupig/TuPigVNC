@@ -1,0 +1,4314 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TuPigVNC \n"
+"Report-Msgid-Bugs-To: https://github.com/TuPig/TuPigVNC/issues\n"
+"POT-Creation-Date: 2026-11-24 20:00+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: vncviewer/vncviewer.cxx:415
+msgid "\n"
+"Options:\n"
+"\n"
+"  -display Xdisplay  - Specifies the X display for the viewer window\n"
+"  -geometry geometry - Initial position of the main TuPigVNC window. See the\n"
+"                       man page for details.\n"
+""
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:189
+#: unix/w0vncserver/w0vncserver.cxx:87
+#: unix/x0vncserver/x0vncserver.cxx:294
+#: unix/xserver/hw/vnc/xvnc.c:223
+#: vncviewer/vncviewer.cxx:422
+msgid "\n"
+"Parameters can be turned on with -<param> or off with -<param>=0\n"
+"Parameters which take a value can be specified as -<param> <value>\n"
+"Other valid forms are <param>=<value> -<param>=<value> --<param>=<value>\n"
+"Parameter names are case-insensitive.  The parameters are:\n"
+"\n"
+""
+msgstr ""
+
+#: unix/w0vncserver/w0vncserver-forget.cxx:47
+msgid "\n"
+"Usage: %s\n"
+""
+msgstr ""
+
+#: unix/w0vncserver/w0vncserver.cxx:82
+#: unix/x0vncserver/x0vncserver.cxx:289
+msgid "\n"
+"Usage: %s [<parameters>]\n"
+"       %s --version\n"
+""
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:396
+msgid "\n"
+"Usage: %s [parameters] [host][:displayNum]\n"
+"       %s [parameters] [host][::port]\n"
+"       %s [parameters] -listen [port]\n"
+"       %s [parameters] [.tigervnc file]\n"
+""
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:404
+msgid "\n"
+"Usage: %s [parameters] [host][:displayNum]\n"
+"       %s [parameters] [host][::port]\n"
+"       %s [parameters] [unix socket]\n"
+"       %s [parameters] -listen [port]\n"
+"       %s [parameters] [.tigervnc file]\n"
+""
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:372
+msgid " (view only)"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:488
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC location."
+msgstr ""
+
+#: win/rfb_win32/DeviceContext.cxx:101
+msgid "%d-bit with masks: (%lx, %lx, %lx)"
+msgstr ""
+
+#: win/rfb_win32/DeviceContext.cxx:136
+msgid "%d-colour palettised"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:199
+msgid "%s\n"
+"\n"
+"Attempt to reconnect?"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:64
+msgid "%s - %s, version %s\n"
+""
+msgstr ""
+
+#: vncviewer/DesktopWindow.cxx:304
+msgid "%s - TuPigVNC"
+msgstr ""
+
+#: vncviewer/DesktopWindow.cxx:302
+msgid "%s - TuPigVNC (keyboard grabbed)"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:240
+msgid "%s already exists. Do you want to overwrite?"
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:268
+msgid "%s: Connecting to %s failed\n"
+""
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:273
+msgid "%s: Disconnecting all clients failed\n"
+""
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:230
+#: unix/w0vncserver/w0vncserver-forget.cxx:71
+#: unix/w0vncserver/w0vncserver.cxx:154
+#: unix/x0vncserver/x0vncserver.cxx:349
+#: vncviewer/vncviewer.cxx:637
+msgid "%s: Extra argument '%s'\n"
+""
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:297
+msgid "%s: Getting the description for parameter %s failed\n"
+""
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:285
+msgid "%s: Getting the value of parameter %s failed\n"
+""
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:314
+#: unix/vncconfig/vncconfig.cxx:336
+msgid "%s: Invalid parameter syntax '%s'\n"
+""
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:252
+msgid "%s: No VNC extension on display \"%s\"\n"
+""
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:325
+#: unix/vncconfig/vncconfig.cxx:347
+msgid "%s: Setting the parameter %s failed\n"
+""
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:225
+msgid "%s: Too long filename specified\n"
+""
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:246
+#: unix/x0vncserver/x0vncserver.cxx:358
+msgid "%s: Unable to open display \"%s\"\n"
+""
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:328
+#: unix/vncpasswd/vncpasswd.cxx:218
+#: unix/w0vncserver/w0vncserver.cxx:147
+#: unix/x0vncserver/x0vncserver.cxx:342
+#: vncviewer/vncviewer.cxx:628
+msgid "%s: Unrecognized option '%s'\n"
+""
+msgstr ""
+
+#: common/network/TcpSocket.cxx:317
+#: common/network/TcpSocket.cxx:331
+#: common/network/TcpSocket.cxx:345
+#: common/network/TcpSocket.cxx:352
+msgid "(N/A)"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:351
+#: unix/xserver/hw/vnc/XserverDesktop.cc:467
+#: win/winvnc/QueryConnectDialog.cxx:95
+msgid "(anonymous)"
+msgstr ""
+
+#: common/network/UnixSocket.cxx:109
+msgid "(unnamed UNIX socket)"
+msgstr ""
+
+#: win/rfb_win32/DeviceContext.cxx:78
+msgid "16-bit high colour"
+msgstr ""
+
+#: win/rfb_win32/DeviceContext.cxx:86
+msgid "24/32-bit high colour"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:743
+msgid "A mask is no longer supported for filters, use a prefix instead"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1087
+msgid "A new version %s is available (current version %s).\n"
+"\n"
+"The update will be downloaded and installed automatically.\n"
+"The program will restart after installation. Continue?"
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:271
+msgid "A view-only password is not used\n"
+""
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:158
+#: vncviewer/vncviewer.cxx:356
+msgid "About TuPigVNC"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:105
+msgid "About..."
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:93
+#: unix/vncconfig/vncconfig.cxx:86
+msgid "Accept clipboard changes from clients"
+msgstr ""
+
+#: vncviewer/parameters.cxx:213
+msgid "Accept clipboard changes from the server"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1007
+msgid "Accept clipboard from server"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:85
+msgid "Accept key events from clients"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:89
+msgid "Accept pointer events from clients"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:101
+msgid "Accept session size changes from clients"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:184
+msgid "Accepted: %s"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:62
+msgid "Action to perform when all clients have disconnected"
+msgstr ""
+
+#: vncviewer/CConn.cxx:568
+#: vncviewer/CConn.cxx:587
+#: vncviewer/CConn.cxx:604
+#: vncviewer/CConn.cxx:621
+#: vncviewer/CConn.cxx:641
+#: vncviewer/CConn.cxx:673
+#: vncviewer/CConn.cxx:693
+#: vncviewer/CConn.cxx:711
+#: vncviewer/CConn.cxx:729
+#: vncviewer/CConn.cxx:750
+msgid "Add exception"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:336
+msgid "Add to Favorites"
+msgstr ""
+
+#: vncviewer/DesktopWindow.cxx:651
+msgid "Adjusting window size to avoid accidental full-screen request"
+msgstr ""
+
+#: common/core/Configuration.cxx:263
+msgid "Alias for %s"
+msgstr ""
+
+#: win/vncconfig/Authentication.h:79
+#: win/vncconfig/Authentication.h:92
+msgid "All"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:337
+msgid "All Files (*)"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1382
+msgid "All keyboard shortcuts are disabled."
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:568
+msgid "Allow JPEG compression"
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:87
+#: vncviewer/OptionsDialog.cxx:1015
+msgid "Also set primary selection"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1087
+#: vncviewer/ShortcutHandler.cxx:226
+msgid "Alt"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:978
+msgid "Always send all keyboard input in full screen"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:70
+msgid "Always treat incoming connections as shared, regardless of the client-specified setting"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:65
+msgid "Always use protocol version 3.3 for backwards compatibility with badly-behaved clients"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:785
+#: vncviewer/Viewport.cxx:870
+#: vncviewer/vncviewer.cxx:147
+msgid "An unexpected error occurred when communicating with the server:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:342
+#: unix/xserver/hw/vnc/XserverDesktop.cc:177
+#: win/winvnc/VNCServerWin32.cxx:249
+msgid "Another connection is currently being queried."
+msgstr ""
+
+#: win/winvnc/STrayIcon.cxx:159
+msgid "Are you sure you want to close the server?"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1259
+msgid "Ask to reconnect on connection errors"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:179
+msgid "Assuming compatibility with version %d.%d"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:459
+msgid "Attaching to device %s"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:463
+msgid "Attaching to virtual desktop"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:177
+msgid "Attempting to register service...\n"
+""
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:149
+msgid "Attempting to start service...\n"
+""
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:154
+msgid "Attempting to stop service...\n"
+""
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:200
+msgid "Attempting to unregister service...\n"
+""
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:144
+msgid "Audio data is too large"
+msgstr ""
+
+#: vncviewer/AudioOutputPulse.cxx:470
+msgid "Audio playback stream failed"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:849
+msgid "Authentication"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:264
+msgid "Authentication error: %s"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:365
+#: common/rfb/SSecurityPlain.cxx:116
+#: common/rfb/SSecurityRSAAES.cxx:639
+#: common/rfb/SSecurityRSAAES.cxx:669
+#: common/rfb/SSecurityVncAuth.cxx:121
+msgid "Authentication failed"
+msgstr ""
+
+#: vncviewer/CConn.cxx:319
+msgid "Authentication failed: %s"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:322
+msgid "Authentication timeout"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:561
+msgid "Auto select"
+msgstr ""
+
+#: vncviewer/parameters.cxx:106
+msgid "Auto select pixel format and encoding"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:90
+msgid "Available configuration parameters:"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:91
+msgid "Avoid fake Shift presses for keys affected by NumLock"
+msgstr ""
+
+#: common/rfb/DecodeManager.cxx:236
+#: common/rfb/DecodeManager.cxx:250
+#: common/rfb/EncodeManager.cxx:210
+#: common/rfb/EncodeManager.cxx:244
+#: common/rfb/EncodeManager.cxx:259
+msgid "B"
+msgstr ""
+
+#: common/rfb/TightDecoder.cxx:74
+msgid "Bad Tight subencoding value received"
+msgstr ""
+
+#: win/rfb_win32/Clipboard.cxx:68
+msgid "Bad clipboard chain change!"
+msgstr ""
+
+#: common/rfb/EncodeManager.cxx:127
+msgid "Bitmap"
+msgstr ""
+
+#: common/rfb/EncodeManager.cxx:129
+msgid "Bitmap RLE"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:150
+msgid "Blacklisted: %s"
+msgstr ""
+
+#: common/rdr/BufferedInStream.cxx:69
+#: common/rdr/BufferedOutStream.cxx:143
+msgid "Buffer size of %lu bytes exceeds maximum of %lu bytes"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:530
+msgid "Built without GPU render support\n"
+""
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:110
+#: vncviewer/ServerDialog.cxx:110
+#: vncviewer/Viewport.cxx:1090
+#: vncviewer/vncviewer.cxx:331
+msgid "Cancel"
+msgstr ""
+
+#: unix/w0vncserver/portals/Clipboard.cxx:513
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:481
+msgid "Cancelled"
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:122
+msgid "Cannot check password quality: %s\n"
+""
+msgstr ""
+
+#: unix/common/randr.cxx:341
+msgid "Cannot find an available output for new screen layout"
+msgstr ""
+
+#: unix/xserver/hw/vnc/XserverDesktop.cc:317
+msgid "Cannot find file descriptor for socket event"
+msgstr ""
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:470
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:512
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:533
+msgid "Cannot handle Wayland pixel format %d"
+msgstr ""
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:179
+msgid "Cannot handle Wayland pixel format %d: %s"
+msgstr ""
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:358
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:627
+msgid "Cannot handle Wayland transform %d"
+msgstr ""
+
+#: win/rfb_win32/CurrentUser.cxx:99
+msgid "Cannot impersonate unsafe or null token"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:334
+msgid "Caps lock is active"
+msgstr ""
+
+#: vncviewer/CConn.cxx:640
+msgid "Certificate hostname mismatch"
+msgstr ""
+
+#: vncviewer/CConn.cxx:586
+msgid "Certificate is not yet valid"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1072
+msgid "Check for Updates"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1073
+msgid "Checking for updates, please wait..."
+msgstr ""
+
+#: common/rfb/CConnection.cxx:308
+#: common/rfb/CSecurityVeNCrypt.cxx:181
+msgid "Choosing security type %s (%d)"
+msgstr ""
+
+#: common/rfb/VNCSConnectionST.cxx:200
+msgid "Clean disconnection"
+msgstr ""
+
+#: unix/w0vncserver/GSocketSource.cxx:240
+#: unix/x0vncserver/x0vncserver.cxx:509
+msgid "Client connection rejected"
+msgstr ""
+
+#: common/rfb/VNCSConnectionST.cxx:251
+msgid "Client does not support resizing the desktop"
+msgstr ""
+
+#: common/rfb/SSecurityRSAAES.cxx:349
+msgid "Client encryption key is invalid"
+msgstr ""
+
+#: common/rfb/SSecurityRSAAES.cxx:336
+msgid "Client encryption key is too long"
+msgstr ""
+
+#: common/rfb/SSecurityRSAAES.cxx:334
+msgid "Client encryption key is too short"
+msgstr ""
+
+#: common/rfb/CSecurityRSAAES.cxx:289
+msgid "Client key length doesn't match length of random data"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:159
+msgid "Client needs protocol version %d.%d"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:165
+msgid "Client needs protocol version %d.%d, server has %d.%d"
+msgstr ""
+
+#: common/rfb/VNCSConnectionST.cxx:498
+msgid "Client pixel format: %s"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:246
+#: common/rfb/SSecurityVeNCrypt.cxx:169
+msgid "Client requests security type %s (%d)"
+msgstr ""
+
+#: common/rfb/VNCSConnectionST.cxx:762
+msgid "Client tried to enable continuous updates when not allowed"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:171
+msgid "Client uses unofficial protocol version %d.%d"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:995
+msgid "Clipboard"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:360
+#: common/rfb/CMsgReader.cxx:386
+#: common/rfb/CMsgReader.cxx:437
+#: common/rfb/SMsgReader.cxx:341
+#: common/rfb/SMsgReader.cxx:367
+#: common/rfb/SMsgReader.cxx:418
+msgid "Clipboard too large (%d bytes)"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:332
+msgid "Close"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:220
+msgid "Closed: %s"
+msgstr ""
+
+#: common/rfb/VNCSConnectionST.cxx:81
+msgid "Closing %s: %s"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:207
+msgid "Closing console"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:646
+msgid "Color level"
+msgstr ""
+
+#: vncviewer/parameters.cxx:114
+msgid "Color level to use on slow connections, 0 = Very Low, 1 = Low, 2 = Medium"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:95
+msgid "Comma separated list of parameters that are allowed to be modified after startup"
+msgstr ""
+
+#: common/rfb/KeyRemapper.cxx:63
+msgid "Comma-separated list of incoming keysyms to remap.  Mappings are expressed as two hex values, prefixed by 0x, and separated by ->"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:73
+msgid "Command-line options:\n"
+"  -connect [<host[::port]>]            - Connect an existing WinVNC server to a listening viewer.\n"
+"  -disconnect                          - Disconnect all clients from an existing WinVNC server.\n"
+"  -register <options...>               - Register WinVNC server as a system service.\n"
+"  -unregister                          - Remove WinVNC server from the list of system services.\n"
+"  -start                               - Start the WinVNC server system service.\n"
+"  -stop                                - Stop the WinVNC server system service.\n"
+"  -status                              - Query the WinVNC service status.\n"
+"  -help                                - Provide usage information.\n"
+"  -noconsole                           - Run without a console (i.e. no stderr/stdout)\n"
+"  <setting>=<value>                    - Set the named configuration parameter.\n"
+"    (Parameter values specified on the command-line override those specified by other configuration methods.)\n"
+""
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:61
+msgid "Command: OS shutdown"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:57
+msgid "Command: Parameters changed"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:53
+msgid "Command: Report status"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:65
+msgid "Command: Stop"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:544
+msgid "Compression"
+msgstr ""
+
+#: vncviewer/parameters.cxx:893
+msgid "Configuration file %s is in an invalid format"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:114
+msgid "Connect"
+msgstr ""
+
+#: vncviewer/CConn.cxx:190
+msgid "Connected to host %s port %d"
+msgstr ""
+
+#: vncviewer/CConn.cxx:183
+msgid "Connected to socket %s"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:134
+msgid "Connection failed."
+msgstr ""
+
+#: common/rfb/SConnection.cxx:350
+msgid "Connection failed: %s"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:604
+#: common/rfb/SConnection.cxx:621
+msgid "Connection rejected"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:510
+#: unix/x0vncserver/XDesktop.cxx:1021
+#: unix/xserver/hw/vnc/vncExtInit.cc:400
+#: win/winvnc/VNCServerWin32.cxx:312
+msgid "Connection rejected by local user"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:456
+msgid "Connection to local session was cancelled"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:182
+msgid "Console is not session zero - reconnect to restore Console session"
+msgstr ""
+
+#: win/rfb_win32/TsSessions.cxx:61
+msgid "Console session is %lu"
+msgstr ""
+
+#: vncviewer/CConn.cxx:787
+msgid "Continue"
+msgstr ""
+
+#: common/rfb/EncodeManager.cxx:202
+#: common/rfb/EncodeManager.cxx:208
+msgid "Copies"
+msgstr ""
+
+#: common/rdr/AESInStream.cxx:86
+msgid "Corrupted message received"
+msgstr ""
+
+#: common/rfb/H264LibavDecoderContext.cxx:65
+msgid "Could not allocate video codec context"
+msgstr ""
+
+#: common/rfb/H264LibavDecoderContext.cxx:73
+msgid "Could not allocate video frame"
+msgstr ""
+
+#: vncviewer/AudioOutputPulse.cxx:152
+#: vncviewer/AudioOutputPulse.cxx:174
+msgid "Could not connect to sound server: %s"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:526
+msgid "Could not create GPU render device\n"
+""
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:249
+#: vncviewer/vncviewer.cxx:493
+msgid "Could not create VNC config directory \"%s\": %s"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:505
+msgid "Could not create VNC data directory \"%s\": %s"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:742
+#: vncviewer/vncviewer.cxx:517
+msgid "Could not create VNC state directory \"%s\": %s"
+msgstr ""
+
+#: vncviewer/AudioOutputPulse.cxx:236
+msgid "Could not create audio playback stream: %s"
+msgstr ""
+
+#: common/rfb/H264LibavDecoderContext.cxx:59
+msgid "Could not create video parser"
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:241
+#: vncviewer/parameters.cxx:767
+#: vncviewer/parameters.cxx:845
+#: vncviewer/vncviewer.cxx:477
+msgid "Could not determine VNC config directory path"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:499
+msgid "Could not determine VNC data directory path"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:688
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:736
+#: unix/w0vncserver/w0vncserver-forget.cxx:80
+#: vncviewer/CConn.cxx:502
+#: vncviewer/ServerDialog.cxx:346
+#: vncviewer/ServerDialog.cxx:428
+#: vncviewer/vncviewer.cxx:511
+msgid "Could not determine VNC state directory path"
+msgstr ""
+
+#: vncviewer/parameters.cxx:787
+#: vncviewer/parameters.cxx:799
+msgid "Could not encode parameter"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:488
+#: unix/xserver/hw/vnc/vncDRI3.c:507
+msgid "Could not find any available render nodes\n"
+""
+msgstr ""
+
+#: common/rfb/H264LibavDecoderContext.cxx:55
+#: common/rfb/H264WinDecoderContext.cxx:49
+#: common/rfb/H264WinDecoderContext.cxx:56
+msgid "Could not find video codec"
+msgstr ""
+
+#: common/rfb/H264WinDecoderContext.cxx:46
+msgid "Could not initialize MediaFoundation"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:301
+#: unix/xserver/hw/vnc/vncDRI3.c:362
+msgid "Could not map GPU buffer: %s\n"
+""
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:601
+#: unix/xserver/hw/vnc/vncInput.c:507
+msgid "Could not map keysym XK_%s (0x%04x) to keycode"
+msgstr ""
+
+#: vncviewer/AudioOutputWin32.cxx:113
+msgid "Could not open audio playback device"
+msgstr ""
+
+#: vncviewer/AudioOutputPulse.cxx:266
+msgid "Could not open audio playback device: %s"
+msgstr ""
+
+#: common/rfb/H264LibavDecoderContext.cxx:81
+msgid "Could not open video codec"
+msgstr ""
+
+#: unix/x0vncserver/x0vncserver.cxx:198
+msgid "Could not read IP filtering rules, rejecting all clients"
+msgstr ""
+
+#: unix/x0vncserver/XSelection.cxx:87
+#: unix/xserver/hw/vnc/vncSelection.c:142
+msgid "Could not set CLIPBOARD selection"
+msgstr ""
+
+#: unix/x0vncserver/XSelection.cxx:92
+#: unix/xserver/hw/vnc/vncSelection.c:137
+msgid "Could not set PRIMARY selection"
+msgstr ""
+
+#: common/rfb/H264WinDecoderContext.cxx:102
+msgid "Could not start video decoder"
+msgstr ""
+
+#: vncviewer/AudioOutputPulse.cxx:396
+msgid "Could not write to audio playback device"
+msgstr ""
+
+#: vncviewer/touch.cxx:195
+msgid "Couldn't attach event handler to window (error 0x%x)"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:349
+msgid "Create a new directory."
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:268
+msgid "Created VNC server for screen %d"
+msgstr ""
+
+#: common/rfb/DecodeManager.cxx:63
+msgid "Creating %d decoder thread(s)"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1071
+#: vncviewer/ShortcutHandler.cxx:210
+msgid "Ctrl"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:944
+msgid "Cursor type"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:338
+msgid "Custom Filter"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:701
+msgid "Custom compression level"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:178
+msgid "DAMAGE extension not present, will have to poll the screen for changes"
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:229
+msgid "Deleting listening socket"
+msgstr ""
+
+#: win/rfb_win32/DIBSectionBuffer.cxx:164
+#: win/rfb_win32/DeviceContext.cxx:121
+msgid "Depth exceeds bits per pixel"
+msgstr ""
+
+#: win/rfb_win32/CurrentUser.cxx:68
+msgid "Desktop \"%s\" inaccessible"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:668
+msgid "Desktop configured a different screen layout than requested"
+msgstr ""
+
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:114
+msgid "Desktop does not support clipboard control"
+msgstr ""
+
+#: unix/w0vncserver/w0vncserver.cxx:222
+msgid "Desktop does not support remote connections"
+msgstr ""
+
+#: unix/x0vncserver/Geometry.cxx:66
+msgid "Desktop geometry is set to %dx%d+%d+%d"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:392
+msgid "Desktop is not started"
+msgstr ""
+
+#: vncviewer/CConn.cxx:215
+msgid "Desktop name: %.80s"
+msgstr ""
+
+#: common/rfb/DecodeManager.cxx:56
+msgid "Detected %d CPU core(s)"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:70
+msgid "Disable desktop user interface effects when the server is in use"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:59
+msgid "Disable local keyboard and pointer input while the server is in use"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:70
+msgid "Disable lossy JPEG compression"
+msgstr ""
+
+#: win/winvnc/STrayIcon.cxx:54
+msgid "Disable the Close entry in the VNC server tray menu"
+msgstr ""
+
+#: win/winvnc/STrayIcon.cxx:51
+msgid "Disable the Options entry in the VNC server tray menu"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:80
+msgid "Disconnect existing clients if an incoming connection is not shared"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1121
+msgid "Display"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:569
+msgid "Display choice restore token was not provided"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:66
+msgid "Display device name of the monitor to be remoted, or empty to export the whole desktop"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1135
+msgid "Display mode"
+msgstr ""
+
+#: vncviewer/CConn.cxx:565
+#: vncviewer/CConn.cxx:584
+#: vncviewer/CConn.cxx:601
+#: vncviewer/CConn.cxx:618
+#: vncviewer/CConn.cxx:638
+#: vncviewer/CConn.cxx:670
+#: vncviewer/CConn.cxx:690
+#: vncviewer/CConn.cxx:708
+#: vncviewer/CConn.cxx:726
+#: vncviewer/CConn.cxx:747
+msgid "Do you want to make an exception for this server?"
+msgstr ""
+
+#: vncviewer/parameters.cxx:201
+msgid "Don't disconnect other viewers upon connection"
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:57
+msgid "Don't display a window"
+msgstr ""
+
+#: vncviewer/parameters.cxx:197
+msgid "Don't send any mouse or keyboard events to the server"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:946
+msgid "Dot"
+msgstr ""
+
+#: vncviewer/parameters.cxx:982
+msgid "DotWhenNoCursor is deprecated, set AlwaysCursor to 1 and CursorType to 'Dot' instead"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1103
+msgid "Downloading and installing version %s, please wait...\n"
+"The program will restart automatically after installation."
+msgstr ""
+
+#: vncviewer/parameters.cxx:191
+msgid "Dynamically resize the remote desktop size as the size of the local client window changes"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:330
+msgid "Empty certificate chain"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:557
+msgid "Empty rectangle received"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:933
+msgid "Emulate middle mouse button"
+msgstr ""
+
+#: vncviewer/parameters.cxx:64
+msgid "Emulate middle mouse button by pressing left and right mouse buttons simultaneously"
+msgstr ""
+
+#: vncviewer/parameters.cxx:153
+msgid "Enable full screen as specified by FullScreenMode"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:614
+msgid "Enabling continuous updates"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:782
+msgid "Encryption"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:191
+msgid "Error accepting client: %s"
+msgstr ""
+
+#: unix/w0vncserver/pipewire/PipeWireStream.cxx:177
+msgid "Error communicating with PipeWire: %s"
+msgstr ""
+
+#: unix/x0vncserver/x0vncserver.cxx:161
+msgid "Error getting listening sockets from systemd: %s"
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:156
+msgid "Error reading default settings: %s"
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:178
+msgid "Error reading global user settings: %s"
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:167
+msgid "Error reading local user settings: %s"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:230
+#: vncviewer/vncviewer.cxx:242
+msgid "Error starting new connection: %s"
+msgstr ""
+
+#: vncviewer/CConn.cxx:603
+msgid "Expired certificate"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:231
+msgid "Failed get address for hostname"
+msgstr ""
+
+#: common/rdr/FileInStream.cxx:57
+#: common/rfb/SSecurityRSAAES.cxx:200
+msgid "Failed reading from \"%s\""
+msgstr ""
+
+#: common/rdr/TLSSocket.cxx:164
+msgid "Failed receiving TLS data"
+msgstr ""
+
+#: common/rdr/TLSSocket.cxx:187
+msgid "Failed sending TLS data"
+msgstr ""
+
+#: common/network/Socket.cxx:210
+msgid "Failed to accept new connection"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/Keyboard.cxx:148
+msgid "Failed to access keyboard layout: %s"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:573
+#: unix/xserver/hw/vnc/vncInput.c:492
+msgid "Failed to add new keysym XK_%s (0x%04x)"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:375
+msgid "Failed to add reverse connection socket"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:368
+msgid "Failed to allocate a new file descriptor for -inetd: %s\n"
+""
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/Keyboard.cxx:182
+msgid "Failed to allocate keyboard state"
+msgstr ""
+
+#: vncviewer/CConn.cxx:320
+msgid "Failed to authenticate with the server. Reason given by the server:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/Object.cxx:57
+msgid "Failed to bind to Wayland object %s"
+msgstr ""
+
+#: unix/w0vncserver/portals/PortalProxy.cxx:139
+msgid "Failed to call D-Bus method \"%s\": %s"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ScreencopyManager.cxx:253
+msgid "Failed to capture screen contents"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:301
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:308
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:312
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:316
+msgid "Failed to capture screen contents: %s"
+msgstr ""
+
+#: win/winvnc/QueryConnectDialog.cxx:76
+msgid "Failed to change to active desktop"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1076
+msgid "Failed to check for updates: %s"
+msgstr ""
+
+#: vncviewer/parameters.cxx:549
+#: vncviewer/parameters.cxx:622
+#: vncviewer/parameters.cxx:666
+#: vncviewer/parameters.cxx:742
+msgid "Failed to close registry key"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:309
+msgid "Failed to close remote desktop session: %s"
+msgstr ""
+
+#: unix/w0vncserver/wayland/GWaylandSource.cxx:125
+#: unix/w0vncserver/wayland/objects/Display.cxx:87
+msgid "Failed to communicate with Wayland server: %s"
+msgstr ""
+
+#: common/rdr/ZlibOutStream.cxx:138
+#: common/rdr/ZlibOutStream.cxx:172
+msgid "Failed to compress data"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:154
+#: common/rfb/CSecurityTLS.cxx:205
+#: common/rfb/CSecurityTLS.cxx:217
+#: common/rfb/CSecurityTLS.cxx:234
+#: common/rfb/SSecurityTLS.cxx:157
+#: common/rfb/SSecurityTLS.cxx:215
+#: common/rfb/SSecurityTLS.cxx:227
+#: common/rfb/SSecurityTLS.cxx:244
+msgid "Failed to configure GnuTLS priority"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:286
+msgid "Failed to configure the server name for TLS handshake"
+msgstr ""
+
+#: unix/w0vncserver/pipewire/PipeWireStream.cxx:154
+msgid "Failed to connect PipeWire stream"
+msgstr ""
+
+#: vncviewer/CConn.cxx:195
+msgid "Failed to connect to \"%s\":\n"
+"\n"
+"%s"
+msgstr ""
+
+#: unix/w0vncserver/portals/PortalProxy.cxx:61
+msgid "Failed to connect to D-Bus interface \"%s\" at \"%s\" from \"%s\": %s"
+msgstr ""
+
+#: unix/w0vncserver/portals/PortalProxy.cxx:225
+#: unix/w0vncserver/portals/PortalProxy.cxx:50
+msgid "Failed to connect to D-Bus: %s"
+msgstr ""
+
+#: unix/w0vncserver/pipewire/PipeWireStream.cxx:84
+msgid "Failed to connect to PipeWire server"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:604
+msgid "Failed to connect to PipeWire: %s"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/Display.cxx:58
+msgid "Failed to connect to Wayland server"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:301
+msgid "Failed to connect to host"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:461
+msgid "Failed to connect to local session"
+msgstr ""
+
+#: common/network/UnixSocket.cxx:76
+msgid "Failed to connect to socket"
+msgstr ""
+
+#: win/rfb_win32/CleanDesktop.cxx:51
+msgid "Failed to contact Active Desktop"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:330
+#: common/network/TcpSocket.cxx:344
+msgid "Failed to convert peer name to a string"
+msgstr ""
+
+#: win/rfb_win32/DeviceContext.cxx:165
+msgid "Failed to create DeviceDC"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:223
+msgid "Failed to create GPU buffer: %s\n"
+""
+msgstr ""
+
+#: common/rfb/H264Decoder.cxx:132
+msgid "Failed to create H.264 context"
+msgstr ""
+
+#: unix/w0vncserver/pipewire/PipeWireStream.cxx:77
+msgid "Failed to create PipeWire context"
+msgstr ""
+
+#: unix/w0vncserver/portals/PortalDesktop.cxx:73
+msgid "Failed to create PipeWire pixel buffer: %s"
+msgstr ""
+
+#: unix/w0vncserver/pipewire/PipeWireStream.cxx:125
+msgid "Failed to create PipeWire stream"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncInput.c:120
+#: unix/xserver/hw/vnc/vncInput.c:129
+#: unix/xserver/hw/vnc/vncInput.c:133
+msgid "Failed to create TuPigVNC input devices\n"
+""
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:239
+#: unix/w0vncserver/wayland/objects/ScreencopyManager.cxx:293
+msgid "Failed to create Wayland buffer object"
+msgstr ""
+
+#: win/rfb_win32/DIBSectionBuffer.cxx:91
+msgid "Failed to create bitmap"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:128
+msgid "Failed to create clipboard data device"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:561
+msgid "Failed to create clipboard data source"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureCursorSession.cxx:73
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureManager.cxx:99
+msgid "Failed to create cursor capture session"
+msgstr ""
+
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:124
+#: unix/w0vncserver/wayland/objects/ScreencopyManager.cxx:180
+msgid "Failed to create framebuffer: %s"
+msgstr ""
+
+#: vncviewer/parameters.cxx:528
+#: vncviewer/parameters.cxx:561
+msgid "Failed to create registry key"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureManager.cxx:81
+msgid "Failed to create screen capture session"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCaptureSource.cxx:53
+#: unix/w0vncserver/wayland/objects/ImageCaptureSource.cxx:74
+msgid "Failed to create screen capture source"
+msgstr ""
+
+#: unix/x0vncserver/Image.cxx:357
+msgid "Failed to create shared memory image, falling back to Xlib image"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:211
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:218
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:229
+#: unix/w0vncserver/wayland/objects/ScreencopyManager.cxx:198
+#: unix/w0vncserver/wayland/objects/ScreencopyManager.cxx:203
+msgid "Failed to create shared memory pool: %s"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:273
+#: common/network/TcpSocket.cxx:398
+#: common/network/TcpSocket.cxx:94
+#: common/network/UnixSocket.cxx:128
+#: common/network/UnixSocket.cxx:62
+msgid "Failed to create socket"
+msgstr ""
+
+#: vncviewer/touch.cxx:190
+#: vncviewer/touch.cxx:191
+msgid "Failed to create touch handler: %s"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:544
+msgid "Failed to create tunnel: '%s' returned %d"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/VirtualKeyboard.cxx:59
+msgid "Failed to create virtual keyboard"
+msgstr ""
+
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:94
+msgid "Failed to create virtual keyboard device: %s"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/VirtualPointer.cxx:73
+msgid "Failed to create virtual pointer"
+msgstr ""
+
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:88
+msgid "Failed to create virtual pointer device: %s"
+msgstr ""
+
+#: common/rfb/TightDecoder.cxx:423
+msgid "Failed to decode Tight rectangle"
+msgstr ""
+
+#: common/rfb/ZRLEDecoder.cxx:249
+#: common/rfb/ZRLEDecoder.cxx:274
+#: common/rfb/ZRLEDecoder.cxx:71
+msgid "Failed to decode ZRLE rectangle"
+msgstr ""
+
+#: vncviewer/CConn.cxx:530
+msgid "Failed to decode server certificate"
+msgstr ""
+
+#: common/rdr/ZlibInStream.cxx:112
+msgid "Failed to decompress data"
+msgstr ""
+
+#: common/rfb/CSecurityRSAAES.cxx:301
+#: common/rfb/SSecurityRSAAES.cxx:411
+msgid "Failed to decrypt data"
+msgstr ""
+
+#: unix/common/randr.cxx:417
+msgid "Failed to disable the output '%s'"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:147
+msgid "Failed to disconnect clients."
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:358
+msgid "Failed to disconnect clients: %s"
+msgstr ""
+
+#: common/rfb/CSecurityRSAAES.cxx:270
+#: common/rfb/SSecurityRSAAES.cxx:380
+msgid "Failed to encrypt data"
+msgstr ""
+
+#: unix/w0vncserver/portals/PortalProxy.cxx:244
+#: unix/w0vncserver/portals/PortalProxy.cxx:256
+msgid "Failed to enumerate desktop portals: %s"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:492
+msgid "Failed to enumerate render nodes\n"
+""
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:378
+msgid "Failed to establish reverse connection: %s"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:806
+msgid "Failed to find a suitable screen size"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:98
+msgid "Failed to find free port"
+msgstr ""
+
+#: common/network/Socket.cxx:127
+#: common/rdr/TLSSocket.cxx:115
+#: common/rfb/CSecurityRSAAES.cxx:91
+#: common/rfb/SSecurityRSAAES.cxx:112
+msgid "Failed to flush remaining socket data on close"
+msgstr ""
+
+#: common/network/Socket.cxx:130
+#: common/rdr/TLSSocket.cxx:118
+#: common/rfb/CSecurityRSAAES.cxx:95
+#: common/rfb/SSecurityRSAAES.cxx:116
+msgid "Failed to flush remaining socket data on close: %s"
+msgstr ""
+
+#: common/rdr/ZlibInStream.cxx:55
+msgid "Failed to flush remaining stream data"
+msgstr ""
+
+#: vncviewer/CConn.cxx:536
+msgid "Failed to format server certificate for display"
+msgstr ""
+
+#: common/rfb/CSecurityRSAAES.cxx:183
+msgid "Failed to generate encryption key"
+msgstr ""
+
+#: common/rdr/RandomStream.cxx:101
+#: common/rdr/RandomStream.cxx:93
+#: common/rfb/CSecurityDH.cxx:121
+#: common/rfb/CSecurityDH.cxx:145
+#: common/rfb/CSecurityMSLogonII.cxx:109
+#: common/rfb/CSecurityMSLogonII.cxx:131
+#: common/rfb/CSecurityRSAAES.cxx:162
+#: common/rfb/CSecurityRSAAES.cxx:256
+#: common/rfb/SSecurityRSAAES.cxx:357
+#: common/rfb/SSecurityRSAAES.cxx:366
+#: common/rfb/SSecurityVncAuth.cxx:91
+msgid "Failed to generate random data"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:627
+msgid "Failed to get PipeWire file descriptors: %s"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/Display.cxx:63
+msgid "Failed to get Wayland registry"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:543
+#: common/network/TcpSocket.cxx:731
+msgid "Failed to get address for hostname"
+msgstr ""
+
+#: vncviewer/CConn.cxx:475
+#: vncviewer/CConn.cxx:491
+msgid "Failed to get certificate problem description"
+msgstr ""
+
+#: win/rfb_win32/CurrentUser.cxx:87
+msgid "Failed to get current user token"
+msgstr ""
+
+#: win/rfb_win32/CurrentUser.cxx:121
+msgid "Failed to get current username"
+msgstr ""
+
+#: win/rfb_win32/CleanDesktop.cxx:126
+msgid "Failed to get desktop item count: %ld"
+msgstr ""
+
+#: vncviewer/touch.cxx:222
+msgid "Failed to get event data for X Input event"
+msgstr ""
+
+#: vncviewer/Win32TouchHandler.cxx:93
+msgid "Failed to get gesture information (error 0x%x)"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:471
+msgid "Failed to get handle to local session"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:538
+msgid "Failed to get image streams for local session"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:526
+msgid "Failed to get input devices"
+msgstr ""
+
+#: vncviewer/KeyboardMacOS.mm:271
+#: vncviewer/KeyboardMacOS.mm:279
+#: vncviewer/KeyboardX11.cxx:220
+msgid "Failed to get keyboard LED state: %d"
+msgstr ""
+
+#: common/network/UnixSocket.cxx:100
+msgid "Failed to get local name for socket"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:316
+#: common/network/UnixSocket.cxx:91
+msgid "Failed to get peer name for socket"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:102
+msgid "Failed to get port number"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:631
+#: unix/x0vncserver/XDesktop.cxx:704
+msgid "Failed to get screen layout"
+msgstr ""
+
+#: vncviewer/MonitorIndicesParameter.cxx:52
+#: vncviewer/MonitorIndicesParameter.cxx:84
+msgid "Failed to get system monitor configuration"
+msgstr ""
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:200
+msgid "Failed to handle screen update"
+msgstr ""
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:199
+msgid "Failed to handle screen update: %s"
+msgstr ""
+
+#: win/rfb_win32/CurrentUser.cxx:103
+msgid "Failed to impersonate user"
+msgstr ""
+
+#: common/network/Socket.cxx:64
+msgid "Failed to initialise Winsock"
+msgstr ""
+
+#: win/rfb_win32/WMHooks.cxx:150
+msgid "Failed to initialise hooks"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:1105
+msgid "Failed to initialize DRI3 extension\n"
+""
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:88
+#: common/rfb/SSecurityTLS.cxx:90
+msgid "Failed to initialize GnuTLS"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:149
+#: common/rfb/SSecurityTLS.cxx:152
+msgid "Failed to initialize GnuTLS session"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:1100
+msgid "Failed to initialize Present extension\n"
+""
+msgstr ""
+
+#: unix/w0vncserver/portals/PortalDesktop.cxx:110
+msgid "Failed to initialize clipboard access: %s"
+msgstr ""
+
+#: common/rdr/ZlibInStream.cxx:81
+#: common/rdr/ZlibOutStream.cxx:50
+msgid "Failed to initialize zlib"
+msgstr ""
+
+#: common/rfb/UnixPasswordValidator.cxx:113
+msgid "Failed to initialized PAM: %d"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:274
+msgid "Failed to listen for VNC connections on inetd socket"
+msgstr ""
+
+#: vncviewer/CConn.cxx:524
+msgid "Failed to load list of servers with a security exception"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:708
+msgid "Failed to load restore token from \"%s\""
+msgstr ""
+
+#: common/rfb/SSecurityTLS.cxx:290
+msgid "Failed to load the server certificate and private key"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:260
+msgid "Failed to load the system certificate trust store"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:263
+msgid "Failed to load the user specified certificate authority"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:266
+msgid "Failed to load the user specified certificate revocation list"
+msgstr ""
+
+#: win/rfb_win32/CleanDesktop.cxx:109
+msgid "Failed to modify Active Desktop options: %ld"
+msgstr ""
+
+#: common/rdr/FileInStream.cxx:40
+#: common/rfb/SSecurityRSAAES.cxx:187
+#: vncviewer/CConn.cxx:385
+#: vncviewer/ServerDialog.cxx:359
+#: vncviewer/ServerDialog.cxx:436
+#: vncviewer/parameters.cxx:778
+#: vncviewer/parameters.cxx:858
+msgid "Failed to open \"%s\""
+msgstr ""
+
+#: common/rfb/SSecurityVncAuth.cxx:144
+#: unix/vncpasswd/vncpasswd.cxx:276
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:696
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:753
+#: unix/xserver/hw/vnc/vncDRI3.c:516
+msgid "Failed to open \"%s\": %s"
+msgstr ""
+
+#: vncviewer/parameters.cxx:639
+#: vncviewer/parameters.cxx:717
+msgid "Failed to open registry key"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/Keyboard.cxx:171
+msgid "Failed to parse keyboard layout"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:374
+#: vncviewer/ServerDialog.cxx:383
+#: vncviewer/parameters.cxx:872
+#: vncviewer/parameters.cxx:879
+#: vncviewer/parameters.cxx:916
+#: vncviewer/parameters.cxx:952
+#: vncviewer/parameters.cxx:960
+msgid "Failed to read line %d in file \"%s\""
+msgstr ""
+
+#: vncviewer/parameters.cxx:698
+#: vncviewer/parameters.cxx:726
+msgid "Failed to read parameter \"%s\": %s"
+msgstr ""
+
+#: vncviewer/parameters.cxx:656
+msgid "Failed to read server history entry %d: %s"
+msgstr ""
+
+#: unix/common/randr.cxx:309
+#: unix/common/randr.cxx:390
+msgid "Failed to reconfigure the output '%s' to %dx%d+%d+%d"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:82
+msgid "Failed to register handler: %lu"
+msgstr ""
+
+#: unix/w0vncserver/portals/Clipboard.cxx:255
+msgid "Failed to release clipboard ownership: %s"
+msgstr ""
+
+#: unix/w0vncserver/w0vncserver-forget.cxx:88
+#: vncviewer/parameters.cxx:581
+#: vncviewer/parameters.cxx:615
+msgid "Failed to remove \"%s\": %s"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:347
+msgid "Failed to request control of input devices: %s"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:383
+msgid "Failed to request monitors to share: %s"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:463
+msgid "Failed to resize remote session: %d"
+msgstr ""
+
+#: unix/common/randr.cxx:239
+msgid "Failed to resize screen to %dx%d"
+msgstr ""
+
+#: unix/w0vncserver/portals/Clipboard.cxx:326
+#: unix/w0vncserver/portals/Clipboard.cxx:355
+#: unix/w0vncserver/portals/Clipboard.cxx:512
+#: unix/w0vncserver/portals/Clipboard.cxx:515
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:254
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:480
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:483
+msgid "Failed to retrieve the clipboard: %s"
+msgstr ""
+
+#: vncviewer/parameters.cxx:568
+#: vncviewer/parameters.cxx:601
+#: vncviewer/parameters.cxx:786
+#: vncviewer/parameters.cxx:798
+msgid "Failed to save \"%s\": %s"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:142
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:170
+msgid "Failed to send keyboard event: %s"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:225
+msgid "Failed to send pointer button event: %s"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:191
+msgid "Failed to send pointer motion event: %s"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:267
+msgid "Failed to send pointer scroll event: %s"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:406
+msgid "Failed to set IPV6_V6ONLY"
+msgstr ""
+
+#: common/rfb/UnixPasswordValidator.cxx:123
+msgid "Failed to set PAM_XDISPLAY: %s (%d)"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:424
+msgid "Failed to set SO_REUSEADDR"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:380
+msgid "Failed to set TCP_NODELAY: %d"
+msgstr ""
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:126
+msgid "Failed to set cursor: %s"
+msgstr ""
+
+#: vncviewer/Win32TouchHandler.cxx:81
+msgid "Failed to set gesture configuration (error 0x%x)"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:431
+#: common/network/UnixSocket.cxx:143
+msgid "Failed to set socket address"
+msgstr ""
+
+#: common/network/UnixSocket.cxx:150
+msgid "Failed to set socket permissions"
+msgstr ""
+
+#: common/network/Socket.cxx:230
+msgid "Failed to set socket to listening mode"
+msgstr ""
+
+#: unix/w0vncserver/portals/PortalDesktop.cxx:129
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:449
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:457
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:462
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:472
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:502
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:511
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:515
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:516
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:527
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:539
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:606
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:616
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:630
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:125
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:181
+msgid "Failed to start remote desktop session"
+msgstr ""
+
+#: unix/w0vncserver/portals/PortalDesktop.cxx:127
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:295
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:407
+msgid "Failed to start remote desktop session: %s"
+msgstr ""
+
+#: vncviewer/CConn.cxx:767
+msgid "Failed to store server certificate to list of servers with a security exception"
+msgstr ""
+
+#: common/rdr/TLSSocket.cxx:131
+#: common/rdr/TLSSocket.cxx:134
+msgid "Failed to terminate TLS cleanly: %s"
+msgstr ""
+
+#: unix/w0vncserver/pipewire/PipeWirePixelBuffer.cxx:279
+msgid "Failed to update cursor image: %s"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:1066
+msgid "Failed to update cursor: %s"
+msgstr ""
+
+#: vncviewer/KeyboardMacOS.mm:296
+#: vncviewer/KeyboardMacOS.mm:302
+#: vncviewer/KeyboardX11.cxx:265
+msgid "Failed to update keyboard LED state: %d"
+msgstr ""
+
+#: vncviewer/KeyboardWin32.cxx:613
+msgid "Failed to update keyboard LED state: %lu"
+msgstr ""
+
+#: unix/w0vncserver/portals/Clipboard.cxx:153
+#: unix/w0vncserver/portals/Clipboard.cxx:183
+#: unix/w0vncserver/portals/Clipboard.cxx:197
+#: unix/w0vncserver/portals/Clipboard.cxx:211
+#: unix/w0vncserver/portals/Clipboard.cxx:222
+#: unix/w0vncserver/portals/Clipboard.cxx:234
+#: unix/w0vncserver/portals/Clipboard.cxx:277
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:177
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:197
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:307
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:323
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:438
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:442
+msgid "Failed to update the clipboard: %s"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:286
+msgid "Failed to write to event log: %ld\n"
+""
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:284
+#: unix/vncpasswd/vncpasswd.cxx:292
+msgid "Failed writing to \"%s\": %s"
+msgstr ""
+
+#: vncviewer/DesktopWindow.cxx:1149
+#: vncviewer/DesktopWindow.cxx:1150
+#: vncviewer/DesktopWindow.cxx:1158
+#: vncviewer/DesktopWindow.cxx:1159
+#: vncviewer/DesktopWindow.cxx:1167
+#: vncviewer/DesktopWindow.cxx:1168
+msgid "Failure grabbing control of the keyboard"
+msgstr ""
+
+#: vncviewer/XInputTouchHandler.cxx:144
+msgid "Failure grabbing device %i"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:739
+msgid "Failure setting up encrypted tunnel:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:718
+msgid "Failure waiting for incoming VNC connection:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:340
+msgid "Favorites"
+msgstr ""
+
+#: common/rfb/VNCSConnectionST.cxx:734
+msgid "Fence response of unexpected size received"
+msgstr ""
+
+#: common/rfb/VNCSConnectionST.cxx:748
+msgid "Fence response of unexpected type received"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:345
+msgid "File Systems"
+msgstr ""
+
+#: unix/x0vncserver/x0vncserver.cxx:98
+msgid "File with IP access control rules"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:341
+msgid "Filename:"
+msgstr ""
+
+#: win/vncconfig/Connections.h:42
+#: win/winvnc/VNCServerWin32.cxx:57
+msgid "Filter describing which hosts are allowed access to this server"
+msgstr ""
+
+#: common/rfb/EncodeManager.cxx:190
+msgid "Framebuffer updates: %u"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:658
+msgid "Full"
+msgstr ""
+
+#: common/rfb/EncodeManager.cxx:135
+msgid "Full color"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1164
+msgid "Full screen on all monitors"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1156
+msgid "Full screen on current monitor"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1213
+msgid "Full screen on multiple monitors is not supported by the current desktop environment"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1209
+msgid "Full screen on multiple monitors is not supported when the system setting \"Displays have separate Spaces\" is enabled"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1172
+msgid "Full screen on selected monitor(s)"
+msgstr ""
+
+#: vncviewer/parameters.cxx:977
+msgid "FullScreenAllMonitors is deprecated, set FullScreenMode to 'all' instead"
+msgstr ""
+
+#: common/rfb/Security.cxx:42
+msgid "GnuTLS priority string that controls the TLS session's handshake algorithms"
+msgstr ""
+
+#: vncviewer/touch.cxx:75
+msgid "Got message (0x%x) for an unhandled window"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:359
+msgid "Hide TuPigVNC"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:360
+msgid "Hide others"
+msgstr ""
+
+#: vncviewer/CConn.cxx:218
+msgid "Host: %.80s port: %d"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:56
+msgid "How to discover desktop updates; 0 - Polling, 1 - Application hooking, 2 - Driver hooking"
+msgstr ""
+
+#: common/rfb/VNCSConnectionST.cxx:839
+msgid "Idle for too long"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:142
+msgid "Ignoring DisconnectAction=Lock - no current user"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:137
+msgid "Ignoring DisconnectAction=Logoff - no current user"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:515
+#: common/rfb/SMsgReader.cxx:257
+msgid "Ignoring fence with too large payload"
+msgstr ""
+
+#: win/rfb_win32/SInput.cxx:478
+msgid "Ignoring unknown keysym 0x%x"
+msgstr ""
+
+#: win/rfb_win32/SInput.cxx:462
+msgid "Ignoring unrecognised Latin-1 keysym 0x%x"
+msgstr ""
+
+#: unix/x0vncserver/PollingManager.cxx:84
+msgid "Image types do not match (%s, %s, %s)"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:133
+msgid "Incompatible bits per pixel for GPU buffer\n"
+""
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:211
+msgid "Incompatible bits per pixel for pixmap\n"
+""
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:138
+#: unix/xserver/hw/vnc/vncDRI3.c:228
+msgid "Incompatible stride for GPU buffer\n"
+""
+msgstr ""
+
+#: common/rfb/CSecurityRSAAES.cxx:472
+#: common/rfb/SSecurityRSAAES.cxx:581
+msgid "Incorrect hash received"
+msgstr ""
+
+#: common/rfb/EncodeManager.cxx:131
+msgid "Indexed"
+msgstr ""
+
+#: common/rfb/EncodeManager.cxx:133
+msgid "Indexed RLE"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:901
+msgid "Input"
+msgstr ""
+
+#: common/rdr/HexInStream.cxx:51
+msgid "Input data is not hexadecimal"
+msgstr ""
+
+#: vncviewer/CConn.cxx:620
+msgid "Insecure certificate algorithm"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:180
+msgid "Internal FLTK error. Exiting."
+msgstr ""
+
+#: common/rfb/HextileDecoder.cxx:214
+msgid "Invalid Hextile coordinates"
+msgstr ""
+
+#: common/rfb/JpegDecompressor.cxx:223
+msgid "Invalid JPEG data received"
+msgstr ""
+
+#: unix/w0vncserver/pipewire/PipeWirePixelBuffer.cxx:119
+msgid "Invalid PipeWire chunk size: %d instead of %d"
+msgstr ""
+
+#: common/rfb/RREDecoder.cxx:112
+msgid "Invalid RRE coordinates"
+msgstr ""
+
+#: common/rfb/SSecurityRSAAES.cxx:193
+#: common/rfb/SSecurityRSAAES.cxx:220
+#: common/rfb/SSecurityRSAAES.cxx:231
+#: common/rfb/SSecurityRSAAES.cxx:271
+msgid "Invalid RSA key"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:683
+msgid "Invalid SetColourMapEntries from server!"
+msgstr ""
+
+#: common/rfb/TightDecoder.cxx:160
+msgid "Invalid Tight filter code received"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:793
+#: common/rfb/SConnection.cxx:549
+#: unix/w0vncserver/portals/Clipboard.cxx:549
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:521
+#: unix/xserver/hw/vnc/vncSelection.c:616
+#: vncviewer/Viewport.cxx:430
+msgid "Invalid UTF-8 sequence in clipboard"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:188
+msgid "Invalid Wayland buffer size: %u x %u"
+msgstr ""
+
+#: common/rfb/TightDecoder.cxx:153
+msgid "Invalid bits per pixel for gradient filter"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:309
+msgid "Invalid buffer constraints"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:856
+#: common/rfb/CMsgReader.cxx:861
+msgid "Invalid desktop name received"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:384
+#: common/rfb/CMsgReader.cxx:406
+#: common/rfb/CMsgReader.cxx:432
+#: common/rfb/CMsgReader.cxx:446
+#: common/rfb/CMsgReader.cxx:462
+#: common/rfb/CMsgReader.cxx:486
+#: common/rfb/SMsgReader.cxx:365
+#: common/rfb/SMsgReader.cxx:387
+#: common/rfb/SMsgReader.cxx:413
+#: common/rfb/SMsgReader.cxx:426
+#: common/rfb/SMsgReader.cxx:442
+#: common/rfb/SMsgReader.cxx:466
+msgid "Invalid extended clipboard message"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:707
+msgid "Invalid filter specified"
+msgstr ""
+
+#: vncviewer/parameters.cxx:919
+msgid "Invalid format"
+msgstr ""
+
+#: vncviewer/parameters.cxx:817
+#: vncviewer/parameters.cxx:932
+msgid "Invalid format or too large value"
+msgstr ""
+
+#: unix/x0vncserver/x0vncserver.cxx:378
+msgid "Invalid geometry"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:312
+#: unix/xserver/hw/vnc/xvnc.c:315
+msgid "Invalid geometry %s passed to -geometry\n"
+""
+msgstr ""
+
+#: vncviewer/DesktopWindow.cxx:150
+msgid "Invalid geometry specified!"
+msgstr ""
+
+#: common/core/LogWriter.cxx:104
+msgid "Invalid log name: %s\n"
+""
+msgstr ""
+
+#: common/core/LogWriter.cxx:89
+msgid "Invalid log target: %s\n"
+""
+msgstr ""
+
+#: common/rfb/KeyRemapper.cxx:89
+msgid "Invalid mapping %s"
+msgstr ""
+
+#: vncviewer/Win32TouchHandler.cxx:361
+msgid "Invalid mouse button %d, must be a number between 1 and 7."
+msgstr ""
+
+#: common/rfb/PixelFormat.cxx:187
+msgid "Invalid pixel format"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:335
+#: unix/xserver/hw/vnc/xvnc.c:338
+#: unix/xserver/hw/vnc/xvnc.c:354
+#: unix/xserver/hw/vnc/xvnc.c:357
+msgid "Invalid pixel format %s passed to -pixelformat\n"
+""
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:285
+#: unix/xserver/hw/vnc/xvnc.c:288
+msgid "Invalid pixmap depth %d passed to -pixdepths\n"
+""
+msgstr ""
+
+#: common/network/TcpSocket.cxx:179
+#: common/network/TcpSocket.cxx:186
+msgid "Invalid port specified"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:766
+msgid "Invalid prefix length for filter: %u"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:553
+msgid "Invalid rectangle received"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:550
+msgid "Invalid rectangle received: %dx%d at %d,%d exceeds %dx%d"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:465
+msgid "Invalid render node path: %s\n"
+""
+msgstr ""
+
+#: unix/w0vncserver/portals/Clipboard.cxx:338
+#: unix/w0vncserver/portals/Clipboard.cxx:476
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:447
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:501
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:614
+msgid "Invalid response to request \"%s\""
+msgstr ""
+
+#: vncviewer/KeyboardWin32.cxx:263
+msgid "Invalid scan code 0x%02x"
+msgstr ""
+
+#: vncviewer/DesktopWindow.cxx:1457
+msgid "Invalid screen layout computed for resize request!"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:654
+msgid "Invalid screen layout requested by client"
+msgstr ""
+
+#: vncviewer/CConn.cxx:478
+msgid "Invalid server certificate: %s"
+msgstr ""
+
+#: vncviewer/EmulateMB.cxx:229
+#: vncviewer/EmulateMB.cxx:292
+msgid "Invalid state for 3 button emulation"
+msgstr ""
+
+#: vncviewer/touch.cxx:141
+#: vncviewer/touch.cxx:167
+msgid "Invalid window 0x%08lx specified for pointer grab"
+msgstr ""
+
+#: vncviewer/parameters.cxx:146
+msgid "JPEG quality level, 0 = Low, 9 = High"
+msgstr ""
+
+#: vncviewer/AuthDialog.cxx:112
+msgid "Keep password for reconnect"
+msgstr ""
+
+#: common/rfb/SMsgReader.cxx:511
+msgid "Key event without keycode"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:967
+msgid "Keyboard"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1051
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncInput.c:642
+msgid "Keysym XK_%s (0x%04x) has been generated by both keys %d and %d"
+msgstr ""
+
+#: vncviewer/CConn.cxx:236
+msgid "Last used encoding: %s"
+msgstr ""
+
+#: vncviewer/CConn.cxx:240
+msgid "Line speed estimate: %d kbit/s"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:387
+#: vncviewer/parameters.cxx:883
+msgid "Line too long"
+msgstr ""
+
+#: vncviewer/parameters.cxx:186
+msgid "Listen for incoming connections from VNC servers"
+msgstr ""
+
+#: unix/w0vncserver/parameters.cxx:49
+#: unix/x0vncserver/x0vncserver.cxx:105
+#: unix/xserver/hw/vnc/vncExtInit.cc:88
+msgid "Listen on the specified network address"
+msgstr ""
+
+#: unix/w0vncserver/w0vncserver.cxx:163
+#: unix/x0vncserver/x0vncserver.cxx:394
+#: unix/xserver/hw/vnc/vncExtInit.cc:224
+msgid "Listening for VNC connections on %s (mode %04o)"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:207
+#: unix/xserver/hw/vnc/vncExtInit.cc:277
+msgid "Listening for VNC connections on inetd socket"
+msgstr ""
+
+#: unix/w0vncserver/w0vncserver.cxx:184
+#: unix/x0vncserver/x0vncserver.cxx:415
+#: unix/xserver/hw/vnc/vncExtInit.cc:247
+msgid "Listening for VNC connections on interface %s, port %d"
+msgstr ""
+
+#: unix/w0vncserver/w0vncserver.cxx:181
+#: unix/x0vncserver/x0vncserver.cxx:412
+#: unix/xserver/hw/vnc/vncExtInit.cc:244
+msgid "Listening for VNC connections on local interfaces, port %d"
+msgstr ""
+
+#: unix/x0vncserver/x0vncserver.cxx:389
+msgid "Listening for VNC connections on systemd sockets"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:689
+msgid "Listening on port %d"
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:112
+#: win/rfb_win32/SocketManager.cxx:161
+#: win/rfb_win32/SocketManager.cxx:177
+msgid "Listening socket is not registered"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:87
+msgid "Load..."
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:153
+msgid "Loading default settings"
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:175
+msgid "Loading global user settings"
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:164
+msgid "Loading local user settings"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:88
+msgid "Log destinations:"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:86
+msgid "Log names:"
+msgstr ""
+
+#: vncviewer/AudioOutputPulse.cxx:454
+msgid "Lost connection to sound server"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:672
+msgid "Low"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:1161
+msgid "MAXFORMATS is too small for this server\n"
+""
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:347
+msgid "Manage Favorites"
+msgstr ""
+
+#: vncviewer/parameters.cxx:150
+msgid "Maximize viewer window"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:759
+msgid "Maximum connected time reached, exiting"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:756
+msgid "Maximum disconnected time reached, exiting"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:753
+msgid "Maximum idle time reached, exiting"
+msgstr ""
+
+#: unix/x0vncserver/x0vncserver.cxx:77
+msgid "Maximum percentage of CPU time to be consumed"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:49
+#: common/rfb/SMsgReader.cxx:51
+msgid "Maximum permitted length of an incoming clipboard update"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:665
+msgid "Medium"
+msgstr ""
+
+#: unix/x0vncserver/x0vncserver.cxx:71
+msgid "Milliseconds per one polling cycle; actual interval may be dynamically adjusted to satisfy MaxProcessorUsage setting"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1245
+msgid "Miscellaneous"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1058
+msgid "Modifier keys for keyboard shortcuts:"
+msgstr ""
+
+#: vncviewer/MonitorIndicesParameter.cxx:72
+msgid "Monitor index %d does not exist"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:921
+msgid "Mouse"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:343
+msgid "My Computer"
+msgstr ""
+
+#: unix/w0vncserver/parameters.cxx:46
+#: unix/x0vncserver/x0vncserver.cxx:81
+#: unix/xserver/hw/vnc/vncExtInit.cc:82
+msgid "Name of VNC desktop"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:75
+msgid "Never treat incoming connections as shared, regardless of the client-specified setting"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:348
+msgid "New Directory?"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:241
+#: vncviewer/vncviewer.cxx:328
+msgid "No"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:174
+msgid "No Wayland pixel formats provided"
+msgstr ""
+
+#: vncviewer/AudioOutput.cxx:48
+msgid "No audio playback device available"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:389
+msgid "No free display number for -inetd\n"
+""
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:649
+msgid "No image streams provided for the session"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1096
+msgid "No installer was found for the current platform. The download page will be opened."
+msgstr ""
+
+#: common/rfb/CConnection.cxx:315
+#: common/rfb/CConnection.cxx:316
+msgid "No matching security types"
+msgstr ""
+
+#: common/rfb/SSecurityRSAAES.cxx:657
+#: common/rfb/SSecurityVncAuth.cxx:108
+msgid "No password configured"
+msgstr ""
+
+#: unix/w0vncserver/w0vncserver.cxx:195
+#: unix/x0vncserver/x0vncserver.cxx:426
+#: unix/xserver/hw/vnc/vncExtInit.cc:255
+msgid "No path or port configured for incoming connections"
+msgstr ""
+
+#: unix/xserver/hw/vnc/XorgGlue.c:86
+msgid "No pixmap format that matches the root window depth\n"
+""
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureManager.cxx:90
+msgid "No pointer available for desktop session"
+msgstr ""
+
+#: vncviewer/KeyboardWin32.cxx:255
+msgid "No scan code for extended virtual key 0x%02x"
+msgstr ""
+
+#: vncviewer/KeyboardWin32.cxx:257
+msgid "No scan code for virtual key 0x%02x"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:370
+msgid "No supported Wayland pixel format"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:196
+msgid "No supported security type for %d.%d client"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:210
+msgid "No supported security types"
+msgstr ""
+
+#: vncviewer/KeyboardWin32.cxx:334
+msgid "No symbol for extended virtual key 0x%02x"
+msgstr ""
+
+#: vncviewer/KeyboardMacOS.mm:199
+#: vncviewer/KeyboardX11.cxx:169
+msgid "No symbol for key code %d (in the current state)"
+msgstr ""
+
+#: vncviewer/KeyboardWin32.cxx:336
+msgid "No symbol for virtual key 0x%02x"
+msgstr ""
+
+#: common/rdr/RandomStream.cxx:73
+msgid "No system random source available"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:299
+msgid "No useful address found for hostname"
+msgstr ""
+
+#: common/rfb/CSecurityVeNCrypt.cxx:179
+#: common/rfb/SSecurityVeNCrypt.cxx:174
+msgid "No valid VeNCrypt sub-type"
+msgstr ""
+
+#: unix/xserver/hw/vnc/XorgGlue.c:99
+msgid "No visual that matches the root window visual\n"
+""
+msgstr ""
+
+#: unix/w0vncserver/portals/Clipboard.cxx:540
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:510
+msgid "Non-ASCII character in clipboard"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:811
+msgid "Non-shared connection requested"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:794
+#: vncviewer/OptionsDialog.cxx:861
+msgid "None"
+msgstr ""
+
+#: win/winvnc/VNCServerWin32.cxx:119
+msgid "Not accepting connections"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:78
+#: unix/xserver/hw/vnc/XserverDesktop.cc:73
+#: win/winvnc/QueryConnectDialog.cxx:43
+msgid "Number of seconds to show the 'Accept connection' dialog before rejecting the connection"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:115
+#: vncviewer/vncviewer.cxx:330
+msgid "OK"
+msgstr ""
+
+#: common/rfb/SSecurityVncAuth.cxx:57
+msgid "Obfuscated binary encoding of the password for VNC authentication"
+msgstr ""
+
+#: unix/common/randr.cxx:201
+msgid "One or more screens are mirrored. Cannot reconfigure screen layout."
+msgstr ""
+
+#: unix/w0vncserver/parameters.cxx:43
+#: unix/x0vncserver/x0vncserver.cxx:101
+#: unix/xserver/hw/vnc/vncExtInit.cc:85
+#: win/vncconfig/Connections.h:44
+#: win/winvnc/VNCServerWin32.cxx:60
+msgid "Only allow connections from localhost"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:654
+msgid "Only one image stream supported, got %d"
+msgstr ""
+
+#: win/vncconfig/Authentication.h:43
+#: win/winvnc/VNCServerWin32.cxx:63
+msgid "Only prompt for a local user to accept incoming connections if there is a user logged on"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:83
+msgid "Options..."
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:241
+msgid "Overwrite"
+msgstr ""
+
+#: common/rfb/UnixPasswordValidator.cxx:131
+msgid "PAM authentication failed: %s (%d)"
+msgstr ""
+
+#: common/rfb/UnixPasswordValidator.cxx:137
+msgid "PAM authorization failed: %s (%d)"
+msgstr ""
+
+#: common/core/Configuration.cxx:369
+msgid "Parameter %s: Invalid value '%d'"
+msgstr ""
+
+#: common/core/Configuration.cxx:309
+#: common/core/Configuration.cxx:359
+#: common/core/Configuration.cxx:464
+#: common/core/Configuration.cxx:594
+#: common/core/Configuration.cxx:613
+#: common/core/LogWriter.cxx:133
+msgid "Parameter %s: Invalid value '%s'"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:672
+#: vncviewer/vncviewer.cxx:673
+msgid "Parameters -listen and -via are incompatible"
+msgstr ""
+
+#: vncviewer/parameters.cxx:253
+msgid "Pass special keys (like Alt+Tab) directly to the server when in full-screen mode"
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:164
+msgid "Password can not be longer than 8 characters - try again\n"
+""
+msgstr ""
+
+#: common/rfb/SSecurityVncAuth.cxx:53
+#: vncviewer/parameters.cxx:99
+msgid "Password file for VNC authentication"
+msgstr ""
+
+#: common/rfb/SSecurityPlain.cxx:102
+msgid "Password is too long"
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:175
+msgid "Password must be at least 6 characters - try again\n"
+""
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:159
+msgid "Password not changed\n"
+""
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:130
+msgid "Password quality check failed:\n"
+""
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:150
+#: vncviewer/AuthDialog.cxx:104
+msgid "Password:"
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:187
+msgid "Passwords don't match - try again\n"
+""
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:814
+msgid "Path to X509 CA certificate"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:821
+msgid "Path to X509 CRL file"
+msgstr ""
+
+#: common/rfb/SSecurityRSAAES.cxx:77
+msgid "Path to the RSA key for the RSA-AES security types"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:57
+msgid "Path to the X.509 certificate for the trusted certificate authority"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:62
+msgid "Path to the X.509 certificate revocation list"
+msgstr ""
+
+#: common/rfb/SSecurityTLS.cxx:72
+msgid "Path to the private key of the server's X.509 certificate"
+msgstr ""
+
+#: common/rfb/SSecurityTLS.cxx:67
+msgid "Path to the server's X.509 certificate"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:56
+msgid "Perform pixel comparison on framebuffer to reduce unnecessary updates (0: never, 1: always, 2: auto)"
+msgstr ""
+
+#: unix/w0vncserver/pipewire/PipeWireSource.cxx:90
+msgid "PipeWire loop failed: %s"
+msgstr ""
+
+#: vncviewer/CConn.cxx:229
+msgid "Pixel format: %s"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1266
+msgid "Play audio from the server"
+msgstr ""
+
+#: vncviewer/parameters.cxx:207
+msgid "Play audio sent by the server, if it offers any"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:339
+msgid "Please choose an existing file!"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:578
+msgid "Preferred encoding"
+msgstr ""
+
+#: vncviewer/parameters.cxx:123
+msgid "Preferred encoding to use"
+msgstr ""
+
+#: vncviewer/DesktopWindow.cxx:1185
+msgid "Press %s to release keyboard control from the session"
+msgstr ""
+
+#: vncviewer/DesktopWindow.cxx:867
+msgid "Press %sEnter to leave full-screen mode"
+msgstr ""
+
+#: vncviewer/DesktopWindow.cxx:242
+msgid "Press %sM to open the context menu"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:350
+msgid "Preview"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:105
+msgid "Prompt the local user to accept or reject incoming connections"
+msgstr ""
+
+#: vncviewer/CConn.cxx:244
+msgid "Protocol version: %d.%d"
+msgstr ""
+
+#: unix/x0vncserver/Image.cxx:252
+#: unix/x0vncserver/Image.cxx:87
+#: unix/xserver/hw/vnc/vncExtInit.cc:153
+msgid "Pseudocolour is not supported"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:733
+msgid "Quality level"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:159
+msgid "Querying service status...\n"
+""
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:362
+msgid "Quit TuPigVNC"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:216
+msgid "RANDR extension not present, will not be able to resize the desktop"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:154
+msgid "Reading version failed, not an RFB client?"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:203
+msgid "Reading version failed, not an RFB server?"
+msgstr ""
+
+#: common/rfb/CSecurityDH.cxx:94
+msgid "Received Diffie-Hellman key is too long"
+msgstr ""
+
+#: common/rfb/CSecurityDH.cxx:92
+msgid "Received Diffie-Hellman key is too short"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:566
+#: common/rfb/CMsgReader.cxx:631
+#: common/rfb/CMsgReader.cxx:678
+#: common/rfb/CMsgReader.cxx:736
+msgid "Received cursor is too large"
+msgstr ""
+
+#: common/rfb/CSecurityDH.cxx:106
+#: common/rfb/CSecurityMSLogonII.cxx:94
+msgid "Received invalid Diffie-Hellman modulus"
+msgstr ""
+
+#: vncviewer/parameters.cxx:176
+msgid "Reconfigure the desktop size on the server to the specified size when connecting"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:201
+msgid "Reconnect"
+msgstr ""
+
+#: vncviewer/DesktopWindow.cxx:171
+msgid "Reducing window size to fit on current monitor"
+msgstr ""
+
+#: win/winvnc/VNCServerWin32.cxx:132
+msgid "Refreshing system tray icon"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:198
+msgid "Registered service successfully"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:78
+msgid "Registering handler..."
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:648
+msgid "Rejecting too large resize request"
+msgstr ""
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:67
+msgid "Remember display choice when user connects"
+msgstr ""
+
+#: unix/w0vncserver/pipewire/PipeWirePixelBuffer.cxx:93
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:75
+msgid "Remote desktop session stopped"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:68
+msgid "Remove the desktop wallpaper when the server is in use"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:362
+msgid "Removing screen %d (%x) as it is completely outside the new framebuffer"
+msgstr ""
+
+#: unix/x0vncserver/Geometry.cxx:89
+msgid "Requested area is outsize of the desktop boundaries"
+msgstr ""
+
+#: vncviewer/CConn.cxx:232
+msgid "Requested encoding: %s"
+msgstr ""
+
+#: common/rfb/SConnection.cxx:244
+msgid "Requested security type is not available"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:639
+msgid "Requesting audio (format %d, %d channels, %d Hz)"
+msgstr ""
+
+#: common/rfb/SSecurityRSAAES.cxx:81
+msgid "Require a username for the RSA-AES security types"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:371
+msgid "Reverse connection: %s:%d%s%s"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:168
+#: win/winvnc/winvnc.cxx:173
+msgid "Run in service mode\n"
+""
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:464
+msgid "Running"
+msgstr ""
+
+#: vncviewer/parameters.cxx:259
+msgid "SSH gateway to tunnel the connection via"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:351
+msgid "Save"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:91
+msgid "Save as..."
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:214
+msgid "Save the TuPigVNC configuration to file"
+msgstr ""
+
+#: unix/x0vncserver/Geometry.cxx:38
+msgid "Screen area shown to VNC clients in the format <width>x<height>+<offset_x>+<offset_y>, or empty to show the whole screen"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:768
+msgid "Security"
+msgstr ""
+
+#: vncviewer/CConn.cxx:770
+msgid "Security exception added for server host"
+msgstr ""
+
+#: vncviewer/CConn.cxx:248
+msgid "Security method: %s"
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:316
+#: unix/vncconfig/vncconfig.cxx:330
+#: unix/vncconfig/vncconfig.cxx:338
+#: unix/vncpasswd/vncpasswd.cxx:220
+#: unix/vncpasswd/vncpasswd.cxx:231
+#: unix/w0vncserver/w0vncserver-forget.cxx:72
+#: unix/w0vncserver/w0vncserver.cxx:149
+#: unix/w0vncserver/w0vncserver.cxx:155
+#: unix/x0vncserver/x0vncserver.cxx:344
+#: unix/x0vncserver/x0vncserver.cxx:350
+#: vncviewer/vncviewer.cxx:630
+#: vncviewer/vncviewer.cxx:638
+msgid "See '%s --help' for more information.\n"
+""
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:173
+msgid "Select a TuPigVNC configuration file"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:97
+msgid "Send clipboard changes to clients"
+msgstr ""
+
+#: vncviewer/parameters.cxx:217
+msgid "Send clipboard changes to the server"
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:88
+msgid "Send clipboard to clients"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1022
+msgid "Send clipboard to server"
+msgstr ""
+
+#: unix/w0vncserver/parameters.cxx:53
+#: unix/x0vncserver/XDesktop.cxx:73
+#: unix/xserver/hw/vnc/XserverDesktop.cc:68
+#: win/rfb_win32/SInput.cxx:146
+msgid "Send keyboard events straight through and avoid mapping them to the current keyboard layout"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1030
+msgid "Send primary selection as clipboard"
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:89
+msgid "Send primary selection to clients"
+msgstr ""
+
+#: unix/w0vncserver/parameters.cxx:66
+#: unix/x0vncserver/XSelection.cxx:43
+#: unix/xserver/hw/vnc/vncExtInit.cc:110
+msgid "Send the primary selection to the client as well as the clipboard selection"
+msgstr ""
+
+#: vncviewer/parameters.cxx:231
+msgid "Send the primary selection to the server as well as the clipboard selection"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:132
+msgid "Sending connect request to VNC Server...\n"
+""
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:145
+msgid "Sending disconnect request to VNC Server...\n"
+""
+msgstr ""
+
+#: vncviewer/CConn.cxx:494
+msgid "Server certificate problems: %s"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:318
+msgid "Server certificate verification failed"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:315
+msgid "Server certificate verification failed: %s"
+msgstr ""
+
+#: common/rfb/VNCSConnectionST.cxx:445
+msgid "Server default pixel format: %s"
+msgstr ""
+
+#: common/rfb/CSecurityRSAAES.cxx:217
+msgid "Server encryption key is invalid"
+msgstr ""
+
+#: common/rfb/CSecurityRSAAES.cxx:204
+msgid "Server encryption key is too long"
+msgstr ""
+
+#: common/rfb/CSecurityRSAAES.cxx:202
+msgid "Server encryption key is too short"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:145
+msgid "Server failed to initialize TLS session"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:213
+#: common/rfb/CConnection.cxx:217
+msgid "Server gave unsupported RFB protocol version %d.%d"
+msgstr ""
+
+#: vncviewer/CConn.cxx:518
+msgid "Server has an existing security exception"
+msgstr ""
+
+#: vncviewer/CConn.cxx:656
+msgid "Server host certificate has changed"
+msgstr ""
+
+#: vncviewer/CConn.cxx:553
+msgid "Server host is not previously known"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:816
+msgid "Server is already in use"
+msgstr ""
+
+#: common/rfb/SSecurityRSAAES.cxx:399
+msgid "Server key length doesn't match length of random data"
+msgstr ""
+
+#: win/rfb_win32/WMPoller.cxx:39
+msgid "Server should poll console windows for updates"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:118
+msgid "Server shutting down"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:208
+msgid "Server supports RFB protocol version %d.%d"
+msgstr ""
+
+#: common/rfb/UnixPasswordValidator.cxx:41
+msgid "Service name for PAM password validation"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:358
+msgid "Services"
+msgstr ""
+
+#: unix/w0vncserver/parameters.cxx:59
+#: unix/x0vncserver/XSelection.cxx:36
+#: unix/xserver/hw/vnc/vncExtInit.cc:103
+#: vncviewer/parameters.cxx:224
+msgid "Set the primary selection as well as the clipboard selection"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1253
+msgid "Shared (don't disconnect other viewers)"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1079
+#: vncviewer/ShortcutHandler.cxx:218
+msgid "Shift"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:361
+msgid "Show all"
+msgstr ""
+
+#: vncviewer/parameters.cxx:86
+msgid "Show an error dialog on connection problems, rather than exiting immediately"
+msgstr ""
+
+#: vncviewer/parameters.cxx:92
+msgid "Show an error dialog on connection problems, rather than exiting immediately, and allow the user to reconnect"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:353
+msgid "Show hidden files"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:939
+msgid "Show local cursor when not provided by server"
+msgstr ""
+
+#: vncviewer/parameters.cxx:74
+msgid "Show local cursor when not provided by the server"
+msgstr ""
+
+#: win/winvnc/VNCServerWin32.cxx:66
+msgid "Show the configuration applet in the system tray"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:352
+msgid "Show:"
+msgstr ""
+
+#: vncviewer/CConn.cxx:222
+msgid "Size: %d x %d"
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:150
+msgid "Socket is not registered"
+msgstr ""
+
+#: common/rfb/EncodeManager.cxx:125
+msgid "Solid"
+msgstr ""
+
+#: vncviewer/CConn.cxx:563
+#: vncviewer/CConn.cxx:582
+#: vncviewer/CConn.cxx:599
+#: vncviewer/CConn.cxx:616
+#: vncviewer/CConn.cxx:636
+#: vncviewer/CConn.cxx:668
+#: vncviewer/CConn.cxx:688
+#: vncviewer/CConn.cxx:706
+#: vncviewer/CConn.cxx:724
+#: vncviewer/CConn.cxx:745
+msgid "Someone could be trying to impersonate the site and you should not continue."
+msgstr ""
+
+#: unix/x0vncserver/Geometry.cxx:61
+#: unix/x0vncserver/Geometry.cxx:94
+msgid "Specified desktop geometry is invalid"
+msgstr ""
+
+#: common/core/LogWriter.cxx:117
+msgid "Specifies which log output should be directed to which target logger, and the level of output to log, in the format <log>:<target>:<level>[, ...]"
+msgstr ""
+
+#: vncviewer/parameters.cxx:181
+msgid "Specify size and position of viewer window"
+msgstr ""
+
+#: vncviewer/parameters.cxx:80
+msgid "Specify which local cursor type should be used when AlwaysCursor is active"
+msgstr ""
+
+#: vncviewer/parameters.cxx:159
+msgid "Specify which monitors to use when in full screen"
+msgstr ""
+
+#: common/rfb/SecurityClient.cxx:54
+#: common/rfb/SecurityServer.cxx:50
+msgid "Specify which security scheme to use"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:867
+msgid "Standard VNC (insecure without encryption)"
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:58
+msgid "Start with window iconified"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:152
+msgid "Started service successfully"
+msgstr ""
+
+#: win/vncconfig/vncconfig.cxx:95
+msgid "Starting vncconfig applet"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:313
+#: win/rfb_win32/Service.cxx:465
+msgid "Stopped"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:157
+msgid "Stopped service successfully"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:466
+msgid "Stopping"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:203
+#: common/rfb/CSecurityTLS.cxx:215
+#: common/rfb/CSecurityTLS.cxx:232
+#: common/rfb/SSecurityTLS.cxx:213
+#: common/rfb/SSecurityTLS.cxx:225
+#: common/rfb/SSecurityTLS.cxx:242
+msgid "Syntax error in GnuTLS priority string: %s"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:947
+msgid "System"
+msgstr ""
+
+#: unix/w0vncserver/parameters.cxx:34
+#: unix/x0vncserver/x0vncserver.cxx:87
+#: unix/xserver/hw/vnc/vncExtInit.cc:73
+#: win/vncconfig/Connections.h:39
+#: win/winvnc/VNCServerWin32.cxx:54
+msgid "TCP port to listen for RFB protocol"
+msgstr ""
+
+#: common/rdr/TLSSocket.cxx:95
+msgid "TLS handshake failed"
+msgstr ""
+
+#: common/rdr/TLSSocket.cxx:93
+msgid "TLS handshake failed: %s"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:807
+msgid "TLS with X509 certificates"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:801
+msgid "TLS with anonymous certificates"
+msgstr ""
+
+#: common/rfb/Blacklist.cxx:30
+msgid "Temporarily reject connections from a host if it repeatedly fails to authenticate"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:51
+msgid "Terminate after the specified number of seconds of user inactivity (zero means no timeout)"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:46
+msgid "Terminate when a client has been connected for the specified number of seconds (zero means no timeout)"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:41
+msgid "Terminate when no client has been connected for the specified number of seconds (zero means no timeout)"
+msgstr ""
+
+#: unix/x0vncserver/x0vncserver.cxx:548
+msgid "Terminated"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:251
+msgid "Termination signal %d has been received. TuPigVNC will now exit."
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:234
+msgid "The AllowEditClients option is not supported by this release."
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:232
+msgid "The AllowShutdown option is not supported by this release."
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:191
+msgid "The AutoPortSelect setting is not supported by this release.The port number will default to 5900."
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:203
+msgid "The QuerySetting option has been replaced by QueryConnect.Please see the documentation for details of the QueryConnect option."
+msgstr ""
+
+#: win/vncconfig/Authentication.h:111
+msgid "The VNC authentication method is disabled, but a password is still stored for it.\n"
+"Do you want to remove the VNC authentication password from the registry?"
+msgstr ""
+
+#: win/vncconfig/Authentication.h:149
+msgid "The VNC authentication method is enabled, but no password is specified.\n"
+"The password dialog will now be shown."
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:56
+#: unix/x0vncserver/x0vncserver.cxx:84
+#: vncviewer/parameters.cxx:235
+msgid "The X display to use"
+msgstr ""
+
+#: unix/xserver/hw/vnc/XserverDesktop.cc:578
+msgid "The attempt to prompt the user to accept the connection failed"
+msgstr ""
+
+#: common/rfb/SSecurityVeNCrypt.cxx:109
+msgid "The client cannot support the server's VeNCrypt version"
+msgstr ""
+
+#: common/rfb/SSecurityVeNCrypt.cxx:119
+msgid "The client returned an unsupported VeNCrypt version"
+msgstr ""
+
+#: vncviewer/parameters.cxx:243
+msgid "The combination of modifier keys that triggers special actions in the viewer instead of being sent to the remote session (possible keys are a combination of Ctrl, Shift, Alt, and Super)"
+msgstr ""
+
+#: vncviewer/CConn.cxx:306
+#: vncviewer/CConn.cxx:308
+msgid "The connection was dropped by the server before the session could be established."
+msgstr ""
+
+#: common/rfb/Blacklist.cxx:41
+msgid "The initial timeout applied when a host is first black-listed"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:61
+msgid "The maximum number of updates per second sent to each client"
+msgstr ""
+
+#: common/rfb/ServerCore.cxx:36
+msgid "The number of seconds after which an idle VNC connection will be dropped (zero means no timeout)"
+msgstr ""
+
+#: common/rfb/Blacklist.cxx:35
+msgid "The number of unauthenticated connection attempts allowed from any individual host before that host is black-listed"
+msgstr ""
+
+#: unix/common/randr.cxx:287
+#: unix/common/randr.cxx:368
+msgid "The output '%s' does not support the required mode %dx%d"
+msgstr ""
+
+#: unix/common/randr.cxx:277
+#: unix/common/randr.cxx:358
+msgid "The required output '%s' is not usable"
+msgstr ""
+
+#: vncviewer/CConn.cxx:780
+msgid "The server has provided the following identifying information:\n"
+"\n"
+"Fingerprint: %s\n"
+"\n"
+"Do you want to continue connecting to this server?"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:778
+msgid "The server is already in use"
+msgstr ""
+
+#: common/rfb/CSecurityVeNCrypt.cxx:111
+msgid "The server reported an unsupported VeNCrypt version"
+msgstr ""
+
+#: common/rfb/CSecurityVeNCrypt.cxx:138
+msgid "The server reported no VeNCrypt sub-types"
+msgstr ""
+
+#: common/rfb/CSecurityVeNCrypt.cxx:123
+msgid "The server reported that it could not support the client's VeNCrypt version"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:163
+msgid "The service \"%s\" is in the state: %s"
+msgstr ""
+
+#: vncviewer/CConn.cxx:632
+msgid "The specified hostname \"%s\" does not match the certificate provided by the server:"
+msgstr ""
+
+#: common/rfb/SSecurityVeNCrypt.cxx:149
+msgid "There are no VeNCrypt sub-types to send to the client"
+msgstr ""
+
+#: vncviewer/CConn.cxx:561
+msgid "This certificate has been signed by an unknown authority:"
+msgstr ""
+
+#: vncviewer/CConn.cxx:597
+msgid "This certificate has expired:"
+msgstr ""
+
+#: vncviewer/CConn.cxx:580
+msgid "This certificate is not yet valid:"
+msgstr ""
+
+#: vncviewer/CConn.cxx:614
+msgid "This certificate uses an insecure algorithm:"
+msgstr ""
+
+#: vncviewer/AuthDialog.cxx:72
+msgid "This connection is not secure"
+msgstr ""
+
+#: vncviewer/AuthDialog.cxx:68
+msgid "This connection is secure"
+msgstr ""
+
+#: vncviewer/CConn.cxx:664
+msgid "This host is previously known with a different certificate, and the new certificate has been signed by an unknown authority:"
+msgstr ""
+
+#: vncviewer/CConn.cxx:703
+msgid "This host is previously known with a different certificate, and the new certificate has expired:"
+msgstr ""
+
+#: vncviewer/CConn.cxx:685
+msgid "This host is previously known with a different certificate, and the new certificate is not yet valid:"
+msgstr ""
+
+#: vncviewer/CConn.cxx:721
+msgid "This host is previously known with a different certificate, and the new certificate uses an insecure algorithm:"
+msgstr ""
+
+#: vncviewer/CConn.cxx:740
+msgid "This host is previously known with a different certificate, and the specified hostname \"%s\" does not match the new certificate provided by the server:"
+msgstr ""
+
+#: vncviewer/CConn.cxx:999
+msgid "Throughput %d kbit/s - changing to quality %d"
+msgstr ""
+
+#: vncviewer/CConn.cxx:1024
+msgid "Throughput %d kbit/s - full color is now disabled"
+msgstr ""
+
+#: vncviewer/CConn.cxx:1021
+msgid "Throughput %d kbit/s - full color is now enabled"
+msgstr ""
+
+#: vncviewer/parameters.cxx:59
+msgid "Time in milliseconds to rate-limit successive pointer events"
+msgstr ""
+
+#: vncviewer/AudioOutputPulse.cxx:180
+msgid "Timed out connecting to sound server"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1407
+msgid "To open the session context menu, press %sM."
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1398
+msgid "To pass all keyboard input to the session, press %sG."
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1393
+msgid "To release keyboard control from the session, press %s."
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1411
+msgid "To send a key combination that includes %s directly to the session, press %sSpace, release the space bar without releasing %s, and press the desired key."
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1403
+msgid "To toggle full-screen mode, press %sEnter."
+msgstr ""
+
+#: common/rfb/TightDecoder.cxx:108
+msgid "Too large Tight rectangle"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:179
+msgid "Too many screens for VNC extension\n"
+""
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:157
+msgid "Too many security failures"
+msgstr ""
+
+#: common/rfb/VNCServerST.cxx:178
+msgid "Too many unauthenticated connections: %s"
+msgstr ""
+
+#: common/rfb/DecodeManager.cxx:242
+#: common/rfb/DecodeManager.cxx:248
+#: common/rfb/EncodeManager.cxx:251
+#: common/rfb/EncodeManager.cxx:257
+msgid "Total:"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:171
+#: vncviewer/ServerDialog.cxx:212
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:76
+msgid "TuPigVNC options"
+msgstr ""
+
+#: unix/w0vncserver/w0vncserver-forget.cxx:40
+msgid "TuPigVNC server version %s\n"
+""
+msgstr ""
+
+#: unix/w0vncserver/w0vncserver.cxx:74
+#: unix/x0vncserver/x0vncserver.cxx:281
+msgid "TuPigVNC server version %s, built %s\n"
+""
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:94
+msgid "TuPigVNC v%s\n"
+"Built on: %s\n"
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
+msgstr ""
+
+#: unix/w0vncserver/parameters.cxx:40
+#: unix/x0vncserver/x0vncserver.cxx:95
+#: unix/xserver/hw/vnc/vncExtInit.cc:79
+msgid "UNIX socket access mode"
+msgstr ""
+
+#: common/network/UnixSocket.cxx:123
+#: common/network/UnixSocket.cxx:56
+msgid "UNIX socket path is too long"
+msgstr ""
+
+#: unix/w0vncserver/parameters.cxx:37
+#: unix/x0vncserver/x0vncserver.cxx:91
+#: unix/xserver/hw/vnc/vncExtInit.cc:76
+msgid "UNIX socket path to listen for RFB protocol"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:302
+msgid "Uknown reason"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:210
+msgid "Unable to access desktop"
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:123
+msgid "Unable to add connection"
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:84
+msgid "Unable to add listening socket"
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:198
+msgid "Unable to adjust socket event mask"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:209
+msgid "Unable to close console: %lu"
+msgstr ""
+
+#: win/rfb_win32/CurrentUser.cxx:73
+msgid "Unable to close desktop: %ld"
+msgstr ""
+
+#: win/rfb_win32/TsSessions.cxx:63
+msgid "Unable to connect session to Console"
+msgstr ""
+
+#: win/vncconfig/Legacy.cxx:125
+msgid "Unable to convert AuthHosts setting to Hosts format."
+msgstr ""
+
+#: win/rfb_win32/MsgWindow.cxx:110
+msgid "Unable to create WMNotifier window instance"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:665
+msgid "Unable to create a custom display mode for %dx%d\n"
+""
+msgstr ""
+
+#: unix/common/randr.cxx:217
+#: unix/common/randr.cxx:226
+msgid "Unable to create more screens, as needed by the new client layout."
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:343
+msgid "Unable to create service"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:675
+msgid "Unable to crop CRTC to new screen dimensions\n"
+""
+msgstr ""
+
+#: win/rfb_win32/DeviceContext.cxx:57
+#: win/rfb_win32/DeviceContext.cxx:60
+msgid "Unable to determine device pixel format"
+msgstr ""
+
+#: common/rfb/DecodeManager.cxx:53
+msgid "Unable to determine the number of CPU cores on this system"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:657
+msgid "Unable to disable a CRTC that is outside of the new screen dimensions\n"
+""
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:252
+msgid "Unable to disable socket events"
+msgstr ""
+
+#: win/rfb_win32/Clipboard.cxx:149
+msgid "Unable to empty clipboard"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncInput.c:614
+msgid "Unable to find a modifier key for AltGr"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncInput.c:593
+msgid "Unable to find a modifier key for Shift"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncInput.c:623
+msgid "Unable to find the modifier key(s) for releasing AltGr"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncInput.c:602
+msgid "Unable to find the modifier key(s) for releasing Shift"
+msgstr ""
+
+#: vncviewer/XInputTouchHandler.cxx:103
+#: vncviewer/touch.cxx:107
+msgid "Unable to get X Input 2 event mask for window 0x%08lx"
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:248
+msgid "Unable to get socket events"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:687
+msgid "Unable to listen for incoming connections"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:145
+msgid "Unable to load the server history: %s"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:195
+#: vncviewer/vncviewer.cxx:464
+msgid "Unable to load the specified configuration file:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:127
+#: win/winvnc/winvnc.cxx:140
+msgid "Unable to locate existing VNC Server"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:384
+msgid "Unable to locate the service"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:334
+#: win/rfb_win32/Service.cxx:379
+#: win/rfb_win32/Service.cxx:406
+#: win/rfb_win32/Service.cxx:426
+#: win/rfb_win32/Service.cxx:447
+msgid "Unable to open Service Control Manager"
+msgstr ""
+
+#: win/rfb_win32/Clipboard.cxx:134
+msgid "Unable to open clipboard"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:272
+msgid "Unable to open event log: %ld\n"
+""
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:411
+#: win/rfb_win32/Service.cxx:431
+#: win/rfb_win32/Service.cxx:452
+msgid "Unable to open the service"
+msgstr ""
+
+#: unix/w0vncserver/portals/PortalDesktop.cxx:156
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:187
+#: unix/xserver/hw/vnc/XserverDesktop.cc:185
+msgid "Unable to query the local user to accept the connection."
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:457
+msgid "Unable to query the service"
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:272
+msgid "Unable to re-enable socket events"
+msgstr ""
+
+#: win/rfb_win32/MsgWindow.cxx:88
+msgid "Unable to register MsgWindow window class"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:386
+msgid "Unable to remove the service"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:290
+msgid "Unable to save the default configuration: %s"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:301
+msgid "Unable to save the server history: %s"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:257
+msgid "Unable to save the specified configuration file:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: win/rfb_win32/Clipboard.cxx:153
+msgid "Unable to set clipboard"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:139
+msgid "Unable to set service status: %lu"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:117
+msgid "Unable to set shutdown parameters: %lu"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:120
+#: win/rfb_win32/Service.cxx:415
+msgid "Unable to start the service"
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:436
+msgid "Unable to stop the service"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:187
+msgid "Unable to switch into input desktop"
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:62
+msgid "Unable to track socket address changes: 0x%08x"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:124
+msgid "Underlying X server release %d\n"
+""
+msgstr ""
+
+#: common/rfb/CConnection.cxx:653
+#: common/rfb/CConnection.cxx:661
+#: common/rfb/CConnection.cxx:669
+msgid "Unexpected audio message"
+msgstr ""
+
+#: vncviewer/CConn.cxx:672
+#: vncviewer/CConn.cxx:692
+#: vncviewer/CConn.cxx:710
+#: vncviewer/CConn.cxx:728
+#: vncviewer/CConn.cxx:749
+msgid "Unexpected server certificate"
+msgstr ""
+
+#: vncviewer/Win32TouchHandler.cxx:426
+msgid "Unhandled key 0x%x - can't generate keyboard event."
+msgstr ""
+
+#: win/rfb_win32/Service.cxx:469
+msgid "Unknown (%lu)"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:265
+msgid "Unknown 3.3 security type"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:264
+msgid "Unknown 3.3 security type %d"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:135
+msgid "Unknown QEMU audio operation %d"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:120
+msgid "Unknown QEMU submessage %d"
+msgstr ""
+
+#: common/rfb/SMsgReader.cxx:491
+msgid "Unknown QEMU submessage type %d"
+msgstr ""
+
+#: common/rfb/CSecurityRSAAES.cxx:502
+msgid "Unknown RSA-AES subtype"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:351
+#: common/network/TcpSocket.cxx:757
+msgid "Unknown address family"
+msgstr ""
+
+#: vncviewer/CConn.cxx:567
+msgid "Unknown certificate issuer"
+msgstr ""
+
+#: win/winvnc/VNCServerWin32.cxx:318
+msgid "Unknown command %d queued"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:830
+msgid "Unknown cursor type"
+msgstr ""
+
+#: win/rfb_win32/SDisplay.cxx:380
+msgid "Unknown display event received"
+msgstr ""
+
+#: common/rfb/EncodeManager.cxx:118
+msgid "Unknown encoder class"
+msgstr ""
+
+#: common/rfb/EncodeManager.cxx:140
+msgid "Unknown encoder type"
+msgstr ""
+
+#: common/rfb/DecodeManager.cxx:108
+#: common/rfb/DecodeManager.cxx:115
+msgid "Unknown encoding"
+msgstr ""
+
+#: common/rfb/DecodeManager.cxx:107
+#: common/rfb/DecodeManager.cxx:114
+msgid "Unknown encoding %d"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:144
+msgid "Unknown keycodes name '%s'"
+msgstr ""
+
+#: common/rfb/SMsgReader.cxx:117
+msgid "Unknown message type"
+msgstr ""
+
+#: common/rfb/CMsgReader.cxx:194
+#: common/rfb/SMsgReader.cxx:116
+msgid "Unknown message type %d"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/VirtualPointer.cxx:60
+msgid "Unknown mouse button"
+msgstr ""
+
+#: common/rfb/KeyRemapper.cxx:84
+msgid "Unknown operation %c>, assuming ->"
+msgstr ""
+
+#: vncviewer/parameters.cxx:963
+msgid "Unknown parameter"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:317
+msgid "Unknown reason %d"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:360
+msgid "Unknown security result from server"
+msgstr ""
+
+#: win/rfb_win32/SocketManager.cxx:235
+msgid "Unknown socket event: %lx"
+msgstr ""
+
+#: vncviewer/KeyboardWin32.cxx:292
+#: vncviewer/KeyboardWin32.cxx:308
+#: vncviewer/KeyboardWin32.cxx:320
+msgid "Unmatched UTF-16 surrogate pair through VK_PACKET"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:140
+msgid "Unmatched [ in hostname"
+msgstr ""
+
+#: win/winvnc/winvnc.cxx:203
+msgid "Unregistered service successfully"
+msgstr ""
+
+#: common/rfb/CSecurityTLS.cxx:308
+msgid "Unsupported certificate type"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/Keyboard.cxx:197
+msgid "Unsupported keymap format: %d"
+msgstr ""
+
+#: unix/w0vncserver/portals/Clipboard.cxx:212
+#: unix/w0vncserver/portals/Clipboard.cxx:400
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:308
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:439
+msgid "Unsupported mime type '%s'"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncDRI3.c:112
+msgid "Unsupported pixel depth: %d\n"
+""
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1090
+msgid "Update Now"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1109
+msgid "Update failed: %s"
+msgstr ""
+
+#: common/rfb/VNCSConnectionST.cxx:656
+msgid "Update request %dx%d at %d,%d exceeds framebuffer %dx%d"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1102
+msgid "Updating"
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:51
+msgid "Usage: %s [file]\n"
+"       %s -f\n"
+""
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:180
+msgid "Usage: %s [parameters]\n"
+"       %s [parameters] -connect [-view-only] <host>[:<port>]\n"
+"       %s [parameters] -disconnect\n"
+"       %s [parameters] [-set] <Xvnc-param>=<value> ...\n"
+"       %s [parameters] -list\n"
+"       %s [parameters] -get <param>\n"
+"       %s [parameters] -desc <param>\n"
+""
+msgstr ""
+
+#: common/network/TcpSocket.cxx:79
+msgid "Use IPv4 for incoming and outgoing connections"
+msgstr ""
+
+#: common/network/TcpSocket.cxx:82
+msgid "Use IPv6 for incoming and outgoing connections"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:70
+msgid "Use MIT-SHM extension if available"
+msgstr ""
+
+#: win/rfb_win32/DeviceFrameBuffer.cxx:47
+msgid "Use a slower capture method that ensures that alpha blended windows will appear correctly"
+msgstr ""
+
+#: vncviewer/parameters.cxx:109
+msgid "Use all available colors"
+msgstr ""
+
+#: vncviewer/parameters.cxx:137
+msgid "Use custom compression level as specified by CompressLevel"
+msgstr ""
+
+#: common/rfb/HextileEncoder.cxx:43
+msgid "Use improved compression algorithm for Hextile encoding which achieves better compression ratios at the cost of using more CPU time"
+msgstr ""
+
+#: vncviewer/parameters.cxx:142
+msgid "Use specified compression level, 0 = Low, 9 = High"
+msgstr ""
+
+#: vncviewer/parameters.cxx:170
+msgid "Use the given list of monitors in full screen when FullScreenMode is set to Selected"
+msgstr ""
+
+#: unix/xserver/hw/vnc/XserverDesktop.cc:436
+msgid "User requested disconnection"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:873
+msgid "Username and password (insecure without encryption)"
+msgstr ""
+
+#: common/rfb/SSecurityPlain.cxx:98
+msgid "Username is too long"
+msgstr ""
+
+#: vncviewer/AuthDialog.cxx:94
+msgid "Username:"
+msgstr ""
+
+#: common/rfb/SSecurityPlain.cxx:48
+msgid "Users permitted to access the server"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:138
+#: unix/x0vncserver/XDesktop.cxx:142
+msgid "Using %s codemap"
+msgstr ""
+
+#: common/rfb/CConnection.cxx:232
+msgid "Using RFB protocol version %d.%d"
+msgstr ""
+
+#: vncviewer/CConn.cxx:1043
+msgid "Using pixel format %s"
+msgstr ""
+
+#: vncviewer/AuthDialog.cxx:54
+msgid "VNC authentication"
+msgstr ""
+
+#: unix/vncconfig/vncconfig.cxx:108
+msgid "VNC config"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1055
+msgid "VNC connection info"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:1116
+msgid "VNC extension does not support -reset, terminating instead. Use -noreset to prevent termination.\n"
+""
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:172
+msgid "VNC extension incorrectly initialized twice in same generation"
+msgstr ""
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:185
+msgid "VNC extension running"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:221
+msgid "VNC parameters:\n"
+""
+msgstr ""
+
+#: win/winvnc/VNCServerWin32.cxx:112
+msgid "VNC server (service):"
+msgstr ""
+
+#: win/winvnc/VNCServerWin32.cxx:110
+msgid "VNC server (user):"
+msgstr ""
+
+#: win/vncconfig/vncconfig.cxx:167
+msgid "VNC server properties (service-mode)"
+msgstr ""
+
+#: win/vncconfig/vncconfig.cxx:169
+msgid "VNC server properties (user-mode)"
+msgstr ""
+
+#: vncviewer/ServerDialog.cxx:74
+msgid "VNC server:"
+msgstr ""
+
+#: vncviewer/CConn.cxx:786
+msgid "Verify server key"
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:180
+msgid "Verify:"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:679
+msgid "Very low"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:914
+msgid "View only (ignore mouse and keyboard)"
+msgstr ""
+
+#: common/rfb/ZRLEEncoder.cxx:50
+msgid "Warning: The ZlibLevel option is deprecated and is ignored by the server. The compression level can be set by the client instead."
+msgstr ""
+
+#: win/rfb_win32/SInput.cxx:98
+msgid "Warning: Two mouse buttons pressed in the same event"
+msgstr ""
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:195
+msgid "Wayland buffer is too large: %u x %u"
+msgstr ""
+
+#: win/rfb_win32/SInput.cxx:143
+msgid "Whether to assume the viewer has already interpreted dead key sequences into latin-1 characters"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1095
+#: vncviewer/ShortcutHandler.cxx:234
+msgid "Win"
+msgstr ""
+
+#: vncviewer/XInputTouchHandler.cxx:113
+#: vncviewer/touch.cxx:114
+msgid "Window 0x%08lx has more than one X Input 2 event mask"
+msgstr ""
+
+#: vncviewer/XInputTouchHandler.cxx:105
+msgid "Window 0x%08lx has no X Input 2 event mask"
+msgstr ""
+
+#: vncviewer/Win32TouchHandler.cxx:46
+msgid "Window is registered for touch instead of gestures"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1148
+msgid "Windowed"
+msgstr ""
+
+#: win/vncconfig/vncconfig.cxx:136
+msgid "Windows reported an error trying to secure the VNC server settings for this user. Your settings may not be secure!"
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:263
+msgid "Would you like to enter a view-only password (y/n)? "
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:96
+msgid "Writing VNC password to stdout failed"
+msgstr ""
+
+#: vncviewer/touch.cxx:266
+msgid "X Input 2 (or newer) is not available."
+msgstr ""
+
+#: vncviewer/touch.cxx:271
+msgid "X Input 2.2 (or newer) is not available. Touch gestures will not be supported."
+msgstr ""
+
+#: vncviewer/touch.cxx:235
+msgid "X Input event for unknown window"
+msgstr ""
+
+#: vncviewer/touch.cxx:259
+msgid "X Input extension not available."
+msgstr ""
+
+#: win/vncconfig/Authentication.h:83
+msgid "X.509 certificate"
+msgstr ""
+
+#: win/vncconfig/Authentication.h:74
+msgid "X.509 certificates"
+msgstr ""
+
+#: win/vncconfig/Authentication.h:96
+msgid "X.509 key"
+msgstr ""
+
+#: win/vncconfig/Authentication.h:87
+msgid "X.509 keys"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:197
+msgid "XFIXES extension not present, will not be able to display the cursor or monitor the clipboard"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:105
+#: unix/x0vncserver/XDesktop.cxx:106
+msgid "XKEYBOARD extension not present"
+msgstr ""
+
+#: unix/x0vncserver/XDesktop.cxx:165
+msgid "XTest extension not present, all connections will be view only"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:122
+msgid "Xvnc %s - built %s\n"
+""
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:329
+msgid "Yes"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:1081
+msgid "You are running the latest version (%s)."
+msgstr ""
+
+#: win/vncconfig/vncconfig.cxx:182
+msgid "You do not have sufficient access rights to run the VNC Configuration applet"
+msgstr ""
+
+#: vncviewer/parameters.cxx:165
+msgid "[DEPRECATED] Enable full screen over all monitors"
+msgstr ""
+
+#: vncviewer/parameters.cxx:69
+msgid "[DEPRECATED] Show a dot cursor when the server sends an invisible cursor"
+msgstr ""
+
+#: common/rfb/ZRLEEncoder.cxx:42
+msgid "[DEPRECATED] Zlib compression level"
+msgstr ""
+
+#: common/rfb/Security.cxx:191
+#: common/rfb/encodings.cxx:55
+msgid "[unknown]"
+msgstr ""
+
+#: common/core/Configuration.cxx:94
+msgid "default"
+msgstr ""
+
+#: unix/xserver/hw/vnc/xvnc.c:1222
+msgid "inetd client gone. Terminating...\n"
+""
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:714
+msgid "level (0=fast, 9=best)"
+msgstr ""
+
+#: common/rfb/DecodeManager.cxx:232
+#: common/rfb/DecodeManager.cxx:246
+#: common/rfb/EncodeManager.cxx:206
+#: common/rfb/EncodeManager.cxx:240
+#: common/rfb/EncodeManager.cxx:255
+msgid "pixels"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:744
+msgid "quality (0=poor, 9=best)"
+msgstr ""
+
+#: common/rfb/DecodeManager.cxx:237
+#: common/rfb/DecodeManager.cxx:251
+#: common/rfb/EncodeManager.cxx:211
+#: common/rfb/EncodeManager.cxx:245
+#: common/rfb/EncodeManager.cxx:260
+msgid "ratio"
+msgstr ""
+
+#: common/rfb/DecodeManager.cxx:230
+#: common/rfb/DecodeManager.cxx:244
+#: common/rfb/EncodeManager.cxx:204
+#: common/rfb/EncodeManager.cxx:238
+#: common/rfb/EncodeManager.cxx:253
+msgid "rects"
+msgstr ""
+
+#: unix/vncpasswd/vncpasswd.cxx:268
+msgid "yY"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:484
+msgid "~/.vnc is deprecated, please consult 'man vncviewer' for paths to migrate to."
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1103
+msgid "⇧ Shift"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1101
+msgid "⌃ Ctrl"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1107
+msgid "⌘ Cmd"
+msgstr ""
+
+#: vncviewer/OptionsDialog.cxx:1105
+msgid "⌥ Option"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:950
+msgctxt "ContextMenu|"
+msgid "&Alt"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:947
+msgctxt "ContextMenu|"
+msgid "&Ctrl"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:962
+msgctxt "ContextMenu|"
+msgid "ℹ Connection &info..."
+msgstr ""
+
+#: vncviewer/Viewport.cxx:942
+msgctxt "ContextMenu|"
+msgid "⇲ Resize &window to session"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:940
+msgctxt "ContextMenu|"
+msgid "− Minimi&ze"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:954
+msgctxt "ContextMenu|"
+msgid "⌨ Send Ctrl-Alt-&Del"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:934
+msgctxt "ContextMenu|"
+msgid "⏻ Disconn&ect"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:966
+msgctxt "ContextMenu|"
+msgid "ⓘ About &TuPigVNC..."
+msgstr ""
+
+#: vncviewer/Viewport.cxx:960
+msgctxt "ContextMenu|"
+msgid "⚙ &Options..."
+msgstr ""
+
+#: vncviewer/Viewport.cxx:937
+msgctxt "ContextMenu|"
+msgid "⛶ &Full screen"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:957
+msgctxt "ContextMenu|"
+msgid "⟳ &Refresh screen"
+msgstr ""
+
+#: vncviewer/Viewport.cxx:964
+msgctxt "ContextMenu|"
+msgid "⤓ Check for &updates..."
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:371
+msgctxt "SysMenu|"
+msgid "&File"
+msgstr ""
+
+#: vncviewer/vncviewer.cxx:374
+msgctxt "SysMenu|File|"
+msgid "&New connection"
+msgstr ""
+

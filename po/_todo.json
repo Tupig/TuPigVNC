@@ -1,0 +1,2798 @@
+[
+ {
+  "msgctxt": null,
+  "msgid": "Failed to update keyboard LED state"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to load the server history:\n\n%s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to save the default configuration:\n\n%s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to save the server history:\n\n%s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not open \"%s\""
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Opening password file failed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "TuPigVNC"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Connect to VNC server and display remote desktop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Virtual Network Computing (VNC) is a remote display system that allows you to view and interact with a virtual desktop environment running on another computer on the network. Using VNC, you can run graphical applications on a remote machine and send only the display from these applications to your local device. This package contains a client which will enable you to connect to other desktops running a VNC server. VNC is platform-independent and supports various operating systems and architectures as both servers and clients."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "TuPigVNC connection to a CentOS machine"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "TuPigVNC connection to a macOS machine"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "TuPigVNC connection to a Windows machine"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The TuPigVNC team"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The name of the parameter is too large"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The parameter is too large"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "About"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Hide"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Quit"
+ },
+ {
+  "msgctxt": "SysMenu|File|",
+  "msgid": "&New Connection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Remote desktop viewer"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "(server default %s)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "SetDesktopSize failed: %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid configuration specified for %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid monitor index '%s'"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unexpected character '%c'"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Show dot when no cursor"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Pass system keys directly to server (full screen)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Menu key"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "VNC Viewer: Connection Details"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No key code specified on key press"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No symbol for key code 0x%02x (in the current state)"
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "Send %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown parameter type"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "disabled"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "enabled"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Using %s encoding"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Not enough memory for framebuffer"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Full (all available colors)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Medium (256 colors)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Low (64 colors)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Very low (8 colors)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "level (1=fast, 6=best [4-6 are rarely useful])"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Screen"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Resize remote session on connect"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Resize remote session to the local window"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Full-screen mode"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Misc."
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "E&xit viewer"
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "Dismiss &menu"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to write parameter %s of type %s to the registry: %ld"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The name of the parameter %s was too large to read from the registry"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The parameter %s was too large to read from the registry"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to write configuration file, can't obtain home directory path."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to write configuration file, can't open %s: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to read configuration file, can't obtain home directory path."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown parameter %s on line %d in file %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not create VNC home directory: can't obtain home directory path."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not create framebuffer device"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not create framebuffer bitmap"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Using platform independent framebuffer"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "unable to create DIB section"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "CreateCompatibleDC failed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "SelectObject failed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "BitBlt failed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Display lacks pixmap format for default depth"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Couldn't find suitable pixmap format"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Only true colour displays supported"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Using default colormap and visual, TrueColor, depth %d."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "\nUsage: %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "\nUsage: %s [<parameters>]\n       %s --version\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "\nUsage: %s [parameters] [host][:displayNum]\n       %s [parameters] [host][::port]\n       %s [parameters] -listen [port]\n       %s [parameters] [.tigervnc file]\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": " (view only)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%d-bit with masks: (%lx, %lx, %lx)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%d-colour palettised"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%s - %s, version %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%s: Connecting to %s failed\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%s: Disconnecting all clients failed\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%s: Getting the description for parameter %s failed\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%s: Getting the value of parameter %s failed\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%s: Invalid parameter syntax '%s'\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%s: No VNC extension on display \"%s\"\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%s: Setting the parameter %s failed\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%s: Too long filename specified\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "%s: Unable to open display \"%s\"\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "(N/A)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "(anonymous)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "(unnamed UNIX socket)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "16-bit high colour"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "24/32-bit high colour"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "A mask is no longer supported for filters, use a prefix instead"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "A view-only password is not used\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Accept clipboard changes from clients"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Accept clipboard changes from the server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Accept key events from clients"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Accept pointer events from clients"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Accept session size changes from clients"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Accepted: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Action to perform when all clients have disconnected"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Add exception"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Add to Favorites"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Alias for %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "All"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "All Files (*)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Always treat incoming connections as shared, regardless of the client-specified setting"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Always use protocol version 3.3 for backwards compatibility with badly-behaved clients"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Another connection is currently being queried."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Are you sure you want to close the server?"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Assuming compatibility with version %d.%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Attaching to device %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Attaching to virtual desktop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Attempting to register service...\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Attempting to start service...\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Attempting to stop service...\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Attempting to unregister service...\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Audio data is too large"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Audio playback stream failed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Authentication error: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Authentication failed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Authentication timeout"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Auto select pixel format and encoding"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Available configuration parameters:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Avoid fake Shift presses for keys affected by NumLock"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "B"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Bad Tight subencoding value received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Bad clipboard chain change!"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Bitmap"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Bitmap RLE"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Blacklisted: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Buffer size of %lu bytes exceeds maximum of %lu bytes"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Built without GPU render support\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Cannot check password quality: %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Cannot find an available output for new screen layout"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Cannot find file descriptor for socket event"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Cannot impersonate unsafe or null token"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Caps lock is active"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Certificate hostname mismatch"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Certificate is not yet valid"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Choosing security type %s (%d)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Clean disconnection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client connection rejected"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client does not support resizing the desktop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client encryption key is invalid"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client encryption key is too long"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client encryption key is too short"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client key length doesn't match length of random data"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client needs protocol version %d.%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client needs protocol version %d.%d, server has %d.%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client pixel format: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client requests security type %s (%d)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client tried to enable continuous updates when not allowed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Client uses unofficial protocol version %d.%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Clipboard too large (%d bytes)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Closed: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Closing %s: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Closing console"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Color level to use on slow connections, 0 = Very Low, 1 = Low, 2 = Medium"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Comma separated list of parameters that are allowed to be modified after startup"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Comma-separated list of incoming keysyms to remap.  Mappings are expressed as two hex values, prefixed by 0x, and separated by ->"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Command-line options:\n  -connect [<host[::port]>]            - Connect an existing WinVNC server to a listening viewer.\n  -disconnect                          - Disconnect all clients from an existing WinVNC server.\n  -register <options...>               - Register WinVNC server as a system service.\n  -unregister                          - Remove WinVNC server from the list of system services.\n  -start                               - Start the WinVNC server system service.\n  -stop                                - Stop the WinVNC server system service.\n  -status                              - Query the WinVNC service status.\n  -help                                - Provide usage information.\n  -noconsole                           - Run without a console (i.e. no stderr/stdout)\n  <setting>=<value>                    - Set the named configuration parameter.\n    (Parameter values specified on the command-line override those specified by other configuration methods.)\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Command: OS shutdown"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Command: Parameters changed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Command: Report status"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Command: Stop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Connection failed."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Connection failed: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Connection rejected"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Connection rejected by local user"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Console is not session zero - reconnect to restore Console session"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Console session is %lu"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Continue"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Copies"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Corrupted message received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not allocate video codec context"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not allocate video frame"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not connect to sound server: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not create GPU render device\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not create audio playback stream: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not create video parser"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not find any available render nodes\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not find video codec"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not initialize MediaFoundation"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not map GPU buffer: %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not map keysym XK_%s (0x%04x) to keycode"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not open audio playback device"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not open audio playback device: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not open video codec"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not read IP filtering rules, rejecting all clients"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not set CLIPBOARD selection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not set PRIMARY selection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not start video decoder"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Could not write to audio playback device"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Create a new directory."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Created VNC server for screen %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Creating %d decoder thread(s)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Custom Filter"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "DAMAGE extension not present, will have to poll the screen for changes"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Deleting listening socket"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Depth exceeds bits per pixel"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Desktop \"%s\" inaccessible"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Desktop configured a different screen layout than requested"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Desktop does not support remote connections"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Desktop geometry is set to %dx%d+%d+%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Desktop is not started"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Detected %d CPU core(s)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Disable desktop user interface effects when the server is in use"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Disable local keyboard and pointer input while the server is in use"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Disable lossy JPEG compression"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Disable the Close entry in the VNC server tray menu"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Disable the Options entry in the VNC server tray menu"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Disconnect existing clients if an incoming connection is not shared"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Display device name of the monitor to be remoted, or empty to export the whole desktop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Do you want to make an exception for this server?"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Don't disconnect other viewers upon connection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Don't display a window"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Don't send any mouse or keyboard events to the server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Dynamically resize the remote desktop size as the size of the local client window changes"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Empty certificate chain"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Empty rectangle received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Emulate middle mouse button by pressing left and right mouse buttons simultaneously"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Enable full screen as specified by FullScreenMode"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Error accepting client: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Error getting listening sockets from systemd: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Error reading default settings: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Error reading global user settings: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Error reading local user settings: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Expired certificate"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed get address for hostname"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed reading from \"%s\""
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed receiving TLS data"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed sending TLS data"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to accept new connection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to add new keysym XK_%s (0x%04x)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to add reverse connection socket"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to allocate a new file descriptor for -inetd: %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to change to active desktop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to compress data"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to configure GnuTLS priority"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to configure the server name for TLS handshake"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to connect to host"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to connect to socket"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to contact Active Desktop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to convert peer name to a string"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to create DeviceDC"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to create GPU buffer: %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to create H.264 context"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to create TuPigVNC input devices\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to create bitmap"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to create shared memory image, falling back to Xlib image"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to create socket"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to create tunnel: '%s' returned %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to decode Tight rectangle"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to decode ZRLE rectangle"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to decode server certificate"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to decompress data"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to decrypt data"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to disable the output '%s'"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to disconnect clients."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to disconnect clients: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to encrypt data"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to enumerate render nodes\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to establish reverse connection: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to find a suitable screen size"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to find free port"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to flush remaining socket data on close"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to flush remaining socket data on close: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to flush remaining stream data"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to format server certificate for display"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to generate encryption key"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to generate random data"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to get address for hostname"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to get certificate problem description"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to get current user token"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to get current username"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to get desktop item count: %ld"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to get local name for socket"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to get peer name for socket"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to get port number"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to get screen layout"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to impersonate user"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to initialise Winsock"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to initialise hooks"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to initialize DRI3 extension\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to initialize GnuTLS"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to initialize GnuTLS session"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to initialize Present extension\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to initialize zlib"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to initialized PAM: %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to listen for VNC connections on inetd socket"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to load list of servers with a security exception"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to load the server certificate and private key"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to load the system certificate trust store"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to load the user specified certificate authority"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to load the user specified certificate revocation list"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to modify Active Desktop options: %ld"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to open \"%s\""
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to open \"%s\": %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to reconfigure the output '%s' to %dx%d+%d+%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to register handler: %lu"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to resize remote session: %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to resize screen to %dx%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to set IPV6_V6ONLY"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to set PAM_XDISPLAY: %s (%d)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to set SO_REUSEADDR"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to set TCP_NODELAY: %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to set socket address"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to set socket permissions"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to set socket to listening mode"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to store server certificate to list of servers with a security exception"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to terminate TLS cleanly: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to update cursor: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed to write to event log: %ld\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Failed writing to \"%s\": %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Favorites"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Fence response of unexpected size received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Fence response of unexpected type received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "File Systems"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "File with IP access control rules"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Filename:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Filter describing which hosts are allowed access to this server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Framebuffer updates: %u"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Full color"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Full screen on multiple monitors is not supported by the current desktop environment"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Full screen on multiple monitors is not supported when the system setting \"Displays have separate Spaces\" is enabled"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "GnuTLS priority string that controls the TLS session's handshake algorithms"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Hide TuPigVNC"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "How to discover desktop updates; 0 - Polling, 1 - Application hooking, 2 - Driver hooking"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Idle for too long"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Ignoring DisconnectAction=Lock - no current user"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Ignoring DisconnectAction=Logoff - no current user"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Ignoring fence with too large payload"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Ignoring unknown keysym 0x%x"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Ignoring unrecognised Latin-1 keysym 0x%x"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Image types do not match (%s, %s, %s)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Incompatible bits per pixel for GPU buffer\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Incompatible bits per pixel for pixmap\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Incompatible stride for GPU buffer\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Incorrect hash received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Indexed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Indexed RLE"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Input data is not hexadecimal"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Insecure certificate algorithm"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid Hextile coordinates"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid JPEG data received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid RRE coordinates"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid RSA key"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid Tight filter code received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid UTF-8 sequence in clipboard"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid bits per pixel for gradient filter"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid desktop name received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid extended clipboard message"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid filter specified"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid geometry"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid geometry %s passed to -geometry\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid log name: %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid log target: %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid mapping %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid pixel format"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid pixel format %s passed to -pixelformat\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid pixmap depth %d passed to -pixdepths\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid port specified"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid prefix length for filter: %u"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid rectangle received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid rectangle received: %dx%d at %d,%d exceeds %dx%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid render node path: %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid screen layout requested by client"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Invalid server certificate: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "JPEG quality level, 0 = Low, 9 = High"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Key event without keycode"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Keysym XK_%s (0x%04x) has been generated by both keys %d and %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Listen for incoming connections from VNC servers"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Listen on the specified network address"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Listening for VNC connections on %s (mode %04o)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Listening for VNC connections on inetd socket"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Listening for VNC connections on interface %s, port %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Listening for VNC connections on local interfaces, port %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Listening for VNC connections on systemd sockets"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Listening socket is not registered"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Loading default settings"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Loading global user settings"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Loading local user settings"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Log destinations:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Log names:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Lost connection to sound server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "MAXFORMATS is too small for this server\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Manage Favorites"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Maximize viewer window"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Maximum connected time reached, exiting"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Maximum disconnected time reached, exiting"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Maximum idle time reached, exiting"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Maximum percentage of CPU time to be consumed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Maximum permitted length of an incoming clipboard update"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Milliseconds per one polling cycle; actual interval may be dynamically adjusted to satisfy MaxProcessorUsage setting"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "My Computer"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Name of VNC desktop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Never treat incoming connections as shared, regardless of the client-specified setting"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "New Directory?"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No audio playback device available"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No free display number for -inetd\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No matching security types"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No password configured"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No path or port configured for incoming connections"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No pixmap format that matches the root window depth\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No supported security type for %d.%d client"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No supported security types"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No system random source available"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No useful address found for hostname"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No valid VeNCrypt sub-type"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "No visual that matches the root window visual\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Non-shared connection requested"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Not accepting connections"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Number of seconds to show the 'Accept connection' dialog before rejecting the connection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Obfuscated binary encoding of the password for VNC authentication"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "One or more screens are mirrored. Cannot reconfigure screen layout."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Only allow connections from localhost"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Only prompt for a local user to accept incoming connections if there is a user logged on"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "PAM authentication failed: %s (%d)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "PAM authorization failed: %s (%d)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Parameter %s: Invalid value '%d'"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Parameter %s: Invalid value '%s'"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Pass special keys (like Alt+Tab) directly to the server when in full-screen mode"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Password can not be longer than 8 characters - try again\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Password file for VNC authentication"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Password is too long"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Password must be at least 6 characters - try again\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Password not changed\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Password quality check failed:\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Passwords don't match - try again\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Path to the RSA key for the RSA-AES security types"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Path to the X.509 certificate for the trusted certificate authority"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Path to the X.509 certificate revocation list"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Path to the private key of the server's X.509 certificate"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Path to the server's X.509 certificate"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Perform pixel comparison on framebuffer to reduce unnecessary updates (0: never, 1: always, 2: auto)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Play audio from the server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Play audio sent by the server, if it offers any"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Please choose an existing file!"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Preferred encoding to use"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Preview"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Prompt the local user to accept or reject incoming connections"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Pseudocolour is not supported"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Querying service status...\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Quit TuPigVNC"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "RANDR extension not present, will not be able to resize the desktop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Reading version failed, not an RFB client?"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Reading version failed, not an RFB server?"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Received Diffie-Hellman key is too long"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Received Diffie-Hellman key is too short"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Received cursor is too large"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Received invalid Diffie-Hellman modulus"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Reconfigure the desktop size on the server to the specified size when connecting"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Reconnect"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Refreshing system tray icon"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Registered service successfully"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Registering handler..."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Rejecting too large resize request"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Remove the desktop wallpaper when the server is in use"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Removing screen %d (%x) as it is completely outside the new framebuffer"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Requested area is outsize of the desktop boundaries"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Requested security type is not available"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Requesting audio (format %d, %d channels, %d Hz)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Require a username for the RSA-AES security types"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Reverse connection: %s:%d%s%s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Run in service mode\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Running"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "SSH gateway to tunnel the connection via"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Save"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Screen area shown to VNC clients in the format <width>x<height>+<offset_x>+<offset_y>, or empty to show the whole screen"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Security exception added for server host"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Send clipboard changes to clients"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Send clipboard changes to the server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Send clipboard to clients"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Send keyboard events straight through and avoid mapping them to the current keyboard layout"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Send primary selection to clients"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Send the primary selection to the client as well as the clipboard selection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Send the primary selection to the server as well as the clipboard selection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Sending connect request to VNC Server...\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Sending disconnect request to VNC Server...\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server certificate problems: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server certificate verification failed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server certificate verification failed: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server default pixel format: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server encryption key is invalid"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server encryption key is too long"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server encryption key is too short"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server failed to initialize TLS session"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server gave unsupported RFB protocol version %d.%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server has an existing security exception"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server host certificate has changed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server host is not previously known"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server is already in use"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server key length doesn't match length of random data"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server should poll console windows for updates"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server shutting down"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Server supports RFB protocol version %d.%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Service name for PAM password validation"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Set the primary selection as well as the clipboard selection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Show an error dialog on connection problems, rather than exiting immediately"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Show an error dialog on connection problems, rather than exiting immediately, and allow the user to reconnect"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Show hidden files"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Show local cursor when not provided by the server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Show the configuration applet in the system tray"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Show:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Socket is not registered"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Solid"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Someone could be trying to impersonate the site and you should not continue."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Specified desktop geometry is invalid"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Specifies which log output should be directed to which target logger, and the level of output to log, in the format <log>:<target>:<level>[, ...]"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Specify size and position of viewer window"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Specify which local cursor type should be used when AlwaysCursor is active"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Specify which monitors to use when in full screen"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Specify which security scheme to use"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Start with window iconified"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Started service successfully"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Starting vncconfig applet"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Stopped"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Stopped service successfully"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Stopping"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Syntax error in GnuTLS priority string: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "TCP port to listen for RFB protocol"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "TLS handshake failed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "TLS handshake failed: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Temporarily reject connections from a host if it repeatedly fails to authenticate"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Terminate after the specified number of seconds of user inactivity (zero means no timeout)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Terminate when a client has been connected for the specified number of seconds (zero means no timeout)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Terminate when no client has been connected for the specified number of seconds (zero means no timeout)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Terminated"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The AllowEditClients option is not supported by this release."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The AllowShutdown option is not supported by this release."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The AutoPortSelect setting is not supported by this release.The port number will default to 5900."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The QuerySetting option has been replaced by QueryConnect.Please see the documentation for details of the QueryConnect option."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The VNC authentication method is disabled, but a password is still stored for it.\nDo you want to remove the VNC authentication password from the registry?"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The VNC authentication method is enabled, but no password is specified.\nThe password dialog will now be shown."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The X display to use"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The attempt to prompt the user to accept the connection failed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The client cannot support the server's VeNCrypt version"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The client returned an unsupported VeNCrypt version"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The combination of modifier keys that triggers special actions in the viewer instead of being sent to the remote session (possible keys are a combination of Ctrl, Shift, Alt, and Super)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The initial timeout applied when a host is first black-listed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The maximum number of updates per second sent to each client"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The number of seconds after which an idle VNC connection will be dropped (zero means no timeout)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The number of unauthenticated connection attempts allowed from any individual host before that host is black-listed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The output '%s' does not support the required mode %dx%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The required output '%s' is not usable"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The server has provided the following identifying information:\n\nFingerprint: %s\n\nDo you want to continue connecting to this server?"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The server is already in use"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The server reported an unsupported VeNCrypt version"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The server reported no VeNCrypt sub-types"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The server reported that it could not support the client's VeNCrypt version"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The service \"%s\" is in the state: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "The specified hostname \"%s\" does not match the certificate provided by the server:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "There are no VeNCrypt sub-types to send to the client"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "This certificate has been signed by an unknown authority:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "This certificate has expired:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "This certificate is not yet valid:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "This certificate uses an insecure algorithm:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "This host is previously known with a different certificate, and the new certificate has been signed by an unknown authority:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "This host is previously known with a different certificate, and the new certificate has expired:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "This host is previously known with a different certificate, and the new certificate is not yet valid:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "This host is previously known with a different certificate, and the new certificate uses an insecure algorithm:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "This host is previously known with a different certificate, and the specified hostname \"%s\" does not match the new certificate provided by the server:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Time in milliseconds to rate-limit successive pointer events"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Timed out connecting to sound server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Too large Tight rectangle"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Too many screens for VNC extension\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Too many security failures"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Too many unauthenticated connections: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Total:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "TuPigVNC server version %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "TuPigVNC server version %s, built %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "UNIX socket access mode"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "UNIX socket path is too long"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "UNIX socket path to listen for RFB protocol"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to access desktop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to add connection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to add listening socket"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to adjust socket event mask"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to close console: %lu"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to close desktop: %ld"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to connect session to Console"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to convert AuthHosts setting to Hosts format."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to create WMNotifier window instance"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to create a custom display mode for %dx%d\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to create more screens, as needed by the new client layout."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to create service"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to crop CRTC to new screen dimensions\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to determine device pixel format"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to determine the number of CPU cores on this system"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to disable a CRTC that is outside of the new screen dimensions\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to disable socket events"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to empty clipboard"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to find a modifier key for AltGr"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to find a modifier key for Shift"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to find the modifier key(s) for releasing AltGr"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to find the modifier key(s) for releasing Shift"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to get socket events"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to load the server history: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to locate existing VNC Server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to locate the service"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to open Service Control Manager"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to open clipboard"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to open event log: %ld\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to open the service"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to query the local user to accept the connection."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to query the service"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to re-enable socket events"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to register MsgWindow window class"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to remove the service"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to save the default configuration: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to save the server history: %s"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to set clipboard"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to set service status: %lu"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to set shutdown parameters: %lu"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to start the service"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to stop the service"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to switch into input desktop"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unable to track socket address changes: 0x%08x"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Underlying X server release %d\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unexpected audio message"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unexpected server certificate"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown (%lu)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown 3.3 security type"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown 3.3 security type %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown QEMU audio operation %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown QEMU submessage %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown QEMU submessage type %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown RSA-AES subtype"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown address family"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown certificate issuer"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown command %d queued"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown cursor type"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown display event received"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown encoder class"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown encoder type"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown keycodes name '%s'"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown message type"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown message type %d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown operation %c>, assuming ->"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown security result from server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unknown socket event: %lx"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unmatched UTF-16 surrogate pair through VK_PACKET"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unmatched [ in hostname"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unregistered service successfully"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unsupported certificate type"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Unsupported pixel depth: %d\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Update request %dx%d at %d,%d exceeds framebuffer %dx%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Usage: %s [file]\n       %s -f\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Usage: %s [parameters]\n       %s [parameters] -connect [-view-only] <host>[:<port>]\n       %s [parameters] -disconnect\n       %s [parameters] [-set] <Xvnc-param>=<value> ...\n       %s [parameters] -list\n       %s [parameters] -get <param>\n       %s [parameters] -desc <param>\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Use IPv4 for incoming and outgoing connections"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Use IPv6 for incoming and outgoing connections"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Use MIT-SHM extension if available"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Use a slower capture method that ensures that alpha blended windows will appear correctly"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Use all available colors"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Use custom compression level as specified by CompressLevel"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Use improved compression algorithm for Hextile encoding which achieves better compression ratios at the cost of using more CPU time"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Use specified compression level, 0 = Low, 9 = High"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Use the given list of monitors in full screen when FullScreenMode is set to Selected"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "User requested disconnection"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Username is too long"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Users permitted to access the server"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Using %s codemap"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Using RFB protocol version %d.%d"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "VNC config"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "VNC extension does not support -reset, terminating instead. Use -noreset to prevent termination.\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "VNC extension incorrectly initialized twice in same generation"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "VNC extension running"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "VNC parameters:\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "VNC server (service):"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "VNC server (user):"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "VNC server properties (service-mode)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "VNC server properties (user-mode)"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Verify server key"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Verify:"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Warning: The ZlibLevel option is deprecated and is ignored by the server. The compression level can be set by the client instead."
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Warning: Two mouse buttons pressed in the same event"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Whether to assume the viewer has already interpreted dead key sequences into latin-1 characters"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Windows reported an error trying to secure the VNC server settings for this user. Your settings may not be secure!"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Would you like to enter a view-only password (y/n)? "
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Writing VNC password to stdout failed"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "X.509 certificate"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "X.509 certificates"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "X.509 key"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "X.509 keys"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "XFIXES extension not present, will not be able to display the cursor or monitor the clipboard"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "XKEYBOARD extension not present"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "XTest extension not present, all connections will be view only"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "Xvnc %s - built %s\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "You do not have sufficient access rights to run the VNC Configuration applet"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "[DEPRECATED] Enable full screen over all monitors"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "[DEPRECATED] Show a dot cursor when the server sends an invisible cursor"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "[DEPRECATED] Zlib compression level"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "[unknown]"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "default"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "inetd client gone. Terminating...\n"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "pixels"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "ratio"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "rects"
+ },
+ {
+  "msgctxt": null,
+  "msgid": "yY"
+ },
+ {
+  "msgctxt": "SysMenu|File|",
+  "msgid": "&New connection"
+ }
+]

@@ -1,5 +1,5 @@
 # Esperanto translation
-# Copyright (C) 2015, 2016, 2018, 2019 the TigerVNC Team (msgids)
+# Copyright (C) 2015, 2016, 2018, 2019 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 # Felipe Castro <fefcas@gmail.com>, 2015, 2016, 2018, 2019.
 #
@@ -328,16 +328,16 @@ msgid "Connect"
 msgstr "Konekti"
 
 #: vncviewer/ServerDialog.cxx:137 vncviewer/ServerDialog.cxx:171
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "Agordo de TigerVNC (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "Agordo de TuPigVNC (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:138
-msgid "Select a TigerVNC configuration file"
-msgstr "Elekti agordo-dosieron de TigerVNC"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Elekti agordo-dosieron de TuPigVNC"
 
 #: vncviewer/ServerDialog.cxx:172
-msgid "Save the TigerVNC configuration to file"
-msgstr "Konservi la agordo-dosieron de TigerVNC"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "Konservi la agordo-dosieron de TuPigVNC"
 
 #: vncviewer/ServerDialog.cxx:197
 #, c-format
@@ -497,8 +497,8 @@ msgstr "&Informo pri konekto..."
 
 #: vncviewer/Viewport.cxx:1237
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC viewer..."
-msgstr "Pri la rigardilo &TigerVNC..."
+msgid "About &TuPigVNC viewer..."
+msgstr "Pri la rigardilo &TuPigVNC..."
 
 #: vncviewer/Viewport.cxx:1240
 msgctxt "ContextMenu|"
@@ -610,19 +610,19 @@ msgstr "Nekonata parametro %s en linio %d en dosiero %s"
 #: vncviewer/vncviewer.cxx:100
 #, c-format
 msgid ""
-"TigerVNC Viewer %d-bit v%s\n"
+"TuPigVNC Viewer %d-bit v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC Team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC Team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"Rigardilo TigerVNC %d-bit v%s\n"
+"Rigardilo TuPigVNC %d-bit v%s\n"
 "Konstruita en: %s\n"
-"Kopirajto (C) 1999-%d teamo de TigerVNC kaj multaj aliaj (konsultu README.rst)\n"
-"Konsultu https://www.tigervnc.org por informoj pri TigerVNC."
+"Kopirajto (C) 1999-%d teamo de TuPigVNC kaj multaj aliaj (konsultu README.rst)\n"
+"Konsultu https://github.com/TuPig/TuPigVNC por informoj pri TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:127
-msgid "About TigerVNC Viewer"
-msgstr "Pri la rigardilo TigerVNC"
+msgid "About TuPigVNC Viewer"
+msgstr "Pri la rigardilo TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:140
 msgid "Internal FLTK error. Exiting."
@@ -630,17 +630,17 @@ msgstr "Interna eraro de FLTK. Ni ĉesas."
 
 #: vncviewer/vncviewer.cxx:158 vncviewer/vncviewer.cxx:170
 #, c-format
-msgid "Error starting new TigerVNC Viewer: %s"
-msgstr "Eraro dum ekigo de nova Rigardilo TigerVNC: %s"
+msgid "Error starting new TuPigVNC Viewer: %s"
+msgstr "Eraro dum ekigo de nova Rigardilo TuPigVNC: %s"
 
 #: vncviewer/vncviewer.cxx:179
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC Viewer will now exit."
-msgstr "Finiga signalo %d estis ricevata. La Rigardilo TigerVNC ĉesos nun."
+msgid "Termination signal %d has been received. TuPigVNC Viewer will now exit."
+msgstr "Finiga signalo %d estis ricevata. La Rigardilo TuPigVNC ĉesos nun."
 
 #: vncviewer/vncviewer.cxx:271 vncviewer/vncviewer.desktop.in.in:3
-msgid "TigerVNC Viewer"
-msgstr "Rigardilo TigerVNC"
+msgid "TuPigVNC Viewer"
+msgstr "Rigardilo TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:280
 msgid "Yes"
@@ -806,17 +806,17 @@ msgstr "tigervnc"
 #~ msgid "Encoding normal character: The size of the buffer dest is to small, it needs to be more than %d bytes bigger."
 #~ msgstr "Enkodigo de ordinara signo: la grando de la bufra celo tro etas, ĝi bezonas esti pli ol %d bajtoj pli granda."
 
-#~ msgid "Error(%d) closing key:  Software\\TigerVNC\\vncviewer"
-#~ msgstr "Eraro(%d) dum fermo de ŝlosilo:  Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) closing key:  Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Eraro(%d) dum fermo de ŝlosilo:  Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) closing key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Eraro(%d) dum fermo de ŝlosilo: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) closing key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Eraro(%d) dum fermo de ŝlosilo: Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) creating key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Eraro(%d) dum kreo de ŝlosilo: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) creating key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Eraro(%d) dum kreo de ŝlosilo: Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) opening key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Eraro(%d) dum malfermo de ŝlosilo: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) opening key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Eraro(%d) dum malfermo de ŝlosilo: Software\\TuPigVNC\\vncviewer"
 
 #~ msgid "Error(%d) reading %s from Registry."
 #~ msgstr "Eraro(%d) dum lego de %s el la Registrujo."
@@ -829,11 +829,11 @@ msgstr "tigervnc"
 
 #~ msgid ""
 #~ "Line 1 in file %s\n"
-#~ "must contain the TigerVNC configuration file identifier string:\n"
+#~ "must contain the TuPigVNC configuration file identifier string:\n"
 #~ "\"%s\""
 #~ msgstr ""
 #~ "Linio 1 en la dosiero %s\n"
-#~ "devas enhavi la agordo-dosieran identig-ĉenon de TigerVNC:\n"
+#~ "devas enhavi la agordo-dosieran identig-ĉenon de TuPigVNC:\n"
 #~ "\"%s\""
 
 #~ msgid "Multiple characters given for key code %d (0x%04x): '%s'"

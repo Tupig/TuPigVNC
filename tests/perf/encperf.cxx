@@ -488,7 +488,7 @@ int main(int argc, char **argv)
 
     if (strcmp(argv[i], "-v") == 0 ||
         strcmp(argv[i], "--version") == 0) {
-      fprintf(stderr, "encperf (TigerVNC) %s\n", PACKAGE_VERSION);
+      fprintf(stderr, "encperf (TuPigVNC) %s\n", PACKAGE_VERSION);
       exit(0);
     }
 

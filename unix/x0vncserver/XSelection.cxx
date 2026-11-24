@@ -49,10 +49,10 @@ static core::LogWriter vlog("XSelection");
 XSelection::XSelection(Display* dpy_, XSelectionHandler* handler_)
     : TXWindow(dpy_, 1, 1, nullptr), handler(handler_), announcedSelection(None)
 {
-  probeProperty = XInternAtom(dpy, "TigerVNC_ProbeProperty", False);
-  transferProperty = XInternAtom(dpy, "TigerVNC_TransferProperty", False);
-  timestampProperty = XInternAtom(dpy, "TigerVNC_TimestampProperty", False);
-  toplevel("TigerVNC Clipboard (x0vncserver)");
+  probeProperty = XInternAtom(dpy, "TuPigVNC_ProbeProperty", False);
+  transferProperty = XInternAtom(dpy, "TuPigVNC_TransferProperty", False);
+  timestampProperty = XInternAtom(dpy, "TuPigVNC_TimestampProperty", False);
+  toplevel("TuPigVNC Clipboard (x0vncserver)");
   addEventMask(PropertyChangeMask); // Required for PropertyNotify events
 }
 

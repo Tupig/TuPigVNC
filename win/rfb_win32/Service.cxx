@@ -256,7 +256,7 @@ rfb::win32::changeDesktop() {
 bool
 rfb::win32::emulateCtrlAltDel() {
   rfb::win32::Handle sessionEventCad = 
-    CreateEvent(nullptr, FALSE, FALSE, "Global\\SessionEventTigerVNCCad");
+    CreateEvent(nullptr, FALSE, FALSE, "Global\\SessionEventTuPigVNCCad");
   SetEvent(sessionEventCad);
   return true;
 }

@@ -259,7 +259,7 @@ core::StringParameter
   via("via", _("SSH gateway to tunnel the connection via"), "");
 #endif
 
-static const char* IDENTIFIER_STRING = "TigerVNC Configuration file Version 1.0";
+static const char* IDENTIFIER_STRING = "TuPigVNC Configuration file Version 1.0";
 
 /*
  * We only save the sub set of parameters that can be modified from
@@ -520,7 +520,7 @@ void saveHistoryToRegKey(const std::list<std::string>& serverHistory)
 {
   HKEY hKey;
   LONG res = RegCreateKeyExW(HKEY_CURRENT_USER,
-                             L"Software\\TigerVNC\\vncviewer\\history", 0, nullptr,
+                             L"Software\\TuPigVNC\\vncviewer\\history", 0, nullptr,
                              REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, nullptr,
                              &hKey, nullptr);
 
@@ -554,7 +554,7 @@ static void saveToReg(const char* servername) {
   HKEY hKey;
     
   LONG res = RegCreateKeyExW(HKEY_CURRENT_USER,
-                             L"Software\\TigerVNC\\vncviewer", 0, nullptr,
+                             L"Software\\TuPigVNC\\vncviewer", 0, nullptr,
                              REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, nullptr,
                              &hKey, nullptr);
   if (res != ERROR_SUCCESS)
@@ -628,7 +628,7 @@ std::list<std::string> loadHistoryFromRegKey()
   std::list<std::string> serverHistory;
 
   LONG res = RegOpenKeyExW(HKEY_CURRENT_USER,
-                           L"Software\\TigerVNC\\vncviewer\\history", 0,
+                           L"Software\\TuPigVNC\\vncviewer\\history", 0,
                            KEY_READ, &hKey);
   if (res != ERROR_SUCCESS) {
     if (res == ERROR_FILE_NOT_FOUND) {
@@ -706,7 +706,7 @@ static std::string loadFromReg() {
   HKEY hKey;
 
   LONG res = RegOpenKeyExW(HKEY_CURRENT_USER,
-                           L"Software\\TigerVNC\\vncviewer", 0,
+                           L"Software\\TuPigVNC\\vncviewer", 0,
                            KEY_READ, &hKey);
   if (res != ERROR_SUCCESS) {
     if (res == ERROR_FILE_NOT_FOUND) {

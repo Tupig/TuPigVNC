@@ -41,10 +41,10 @@ if(APPLE)
 configure_file(makemacapp.in makemacapp)
 configure_file(Info.plist.in Info.plist)
 
-add_custom_command(OUTPUT TigerVNC-${VERSION}.dmg
+add_custom_command(OUTPUT TuPigVNC-${VERSION}.dmg
   COMMAND sh makemacapp
   DEPENDS vncviewer makemacapp Info.plist)
-add_custom_target(dmg DEPENDS TigerVNC-${VERSION}.dmg)
+add_custom_target(dmg DEPENDS TuPigVNC-${VERSION}.dmg)
 
 endif() # APPLE
 
@@ -57,14 +57,10 @@ if(UNIX)
 
 configure_file(maketarball.in maketarball)
 
-if(BUILD_JAVA)
-  set(TARBALL_JAVA_DEPENDENCY java)
-endif()
-
 set(PACKAGE_FILE ${CMAKE_PROJECT_NAME}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}-${VERSION}.tar.gz)
 add_custom_command(OUTPUT ${PACKAGE_FILE}
   COMMAND bash maketarball
-  DEPENDS maketarball vncviewer vncpasswd vncconfig ${TARBALL_JAVA_DEPENDENCY})
+  DEPENDS maketarball vncviewer vncpasswd vncconfig)
 
 add_custom_target(tarball DEPENDS ${PACKAGE_FILE})
 

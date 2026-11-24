@@ -1,5 +1,5 @@
-# Indonesian translation of TigerVNC
-# Copyright (C) 2018 the TigerVNC Team (msgids)
+# Indonesian translation of TuPigVNC
+# Copyright (C) 2018 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 # Andika Triwidada <andika@gmail.com>, 2018, 2020-2022, 2024, 2025.
 #
@@ -140,13 +140,13 @@ msgstr "Tekan %sM untuk membuka menu konteks"
 
 #: vncviewer/DesktopWindow.cxx:312
 #, c-format
-msgid "%s - TigerVNC (keyboard grabbed)"
-msgstr "%s - TigerVNC (papan tik diambil alih)"
+msgid "%s - TuPigVNC (keyboard grabbed)"
+msgstr "%s - TuPigVNC (papan tik diambil alih)"
 
 #: vncviewer/DesktopWindow.cxx:314
 #, c-format
-msgid "%s - TigerVNC"
-msgstr "%s - TigerVNC"
+msgid "%s - TuPigVNC"
+msgstr "%s - TuPigVNC"
 
 #: vncviewer/DesktopWindow.cxx:705
 msgid "Adjusting window size to avoid accidental full-screen request"
@@ -231,8 +231,8 @@ msgid "Monitor index %d does not exist"
 msgstr "Indeks monitor %d tidak ada"
 
 #: vncviewer/OptionsDialog.cxx:70
-msgid "TigerVNC options"
-msgstr "Opsi TigerVNC"
+msgid "TuPigVNC options"
+msgstr "Opsi TuPigVNC"
 
 #: vncviewer/OptionsDialog.cxx:104 vncviewer/ServerDialog.cxx:110
 #: vncviewer/vncviewer.cxx:397
@@ -552,12 +552,12 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:175 vncviewer/ServerDialog.cxx:215
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "Konfigurasi TigerVNC (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "Konfigurasi TuPigVNC (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:176
-msgid "Select a TigerVNC configuration file"
-msgstr "Pilih berkas konfigurasi TigerVNC"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Pilih berkas konfigurasi TuPigVNC"
 
 #: vncviewer/ServerDialog.cxx:198 vncviewer/vncviewer.cxx:517
 #, c-format
@@ -571,8 +571,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:216
-msgid "Save the TigerVNC configuration to file"
-msgstr "Simpan konfigurasi TigerVNC ke berkas"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "Simpan konfigurasi TuPigVNC ke berkas"
 
 #: vncviewer/ServerDialog.cxx:242
 #, c-format
@@ -735,8 +735,8 @@ msgstr "&Info koneksi..."
 
 #: vncviewer/Viewport.cxx:935
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC..."
-msgstr "Tentang &TigerVNC..."
+msgid "About &TuPigVNC..."
+msgstr "Tentang &TuPigVNC..."
 
 #: vncviewer/Viewport.cxx:1027
 msgid "VNC connection info"
@@ -788,8 +788,8 @@ msgstr "Kegagalan saat meng-grab perangkat %i"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
 #: vncviewer/vncviewer.desktop.in.in:2
-msgid "TigerVNC"
-msgstr "TigerVNC"
+msgid "TuPigVNC"
+msgstr "TuPigVNC"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:4
@@ -801,26 +801,26 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Virtual Network Computing (VNC) adalah sistem tampilan jarak jauh yang memungkinkan Anda untuk melihat dan berinteraksi dengan lingkungan desktop virtual yang berjalan di komputer lain di jaringan. Menggunakan VNC, Anda dapat menjalankan aplikasi grafis pada mesin jarak jauh dan hanya mengirim tampilan dari aplikasi ini ke perangkat lokal Anda. Paket ini berisi klien yang akan memungkinkan Anda untuk terhubung ke desktop lain yang menjalankan server VNC. VNC adalah platform-independen dan mendukung berbagai sistem operasi dan arsitektur sebagai server dan klien."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC adalah versi VNC berkecepatan tinggi berdasarkan basis kode RealVNC 4 dan X.org. TigerVNC dimulai sebagai upaya pengembangan generasi berikutnya untuk TightVNC pada platform Unix dan Linux, tetapi terpisah dari proyek induknya pada awal 2009 sehingga TightVNC dapat fokus pada platform Windows. TigerVNC mendukung varian Pengodean ketat yang sangat dipercepat dengan penggunaan kodek JPEG libjpeg-turbo."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC adalah versi VNC berkecepatan tinggi berdasarkan basis kode RealVNC 4 dan X.org. TuPigVNC dimulai sebagai upaya pengembangan generasi berikutnya untuk TightVNC pada platform Unix dan Linux, tetapi terpisah dari proyek induknya pada awal 2009 sehingga TightVNC dapat fokus pada platform Windows. TuPigVNC mendukung varian Pengodean ketat yang sangat dipercepat dengan penggunaan kodek JPEG libjpeg-turbo."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC connection to a CentOS machine"
-msgstr "Koneksi TigerVNC ke mesin CentOS"
+msgid "TuPigVNC connection to a CentOS machine"
+msgstr "Koneksi TuPigVNC ke mesin CentOS"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC connection to a macOS machine"
-msgstr "Koneksi TigerVNC ke mesin macOS"
+msgid "TuPigVNC connection to a macOS machine"
+msgstr "Koneksi TuPigVNC ke mesin macOS"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC connection to a Windows machine"
-msgstr "Koneksi TigerVNC ke mesin Windows"
+msgid "TuPigVNC connection to a Windows machine"
+msgstr "Koneksi TuPigVNC ke mesin Windows"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:46
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:48
-msgid "The TigerVNC team"
-msgstr "Tim TigerVNC"
+msgid "The TuPigVNC team"
+msgstr "Tim TuPigVNC"
 
 #: vncviewer/parameters.cxx:386 vncviewer/parameters.cxx:411
 #: vncviewer/parameters.cxx:428 vncviewer/parameters.cxx:468
@@ -937,19 +937,19 @@ msgstr "X Input 2.2 (atau yang lebih baru) tidak tersedia. Gestur sentuh tidak a
 #: vncviewer/vncviewer.cxx:103
 #, c-format
 msgid ""
-"TigerVNC v%s\n"
+"TuPigVNC v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC v%s\n"
+"TuPigVNC v%s\n"
 "Dibangun pada: %s\n"
-"Hak Cipta (C) 1999-%d Tim TigerVNC dan banyak lainnya (lihat README.rst)\n"
-"Lihat https://www.tigervnc.org untuk informasi tentang TigerVNC."
+"Hak Cipta (C) 1999-%d Tim TuPigVNC dan banyak lainnya (lihat README.rst)\n"
+"Lihat https://github.com/TuPig/TuPigVNC untuk informasi tentang TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:173
-msgid "About TigerVNC"
-msgstr "Tentang TigerVNC"
+msgid "About TuPigVNC"
+msgstr "Tentang TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:195
 msgid "Internal FLTK error. Exiting."
@@ -973,8 +973,8 @@ msgstr "Kesalahan saat memulai koneksi baru: %s"
 
 #: vncviewer/vncviewer.cxx:266
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC will now exit."
-msgstr "Sinyal pengakhiran %d telah diterima. TigerVNC sekarang akan keluar."
+msgid "Termination signal %d has been received. TuPigVNC will now exit."
+msgstr "Sinyal pengakhiran %d telah diterima. TuPigVNC sekarang akan keluar."
 
 #: vncviewer/vncviewer.cxx:395
 msgid "Yes"
@@ -1042,14 +1042,14 @@ msgid ""
 "Options:\n"
 "\n"
 "  -display Xdisplay  - Specifies the X display for the viewer window\n"
-"  -geometry geometry - Initial position of the main TigerVNC window. See the\n"
+"  -geometry geometry - Initial position of the main TuPigVNC window. See the\n"
 "                       man page for details.\n"
 msgstr ""
 "\n"
 "Opsi:\n"
 "\n"
 "  -display Xdisplay  - Menyatakan display X bagi jendela penampil\n"
-"  -geometry geometri - Posisi awal dari jendela penampil TigerVNC utama. Lihat\n"
+"  -geometry geometri - Posisi awal dari jendela penampil TuPigVNC utama. Lihat\n"
 "                       halaman man untuk rincian.\n"
 
 #: vncviewer/vncviewer.cxx:472
@@ -1083,8 +1083,8 @@ msgstr "~/.vnc usang, harap baca 'man vncviewer' untuk migrasi ke path mana."
 
 #: vncviewer/vncviewer.cxx:557
 #, c-format
-msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TigerVNC location."
-msgstr "%%APPDATA%%\\vnc usang, harap beralih ke lokasi %%APPDATA%%\\TigerVNC."
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC location."
+msgstr "%%APPDATA%%\\vnc usang, harap beralih ke lokasi %%APPDATA%%\\TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:562
 #, c-format

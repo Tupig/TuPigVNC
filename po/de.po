@@ -1,5 +1,5 @@
 # German translation of tigervnc.
-# Copyright (C) 2014 the TigerVNC Team (msgids)
+# Copyright (C) 2014 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 #
 # Klaus Franken <Klaus.Franken@StrukturPunkt.de>, 2005.
@@ -141,13 +141,13 @@ msgstr "Drücken Sie %sM, um das Kontextmenü zu öffnen"
 
 #: vncviewer/DesktopWindow.cxx:312
 #, c-format
-msgid "%s - TigerVNC (keyboard grabbed)"
-msgstr "%s - TigerVNC (Tastatur übernommen)"
+msgid "%s - TuPigVNC (keyboard grabbed)"
+msgstr "%s - TuPigVNC (Tastatur übernommen)"
 
 #: vncviewer/DesktopWindow.cxx:314
 #, c-format
-msgid "%s - TigerVNC"
-msgstr "%s - TigerVNC"
+msgid "%s - TuPigVNC"
+msgstr "%s - TuPigVNC"
 
 #: vncviewer/DesktopWindow.cxx:705
 msgid "Adjusting window size to avoid accidental full-screen request"
@@ -232,8 +232,8 @@ msgid "Monitor index %d does not exist"
 msgstr "Bildschirm-Index %d existiert nicht"
 
 #: vncviewer/OptionsDialog.cxx:70
-msgid "TigerVNC options"
-msgstr "TigerVNC-Optionen"
+msgid "TuPigVNC options"
+msgstr "TuPigVNC-Optionen"
 
 #: vncviewer/OptionsDialog.cxx:104 vncviewer/ServerDialog.cxx:110
 #: vncviewer/vncviewer.cxx:397
@@ -553,12 +553,12 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:175 vncviewer/ServerDialog.cxx:215
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "TigerVNC-Konfiguration (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "TuPigVNC-Konfiguration (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:176
-msgid "Select a TigerVNC configuration file"
-msgstr "Eine TigerVNC-Konfigurationsdatei wählen"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Eine TuPigVNC-Konfigurationsdatei wählen"
 
 #: vncviewer/ServerDialog.cxx:198 vncviewer/vncviewer.cxx:517
 #, c-format
@@ -572,8 +572,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:216
-msgid "Save the TigerVNC configuration to file"
-msgstr "Eine TigerVNC-Konfigurationsdatei speichern"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "Eine TuPigVNC-Konfigurationsdatei speichern"
 
 #: vncviewer/ServerDialog.cxx:242
 #, c-format
@@ -736,8 +736,8 @@ msgstr "Ver&bindungsinformationen …"
 
 #: vncviewer/Viewport.cxx:935
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC..."
-msgstr "Info zu &TigerVNC …"
+msgid "About &TuPigVNC..."
+msgstr "Info zu &TuPigVNC …"
 
 #: vncviewer/Viewport.cxx:1027
 msgid "VNC connection info"
@@ -789,8 +789,8 @@ msgstr "Fehler beim Übernehmen des Geräts %i"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
 #: vncviewer/vncviewer.desktop.in.in:2
-msgid "TigerVNC"
-msgstr "TigerVNC"
+msgid "TuPigVNC"
+msgstr "TuPigVNC"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:4
@@ -802,26 +802,26 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Virtual Network Computing (VNC) ist ein Anzeigesystem für ferne Rechner, das es Ihnen ermöglicht, eine Arbeitsumgebung auf einem anderen Rechner im Netzwerk zu betrachten und damit zu interagieren. Mit VNC können Sie auf dem fernen Rechner grafische Anwendungen ausführen und lediglich die Anzeige dieser Anwendungen auf Ihr lokales Gerät holen. Dieses Paket enthält einen Client, mit dem Sie sich mittels eines laufenden VNC-Servers mit anderen Arbeitsumgebungen verbinden können. VNC ist plattformunabhängig und unterstützt verschiedene Betriebssysteme und Architekturen sowohl als Server wie auch als Client."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC ist eine Hochgeschwindigkeitsversion von VNC, basierend auf den Codebasen von RealVNC 4 und X.org. TigerVNC begann als Weiterentwicklung von TightVNC auf Unix- und Linux-Plattformen und trennte sich Anfang 2009 von seinem Vorgängerprojekt, so dass sich TightVNC auf Windows-Plattformen konzentrieren konnte. TigerVNC unterstützt eine Variante von Tight Encoding, das durch die Verwendung des JPEG-Codecs »libjpeg-turbo« erheblich beschleunigt wird."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC ist eine Hochgeschwindigkeitsversion von VNC, basierend auf den Codebasen von RealVNC 4 und X.org. TuPigVNC begann als Weiterentwicklung von TightVNC auf Unix- und Linux-Plattformen und trennte sich Anfang 2009 von seinem Vorgängerprojekt, so dass sich TightVNC auf Windows-Plattformen konzentrieren konnte. TuPigVNC unterstützt eine Variante von Tight Encoding, das durch die Verwendung des JPEG-Codecs »libjpeg-turbo« erheblich beschleunigt wird."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC connection to a CentOS machine"
-msgstr "TigerVNC-Verbindung zu einem CentOS-Rechner"
+msgid "TuPigVNC connection to a CentOS machine"
+msgstr "TuPigVNC-Verbindung zu einem CentOS-Rechner"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC connection to a macOS machine"
-msgstr "TigerVNC-Verbindung zu einem macOS-Rechner"
+msgid "TuPigVNC connection to a macOS machine"
+msgstr "TuPigVNC-Verbindung zu einem macOS-Rechner"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC connection to a Windows machine"
-msgstr "TigerVNC-Verbindung zu einem Windows-Rechner"
+msgid "TuPigVNC connection to a Windows machine"
+msgstr "TuPigVNC-Verbindung zu einem Windows-Rechner"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:46
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:48
-msgid "The TigerVNC team"
-msgstr "Das TigerVNC-Team"
+msgid "The TuPigVNC team"
+msgstr "Das TuPigVNC-Team"
 
 #: vncviewer/parameters.cxx:386 vncviewer/parameters.cxx:411
 #: vncviewer/parameters.cxx:428 vncviewer/parameters.cxx:468
@@ -938,19 +938,19 @@ msgstr "X-Input 2.2 (oder neuer) ist nicht verfügbar. Touch-Gesten werden nicht
 #: vncviewer/vncviewer.cxx:103
 #, c-format
 msgid ""
-"TigerVNC v%s\n"
+"TuPigVNC v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC Version %s\n"
+"TuPigVNC Version %s\n"
 "Erstellt auf: %s\n"
-"Copyright (C) 1999-%d TigerVNC-Team und viele andere (siehe README.rst)\n"
-"Siehe https://www.tigervnc.org für Informationen zu TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC-Team und viele andere (siehe README.rst)\n"
+"Siehe https://github.com/TuPig/TuPigVNC für Informationen zu TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:173
-msgid "About TigerVNC"
-msgstr "Info zu TigerVNC"
+msgid "About TuPigVNC"
+msgstr "Info zu TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:195
 msgid "Internal FLTK error. Exiting."
@@ -974,8 +974,8 @@ msgstr "Fehler beim Starten der neuen Verbindung: %s"
 
 #: vncviewer/vncviewer.cxx:266
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC will now exit."
-msgstr "Terminierungssignal %d wurde empfangen. TigerVNC wird nun beendet."
+msgid "Termination signal %d has been received. TuPigVNC will now exit."
+msgstr "Terminierungssignal %d wurde empfangen. TuPigVNC wird nun beendet."
 
 #: vncviewer/vncviewer.cxx:395
 msgid "Yes"
@@ -1043,14 +1043,14 @@ msgid ""
 "Options:\n"
 "\n"
 "  -display Xdisplay  - Specifies the X display for the viewer window\n"
-"  -geometry geometry - Initial position of the main TigerVNC window. See the\n"
+"  -geometry geometry - Initial position of the main TuPigVNC window. See the\n"
 "                       man page for details.\n"
 msgstr ""
 "\n"
 "Optionen:\n"
 "\n"
 "  -display X-Display  - Gibt das X-Display für das Betrachterfenster an\n"
-"  -geometry Geometrie - Anfängliche Position des Hauptfensters von TigerVNC.\n"
+"  -geometry Geometrie - Anfängliche Position des Hauptfensters von TuPigVNC.\n"
 "                        In der Handbuchseite finden Sie weitere\n"
 "                        Details.\n"
 
@@ -1087,8 +1087,8 @@ msgstr "~/.vnc ist veraltet, bitte rufen Sie »man vncviewer« auf, um Informati
 
 #: vncviewer/vncviewer.cxx:557
 #, c-format
-msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TigerVNC location."
-msgstr "%%APPDATA%%\\vnc ist veraltet, bitte wechseln Sie zum Ort %%APPDATA%%\\TigerVNC."
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC location."
+msgstr "%%APPDATA%%\\vnc ist veraltet, bitte wechseln Sie zum Ort %%APPDATA%%\\TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:562
 #, c-format

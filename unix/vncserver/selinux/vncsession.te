@@ -60,7 +60,7 @@ optional_policy(`
 	create_dirs_pattern(vnc_session_t, admin_home_t, admin_home_t)
 ')
 
-# Manage TigerVNC files (mainly ~/.local/state/*.log)
+# Manage TuPigVNC files (mainly ~/.local/state/*.log)
 create_dirs_pattern(vnc_session_t, vnc_home_t, vnc_home_t)
 manage_files_pattern(vnc_session_t, vnc_home_t, vnc_home_t)
 manage_fifo_files_pattern(vnc_session_t, vnc_home_t, vnc_home_t)

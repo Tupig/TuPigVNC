@@ -1,5 +1,5 @@
 # French translation for tigervnc.
-# Copyright (C) 2011 the TigerVNC Team (msgids)
+# Copyright (C) 2011 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 #
 # Alain Portal <alain.portal@free.fr>, 2010
@@ -418,12 +418,12 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:173 vncviewer/ServerDialog.cxx:212
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "Configuration TigerVNC (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "Configuration TuPigVNC (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:174
-msgid "Select a TigerVNC configuration file"
-msgstr "Sélectionner un fichier de configuration TigerVNC"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Sélectionner un fichier de configuration TuPigVNC"
 
 #: vncviewer/ServerDialog.cxx:196 vncviewer/vncviewer.cxx:552
 #, c-format
@@ -437,8 +437,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:213
-msgid "Save the TigerVNC configuration to file"
-msgstr "Enregistrer le fichier de configuration TigerVNC"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "Enregistrer le fichier de configuration TuPigVNC"
 
 #: vncviewer/ServerDialog.cxx:239
 #, c-format
@@ -655,8 +655,8 @@ msgstr "&Informations de connexion…"
 
 #: vncviewer/Viewport.cxx:1285
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC viewer..."
-msgstr "À propos de la visionneuse &TigerVNC…"
+msgid "About &TuPigVNC viewer..."
+msgstr "À propos de la visionneuse &TuPigVNC…"
 
 #: vncviewer/Viewport.cxx:1374
 msgid "VNC connection info"
@@ -708,8 +708,8 @@ msgstr "Échec de saisie souris %i"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
 #: vncviewer/vncviewer.cxx:406 vncviewer/vncviewer.desktop.in.in:3
-msgid "TigerVNC Viewer"
-msgstr "Visionneuse TigerVNC"
+msgid "TuPigVNC Viewer"
+msgstr "Visionneuse TuPigVNC"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:5
@@ -721,20 +721,20 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Virtual Network Computing (VNC) est un système d'affichage à distance qui permet de visualiser et d'interagir avec un environnement de bureau virtuel exécuté sur un autre ordinateur du réseau. À l'aide de VNC, vous pouvez exécuter des applications graphiques sur une machine distante et envoyer uniquement l'affichage de ces applications à votre périphérique local. Ce package contient un client qui vous permettra de vous connecter à d'autres bureaux exécutant un serveur VNC. VNC est indépendant de la plate-forme et prend en charge divers systèmes d'exploitation et architectures en tant que serveurs et clients."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC est une version optimisée pour la vitesse de VNC basée sur le code de RealVNC 4 et X.org. TigerVNC a commencé comme une réécriture de TightVNC pour les plates-formes Unix et Linux, puis il a pris son autonomie début de 2009 afin que TightVNC puisse se concentrer sur les plates-formes Windows. TigerVNC prend en charge une variante de l'encodage Tight qui tire sa rapidité de l'utilisation du codec JPEG libjpeg-turbo."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC est une version optimisée pour la vitesse de VNC basée sur le code de RealVNC 4 et X.org. TuPigVNC a commencé comme une réécriture de TightVNC pour les plates-formes Unix et Linux, puis il a pris son autonomie début de 2009 afin que TightVNC puisse se concentrer sur les plates-formes Windows. TuPigVNC prend en charge une variante de l'encodage Tight qui tire sa rapidité de l'utilisation du codec JPEG libjpeg-turbo."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC Viewer connection to a CentOS machine"
-msgstr "Connexion de TigerVNC Viewer à une machine CentOS"
+msgid "TuPigVNC Viewer connection to a CentOS machine"
+msgstr "Connexion de TuPigVNC Viewer à une machine CentOS"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC Viewer connection to a macOS machine"
-msgstr "Connexion de TigerVNC Viewer à une machine macOS"
+msgid "TuPigVNC Viewer connection to a macOS machine"
+msgstr "Connexion de TuPigVNC Viewer à une machine macOS"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC Viewer connection to a Windows machine"
-msgstr "Connexion de TigerVNC Viewer à une machine Windows"
+msgid "TuPigVNC Viewer connection to a Windows machine"
+msgstr "Connexion de TuPigVNC Viewer à une machine Windows"
 
 #: vncviewer/parameters.cxx:308 vncviewer/parameters.cxx:333
 #: vncviewer/parameters.cxx:350 vncviewer/parameters.cxx:390
@@ -852,15 +852,15 @@ msgstr "X Input 2 indisponible ou de version incompatible. Le tactile ne sera pa
 #: vncviewer/vncviewer.cxx:107
 #, c-format
 msgid ""
-"TigerVNC Viewer v%s\n"
+"TuPigVNC Viewer v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC Team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC Team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"Visionneuse TigerVNC v%s\n"
+"Visionneuse TuPigVNC v%s\n"
 "Compilé sur : %s\n"
-"Copyright © 1999-%d L’équipe de TigerVNC et beaucoup d’autres (voir README.rst)\n"
-"Voir https://www.tigervnc.org pour plus d’informations sur TigerVNC."
+"Copyright © 1999-%d L’équipe de TuPigVNC et beaucoup d’autres (voir README.rst)\n"
+"Voir https://github.com/TuPig/TuPigVNC pour plus d’informations sur TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:161
 #, c-format
@@ -874,8 +874,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/vncviewer.cxx:177
-msgid "About TigerVNC Viewer"
-msgstr "À propos de la visionneuse TigerVNC"
+msgid "About TuPigVNC Viewer"
+msgstr "À propos de la visionneuse TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:198
 msgid "Internal FLTK error. Exiting."
@@ -894,13 +894,13 @@ msgstr ""
 
 #: vncviewer/vncviewer.cxx:248 vncviewer/vncviewer.cxx:260
 #, c-format
-msgid "Error starting new TigerVNC Viewer: %s"
-msgstr "Une erreur a démarré une nouvelle visionneuse TigerVNC : %s"
+msgid "Error starting new TuPigVNC Viewer: %s"
+msgstr "Une erreur a démarré une nouvelle visionneuse TuPigVNC : %s"
 
 #: vncviewer/vncviewer.cxx:269
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC Viewer will now exit."
-msgstr "Signal de fin %d reçu. La visionneuse TigerVNC va se fermer."
+msgid "Termination signal %d has been received. TuPigVNC Viewer will now exit."
+msgstr "Signal de fin %d reçu. La visionneuse TuPigVNC va se fermer."
 
 #: vncviewer/vncviewer.cxx:415
 msgid "Yes"

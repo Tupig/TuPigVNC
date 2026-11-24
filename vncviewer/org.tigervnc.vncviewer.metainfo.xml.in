@@ -10,67 +10,49 @@
   <id>org.tigervnc.vncviewer</id>
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-2.0-or-later</project_license>
-  <name>TigerVNC</name>
-  <summary>Connect to VNC server and display remote desktop</summary>
+  <name>TuPigVNC</name>
+  <summary>连接到 VNC 服务器并显示远程桌面</summary>
   <content_rating type="oars-1.1"/>
   <description>
     <p>
-      Virtual Network Computing (VNC) is a remote display system that allows you to view and interact with a virtual desktop environment running on another computer on the network.
-      Using VNC, you can run graphical applications on a remote machine and send only the display from these applications to your local device.
-      This package contains a client which will enable you to connect to other desktops running a VNC server.
-      VNC is platform-independent and supports various operating systems and architectures as both servers and clients.
+      虚拟网络计算（VNC）是一种远程显示系统，允许用户查看并操作运行在网络中另一台计算机上的虚拟桌面环境。
+      借助 VNC，用户可以在远程计算机上运行图形应用程序，并仅将这些应用程序的显示内容发送至本地设备。
+      本软件包包含一个客户端，可连接到其他运行 VNC 服务器的桌面。
+      VNC 与平台无关，可作为服务器与客户端运行于多种操作系统和体系结构之上。
     </p>
     <p>
-      TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases.
-      TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms.
-      TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec.
+      TuPigVNC 是基于 RealVNC 4 与 X.org 代码库构建的高速 VNC 实现。
+      TuPigVNC 最初是 TightVNC 在 Unix 与 Linux 平台上的下一代开发工作，后于 2009 年初从父项目中分离，以便 TightVNC 专注于 Windows 平台。
+      TuPigVNC 支持一种经过改进的 Tight 编码，借助 libjpeg-turbo JPEG 编解码器实现了显著加速。
     </p>
   </description>
 
   <launchable type="desktop-id">vncviewer.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <caption>TigerVNC connection to a CentOS machine</caption>
-      <image>https://raw.githubusercontent.com/TigerVNC/tigervnc/741d3edbfab65eda6f033078bc06347fe244ea6a/vncviewer/metainfo/tigervnc-connection-linux.jpg</image>
+      <caption>TuPigVNC 连接到 CentOS 机器</caption>
+      <image>https://raw.githubusercontent.com/TuPig/TuPigVNC/main/vncviewer/metainfo/tigervnc-connection-linux.jpg</image>
     </screenshot>
     <screenshot>
-      <caption>TigerVNC connection to a macOS machine</caption>
-      <image>https://raw.githubusercontent.com/TigerVNC/tigervnc/741d3edbfab65eda6f033078bc06347fe244ea6a/vncviewer/metainfo/tigervnc-connection-macos.jpg</image>
+      <caption>TuPigVNC 连接到 macOS 机器</caption>
+      <image>https://raw.githubusercontent.com/TuPig/TuPigVNC/main/vncviewer/metainfo/tigervnc-connection-macos.jpg</image>
     </screenshot>
     <screenshot>
-      <caption>TigerVNC connection to a Windows machine</caption>
-      <image>https://raw.githubusercontent.com/TigerVNC/tigervnc/741d3edbfab65eda6f033078bc06347fe244ea6a/vncviewer/metainfo/tigervnc-connection-windows.jpg</image>
+      <caption>TuPigVNC 连接到 Windows 机器</caption>
+      <image>https://raw.githubusercontent.com/TuPig/TuPigVNC/main/vncviewer/metainfo/tigervnc-connection-windows.jpg</image>
     </screenshot>
   </screenshots>
   <!-- developer_name tag deprecated with Appstream 1.0 -->
-  <developer_name>The TigerVNC team</developer_name>
+  <developer_name>TuPigVNC 团队</developer_name>
   <developer id="org.tigervnc">
-    <name>The TigerVNC team</name>
+    <name>TuPigVNC 团队</name>
   </developer>
-  <url type="homepage">https://tigervnc.org</url>
-  <url type="bugtracker">https://github.com/TigerVNC/tigervnc/issues</url>
-  <url type="vcs-browser">https://github.com/TigerVNC/tigervnc</url>
+  <url type="homepage">https://github.com/TuPig/TuPigVNC</url>
+  <url type="bugtracker">https://github.com/TuPig/TuPigVNC/issues</url>
+  <url type="vcs-browser">https://github.com/TuPig/TuPigVNC</url>
   <releases>
-    <release version="1.16.2" date="2026-03-26">
-      <url>https://github.com/TigerVNC/tigervnc/releases/tag/v1.16.2</url>
-    </release>
-    <release version="1.16.1" date="2026-03-25">
-      <url>https://github.com/TigerVNC/tigervnc/releases/tag/v1.16.1</url>
-    </release>
-    <release version="1.16.0" date="2026-01-27">
-      <url>https://github.com/TigerVNC/tigervnc/releases/tag/v1.16.0</url>
-    </release>
-    <release version="1.15.0" date="2025-02-17">
-      <url>https://github.com/TigerVNC/tigervnc/releases/tag/v1.15.0</url>
-    </release>
-    <release version="1.14.0" date="2024-07-24">
-      <url>https://github.com/TigerVNC/tigervnc/releases/tag/v1.14.0</url>
-    </release>
-    <release version="1.13.0" date="2023-02-08">
-      <url>https://github.com/TigerVNC/tigervnc/releases/tag/v1.13.0</url>
-    </release>
-    <release version="1.12.0" date="2021-11-10">
-      <url>https://github.com/TigerVNC/tigervnc/releases/tag/v1.12.0</url>
+    <release version="0.0.1" date="2026-11-24">
+      <url>https://github.com/TuPig/TuPigVNC/releases/tag/v0.0.1</url>
     </release>
   </releases>
 </component>

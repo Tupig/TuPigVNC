@@ -1,4 +1,4 @@
-# SELinux module for TigerVNC's vncsession
+# SELinux module for TuPigVNC's vncsession
 #
 # This will install the policy module, but not load it. To apply
 # it you should also run:

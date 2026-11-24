@@ -28,6 +28,7 @@
 #include <stdexcept>
 
 #include <core/LogWriter.h>
+#include <core/UpdateChecker.h>
 #include <core/i18n.h>
 #include <core/string.h>
 
@@ -83,7 +84,7 @@ static core::LogWriter vlog("Viewport");
 
 enum { ID_DISCONNECT, ID_FULLSCREEN, ID_MINIMIZE, ID_RESIZE,
        ID_CTRL, ID_ALT, ID_CTRLALTDEL,
-       ID_REFRESH, ID_OPTIONS, ID_INFO, ID_ABOUT };
+       ID_REFRESH, ID_OPTIONS, ID_INFO, ID_ABOUT, ID_CHECKUPDATE };
 
 // Used for fake key presses from the menu
 static const int FAKE_CTRL_KEY_CODE = 0x10001;
@@ -930,15 +931,15 @@ void Viewport::initContextMenu()
 {
   contextMenu->clear();
 
-  fltk_menu_add(contextMenu, C_("ContextMenu|", "Disconn&ect"),
+  fltk_menu_add(contextMenu, C_("ContextMenu|", "⏻ Disconn&ect"),
                 0, nullptr, (void*)ID_DISCONNECT, FL_MENU_DIVIDER);
 
-  fltk_menu_add(contextMenu, C_("ContextMenu|", "&Full screen"),
+  fltk_menu_add(contextMenu, C_("ContextMenu|", "⛶ &Full screen"),
                 0, nullptr, (void*)ID_FULLSCREEN,
                 FL_MENU_TOGGLE | (window()->fullscreen_active()?FL_MENU_VALUE:0));
-  fltk_menu_add(contextMenu, C_("ContextMenu|", "Minimi&ze"),
+  fltk_menu_add(contextMenu, C_("ContextMenu|", "− Minimi&ze"),
                 0, nullptr, (void*)ID_MINIMIZE, 0);
-  fltk_menu_add(contextMenu, C_("ContextMenu|", "Resize &window to session"),
+  fltk_menu_add(contextMenu, C_("ContextMenu|", "⇲ Resize &window to session"),
                 0, nullptr, (void*)ID_RESIZE,
                 (window()->fullscreen_active()?FL_MENU_INACTIVE:0) |
                 FL_MENU_DIVIDER);
@@ -950,17 +951,19 @@ void Viewport::initContextMenu()
                 0, nullptr, (void*)ID_ALT,
                 FL_MENU_TOGGLE | (menuAltKey?FL_MENU_VALUE:0));
 
-  fltk_menu_add(contextMenu, C_("ContextMenu|", "Send Ctrl-Alt-&Del"),
+  fltk_menu_add(contextMenu, C_("ContextMenu|", "⌨ Send Ctrl-Alt-&Del"),
                 0, nullptr, (void*)ID_CTRLALTDEL, FL_MENU_DIVIDER);
 
-  fltk_menu_add(contextMenu, C_("ContextMenu|", "&Refresh screen"),
+  fltk_menu_add(contextMenu, C_("ContextMenu|", "⟳ &Refresh screen"),
                 0, nullptr, (void*)ID_REFRESH, FL_MENU_DIVIDER);
 
-  fltk_menu_add(contextMenu, C_("ContextMenu|", "&Options..."),
+  fltk_menu_add(contextMenu, C_("ContextMenu|", "⚙ &Options..."),
                 0, nullptr, (void*)ID_OPTIONS, 0);
-  fltk_menu_add(contextMenu, C_("ContextMenu|", "Connection &info..."),
+  fltk_menu_add(contextMenu, C_("ContextMenu|", "ℹ Connection &info..."),
                 0, nullptr, (void*)ID_INFO, 0);
-  fltk_menu_add(contextMenu, C_("ContextMenu|", "About &TigerVNC..."),
+  fltk_menu_add(contextMenu, C_("ContextMenu|", "⤓ Check for &updates..."),
+                0, nullptr, (void*)ID_CHECKUPDATE, FL_MENU_DIVIDER);
+  fltk_menu_add(contextMenu, C_("ContextMenu|", "ⓘ About &TuPigVNC..."),
                 0, nullptr, (void*)ID_ABOUT, 0);
 }
 #pragma GCC diagnostic pop
@@ -1008,7 +1011,7 @@ void Viewport::popupContextMenu()
   case ID_MINIMIZE:
 #ifdef __APPLE__
     // FIXME: Workaround for not being able to minimize in fullscreen
-    // https://github.com/TigerVNC/tigervnc/pull/1813
+    // https://github.com/TuPig/TuPigVNC/pull/1813
     if (window()->fullscreen_active())
       cocoa_enable_minimize(window());
 #endif
@@ -1055,7 +1058,60 @@ void Viewport::popupContextMenu()
   case ID_ABOUT:
     about_vncviewer();
     break;
+  case ID_CHECKUPDATE:
+    checkForUpdates();
+    break;
   }
+}
+
+void Viewport::checkForUpdates()
+{
+  core::ReleaseInfo info;
+  std::string error;
+
+  fl_message_title(_("Check for Updates"));
+  fl_message(_("Checking for updates, please wait..."));
+
+  if (!core::UpdateChecker::fetchLatestRelease(&info, &error)) {
+    fl_alert(_("Failed to check for updates: %s"), error.c_str());
+    return;
+  }
+
+  if (!core::UpdateChecker::isNewer(info.version, PACKAGE_VERSION)) {
+    fl_message(_("You are running the latest version (%s)."),
+               PACKAGE_VERSION);
+    return;
+  }
+
+  int choice = fl_choice(
+      _("A new version %s is available (current version %s).\n\n"
+        "The update will be downloaded and installed automatically.\n"
+        "The program will restart after installation. Continue?"),
+      _("Cancel"), _("Update Now"), nullptr,
+      info.version.c_str(), PACKAGE_VERSION);
+  if (choice != 1)
+    return;
+
+  if (info.downloadUrl.empty()) {
+    fl_alert(_("No installer was found for the current platform. "
+               "The download page will be opened."));
+    core::UpdateChecker::openInBrowser(info.htmlUrl);
+    return;
+  }
+
+  fl_message_title(_("Updating"));
+  fl_message(_("Downloading and installing version %s, please wait...\n"
+               "The program will restart automatically after installation."),
+             info.version.c_str());
+
+  if (!core::UpdateChecker::downloadAndInstall(info.downloadUrl,
+                                                info.version, &error)) {
+    fl_alert(_("Update failed: %s"), error.c_str());
+    return;
+  }
+
+  /* 更新脚本已启动，退出当前实例以便替换文件 */
+  exit(0);
 }
 
 void Viewport::handleOptions(void *data)

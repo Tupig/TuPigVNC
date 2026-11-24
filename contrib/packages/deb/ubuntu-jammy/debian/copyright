@@ -2,12 +2,12 @@ This package was packaged for Debian by Brian P. Hinz <bphinz@users.sourceforge.
 on Mon, 28 Oct 2019 21:29:33 +0500 using the tightvnc package as a base.
 
 It was downloaded from:
-	https://www.tigervnc.org/
+	https://github.com/TuPig/TuPigVNC/
 
 COPYRIGHT:
 ==========
 
-TigerVNC is
+TuPigVNC is
 
         Copyright (C) 1999 AT&T Laboratories Cambridge
         Copyright (C) 2002-2005 RealVNC Ltd.
@@ -22,12 +22,12 @@ TigerVNC is
         Copyright (C) 2009-2011 D. R. Commander
         Copyright (C) 2009-2011 Pierre Ossman for Cendio AB
         Copyright (C) 2004, 2009-2011 Red Hat, Inc.
-        Copyright (C) 2009-2024 TigerVNC Team
+        Copyright (C) 2009-2024 TuPigVNC Team
         All Rights Reserved.
 
 This software is distributed under the GNU General Public Licence as published
 by the Free Software Foundation.  See the file LICENCE.TXT for the conditions
-under which this software is made available.  TigerVNC also contains code from
+under which this software is made available.  TuPigVNC also contains code from
 other sources.  See the Acknowledgements section below, and the individual
 source files, for details of the conditions under which they are made
 available.

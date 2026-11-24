@@ -13,3 +13,16 @@ config.h
 cmake_install.cmake
 cmake_uninstall.cmake
 install_manifest.txt
+
+# Claude 相关文件不提交
+.claude/
+
+# TODO 清单不提交
+TODO.md
+
+# 日志目录只保留目录本身，目录内文件不提交
+log/*
+!log/.gitkeep
+
+# 翻译备份文件
+po/*.bak*

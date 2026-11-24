@@ -1,5 +1,5 @@
 # Serbian translation for tigervnc.
-# Copyright © 2020 the TigerVNC Team (msgids)
+# Copyright © 2020 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 # Мирослав Николић <miroslavnikolic@rocketmail.com>, 2016-2026.
 msgid ""
@@ -139,13 +139,13 @@ msgstr "Притисните „%sM“ да отворите приручни и
 
 #: vncviewer/DesktopWindow.cxx:312
 #, c-format
-msgid "%s - TigerVNC (keyboard grabbed)"
-msgstr "%s – TigerVNC (тастата је радна"
+msgid "%s - TuPigVNC (keyboard grabbed)"
+msgstr "%s – TuPigVNC (тастата је радна"
 
 #: vncviewer/DesktopWindow.cxx:314
 #, c-format
-msgid "%s - TigerVNC"
-msgstr "%s – TigerVNC"
+msgid "%s - TuPigVNC"
+msgstr "%s – TuPigVNC"
 
 #: vncviewer/DesktopWindow.cxx:705
 msgid "Adjusting window size to avoid accidental full-screen request"
@@ -230,8 +230,8 @@ msgid "Monitor index %d does not exist"
 msgstr "Индекс монитора %d не постоји"
 
 #: vncviewer/OptionsDialog.cxx:70
-msgid "TigerVNC options"
-msgstr "Опције TigerVNC-а"
+msgid "TuPigVNC options"
+msgstr "Опције TuPigVNC-а"
 
 #: vncviewer/OptionsDialog.cxx:104 vncviewer/ServerDialog.cxx:110
 #: vncviewer/vncviewer.cxx:397
@@ -551,11 +551,11 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:175 vncviewer/ServerDialog.cxx:215
-msgid "TigerVNC configuration (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
 msgstr "Подешавање ТиграВНЦ (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:176
-msgid "Select a TigerVNC configuration file"
+msgid "Select a TuPigVNC configuration file"
 msgstr "Изаберите датотеку подешавања ТиграВНЦ"
 
 #: vncviewer/ServerDialog.cxx:198 vncviewer/vncviewer.cxx:517
@@ -570,7 +570,7 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:216
-msgid "Save the TigerVNC configuration to file"
+msgid "Save the TuPigVNC configuration to file"
 msgstr "Сачувајте подешавање ТиграВНЦ у датотеку"
 
 #: vncviewer/ServerDialog.cxx:242
@@ -734,8 +734,8 @@ msgstr "Подаци о &вези..."
 
 #: vncviewer/Viewport.cxx:935
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC..."
-msgstr "О &TigerVNC-у..."
+msgid "About &TuPigVNC..."
+msgstr "О &TuPigVNC-у..."
 
 #: vncviewer/Viewport.cxx:1027
 msgid "VNC connection info"
@@ -787,8 +787,8 @@ msgstr "Неуспех хватања уређаја %i"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
 #: vncviewer/vncviewer.desktop.in.in:2
-msgid "TigerVNC"
-msgstr "TigerVNC"
+msgid "TuPigVNC"
+msgstr "TuPigVNC"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:4
@@ -800,26 +800,26 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Виртуелно мрежно рачунарство (VNC) је систем удаљеног приказа који вам омогућава да видте и радите са виртуелним окружењем радне површи које ради на другом рачунару на мрежи. Коришћењем ВМР-а, можете да покрећете графичке програме на удаљеном рачунару и да пошаљете само приказ тих програма вашем локалном уређају. Овај пакет садржи клијента који ће вам омогућити да се повежете са другим радним површима на којима ради ВМР сервер. ВМР је независан од платформе и подржава разне оперативне системе и архитектуре као и сервере и клијенте."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC великобрзинско издање ВНЦ-а засновано на основама „RealVNC“-у 4 и „X.org“ кода. TigerVNC је започео као развојно залагање следеће генерације за „TightVNC“ на Јуникс и Линукс платформама, али се издваја из свог родитељског пројекта у раним 2009 тако да се „TightVNC“ може фокусирати на Виндоуз платформама. TigerVNC подржава варијанту „Tight“ кодирања тако да је поприлично убрзан коришћењем „libjpeg-turbo“ ЈПЕГ кодека."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC великобрзинско издање ВНЦ-а засновано на основама „RealVNC“-у 4 и „X.org“ кода. TuPigVNC је започео као развојно залагање следеће генерације за „TightVNC“ на Јуникс и Линукс платформама, али се издваја из свог родитељског пројекта у раним 2009 тако да се „TightVNC“ може фокусирати на Виндоуз платформама. TuPigVNC подржава варијанту „Tight“ кодирања тако да је поприлично убрзан коришћењем „libjpeg-turbo“ ЈПЕГ кодека."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC connection to a CentOS machine"
-msgstr "Веза TigerVNC-а са CentOS рачунаром"
+msgid "TuPigVNC connection to a CentOS machine"
+msgstr "Веза TuPigVNC-а са CentOS рачунаром"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC connection to a macOS machine"
-msgstr "Веза TigerVNC-а са macOS рачунаром"
+msgid "TuPigVNC connection to a macOS machine"
+msgstr "Веза TuPigVNC-а са macOS рачунаром"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC connection to a Windows machine"
-msgstr "Веза TigerVNC-а са Виндоуз рачунаром"
+msgid "TuPigVNC connection to a Windows machine"
+msgstr "Веза TuPigVNC-а са Виндоуз рачунаром"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:46
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:48
-msgid "The TigerVNC team"
-msgstr "Тим TigerVNC-а"
+msgid "The TuPigVNC team"
+msgstr "Тим TuPigVNC-а"
 
 #: vncviewer/parameters.cxx:386 vncviewer/parameters.cxx:411
 #: vncviewer/parameters.cxx:428 vncviewer/parameters.cxx:468
@@ -936,19 +936,19 @@ msgstr "„X Input 2“ (или новије) није доступно. Пок�
 #: vncviewer/vncviewer.cxx:103
 #, c-format
 msgid ""
-"TigerVNC v%s\n"
+"TuPigVNC v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC и%s\n"
+"TuPigVNC и%s\n"
 "Изграђен: %s\n"
-"Ауторска права © 1999-%d Тим TigerVNC-а и многи други (видите „README.rst“)\n"
-"Посетите „https://www.tigervnc.org“ да сазнате више о програму."
+"Ауторска права © 1999-%d Тим TuPigVNC-а и многи други (видите „README.rst“)\n"
+"Посетите „https://github.com/TuPig/TuPigVNC“ да сазнате више о програму."
 
 #: vncviewer/vncviewer.cxx:173
-msgid "About TigerVNC"
-msgstr "О TigerVNC-у"
+msgid "About TuPigVNC"
+msgstr "О TuPigVNC-у"
 
 #: vncviewer/vncviewer.cxx:195
 msgid "Internal FLTK error. Exiting."
@@ -972,7 +972,7 @@ msgstr "Грешка покретања нове везе: %s"
 
 #: vncviewer/vncviewer.cxx:266
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC will now exit."
+msgid "Termination signal %d has been received. TuPigVNC will now exit."
 msgstr "Примљен је сигнал за окончавање %d. Програм ће сада изаћи."
 
 #: vncviewer/vncviewer.cxx:395
@@ -1041,14 +1041,14 @@ msgid ""
 "Options:\n"
 "\n"
 "  -display Xdisplay  - Specifies the X display for the viewer window\n"
-"  -geometry geometry - Initial position of the main TigerVNC window. See the\n"
+"  -geometry geometry - Initial position of the main TuPigVNC window. See the\n"
 "                       man page for details.\n"
 msgstr ""
 "\n"
 "Опције:\n"
 "\n"
 "  -display Xdisplay  – Наводи X приказ за прозор прегледача\n"
-"  -geometry geometry – почетни положај главног прозора TigerVNC-а. Видите\n"
+"  -geometry geometry – почетни положај главног прозора TuPigVNC-а. Видите\n"
 "                       страницу упутства за више о томе.\n"
 
 #: vncviewer/vncviewer.cxx:472
@@ -1082,8 +1082,8 @@ msgstr "„~/.vnc“ је застарело, погледајте „man vncvie
 
 #: vncviewer/vncviewer.cxx:557
 #, c-format
-msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TigerVNC location."
-msgstr "„%%APPDATA%%\\vnc“ је застарело, пређите на „%%APPDATA%%\\TigerVNC“."
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC location."
+msgstr "„%%APPDATA%%\\vnc“ је застарело, пређите на „%%APPDATA%%\\TuPigVNC“."
 
 #: vncviewer/vncviewer.cxx:562
 #, c-format
@@ -1197,7 +1197,7 @@ msgstr "Прегледач удаљених радних површи"
 #~ msgid "Send %s"
 #~ msgstr "Пошаљи „%s“"
 
-#~ msgid "TigerVNC viewer"
+#~ msgid "TuPigVNC viewer"
 #~ msgstr "Прегледач ТигарВНЦ"
 
 #~ msgid "Show dot when no cursor"

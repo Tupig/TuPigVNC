@@ -2,14 +2,20 @@
 #ifdef WIN64
 ArchitecturesInstallIn64BitMode=x64
 #endif
-AppName=TigerVNC
-AppVerName=TigerVNC @VERSION@ (@BUILD@)
+AppName=TuPigVNC
+AppVerName=TuPigVNC @VERSION@ (@BUILD@)
 AppVersion=@VERSION@
-AppPublisher=TigerVNC team
-AppPublisherURL=https://tigervnc.org
-DefaultDirName={pf}\TigerVNC
-DefaultGroupName=TigerVNC
+AppPublisher=TuPigVNC team
+AppPublisherURL=https://github.com/TuPig/TuPigVNC
+DefaultDirName={pf}\TuPigVNC
+DefaultGroupName=TuPigVNC
 LicenseFile=@CMAKE_SOURCE_DIR@\LICENCE.TXT
+; 自更新支持：自动关闭并重启正在运行的实例
+CloseApplications=yes
+RestartApplications=yes
+; 静默安装时不在语言选择页停留
+DisableDirPage=auto
+DisableProgramGroupPage=auto
 
 [Files]
 Source: "@CMAKE_BINARY_DIR@\vncviewer\vncviewer.exe"; DestDir: "{app}"; Flags: ignoreversion restartreplace; 
@@ -25,9 +31,9 @@ Source: "@CMAKE_SOURCE_DIR@\LICENCE.TXT"; DestDir: "{app}"; Flags: ignoreversion
 #for {LINGUAS = FileOpen("@CMAKE_SOURCE_DIR@\po\LINGUAS"); !FileEof(LINGUAS); ""} AddLanguage
 
 [Icons]
-Name: "{group}\TigerVNC"; FileName: "{app}\vncviewer.exe";
-Name: "{group}\Listening TigerVNC"; FileName: "{app}\vncviewer.exe"; Parameters: "-listen";
+Name: "{group}\TuPigVNC"; FileName: "{app}\vncviewer.exe";
+Name: "{group}\Listening TuPigVNC"; FileName: "{app}\vncviewer.exe"; Parameters: "-listen";
 
 Name: "{group}\License"; FileName: "write.exe"; Parameters: "LICENCE.TXT"; WorkingDir: "{app}"; Flags: "useapppaths"
 Name: "{group}\Read Me"; FileName: "write.exe"; Parameters: "README.rst"; WorkingDir: "{app}"; Flags: "useapppaths"
-Name: "{group}\Uninstall TigerVNC"; FileName: "{uninstallexe}"; WorkingDir: "{app}";
+Name: "{group}\Uninstall TuPigVNC"; FileName: "{uninstallexe}"; WorkingDir: "{app}";

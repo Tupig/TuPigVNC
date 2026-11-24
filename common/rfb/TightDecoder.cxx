@@ -101,7 +101,7 @@ bool TightDecoder::readRect(const core::Rect& r, rdr::InStream* is,
     return true;
   }
 
-  // FIXME: This check should be for all Tight types, but TigerVNC
+  // FIXME: This check should be for all Tight types, but TuPigVNC
   //        servers until 1.16.0 were buggy and sent larger rects for
   //        fill type rectangles.
   if (r.width() > TIGHT_MAX_WIDTH)

@@ -20,7 +20,7 @@ import struct
 
 
 def pixel(red, green, blue):
-    # rgb888 parsed by TigerVNC is little-endian 32bpp, with an unused byte.
+    # rgb888 parsed by TuPigVNC is little-endian 32bpp, with an unused byte.
     return bytes((blue, green, red, 0))
 
 

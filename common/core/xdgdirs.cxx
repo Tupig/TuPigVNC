@@ -98,12 +98,12 @@ static const char* getvncdir(bool userDir, const char *xdg_env, const char *xdg_
   if (ret == FALSE)
     return nullptr;
 
-  if (strlen(dir) + strlen("\\TigerVNC") >= sizeof(dir))
+  if (strlen(dir) + strlen("\\TuPigVNC") >= sizeof(dir))
     return nullptr;
   if (strlen(legacy) + strlen("\\vnc") >= sizeof(legacy))
     return nullptr;
 
-  strcat(dir, "\\TigerVNC");
+  strcat(dir, "\\TuPigVNC");
   strcat(legacy, "\\vnc");
 #endif
   return (stat(dir, &st) != 0 && stat(legacy, &st) == 0) ? legacy : dir;

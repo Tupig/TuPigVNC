@@ -1,5 +1,5 @@
 # Chinese (Traditional) translation of tigervnc
-# Copyright (C) 2019 the TigerVNC Team (msgids)
+# Copyright (C) 2019 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 #
 # pan93412 <pan93412@gmail.com>, 2019.
@@ -240,8 +240,8 @@ msgid "Unexpected character '%c'"
 msgstr "遇到非預期字元「%c」"
 
 #: vncviewer/OptionsDialog.cxx:64
-msgid "TigerVNC options"
-msgstr "TigerVNC 選項"
+msgid "TuPigVNC options"
+msgstr "TuPigVNC 選項"
 
 #: vncviewer/OptionsDialog.cxx:97 vncviewer/ServerDialog.cxx:107
 #: vncviewer/vncviewer.cxx:397
@@ -481,12 +481,12 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:176 vncviewer/ServerDialog.cxx:216
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "TigerVNC 組態設定 (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "TuPigVNC 組態設定 (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:177
-msgid "Select a TigerVNC configuration file"
-msgstr "請選取 TigerVNC 組態設定檔"
+msgid "Select a TuPigVNC configuration file"
+msgstr "請選取 TuPigVNC 組態設定檔"
 
 #: vncviewer/ServerDialog.cxx:199 vncviewer/vncviewer.cxx:517
 #, c-format
@@ -500,8 +500,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:217
-msgid "Save the TigerVNC configuration to file"
-msgstr "將 TigerVNC 組態設定儲存為檔案"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "將 TuPigVNC 組態設定儲存為檔案"
 
 #: vncviewer/ServerDialog.cxx:243
 #, c-format
@@ -658,8 +658,8 @@ msgstr "連線資訊(&I)…"
 
 #: vncviewer/Viewport.cxx:734
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC viewer..."
-msgstr "關於 TigerVNC 檢視器(&T)…"
+msgid "About &TuPigVNC viewer..."
+msgstr "關於 TuPigVNC 檢視器(&T)…"
 
 #: vncviewer/Viewport.cxx:830
 msgid "VNC connection info"
@@ -710,8 +710,8 @@ msgid "Failure grabbing device %i"
 msgstr "擷取裝置 %i 失敗"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
-msgid "TigerVNC Viewer"
-msgstr "TigerVNC 檢視器"
+msgid "TuPigVNC Viewer"
+msgstr "TuPigVNC 檢視器"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:5
@@ -723,26 +723,26 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Virtual Network Computing (VNC) 是個遠端顯示系統，讓您能檢視網路上其他電腦的虛擬桌面環境並與之互動。您可以使用 VNC 來執行圖形化的應用程式，並只回傳這些應用程式的顯示畫面到您的本地裝置。本套件包含 VNC 用戶端，讓您可以連線到其他執行著 VNC 伺服器的桌面。VNC 不受平台侷限，無論是伺服器還是用戶端，都支援各種作業系統和架構。"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC 是以 RealVNC 4 和 X.org 程式碼為基礎打造的 VNC 高速版本。TigerVNC 原先是 TightVNC 在 Unix 和 Linux 平台上的下一代開發成果，但在 2009 年初從原本的專案中分離，讓 TigerVNC 得以專注在 Windows 平台上。TigerVNC 支援 Tight 編碼的變體版本，透過 libjpeg-turbo JPEG 編解碼器，使其速度獲得相當大的提升。"
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC 是以 RealVNC 4 和 X.org 程式碼為基礎打造的 VNC 高速版本。TuPigVNC 原先是 TightVNC 在 Unix 和 Linux 平台上的下一代開發成果，但在 2009 年初從原本的專案中分離，讓 TuPigVNC 得以專注在 Windows 平台上。TuPigVNC 支援 Tight 編碼的變體版本，透過 libjpeg-turbo JPEG 編解碼器，使其速度獲得相當大的提升。"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC viewer connection to a CentOS machine"
-msgstr "連線至 CentOS 機器的 TigerVNC 檢視器"
+msgid "TuPigVNC viewer connection to a CentOS machine"
+msgstr "連線至 CentOS 機器的 TuPigVNC 檢視器"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC viewer connection to a macOS machine"
-msgstr "連線至 macOS 機器的 TigerVNC 檢視器"
+msgid "TuPigVNC viewer connection to a macOS machine"
+msgstr "連線至 macOS 機器的 TuPigVNC 檢視器"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC viewer connection to a Windows machine"
-msgstr "連線至 Windows 機器的 TigerVNC 檢視器"
+msgid "TuPigVNC viewer connection to a Windows machine"
+msgstr "連線至 Windows 機器的 TuPigVNC 檢視器"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:46
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:48
-msgid "The TigerVNC team"
-msgstr "TigerVNC 團隊"
+msgid "The TuPigVNC team"
+msgstr "TuPigVNC 團隊"
 
 #: vncviewer/parameters.cxx:319 vncviewer/parameters.cxx:344
 #: vncviewer/parameters.cxx:361 vncviewer/parameters.cxx:401
@@ -859,15 +859,15 @@ msgstr "不支援 X Input 2.2（或新版）。將不支援觸控手勢。"
 #: vncviewer/vncviewer.cxx:104
 #, c-format
 msgid ""
-"TigerVNC viewer v%s\n"
+"TuPigVNC viewer v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC 檢視器 v%s\n"
+"TuPigVNC 檢視器 v%s\n"
 "編譯時間：%s\n"
-"著作權所有 (C) 1999-%d TigerVNC 團隊以及其他人 (詳閱 README.rst)\n"
-"前往 https://www.tigervnc.org 取得 TigerVNC 的相關資訊。"
+"著作權所有 (C) 1999-%d TuPigVNC 團隊以及其他人 (詳閱 README.rst)\n"
+"前往 https://github.com/TuPig/TuPigVNC 取得 TuPigVNC 的相關資訊。"
 
 #: vncviewer/vncviewer.cxx:158
 #, c-format
@@ -881,8 +881,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/vncviewer.cxx:174
-msgid "About TigerVNC Viewer"
-msgstr "關於 TigerVNC 檢視器"
+msgid "About TuPigVNC Viewer"
+msgstr "關於 TuPigVNC 檢視器"
 
 #: vncviewer/vncviewer.cxx:195
 msgid "Internal FLTK error. Exiting."
@@ -901,17 +901,17 @@ msgstr ""
 
 #: vncviewer/vncviewer.cxx:245 vncviewer/vncviewer.cxx:257
 #, c-format
-msgid "Error starting new TigerVNC Viewer: %s"
-msgstr "啟動新的 TigerVNC 檢視器時發生錯誤：%s"
+msgid "Error starting new TuPigVNC Viewer: %s"
+msgstr "啟動新的 TuPigVNC 檢視器時發生錯誤：%s"
 
 #: vncviewer/vncviewer.cxx:266
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC viewer will now exit."
-msgstr "接收到終止信號 %d。TigerVNC 檢視器現將結束。"
+msgid "Termination signal %d has been received. TuPigVNC viewer will now exit."
+msgstr "接收到終止信號 %d。TuPigVNC 檢視器現將結束。"
 
 #: vncviewer/vncviewer.cxx:391 vncviewer/vncviewer.desktop.in.in:3
-msgid "TigerVNC viewer"
-msgstr "TigerVNC 檢視器"
+msgid "TuPigVNC viewer"
+msgstr "TuPigVNC 檢視器"
 
 #: vncviewer/vncviewer.cxx:395
 msgid "Yes"
@@ -1020,8 +1020,8 @@ msgstr "~/.vnc 已廢棄，請查閱「man vncviewer」了解可以遷移到的�
 
 #: vncviewer/vncviewer.cxx:557
 #, c-format
-msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TigerVNC location."
-msgstr "%%APPDATA%%\\vnc 已廢棄，請改到 %%APPDATA%%\\TigerVNC 位置。"
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC location."
+msgstr "%%APPDATA%%\\vnc 已廢棄，請改到 %%APPDATA%%\\TuPigVNC 位置。"
 
 #: vncviewer/vncviewer.cxx:562
 #, c-format

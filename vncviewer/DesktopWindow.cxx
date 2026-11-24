@@ -299,9 +299,9 @@ void DesktopWindow::updateCaption()
   // FIXME: All of this consideres bytes, not characters
 
   if (keyboardGrabbed)
-    labelFormat = _("%s - TigerVNC (keyboard grabbed)");
+    labelFormat = _("%s - TuPigVNC (keyboard grabbed)");
   else
-    labelFormat = _("%s - TigerVNC");
+    labelFormat = _("%s - TuPigVNC");
 
   // Ignore the length of '%s' since it is
   // a format marker which won't take up space

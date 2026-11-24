@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1D4ED8"/>
+      <stop offset="55%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="snout" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C084FC"/>
+      <stop offset="100%" stop-color="#A855F7"/>
+    </linearGradient>
+  </defs>
+  <!-- 圆角背景 -->
+  <rect x="0" y="0" width="1024" height="1024" rx="225" ry="225" fill="url(#bg)"/>
+  <!-- 显示器外框 -->
+  <rect x="228" y="208" width="568" height="472" rx="52" ry="52"
+        fill="none" stroke="#FFFFFF" stroke-width="34"/>
+  <!-- 显示器支架 -->
+  <path d="M 448 680 L 448 748 L 576 748 L 576 680" fill="none"
+        stroke="#FFFFFF" stroke-width="34" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- 显示器底座 -->
+  <line x1="368" y1="790" x2="656" y2="790" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round"/>
+  <!-- 猪鼻子 -->
+  <rect x="404" y="392" width="216" height="168" rx="84" ry="84" fill="url(#snout)"/>
+  <!-- 鼻孔 -->
+  <ellipse cx="466" cy="476" rx="30" ry="42" fill="#7C3AED"/>
+  <ellipse cx="558" cy="476" rx="30" ry="42" fill="#7C3AED"/>
+  <!-- 网络波纹 -->
+  <path d="M 300 862 Q 360 826 420 862 T 540 862 T 660 862 T 780 862"
+        fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round" opacity="0.95"/>
+</svg>

@@ -1,4 +1,4 @@
-Building TigerVNC with MSVC
+Building TuPigVNC with MSVC
 ===========================
 
 MinGW is the supported toolchain on Windows. The headers in include/

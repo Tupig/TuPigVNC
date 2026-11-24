@@ -37,7 +37,7 @@ namespace core {
    * Get VNC config directory. On Unix-like systems, this is either:
    * - $XDG_CONFIG_HOME/tigervnc
    * - $HOME/.config/tigervnc
-   * On Windows, this is simply %APPDATA%/TigerVNC/.
+   * On Windows, this is simply %APPDATA%/TuPigVNC/.
    *
    * Returns NULL on failure.
    */
@@ -48,7 +48,7 @@ namespace core {
    * On Unix-like systems, this is either:
    * - $XDG_DATA_HOME/tigervnc
    * - $HOME/.local/share/tigervnc
-   * On Windows, this is simply %APPDATA%/TigerVNC/.
+   * On Windows, this is simply %APPDATA%/TuPigVNC/.
    *
    * Returns NULL on failure.
    */
@@ -58,7 +58,7 @@ namespace core {
    * Get VNC state (logs) directory. On Unix-like systems, this is either:
    * - $XDG_STATE_HOME/tigervnc
    * - $HOME/.local/state/tigervnc
-   * On Windows, this is simply %APPDATA%/TigerVNC/.
+   * On Windows, this is simply %APPDATA%/TuPigVNC/.
    *
    * Returns NULL on failure.
    */

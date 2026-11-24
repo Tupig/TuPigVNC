@@ -100,6 +100,9 @@ private:
   void initContextMenu();
   void popupContextMenu();
 
+  /* 检查并执行自更新 */
+  void checkForUpdates();
+
   static void handleOptions(void *data);
 
 private:

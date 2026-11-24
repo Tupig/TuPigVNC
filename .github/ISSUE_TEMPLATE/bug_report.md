@@ -22,13 +22,13 @@ If applicable, add screenshots to help explain your problem.
 
 **Client (please complete the following information):**
  - OS: [e.g. Windows 8.1]
- - VNC client: [e.g. TigerVNC, or UltraVNC]
+ - VNC client: [e.g. TuPigVNC, or UltraVNC]
  - VNC client version: [e.g. 1.8.0]
  - Client downloaded from: [e.g. my Linux distribution]
 
 **Server (please complete the following information):**
  - OS: [e.g. Windows 8.1]
- - VNC server: [e.g. TigerVNC, or UltraVNC]
+ - VNC server: [e.g. TuPigVNC, or UltraVNC]
  - VNC server version: [e.g. 1.8.0]
  - Server downloaded from: [e.g. my Linux distribution]
  - Server was started using: [e.g. `vncserver`]

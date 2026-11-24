@@ -1,203 +1,187 @@
-Test protocol for keyboard handling
+键盘处理测试协议
 ===================================
 
-Platform specific tests/issues are marked with [].
+平台特定的测试/问题以 [] 标注。
 
-These tests are primarily about what is sent over the protocol and some
-may be difficult or impossible to test using normal applications. One
-such case is that xev will see fake KeyRelease events on key repeat,
-even when no such events were sent by the client. In these cases you
-can turn on debug logging in either the client or the server by
-specifying "-Log *:stderr:100".
+这些测试主要关注协议上传输的内容，部分测试使用普通应用程序可能难以或无法完成。其中一个例子是：即使客户端未发送伪造的 KeyRelease 事件，xev 也会在按键重复时看到该事件。此类情况下，可在客户端或服务器上通过指定 "-Log *:stderr:100" 开启调试日志。
 
-We currently have a limitation in Xvnc where it can run out of symbols,
-resulting in nothing being sent to the applications. Just run setxkbmap
-with any layout to reset the symbol table.
+当前 Xvnc 存在一项限制：符号可能耗尽，导致不向应用程序发送任何内容。此时只需使用任意布局运行 setxkbmap 以重置符号表即可。
 
-Client (classic, non-raw, mode)
+客户端（经典模式，非原始模式）
 -------------------------------
 
-- Normal symbols:
+- 普通符号：
 
-  - ASCII characters
-  - Latin 1 character
-  - Unicode BMP characters
-  - Unicode non-BMP characters (does any layout actually have these?)
+  - ASCII 字符
+  - Latin 1 字符
+  - Unicode BMP 字符
+  - Unicode 非 BMP 字符（是否有布局实际使用这些？）
 
-- Dead keys:
+- 死键：
 
-  These are not available on a single layout, so you need to switch to
-  test everything. The useful layouts also differ per platform:
+  这些字符在单一布局中不可用，因此需要切换布局以测试全部内容。各平台的有用布局也有所不同：
 
-    X11: US International for most, Greek for some specific diacretics
-    Win: US International, Czech, Greek Polytonic, Vietnamese
-    OS X: ABC Extended (FIXME: lots of broken keys),
-          Greek (FIXME: cannot be used with TigerVNC)
+    X11：多数为 US International，特定变音符号用希腊语
+    Win：US International、捷克语、希腊语多调、越南语
+    OS X：ABC Extended（待办：大量按键损坏），
+          希腊语（待办：无法与 TuPigVNC 配合使用）
 
-  - Grave
-  - Acute
-  - Circumflex
-  - Tilde
-  - Macron (FIXME: broken on Win)
-  - Breve
-  - Dot above
-  - Dot below
-  - Diaeresis
-  - Ring above
-  - Double acute
-  - Caron
-  - Cedilla
-  - Ogonek
-  - Ypogegrammeni (iota below) (FIXME: broken on Win)
-  - Dialytika tonos [Win] (Diaresis on X11, and maybe OS X?)
-  - Comma above (FIXME: broken on Win)
-  - Reversed comma above (FIXME: broken on Win)
-  - Horn [X11?]
-  - Hook above [Win?]
-  - Hook below [X11?, Win?]
-  - Dakuten (Katakana voiced mark) (Only Input Methods layouts?)
-  - Handakuten (Katakana semi-voiced mark) (Only Input Methods layouts?)
-  - FIXME: Many more that we currently probably don't support
+  - 重音符
+  - 尖音符
+  - 抑扬符
+  - 波浪号
+  - 长音符（待办：Win 上损坏）
+  - 短音符
+  - 上点
+  - 下点
+  - 分音符
+  - 上圈
+  - 双尖音符
+  - 抑扬符（Caron）
+  - 软音符
+  - 反尾形符
+  - 下钩（下iota）（待办：Win 上损坏）
+  - 分音符加尖音符 [Win]（X11 上为分音符，OS X 上或许也是？）
+  - 上逗号（待办：Win 上损坏）
+  - 上反逗号（待办：Win 上损坏）
+  - 角符 [X11？]
+  - 上钩 [Win？]
+  - 下钩 [X11？，Win？]
+  - 浊音符（片假名浊音标记）（仅输入法布局？）
+  - 半浊音符（片假名半浊音标记）（仅输入法布局？）
+  - 待办：还有许多我们目前可能不支持的字符
 
-  - No composition on client
+  - 客户端不进行组合
 
-- Modifiers:
+- 修饰键：
 
-  X11: You can usually toggle Hyper/Super and Compose/Scroll_Lock using
-       XKB options.
+  X11：通常可通过 XKB 选项切换 Hyper/Super 与 Compose/Scroll_Lock。
 
-  - CapsLock, NumLock
-  - Shift, Ctrl
-  - Alt, AltGr, Super [Win, X11]
+  - CapsLock、NumLock
+  - Shift、Ctrl
+  - Alt、AltGr、Super [Win, X11]
   - Ctrl+AltGr [Win]
   - Meta [X11]
-  - Left/right identification (FIXME: broken release for Shift on Win)
-  - CmdL => AltL, CmdR => SuperL, AltL => ModeSwitch, AltR => Level3Shift [OS X]
-  - Hyper sends Super [X11]
+  - 左右识别（待办：Win 上 Shift 释放损坏）
+  - CmdL => AltL、CmdR => SuperL、AltL => ModeSwitch、AltR => Level3Shift [OS X]
+  - Hyper 发送 Super [X11]
 
-  - CapsLock, Shift and AltGr affect symbol lookup
-  - Ctrl does not affect symbol lookup
-  - Ctrl+Alt+<ANY> sends the same symbol as <ANY>
-  - "Shift press, A press, Shift release, A release" should not send "a release"
+  - CapsLock、Shift 与 AltGr 影响符号查找
+  - Ctrl 不影响符号查找
+  - Ctrl+Alt+<任意键> 发送与 <任意键> 相同的符号
+  - “按下 Shift、按下 A、释放 Shift、释放 A”不应发送“释放 a”
 
-- Numpad:
+- 数字键盘：
 
-  - NumLock affects symbol lookup [Win, X11]
-  - Numpad specific symbols are sent
-  - Decimal key should send Decimal for layouts with . as a symbol, and
-    Separator for layouts with , as a symbol
-  - Shift inverts NumLock behaviour [X11]
-  - Shift turns NumLock off, but not on [Win] (FIXME: fake Shifts also sent)
+  - NumLock 影响符号查找 [Win, X11]
+  - 发送数字键盘特定符号
+  - 对于以 . 为符号的布局，小数点键应发送 Decimal；对于以 , 为符号的布局，应发送 Separator
+  - Shift 反转 NumLock 行为 [X11]
+  - Shift 关闭 NumLock，但不会开启 [Win]（待办：也会发送伪造的 Shift）
 
-- Multimedia keys:
+- 多媒体键：
 
-  OS X: FIXME: all broken
+  OS X：待办：全部损坏
 
-  - Back, Forward, Refresh, Stop
-  - HomePage, Search, Favourites (FIXME: broken on Win)
-  - Mail, Calculator
-  - Volume up, down, mute
-  - Media next, previous, stop, play
-  - Sleep (FIXME: broken on Win)
-  - FIXME: probably more keys exist
+  - 后退、前进、刷新、停止
+  - 主页、搜索、收藏夹（待办：Win 上损坏）
+  - 邮件、计算器
+  - 音量加、减、静音
+  - 媒体下一曲、上一曲、停止、播放
+  - 睡眠（待办：Win 上损坏）
+  - 待办：可能还有更多按键
 
-- Non-character keys:
+- 非字符键：
 
-  - F1-F24 (FIXME: F14-F15 broken on OS X)
-  - Tab, Space, Backspace, Return, Esc
-  - LeftTab sends Tab [X11]
-  - PrntScrn, ScrollLock, Pause [X11, Win]
-  - Help [X11?, OS X]
+  - F1-F24（待办：OS X 上 F14-F15 损坏）
+  - Tab、Space、Backspace、Return、Esc
+  - LeftTab 发送 Tab [X11]
+  - PrntScrn、ScrollLock、Pause [X11, Win]
+  - Help [X11？，OS X]
   - Insert [X11, Win]
-  - Delete, Home, End, PageUp, PageDown
-  - Arrow keys
+  - Delete、Home、End、PageUp、PageDown
+  - 方向键
   - Menu
-  - Alt+PrntScrn sends Sys_Req [Win]
+  - Alt+PrntScrn 发送 Sys_Req [Win]
 
-- French layout (AZERTY and inverted shift behaviour for many keys)
+- 法语布局（AZERTY，且许多按键的 Shift 行为反转）
 
-- Local layout changes are respected
+- 本地布局更改得到遵循
 
-Client (raw mode)
+客户端（原始模式）
 -----------------
 
-- All physical keys (modifiers or type of symbol shouldn't matter)
+- 所有物理按键（修饰键或符号类型应无关紧要）
 
-  - Normal keys
-  - Dead keys
-  - Numpad
-  - Multimedia keys
-  - Non-character keys
+  - 普通按键
+  - 死键
+  - 数字键盘
+  - 多媒体键
+  - 非字符键
 
-Client (both modes)
+客户端（两种模式）
 -------------------
 
-- Key repeat should not send repeated release events
+- 按键重复不应发送重复的释放事件
 
-- Keys are released on loss of focus
+- 失去焦点时释放按键
 
-- Local input methods are disabled/enabled with focus
+- 本地输入法随焦点禁用/启用
 
-- System keys should be grabbed in full screen (FIXME: lots missing on Win)
+- 全屏时应抓取系统按键（待办：Win 上大量缺失）
 
-  The exact keys depends on the system and configuration, but it
-  is usually variants of these:
+  具体按键取决于系统与配置，但通常为以下变体：
 
   - Alt+Tab
-  - Super (and Super+other)
-  - Multimedia keys
+  - Super（及 Super+其他）
+  - 多媒体键
   - Ctrl+Alt+Delete
   - Ctrl+Esc
   - F8-F12
 
-- Lock key states:
+- 锁定键状态：
 
-  - Adjusted on server when connecting
-  - Adjusted on server when regaining focus
-  - Server changes are honored when focused
-  - Server changes are not honored when not focused
+  - 连接时在服务器端调整
+  - 重新获得焦点时在服务器端调整
+  - 获得焦点时遵循服务器端更改
+  - 未获得焦点时不遵循服务器端更改
 
   - CapsLock
-  - NumLock (hidden state on macOS)
+  - NumLock（macOS 上为隐藏状态）
   - ScollLock* [X11, Win]
 
-  * Usually needs to be enabled with: xmodmap -e "add mod3 = Scroll_Lock"
+  * 通常需要通过以下命令启用：xmodmap -e "add mod3 = Scroll_Lock"
 
-- Virtual keyboard (as much of the above as is possible)
+- 虚拟键盘（尽可能多地覆盖上述内容）
 
-Server
+服务器
 ------
 
-- Fake key events
+- 伪造按键事件
 
-  An extra press or release should be added before the real key press
-  in order to get the correct state to get the desired symbol. A second
-  fake event should be added after the real key press to restore state.
-  No extra events should be added for a key release.
+  为获得正确状态以得到所需符号，应在真实按键按下前添加额外的按下或释放事件。在真实按键按下后应添加第二次伪造事件以恢复状态。按键释放时不应添加额外事件。
 
-  Possible fake keys:
+  可能的伪造按键：
 
   - Shift
   - AltGr
 
-  - Shift+Tab bypasses this and never fake releases Shift
+  - Shift+Tab 会绕过此机制，且绝不伪造释放 Shift
 
-- Alternative keys
+- 替代按键
 
-  A semantically equivalent key is sent when the desired key cannot be
-  reached in the current keyboard state:
+  当在当前键盘状态下无法到达所需按键时，发送语义上等效的按键：
 
-  - Left modifier <=> Right modifier (e.g. Alt_R for Alt_L)
-  - Keypad key <=> Standard key
+  - 左修饰键 <=> 右修饰键（例如用 Alt_R 代替 Alt_L）
+  - 数字键盘键 <=> 标准键
   - ISO_Level3_Shift <=> Mode_Switch
 
-- Meta for Shift+Alt (if server keymap agrees)
+- Shift+Alt 的 Meta（若服务器键盘映射同意）
 
-- Lock key heuristics (for clients without lock key extension)
+- 锁定键启发式规则（适用于无锁定键扩展的客户端）
 
-  - CapsLock is corrected when A-Z or a-z are pressed
-  - CapsLock is corrected when Shift and A-Z or a-z are pressed*
-  - NumLock is corrected when 0-9 on the keypad are pressed
+  - 按下 A-Z 或 a-z 时修正 CapsLock
+  - 按下 Shift 与 A-Z 或 a-z 时修正 CapsLock*
+  - 按下数字键盘上的 0-9 时修正 NumLock
 
-  * Gives incorrect behaviour if the client doesn't have "Shift cancels
-    CapsLock behaviour", e.g. macOS
+  * 若客户端不具备“Shift 取消 CapsLock 行为”，将产生错误行为，例如 macOS

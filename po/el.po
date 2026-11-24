@@ -1,5 +1,5 @@
-# TigerVNC Greek (el) translation.
-# Copyright (C) 2014 the TigerVNC Team (msgids)
+# TuPigVNC Greek (el) translation.
+# Copyright (C) 2014 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 # First translator: Vangelis Skarmoutsos <skarmoutsosv@gmail.com>, 2015.
 # Vangelis Skarmoutsos <skarmoutsosv@gmail.com>, 2015, 2021.
@@ -340,16 +340,16 @@ msgid "Connect"
 msgstr "Σύνδεση"
 
 #: vncviewer/ServerDialog.cxx:137 vncviewer/ServerDialog.cxx:171
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "Ρυθμίσεις TigerVNC (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "Ρυθμίσεις TuPigVNC (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:138
-msgid "Select a TigerVNC configuration file"
-msgstr "Επιλογή αρχείου ρυθμίσεων του TigerVNC"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Επιλογή αρχείου ρυθμίσεων του TuPigVNC"
 
 #: vncviewer/ServerDialog.cxx:172
-msgid "Save the TigerVNC configuration to file"
-msgstr "Αποθήκευση ρυθμίσεων του TigerVNC σε αρχείο"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "Αποθήκευση ρυθμίσεων του TuPigVNC σε αρχείο"
 
 #: vncviewer/ServerDialog.cxx:197
 #, c-format
@@ -528,10 +528,10 @@ msgstr "Πληροφορίες &σύνδεσης..."
 
 #: vncviewer/Viewport.cxx:1237
 #, fuzzy
-#| msgid "About TigerVNC viewer..."
+#| msgid "About TuPigVNC viewer..."
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC viewer..."
-msgstr "Σχετικά με τον θεατή &TigerVNC..."
+msgid "About &TuPigVNC viewer..."
+msgstr "Σχετικά με τον θεατή &TuPigVNC..."
 
 #: vncviewer/Viewport.cxx:1240
 #, fuzzy
@@ -649,24 +649,24 @@ msgstr "Άκυρο όνομα παραμέτρου στην γραμμή %d στ
 #: vncviewer/vncviewer.cxx:100
 #, fuzzy, c-format
 #| msgid ""
-#| "TigerVNC Viewer %d-bit v%s\n"
+#| "TuPigVNC Viewer %d-bit v%s\n"
 #| "Built on: %s\n"
-#| "Copyright (C) 1999-%d TigerVNC Team and many others (see README.txt)\n"
-#| "See http://www.tigervnc.org for information on TigerVNC."
+#| "Copyright (C) 1999-%d TuPigVNC Team and many others (see README.txt)\n"
+#| "See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgid ""
-"TigerVNC Viewer %d-bit v%s\n"
+"TuPigVNC Viewer %d-bit v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC Team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC Team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"Θεατής TigerVNC %d-bit v%s\n"
+"Θεατής TuPigVNC %d-bit v%s\n"
 "Built on: %s\n"
-"Πνευματικά δικαιώματα (C) 1999-%d Ομάδα TigerVNC και πολλοί άλλοι (δείτε το README.txt)\n"
-"Δείτε στο http://www.tigervnc.org για πληροφορίες σχετικά με το TigerVNC."
+"Πνευματικά δικαιώματα (C) 1999-%d Ομάδα TuPigVNC και πολλοί άλλοι (δείτε το README.txt)\n"
+"Δείτε στο https://github.com/TuPig/TuPigVNC για πληροφορίες σχετικά με το TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:127
-msgid "About TigerVNC Viewer"
-msgstr "Σχετικά με τον Θεατή TigerVNC"
+msgid "About TuPigVNC Viewer"
+msgstr "Σχετικά με τον Θεατή TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:140
 msgid "Internal FLTK error. Exiting."
@@ -674,18 +674,18 @@ msgstr "Εσωτερικό σφάλμα του FLTK. Γίνεται έξοδος
 
 #: vncviewer/vncviewer.cxx:158 vncviewer/vncviewer.cxx:170
 #, fuzzy, c-format
-#| msgid "About TigerVNC Viewer"
-msgid "Error starting new TigerVNC Viewer: %s"
-msgstr "Σχετικά με τον Θεατή TigerVNC"
+#| msgid "About TuPigVNC Viewer"
+msgid "Error starting new TuPigVNC Viewer: %s"
+msgstr "Σχετικά με τον Θεατή TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:179
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC Viewer will now exit."
-msgstr "Λήφθηκε σήμα τερματισμού %d. Το TigerVNC θα τερματιστεί."
+msgid "Termination signal %d has been received. TuPigVNC Viewer will now exit."
+msgstr "Λήφθηκε σήμα τερματισμού %d. Το TuPigVNC θα τερματιστεί."
 
 #: vncviewer/vncviewer.cxx:271 vncviewer/vncviewer.desktop.in.in:3
-msgid "TigerVNC Viewer"
-msgstr "Θεατής TigerVNC"
+msgid "TuPigVNC Viewer"
+msgstr "Θεατής TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:280
 msgid "Yes"
@@ -820,25 +820,25 @@ msgstr "tigervnc"
 #~ msgid "Encoding normal character: The size of the buffer dest is to small, it needs to be more than %d bytes bigger."
 #~ msgstr "Κωδικοποίηση κανονικού χαρακτήρα: Το μέγεθος του buffer προορισμού είναι πολύ μικρό, χρειάζεται είναι περισσότερο από %d byte μεγαλύτερο."
 
-#~ msgid "Error(%d) closing key:  Software\\TigerVNC\\vncviewer"
-#~ msgstr "Σφάλμα(%d) closing key:  Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) closing key:  Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Σφάλμα(%d) closing key:  Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) closing key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Σφάλμα(%d) closing key: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) closing key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Σφάλμα(%d) closing key: Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) creating key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Σφάλμα(%d) creating key: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) creating key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Σφάλμα(%d) creating key: Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) opening key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Σφάλμα(%d) opening key: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) opening key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Σφάλμα(%d) opening key: Software\\TuPigVNC\\vncviewer"
 
 #~ msgid ""
 #~ "Line 1 in file %s\n"
-#~ "must contain the TigerVNC configuration file identifier string:\n"
+#~ "must contain the TuPigVNC configuration file identifier string:\n"
 #~ "\"%s\""
 #~ msgstr ""
 #~ "Η γραμμή 1 στο αρχείο %s\n"
-#~ "πρέπει να περιέχει τη συμβολοσειρά αναγνώρισης αρχείου διαμόρφωσης του TigerVNC:\n"
+#~ "πρέπει να περιέχει τη συμβολοσειρά αναγνώρισης αρχείου διαμόρφωσης του TuPigVNC:\n"
 #~ "\"%s\""
 
 #~ msgid "Multiple characters given for key code %d (0x%04x): '%s'"

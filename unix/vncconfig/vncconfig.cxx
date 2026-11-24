@@ -235,7 +235,7 @@ int main(int argc, char** argv)
     if (strcmp(argv[i], "-v") == 0 ||
         strcmp(argv[i], "-version") == 0 ||
         strcmp(argv[i], "--version") == 0) {
-      fprintf(stderr, "vncconfig (TigerVNC) %s\n", PACKAGE_VERSION);
+      fprintf(stderr, "vncconfig (TuPigVNC) %s\n", PACKAGE_VERSION);
       exit(0);
     }
 

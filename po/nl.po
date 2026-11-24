@@ -1,5 +1,5 @@
-# Dutch translations for TigerVNC.
-# Copyright (C) the TigerVNC Team (msgids)
+# Dutch translations for TuPigVNC.
+# Copyright (C) the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 #
 # "That said, you owe me a new keyboard."
@@ -449,8 +449,8 @@ msgstr "Verbindings&info..."
 
 #: vncviewer/Viewport.cxx:746
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC viewer..."
-msgstr "Info over &TigerVNC-viewer..."
+msgid "About &TuPigVNC viewer..."
+msgstr "Info over &TuPigVNC-viewer..."
 
 #: vncviewer/Viewport.cxx:749
 msgctxt "ContextMenu|"
@@ -562,19 +562,19 @@ msgstr "Onbekende parameter %s op regel %d in bestand %s"
 #: vncviewer/vncviewer.cxx:100
 #, c-format
 msgid ""
-"TigerVNC Viewer %d-bit v%s\n"
+"TuPigVNC Viewer %d-bit v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC Team and many others (see README.txt)\n"
-"See http://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC Team and many others (see README.txt)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC Viewer (%d-bit) v%s\n"
+"TuPigVNC Viewer (%d-bit) v%s\n"
 "Gecompileerd op: %s\n"
-"Copyright (C) 1999-%d het TigerVNC-team en vele anderen (zie README.txt)\n"
-"Zie http://www.tigervnc.org voor informatie over TigerVNC."
+"Copyright (C) 1999-%d het TuPigVNC-team en vele anderen (zie README.txt)\n"
+"Zie https://github.com/TuPig/TuPigVNC voor informatie over TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:127
-msgid "About TigerVNC Viewer"
-msgstr "Info over TigerVNC-viewer"
+msgid "About TuPigVNC Viewer"
+msgstr "Info over TuPigVNC-viewer"
 
 #: vncviewer/vncviewer.cxx:140
 msgid "Internal FLTK error. Exiting."
@@ -582,17 +582,17 @@ msgstr "Interne FLTK-fout.  Bezig met afsluiten."
 
 #: vncviewer/vncviewer.cxx:158 vncviewer/vncviewer.cxx:170
 #, c-format
-msgid "Error starting new TigerVNC Viewer: %s"
-msgstr "Fout tijdens starten van nieuwe TigerVNC-viewer: %s"
+msgid "Error starting new TuPigVNC Viewer: %s"
+msgstr "Fout tijdens starten van nieuwe TuPigVNC-viewer: %s"
 
 #: vncviewer/vncviewer.cxx:179
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC Viewer will now exit."
-msgstr "Beëindigingssignaal %d werd ontvangen.  TigerVNC-viewer sluit nu af."
+msgid "Termination signal %d has been received. TuPigVNC Viewer will now exit."
+msgstr "Beëindigingssignaal %d werd ontvangen.  TuPigVNC-viewer sluit nu af."
 
 #: vncviewer/vncviewer.cxx:271
-msgid "TigerVNC Viewer"
-msgstr "TigerVNC-viewer"
+msgid "TuPigVNC Viewer"
+msgstr "TuPigVNC-viewer"
 
 #: vncviewer/vncviewer.cxx:279
 msgid "No"

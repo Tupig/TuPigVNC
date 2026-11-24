@@ -37,7 +37,7 @@ char* programName = nullptr;
 
 static void printVersion(FILE *fp)
 {
-  fprintf(fp, _("TigerVNC server version %s\n"), PACKAGE_VERSION);
+  fprintf(fp, _("TuPigVNC server version %s\n"), PACKAGE_VERSION);
 }
 
 static void usage()

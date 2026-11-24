@@ -1,8 +1,8 @@
 # Romanian translation for tigervnc.
 # Mesajele în limba română pentru pachetul tigervnc.
-# Copyright © 2022, 2024, 2025 the TigerVNC Team (msgids)
+# Copyright © 2022, 2024, 2025 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
-# Copyright © 2022, 2024, 2025 TigerVNC Team and many others (see README.rst).
+# Copyright © 2022, 2024, 2025 TuPigVNC Team and many others (see README.rst).
 #
 # Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2022 - 2025.
 #
@@ -201,13 +201,13 @@ msgstr "Apăsați %sM pentru a deschide meniul contextual"
 
 #: vncviewer/DesktopWindow.cxx:312
 #, c-format
-msgid "%s - TigerVNC (keyboard grabbed)"
-msgstr "%s - TigerVNC (tastatură preluată)"
+msgid "%s - TuPigVNC (keyboard grabbed)"
+msgstr "%s - TuPigVNC (tastatură preluată)"
 
 #: vncviewer/DesktopWindow.cxx:314
 #, c-format
-msgid "%s - TigerVNC"
-msgstr "%s - TigerVNC"
+msgid "%s - TuPigVNC"
+msgstr "%s - TuPigVNC"
 
 #: vncviewer/DesktopWindow.cxx:705
 msgid "Adjusting window size to avoid accidental full-screen request"
@@ -292,8 +292,8 @@ msgid "Monitor index %d does not exist"
 msgstr "Indexul de monitor %d nu există"
 
 #: vncviewer/OptionsDialog.cxx:70
-msgid "TigerVNC options"
-msgstr "Opțiuni TigerVNC"
+msgid "TuPigVNC options"
+msgstr "Opțiuni TuPigVNC"
 
 #: vncviewer/OptionsDialog.cxx:104 vncviewer/ServerDialog.cxx:110
 #: vncviewer/vncviewer.cxx:397
@@ -618,12 +618,12 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:175 vncviewer/ServerDialog.cxx:215
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "Configurația TigerVNC (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "Configurația TuPigVNC (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:176
-msgid "Select a TigerVNC configuration file"
-msgstr "Selectați un fișier de configurare TigerVNC"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Selectați un fișier de configurare TuPigVNC"
 
 #: vncviewer/ServerDialog.cxx:198 vncviewer/vncviewer.cxx:517
 #, c-format
@@ -637,8 +637,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:216
-msgid "Save the TigerVNC configuration to file"
-msgstr "Salvați configurația TigerVNC în fișier"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "Salvați configurația TuPigVNC în fișier"
 
 #: vncviewer/ServerDialog.cxx:242
 #, c-format
@@ -801,8 +801,8 @@ msgstr "&Informații despre conexiune..."
 
 #: vncviewer/Viewport.cxx:935
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC..."
-msgstr "Despre &TigerVNC..."
+msgid "About &TuPigVNC..."
+msgstr "Despre &TuPigVNC..."
 
 #: vncviewer/Viewport.cxx:1027
 msgid "VNC connection info"
@@ -854,8 +854,8 @@ msgstr "Eroare la preluarea dispozitivului %i"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
 #: vncviewer/vncviewer.desktop.in.in:2
-msgid "TigerVNC"
-msgstr "TigerVNC"
+msgid "TuPigVNC"
+msgstr "TuPigVNC"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:4
@@ -867,26 +867,26 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Calculatoare în rețea virtuală ⟶ (Virtual Network Computing) «VNC» este un sistem de afișare la distanță care vă permite să vizualizați și să interacționați cu un mediu de birou virtual care rulează pe un alt computer din rețea. Folosind VNC, puteți rula aplicații grafice pe o mașină de la distanță și puteți trimite numai afișarea din aceste aplicații pe dispozitivul local. Acest pachet conține un client care vă va permite să vă conectați la alte calculatoare care rulează un server VNC. VNC este independent de platformă și acceptă diverse sisteme de operare și arhitecturi atât ca servere, cât și ca clienți."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC este o versiune de mare viteză a VNC bazată pe bazele codurilor RealVNC 4 și X.org. TigerVNC a început ca un efort de dezvoltare de ultimă generație pentru TightVNC pe platformele Unix și Linux, dar s-a despărțit de proiectul său părinte la începutul anului 2009, astfel încât TightVNC să se poată concentra pe platformele Windows. TigerVNC acceptă o variantă de codificare Tight care este mult accelerată prin utilizarea codec-ului JPEG libjpeg-turbo."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC este o versiune de mare viteză a VNC bazată pe bazele codurilor RealVNC 4 și X.org. TuPigVNC a început ca un efort de dezvoltare de ultimă generație pentru TightVNC pe platformele Unix și Linux, dar s-a despărțit de proiectul său părinte la începutul anului 2009, astfel încât TightVNC să se poată concentra pe platformele Windows. TuPigVNC acceptă o variantă de codificare Tight care este mult accelerată prin utilizarea codec-ului JPEG libjpeg-turbo."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC connection to a CentOS machine"
-msgstr "Conexiune a TigerVNC la o mașină «GNU/Linux»"
+msgid "TuPigVNC connection to a CentOS machine"
+msgstr "Conexiune a TuPigVNC la o mașină «GNU/Linux»"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC connection to a macOS machine"
-msgstr "Conexiune a TigerVNC la o mașină «macOS»"
+msgid "TuPigVNC connection to a macOS machine"
+msgstr "Conexiune a TuPigVNC la o mașină «macOS»"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC connection to a Windows machine"
-msgstr "Conexiune a TigerVNC la o mașină «Windows»"
+msgid "TuPigVNC connection to a Windows machine"
+msgstr "Conexiune a TuPigVNC la o mașină «Windows»"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:46
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:48
-msgid "The TigerVNC team"
-msgstr "Echipa TigerVNC"
+msgid "The TuPigVNC team"
+msgstr "Echipa TuPigVNC"
 
 #: vncviewer/parameters.cxx:386 vncviewer/parameters.cxx:411
 #: vncviewer/parameters.cxx:428 vncviewer/parameters.cxx:468
@@ -1014,19 +1014,19 @@ msgstr "X Input 2 (sau mai nouă) nu este disponibilă. Gesturile tactile nu vor
 #: vncviewer/vncviewer.cxx:103
 #, c-format
 msgid ""
-"TigerVNC v%s\n"
+"TuPigVNC v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC versiunea %s\n"
+"TuPigVNC versiunea %s\n"
 "Construit pe: %s\n"
-"Drepturi de autor © 1999-%d Echipa TigerVNC și mulți alții (vedeți fișierul README.rst)\n"
-"Consultați https://www.tigervnc.org pentru informații despre TigerVNC."
+"Drepturi de autor © 1999-%d Echipa TuPigVNC și mulți alții (vedeți fișierul README.rst)\n"
+"Consultați https://github.com/TuPig/TuPigVNC pentru informații despre TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:173
-msgid "About TigerVNC"
-msgstr "Despre TigerVNC"
+msgid "About TuPigVNC"
+msgstr "Despre TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:195
 msgid "Internal FLTK error. Exiting."
@@ -1050,8 +1050,8 @@ msgstr "Eroare la inițierea noii conexiuni: %s"
 
 #: vncviewer/vncviewer.cxx:266
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC will now exit."
-msgstr "Semnalul de terminare %d a fost primit. TigerVNC se va închide acum."
+msgid "Termination signal %d has been received. TuPigVNC will now exit."
+msgstr "Semnalul de terminare %d a fost primit. TuPigVNC se va închide acum."
 
 #: vncviewer/vncviewer.cxx:395
 msgid "Yes"
@@ -1119,14 +1119,14 @@ msgid ""
 "Options:\n"
 "\n"
 "  -display Xdisplay  - Specifies the X display for the viewer window\n"
-"  -geometry geometry - Initial position of the main TigerVNC window. See the\n"
+"  -geometry geometry - Initial position of the main TuPigVNC window. See the\n"
 "                       man page for details.\n"
 msgstr ""
 "\n"
 "Opțiuni:\n"
 "\n"
 "  -display afișajulX  - Specifică afișajul X pentru fereastra vizorului\n"
-"  -geometry geometria - Poziția inițială a ferestrei principale a TigerVNC.\n"
+"  -geometry geometria - Poziția inițială a ferestrei principale a TuPigVNC.\n"
 "                        Consultați pagina de manual pentru detalii.\n"
 
 #: vncviewer/vncviewer.cxx:472
@@ -1160,8 +1160,8 @@ msgstr "~/.vnc este depreciat, vă rugăm să consultați «man vncviewer» pent
 
 #: vncviewer/vncviewer.cxx:557
 #, c-format
-msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TigerVNC location."
-msgstr "%%APPDATA%%\\vnc este depreciat, vă rugăm să treceți la locația %%APPDATA%%\\TigerVNC."
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC location."
+msgstr "%%APPDATA%%\\vnc este depreciat, vă rugăm să treceți la locația %%APPDATA%%\\TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:562
 #, c-format
@@ -1275,8 +1275,8 @@ msgstr "Vizor pentru birou la distanță"
 #~ msgid "Send %s"
 #~ msgstr "Trimite %s"
 
-#~ msgid "TigerVNC viewer"
-#~ msgstr "Vizor TigerVNC"
+#~ msgid "TuPigVNC viewer"
+#~ msgstr "Vizor TuPigVNC"
 
 #~ msgid "Show dot when no cursor"
 #~ msgstr "Afișează un punct când nu există cursor al mouse-ului"

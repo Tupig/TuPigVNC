@@ -1,5 +1,5 @@
 # Ukrainian translation of tigervnc
-# Copyright (C) 2014 the TigerVNC Team (msgids)
+# Copyright (C) 2014 the TuPigVNC Team (msgids)
 # This file is distributed under the same license as the tigervnc package.
 #
 # Yuri Chornoivan <yurchor@ukr.net>, 2014, 2015, 2016, 2017, 2018, 2019, 2021, 2022, 2024, 2025.
@@ -140,13 +140,13 @@ msgstr "Натисніть %sM, щоб відкрити контекстне м�
 
 #: vncviewer/DesktopWindow.cxx:312
 #, c-format
-msgid "%s - TigerVNC (keyboard grabbed)"
-msgstr "%s - TigerVNC (клавіатуру перехоплено)"
+msgid "%s - TuPigVNC (keyboard grabbed)"
+msgstr "%s - TuPigVNC (клавіатуру перехоплено)"
 
 #: vncviewer/DesktopWindow.cxx:314
 #, c-format
-msgid "%s - TigerVNC"
-msgstr "%s - TigerVNC"
+msgid "%s - TuPigVNC"
+msgstr "%s - TuPigVNC"
 
 #: vncviewer/DesktopWindow.cxx:705
 msgid "Adjusting window size to avoid accidental full-screen request"
@@ -231,8 +231,8 @@ msgid "Monitor index %d does not exist"
 msgstr "Монітора із індексом %d не існує"
 
 #: vncviewer/OptionsDialog.cxx:70
-msgid "TigerVNC options"
-msgstr "Параметри TigerVNC"
+msgid "TuPigVNC options"
+msgstr "Параметри TuPigVNC"
 
 #: vncviewer/OptionsDialog.cxx:104 vncviewer/ServerDialog.cxx:110
 #: vncviewer/vncviewer.cxx:397
@@ -552,12 +552,12 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:175 vncviewer/ServerDialog.cxx:215
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "налаштування TigerVNC (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "налаштування TuPigVNC (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:176
-msgid "Select a TigerVNC configuration file"
-msgstr "Виберіть файл налаштувань TigerVNC"
+msgid "Select a TuPigVNC configuration file"
+msgstr "Виберіть файл налаштувань TuPigVNC"
 
 #: vncviewer/ServerDialog.cxx:198 vncviewer/vncviewer.cxx:517
 #, c-format
@@ -571,8 +571,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:216
-msgid "Save the TigerVNC configuration to file"
-msgstr "Зберегти налаштування TigerVNC до файла"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "Зберегти налаштування TuPigVNC до файла"
 
 #: vncviewer/ServerDialog.cxx:242
 #, c-format
@@ -735,8 +735,8 @@ msgstr "Дані щодо з’&єднання…"
 
 #: vncviewer/Viewport.cxx:935
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC..."
-msgstr "Про &TigerVNC…"
+msgid "About &TuPigVNC..."
+msgstr "Про &TuPigVNC…"
 
 #: vncviewer/Viewport.cxx:1027
 msgid "VNC connection info"
@@ -788,8 +788,8 @@ msgstr "Помилка під час спроби захопити пристр�
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
 #: vncviewer/vncviewer.desktop.in.in:2
-msgid "TigerVNC"
-msgstr "TigerVNC"
+msgid "TuPigVNC"
+msgstr "TuPigVNC"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:4
@@ -801,26 +801,26 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Віртуальна мережева взаємодія комп'ютерів (Virtual Network Computing або VNC) є системою віддаленої стільниці, за допомогою якої ви можете переглядати та взаємодіяти із віртуальним стільничним середовищем, яке запущено на іншому комп'ютері у мережі. За допомогою VNC ви можете запускати програми із графічним інтерфейсом на віддаленому комп'ютері і отримувати лише зображення з цих програм на вашому локальному пристрої. У цьому пакунку міститься клієнтська частина, за допомогою якої ви можете з'єднуватися з іншими стільничними середовищами, де запущено сервер VNC. Протокол VNC є незалежним від платформи, у ньому передбачено підтримку різних операційних систем та апаратних архітектур, як на сервері, так і на клієнті."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC — високошвидкісна версія VNC на основі програмного коду RealVNC 4 та X.org. Роботу над TigerVNC було розпочато у межах побудови наступного покоління для TightVNC на платформах Unix та Linux, але програма відокремилася від батьківського проєкту на початку 2009 року, коли проєкт TightVNC зосередився на платформах Windows. У TigerVNC передбачено підтримку варіанта кодування Tight, який значно пришвидшено використанням кодека JPEG libjpeg-turbo."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC — високошвидкісна версія VNC на основі програмного коду RealVNC 4 та X.org. Роботу над TuPigVNC було розпочато у межах побудови наступного покоління для TightVNC на платформах Unix та Linux, але програма відокремилася від батьківського проєкту на початку 2009 року, коли проєкт TightVNC зосередився на платформах Windows. У TuPigVNC передбачено підтримку варіанта кодування Tight, який значно пришвидшено використанням кодека JPEG libjpeg-turbo."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC connection to a CentOS machine"
-msgstr "З'єднання TigerVNC зі комп'ютером, де працює CentOS"
+msgid "TuPigVNC connection to a CentOS machine"
+msgstr "З'єднання TuPigVNC зі комп'ютером, де працює CentOS"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC connection to a macOS machine"
-msgstr "З'єднання TigerVNC із комп'ютером, де працює macOS"
+msgid "TuPigVNC connection to a macOS machine"
+msgstr "З'єднання TuPigVNC із комп'ютером, де працює macOS"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC connection to a Windows machine"
-msgstr "З'єднання TigerVNC із комп'ютером, де працює Windows"
+msgid "TuPigVNC connection to a Windows machine"
+msgstr "З'єднання TuPigVNC із комп'ютером, де працює Windows"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:46
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:48
-msgid "The TigerVNC team"
-msgstr "Команда TigerVNC"
+msgid "The TuPigVNC team"
+msgstr "Команда TuPigVNC"
 
 #: vncviewer/parameters.cxx:386 vncviewer/parameters.cxx:411
 #: vncviewer/parameters.cxx:428 vncviewer/parameters.cxx:468
@@ -937,19 +937,19 @@ msgstr "Немає доступу до X Input 2.2 (або новішої вер
 #: vncviewer/vncviewer.cxx:103
 #, c-format
 msgid ""
-"TigerVNC v%s\n"
+"TuPigVNC v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC, v%s\n"
+"TuPigVNC, v%s\n"
 "Зібрано: %s\n"
-"Авторські права належать команді TigerVNC та багатьом іншим (див. файл README.rst), 1999–%d\n"
-"Докладніший опис TigerVNC можна знайти на https://www.tigervnc.org."
+"Авторські права належать команді TuPigVNC та багатьом іншим (див. файл README.rst), 1999–%d\n"
+"Докладніший опис TuPigVNC можна знайти на https://github.com/TuPig/TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:173
-msgid "About TigerVNC"
-msgstr "Про TigerVNC"
+msgid "About TuPigVNC"
+msgstr "Про TuPigVNC"
 
 #: vncviewer/vncviewer.cxx:195
 msgid "Internal FLTK error. Exiting."
@@ -973,8 +973,8 @@ msgstr "Не вдалося встановити нове з'єднання: %s"
 
 #: vncviewer/vncviewer.cxx:266
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC will now exit."
-msgstr "Отримано сигнал переривання %d. Зараз TigerVNC завершить роботу."
+msgid "Termination signal %d has been received. TuPigVNC will now exit."
+msgstr "Отримано сигнал переривання %d. Зараз TuPigVNC завершить роботу."
 
 #: vncviewer/vncviewer.cxx:395
 msgid "Yes"
@@ -1042,14 +1042,14 @@ msgid ""
 "Options:\n"
 "\n"
 "  -display Xdisplay  - Specifies the X display for the viewer window\n"
-"  -geometry geometry - Initial position of the main TigerVNC window. See the\n"
+"  -geometry geometry - Initial position of the main TuPigVNC window. See the\n"
 "                       man page for details.\n"
 msgstr ""
 "\n"
 "Параметри:\n"
 "\n"
 "  -display дисплейX  - визначити дисплей X для показу вікна переглядача\n"
-"  -geometry геометрія - початкова позиція головного вікна TigerVNC.\n"
+"  -geometry геометрія - початкова позиція головного вікна TuPigVNC.\n"
 "                       Див. сторінку man, щоб дізнатися більше.\n"
 
 #: vncviewer/vncviewer.cxx:472
@@ -1083,8 +1083,8 @@ msgstr "~/.vnc вважається застарілим, будь ласка, �
 
 #: vncviewer/vncviewer.cxx:557
 #, c-format
-msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TigerVNC location."
-msgstr "%%APPDATA%%\\vnc вважається застарілим, будь ласка, переходьте на %%APPDATA%%\\TigerVNC."
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC location."
+msgstr "%%APPDATA%%\\vnc вважається застарілим, будь ласка, переходьте на %%APPDATA%%\\TuPigVNC."
 
 #: vncviewer/vncviewer.cxx:562
 #, c-format
@@ -1198,8 +1198,8 @@ msgstr "Засіб перегляду віддаленої стільниці"
 #~ msgid "Send %s"
 #~ msgstr "Надіслати %s"
 
-#~ msgid "TigerVNC viewer"
-#~ msgstr "Засіб перегляду TigerVNC"
+#~ msgid "TuPigVNC viewer"
+#~ msgstr "Засіб перегляду TuPigVNC"
 
 #~ msgid "Show dot when no cursor"
 #~ msgstr "Показувати крапку, якщо немає курсора"
@@ -1388,17 +1388,17 @@ msgstr "Засіб перегляду віддаленої стільниці"
 #~ msgid "Encoding normal character: The size of the buffer dest is to small, it needs to be more than %d bytes bigger."
 #~ msgstr "Кодування звичайного символу: розмір буфера призначення є надто малим. Його слід збільшити на понад %d байтів."
 
-#~ msgid "Error(%d) closing key:  Software\\TigerVNC\\vncviewer"
-#~ msgstr "Помилка (%d) закриття ключа:  Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) closing key:  Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Помилка (%d) закриття ключа:  Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) closing key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Помилка (%d) закриття ключа: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) closing key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Помилка (%d) закриття ключа: Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) creating key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Помилка (%d) під час створення ключа: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) creating key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Помилка (%d) під час створення ключа: Software\\TuPigVNC\\vncviewer"
 
-#~ msgid "Error(%d) opening key: Software\\TigerVNC\\vncviewer"
-#~ msgstr "Помилка (%d) під час відкриття ключа: Software\\TigerVNC\\vncviewer"
+#~ msgid "Error(%d) opening key: Software\\TuPigVNC\\vncviewer"
+#~ msgstr "Помилка (%d) під час відкриття ключа: Software\\TuPigVNC\\vncviewer"
 
 #~ msgid "Error(%d) reading %s from Registry."
 #~ msgstr "Помилка (%d) під час читання %s з реєстру."
@@ -1411,11 +1411,11 @@ msgstr "Засіб перегляду віддаленої стільниці"
 
 #~ msgid ""
 #~ "Line 1 in file %s\n"
-#~ "must contain the TigerVNC configuration file identifier string:\n"
+#~ "must contain the TuPigVNC configuration file identifier string:\n"
 #~ "\"%s\""
 #~ msgstr ""
 #~ "Рядок 1 у файлі %s\n"
-#~ "має містити рядок ідентифікатор файла налаштувань TigerVNC:\n"
+#~ "має містити рядок ідентифікатор файла налаштувань TuPigVNC:\n"
 #~ "«%s»"
 
 #~ msgid "Multiple characters given for key code %d (0x%04x): '%s'"

@@ -74,9 +74,9 @@ from the X Consortium.
 
 #include "version-config.h"
 
-#define XVNCVERSION "TigerVNC 1.16.80"
-#define XVNCCOPYRIGHT ("Copyright (C) 1999-2026 TigerVNC team and many others (see README.rst)\n" \
-                       "See https://www.tigervnc.org for information on TigerVNC.\n")
+#define XVNCVERSION "TuPigVNC 1.16.80"
+#define XVNCCOPYRIGHT ("Copyright (C) 1999-2026 TuPigVNC team and many others (see README.rst)\n" \
+                       "See https://github.com/TuPig/TuPigVNC for information on TuPigVNC.\n")
 
 #define VNC_DEFAULT_WIDTH  1024
 #define VNC_DEFAULT_HEIGHT 768

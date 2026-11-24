@@ -1,5 +1,5 @@
 # Turkish translation for tigervnc.
-# Copyright (C) TigerVNC Team
+# Copyright (C) TuPigVNC Team
 # This file is distributed under the same license as the tigervnc package.
 # Volkan Gezer <volkangezer@gmail.com>, 2017.
 # Volkan Gezer <volkangezer@gmail.com>, 2023.
@@ -410,12 +410,12 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:173 vncviewer/ServerDialog.cxx:212
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "TigerVNC yapılandırması (*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "TuPigVNC yapılandırması (*.tigervnc)"
 
 #: vncviewer/ServerDialog.cxx:174
-msgid "Select a TigerVNC configuration file"
-msgstr "TigerVNC yapılandırma dosyasını seçin"
+msgid "Select a TuPigVNC configuration file"
+msgstr "TuPigVNC yapılandırma dosyasını seçin"
 
 #: vncviewer/ServerDialog.cxx:196 vncviewer/vncviewer.cxx:552
 #, c-format
@@ -429,8 +429,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:213
-msgid "Save the TigerVNC configuration to file"
-msgstr "TigerVNC yapılandırmasını dosyaya kaydedin"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "TuPigVNC yapılandırmasını dosyaya kaydedin"
 
 #: vncviewer/ServerDialog.cxx:239
 #, c-format
@@ -647,8 +647,8 @@ msgstr "Bağlantı &bilgisi..."
 
 #: vncviewer/Viewport.cxx:1285
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC viewer..."
-msgstr "TigerVNC görüntüleyici &hakkında..."
+msgid "About &TuPigVNC viewer..."
+msgstr "TuPigVNC görüntüleyici &hakkında..."
 
 #: vncviewer/Viewport.cxx:1374
 msgid "VNC connection info"
@@ -700,8 +700,8 @@ msgstr "Başarısızlık yakalama cihazı %i"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
 #: vncviewer/vncviewer.cxx:406 vncviewer/vncviewer.desktop.in.in:3
-msgid "TigerVNC Viewer"
-msgstr "TigerVNC Görüntüleyici"
+msgid "TuPigVNC Viewer"
+msgstr "TuPigVNC Görüntüleyici"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:5
@@ -713,20 +713,20 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "Sanal Ağ Bilgi İşlem (VNC), ağdaki başka bir bilgisayarda çalışan sanal masaüstü ortamını görüntülemenize ve etkileşimde bulunmanıza olanak tanıyan bir uzak görüntüleme sistemidir. VNC'yi kullanarak uzaktaki bir makinede grafik uygulamaları çalıştırabilir ve bu uygulamaların yalnızca ekranını yerel cihazınıza gönderebilirsiniz. Bu paket, VNC sunucusu çalıştıran diğer masaüstlerine bağlanmanızı sağlayacak bir istemci içerir. VNC platformdan bağımsızdır ve hem sunucu hem de istemci olarak çeşitli işletim sistemlerini ve mimarileri destekler."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC, RealVNC 4 ve X.org kod tabanlarını temel alan yüksek hızlı bir VNC sürümüdür. TigerVNC, TightVNC'nin Unix ve Linux platformlarında yeni nesil geliştirme çalışması olarak başladı, ancak TightVNC'nin Windows platformlarına odaklanabilmesi için 2009'un başlarında ana projesinden ayrıldı. TigerVNC, libjpeg-turbo JPEG codec bileşeninin kullanımıyla büyük ölçüde hızlandırılan bir Sıkı kodlama çeşidini destekler."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC, RealVNC 4 ve X.org kod tabanlarını temel alan yüksek hızlı bir VNC sürümüdür. TuPigVNC, TightVNC'nin Unix ve Linux platformlarında yeni nesil geliştirme çalışması olarak başladı, ancak TightVNC'nin Windows platformlarına odaklanabilmesi için 2009'un başlarında ana projesinden ayrıldı. TuPigVNC, libjpeg-turbo JPEG codec bileşeninin kullanımıyla büyük ölçüde hızlandırılan bir Sıkı kodlama çeşidini destekler."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC Viewer connection to a CentOS machine"
-msgstr "TigerVNC Görüntüleyici, CentOS makinesine bağlantı"
+msgid "TuPigVNC Viewer connection to a CentOS machine"
+msgstr "TuPigVNC Görüntüleyici, CentOS makinesine bağlantı"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC Viewer connection to a macOS machine"
-msgstr "TigerVNC Görüntüleyici, macOS makinesine bağlantı"
+msgid "TuPigVNC Viewer connection to a macOS machine"
+msgstr "TuPigVNC Görüntüleyici, macOS makinesine bağlantı"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC Viewer connection to a Windows machine"
-msgstr "TigerVNC Görüntüleyici, Windows makinesine bağlantı"
+msgid "TuPigVNC Viewer connection to a Windows machine"
+msgstr "TuPigVNC Görüntüleyici, Windows makinesine bağlantı"
 
 #: vncviewer/parameters.cxx:308 vncviewer/parameters.cxx:333
 #: vncviewer/parameters.cxx:350 vncviewer/parameters.cxx:390
@@ -844,15 +844,15 @@ msgstr "X Giriş 2.2 (veya daha yenisi) mevcut değil. Dokunma hareketleri deste
 #: vncviewer/vncviewer.cxx:107
 #, c-format
 msgid ""
-"TigerVNC Viewer v%s\n"
+"TuPigVNC Viewer v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC Team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC Team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC Görüntüleyici v%s\n"
+"TuPigVNC Görüntüleyici v%s\n"
 "Derlenme: %s\n"
-"Telif Hakkı (C) 1999-%d TigerVNC Takımı ve diğer birçok kişi (bkz. README.rst)\n"
-"TigerVNC hakkında bilgi için http://www.tigervnc.org adresine bakın."
+"Telif Hakkı (C) 1999-%d TuPigVNC Takımı ve diğer birçok kişi (bkz. README.rst)\n"
+"TuPigVNC hakkında bilgi için https://github.com/TuPig/TuPigVNC adresine bakın."
 
 #: vncviewer/vncviewer.cxx:161
 #, c-format
@@ -866,8 +866,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/vncviewer.cxx:177
-msgid "About TigerVNC Viewer"
-msgstr "TigerVNC Görüntüleyici Hakkında"
+msgid "About TuPigVNC Viewer"
+msgstr "TuPigVNC Görüntüleyici Hakkında"
 
 #: vncviewer/vncviewer.cxx:198
 msgid "Internal FLTK error. Exiting."
@@ -886,13 +886,13 @@ msgstr ""
 
 #: vncviewer/vncviewer.cxx:248 vncviewer/vncviewer.cxx:260
 #, c-format
-msgid "Error starting new TigerVNC Viewer: %s"
-msgstr "Yeni TigerVNC Görüntüleyici başlatılırken hata oluştu: %s"
+msgid "Error starting new TuPigVNC Viewer: %s"
+msgstr "Yeni TuPigVNC Görüntüleyici başlatılırken hata oluştu: %s"
 
 #: vncviewer/vncviewer.cxx:269
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC Viewer will now exit."
-msgstr "Sonlandırma sinyali %d alındı. TigerVNC Görüntüleyici çıkacak."
+msgid "Termination signal %d has been received. TuPigVNC Viewer will now exit."
+msgstr "Sonlandırma sinyali %d alındı. TuPigVNC Görüntüleyici çıkacak."
 
 #: vncviewer/vncviewer.cxx:415
 msgid "Yes"

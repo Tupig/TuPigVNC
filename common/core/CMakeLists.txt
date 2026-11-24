@@ -11,9 +11,16 @@ add_library(core STATIC
   LogWriter.cxx
   Region.cxx
   Timer.cxx
+  UpdateChecker.cxx
   string.cxx
   time.cxx
   xdgdirs.cxx)
+
+if(WIN32)
+  target_sources(core PRIVATE UpdateCheckerWin32.cxx)
+else()
+  target_sources(core PRIVATE UpdateCheckerUnix.cxx)
+endif()
 
 target_include_directories(core PUBLIC ${CMAKE_SOURCE_DIR}/common)
 target_include_directories(core SYSTEM PUBLIC ${PIXMAN_INCLUDE_DIRS})
@@ -30,7 +37,7 @@ if(ENABLE_NLS)
 endif()
 
 if(WIN32)
-  target_link_libraries(core PRIVATE ws2_32)
+  target_link_libraries(core PRIVATE ws2_32 winhttp)
 elseif(APPLE)
   target_link_libraries(core PRIVATE "-framework Carbon")
 endif()

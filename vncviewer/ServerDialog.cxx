@@ -61,7 +61,7 @@ static core::LogWriter vlog("ServerDialog");
 const char* SERVER_HISTORY="tigervnc.history";
 
 ServerDialog::ServerDialog()
-  : Fl_Window(450, 0, "TigerVNC")
+  : Fl_Window(450, 0, "TuPigVNC")
 {
   int x, y, x2;
   Fl_Button *button;
@@ -168,9 +168,9 @@ void ServerDialog::handleLoad(Fl_Widget* /*widget*/, void* data)
     dialog->usedDir = core::getuserhomedir();
 
   Fl_File_Chooser* file_chooser = new Fl_File_Chooser(dialog->usedDir.c_str(),
-                                                      _("TigerVNC configuration (*.tigervnc)"),
+                                                      _("TuPigVNC configuration (*.tigervnc)"),
                                                       Fl_File_Chooser::SINGLE,
-                                                      _("Select a TigerVNC configuration file"));
+                                                      _("Select a TuPigVNC configuration file"));
   file_chooser->preview(0);
   file_chooser->previewButton->hide();
   file_chooser->show();
@@ -209,9 +209,9 @@ void ServerDialog::handleSaveAs(Fl_Widget* /*widget*/, void* data)
     dialog->usedDir = core::getuserhomedir();
   
   Fl_File_Chooser* file_chooser = new Fl_File_Chooser(dialog->usedDir.c_str(),
-                                                      _("TigerVNC configuration (*.tigervnc)"),
+                                                      _("TuPigVNC configuration (*.tigervnc)"),
                                                       Fl_File_Chooser::CREATE,
-                                                      _("Save the TigerVNC configuration to file"));
+                                                      _("Save the TuPigVNC configuration to file"));
   
   file_chooser->preview(0);
   file_chooser->previewButton->hide();

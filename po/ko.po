@@ -1,5 +1,5 @@
-# Korean Translation for TigerVNC.
-# Copyright (C) 2009-2023 TigerVNC Team and many others (see README.rst)
+# Korean Translation for TuPigVNC.
+# Copyright (C) 2009-2023 TuPigVNC Team and many others (see README.rst)
 # This file is distributed under the same license as the tigervnc package.
 # JiYoon Kwon <bbkjo0123@gmail.com>, 2023.
 #
@@ -417,13 +417,13 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:173 vncviewer/ServerDialog.cxx:212
-msgid "TigerVNC configuration (*.tigervnc)"
-msgstr "TigerVNC 환경 설정(*.tigervnc)"
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "TuPigVNC 환경 설정(*.tigervnc)"
 
 # 구성 vs 환경설정
 #: vncviewer/ServerDialog.cxx:174
-msgid "Select a TigerVNC configuration file"
-msgstr "TigerVNC 환경 설정 파일 선택"
+msgid "Select a TuPigVNC configuration file"
+msgstr "TuPigVNC 환경 설정 파일 선택"
 
 #: vncviewer/ServerDialog.cxx:196 vncviewer/vncviewer.cxx:552
 #, c-format
@@ -437,8 +437,8 @@ msgstr ""
 "%s"
 
 #: vncviewer/ServerDialog.cxx:213
-msgid "Save the TigerVNC configuration to file"
-msgstr "TigerVNC 환경 설정을 파일로 저장"
+msgid "Save the TuPigVNC configuration to file"
+msgstr "TuPigVNC 환경 설정을 파일로 저장"
 
 #: vncviewer/ServerDialog.cxx:239
 #, c-format
@@ -655,8 +655,8 @@ msgstr "연결 정보(&I)"
 
 #: vncviewer/Viewport.cxx:1285
 msgctxt "ContextMenu|"
-msgid "About &TigerVNC viewer..."
-msgstr "TigerVNC 뷰어 정보(&T)"
+msgid "About &TuPigVNC viewer..."
+msgstr "TuPigVNC 뷰어 정보(&T)"
 
 #: vncviewer/Viewport.cxx:1374
 msgid "VNC connection info"
@@ -708,8 +708,8 @@ msgstr "장치 %i을(를) 가져오지 못함"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
 #: vncviewer/vncviewer.cxx:406 vncviewer/vncviewer.desktop.in.in:3
-msgid "TigerVNC Viewer"
-msgstr "TigerVNC 뷰어"
+msgid "TuPigVNC Viewer"
+msgstr "TuPigVNC 뷰어"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
 #: vncviewer/vncviewer.desktop.in.in:5
@@ -721,20 +721,20 @@ msgid "Virtual Network Computing (VNC) is a remote display system that allows yo
 msgstr "가상 네트워크 컴퓨팅(Virtual Network Computing, VNC)이란 네트워크를 통해 다른 컴퓨터에서 실행 중인 가상 데스크톱 환경을 보고 상호작용할 수 있는 원격 디스플레이 시스템입니다. VNC을 사용하면 원격 컴퓨터에서 실행한 그래픽 애플리케이션의 화면만 로컬 장치로 전송할 수 있습니다. 이 패키지에는 VNC 서버를 실행하는 다른 데스크톱에 연결할 수 있는 클라이언트가 포함되어 있습니다. VNC는 플랫폼 독립적이며 서버와 클라이언트로서 다양한 운영 체제 및 아키텍처를 지원합니다."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
-msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
-msgstr "TigerVNC는 RealVNC 4와 X.org 코드를 기반으로 한 고속 버전의 VNC입니다. TigerVNC는 Unix 및 Linux 플랫폼에서의 차세대 TightVNC를 개발하기 위해 시작되었지만 2009년 초에 프로젝트에서 분리었고 TightVNC는 Windows 플랫폼에 집중할 수 있게 되었습니다. TigerVNC는 libjpeg-turbo JPEG 코덱을 사용하여 가속화되는 Tight 인코딩의 변형을 지원합니다."
+msgid "TuPigVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TuPigVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TuPigVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TuPigVNC는 RealVNC 4와 X.org 코드를 기반으로 한 고속 버전의 VNC입니다. TuPigVNC는 Unix 및 Linux 플랫폼에서의 차세대 TightVNC를 개발하기 위해 시작되었지만 2009년 초에 프로젝트에서 분리었고 TightVNC는 Windows 플랫폼에 집중할 수 있게 되었습니다. TuPigVNC는 libjpeg-turbo JPEG 코덱을 사용하여 가속화되는 Tight 인코딩의 변형을 지원합니다."
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
-msgid "TigerVNC Viewer connection to a CentOS machine"
-msgstr "CentOS 기기에 대한 TigerVNC 뷰어 연결"
+msgid "TuPigVNC Viewer connection to a CentOS machine"
+msgstr "CentOS 기기에 대한 TuPigVNC 뷰어 연결"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
-msgid "TigerVNC Viewer connection to a macOS machine"
-msgstr "macOS 기기에 대한 TigerVNC 뷰어 연결"
+msgid "TuPigVNC Viewer connection to a macOS machine"
+msgstr "macOS 기기에 대한 TuPigVNC 뷰어 연결"
 
 #: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
-msgid "TigerVNC Viewer connection to a Windows machine"
-msgstr "Windows 기기에 대한 TigerVNC 뷰어 연결"
+msgid "TuPigVNC Viewer connection to a Windows machine"
+msgstr "Windows 기기에 대한 TuPigVNC 뷰어 연결"
 
 #: vncviewer/parameters.cxx:308 vncviewer/parameters.cxx:333
 #: vncviewer/parameters.cxx:350 vncviewer/parameters.cxx:390
@@ -853,15 +853,15 @@ msgstr "X Input 2.2(또는 그 이상)을 사용할 수 없습니다. 터치 제
 #: vncviewer/vncviewer.cxx:107
 #, c-format
 msgid ""
-"TigerVNC Viewer v%s\n"
+"TuPigVNC Viewer v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC Team and many others (see README.rst)\n"
-"See https://www.tigervnc.org for information on TigerVNC."
+"Copyright (C) 1999-%d TuPigVNC Team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
 msgstr ""
-"TigerVNC Viewer v%s\n"
+"TuPigVNC Viewer v%s\n"
 "Built on: %s\n"
-"Copyright (C) 1999-%d TigerVNC Team and many others (see README.rst)\n"
-"TigerVNC에 대한 자세한 정보는 https://www.tigervnc.org를 참조하십시오."
+"Copyright (C) 1999-%d TuPigVNC Team and many others (see README.rst)\n"
+"TuPigVNC에 대한 자세한 정보는 https://github.com/TuPig/TuPigVNC를 참조하십시오."
 
 #: vncviewer/vncviewer.cxx:161
 #, c-format
@@ -872,8 +872,8 @@ msgid ""
 msgstr "서버 통신 중 예상치 못한 오류 발생: %s"
 
 #: vncviewer/vncviewer.cxx:177
-msgid "About TigerVNC Viewer"
-msgstr "TigerVNC 뷰어 정보"
+msgid "About TuPigVNC Viewer"
+msgstr "TuPigVNC 뷰어 정보"
 
 #: vncviewer/vncviewer.cxx:198
 msgid "Internal FLTK error. Exiting."
@@ -892,13 +892,13 @@ msgstr ""
 
 #: vncviewer/vncviewer.cxx:248 vncviewer/vncviewer.cxx:260
 #, c-format
-msgid "Error starting new TigerVNC Viewer: %s"
-msgstr "새 TigerVNC 뷰어를 시작하는 중 오류 발생: %s"
+msgid "Error starting new TuPigVNC Viewer: %s"
+msgstr "새 TuPigVNC 뷰어를 시작하는 중 오류 발생: %s"
 
 #: vncviewer/vncviewer.cxx:269
 #, c-format
-msgid "Termination signal %d has been received. TigerVNC Viewer will now exit."
-msgstr "종료 신호 %d가 수신되었습니다. TigerVNC 뷰어를 종료합니다."
+msgid "Termination signal %d has been received. TuPigVNC Viewer will now exit."
+msgstr "종료 신호 %d가 수신되었습니다. TuPigVNC 뷰어를 종료합니다."
 
 #: vncviewer/vncviewer.cxx:415
 msgid "Yes"

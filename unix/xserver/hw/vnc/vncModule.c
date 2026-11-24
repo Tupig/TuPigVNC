@@ -50,7 +50,7 @@ ExtensionModule vncExt =
 static XF86ModuleVersionInfo vncVersRec =
 {
     "vnc",
-    "TigerVNC",
+    "TuPigVNC",
     MODINFOSTRING1,
     MODINFOSTRING2,
     VENDOR_RELEASE,

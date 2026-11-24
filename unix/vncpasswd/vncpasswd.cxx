@@ -208,7 +208,7 @@ int main(int argc, char** argv)
       usage();
     } else if ((strcmp(argv[i], "-v") == 0) ||
                (strcmp(argv[i], "--version") == 0)) {
-      fprintf(stderr, "vncpasswd (TigerVNC) %s\n", PACKAGE_VERSION);
+      fprintf(stderr, "vncpasswd (TuPigVNC) %s\n", PACKAGE_VERSION);
       exit(0);
     } else if (strcmp(argv[i], "-q") == 0) {
       // allowed for backwards compatibility

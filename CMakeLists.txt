@@ -19,8 +19,16 @@ include(CheckCSourceRuns)
 
 include(CMakeMacroLibtoolFile)
 
-project(tigervnc)
-set(VERSION 1.16.80)
+project(TuPigVNC)
+
+# 版本号采用语义化版本（SemVer）：MAJOR.MINOR.PATCH[-PRERELEASE]
+#   0.x.y  —— 初始开发阶段，API 与功能可能随时变化
+#   1.0.0  —— 首个稳定版本
+#   PATCH   —— 仅修复缺陷（如 0.0.2）
+#   MINOR   —— 新增向后兼容的功能（如 0.1.0）
+#   MAJOR   —— 不兼容的变更（如 1.0.0）
+# 版本号仅在此处维护，其余位置统一引用 ${VERSION}。
+set(VERSION 0.0.1)
 
 # The RC version must always be four comma-separated numbers
 string(REPLACE . , RCVERSION "${VERSION}.0")
@@ -34,7 +42,7 @@ else()
   set(CMAKE_INSTALL_FULL_UNITDIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_UNITDIR}")
 endif()
 
-option(INSTALL_SYSTEMD_UNITS "Install TigerVNC systemd units" ON)
+option(INSTALL_SYSTEMD_UNITS "Install TuPigVNC systemd units" ON)
 
 if(MSVC)
   include_directories(BEFORE SYSTEM ${CMAKE_SOURCE_DIR}/contrib/msvc/include)
@@ -267,12 +275,7 @@ if(NOT FOUND_LIBJPEG_TURBO)
   message(STATUS "Warning: You are not using libjpeg-turbo. Performance will suffer.")
 endif()
 
-option(BUILD_JAVA "Build Java version of the TigerVNC Viewer" FALSE)
-if(BUILD_JAVA)
-  add_subdirectory(java)
-endif()
-
-trioption(BUILD_VIEWER "Build TigerVNC viewer")
+trioption(BUILD_VIEWER "Build TuPigVNC viewer")
 if(BUILD_VIEWER)
   # Check for FLTK
   set(FLTK_SKIP_FLUID TRUE)
@@ -285,7 +288,7 @@ if(BUILD_VIEWER)
   endif()
 
   if(NOT FLTK_FOUND)
-    message(WARNING "FLTK NOT found. TigerVNC viewer disabled.")
+    message(WARNING "FLTK NOT found. TuPigVNC viewer disabled.")
     set(BUILD_VIEWER 0)
   endif()
 
@@ -337,7 +340,7 @@ if(BUILD_VIEWER)
     endif()
 
     if(NOT X11_FOUND)
-      message(WARNING "X11 libraries NOT found. TigerVNC viewer disabled.")
+      message(WARNING "X11 libraries NOT found. TuPigVNC viewer disabled.")
       set(BUILD_VIEWER 0)
     endif()
   endif()

@@ -34,9 +34,9 @@ chmod a+x ${CURDIR}/build/debian/rules
 cat - > ${CURDIR}/build/debian/changelog << EOT
 tigervnc (${VERSION}-1ubuntu1) UNRELEASED; urgency=low
 
-  * Automated build for TigerVNC
+  * Automated build for TuPigVNC
 
- -- Build bot <tigervncbot@tigervnc.org>  $(date -R)
+ -- Build bot <tupigvncbot@users.noreply.github.com>  $(date -R)
 
 EOT
 cat ${DEBDIR}/debian/changelog >> ${CURDIR}/build/debian/changelog

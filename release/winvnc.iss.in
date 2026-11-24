@@ -2,13 +2,13 @@
 #ifdef WIN64
 ArchitecturesInstallIn64BitMode=x64
 #endif
-AppName=TigerVNC server
-AppVerName=TigerVNC server v@VERSION@ (@BUILD@)
+AppName=TuPigVNC server
+AppVerName=TuPigVNC server v@VERSION@ (@BUILD@)
 AppVersion=@VERSION@
-AppPublisher=TigerVNC team
-AppPublisherURL=https://tigervnc.org
-DefaultDirName={pf}\TigerVNC server
-DefaultGroupName=TigerVNC server
+AppPublisher=TuPigVNC team
+AppPublisherURL=https://github.com/TuPig/TuPigVNC
+DefaultDirName={pf}\TuPigVNC server
+DefaultGroupName=TuPigVNC server
 LicenseFile=@CMAKE_SOURCE_DIR@\LICENCE.TXT
 
 [Dirs]
@@ -42,11 +42,11 @@ Name: "{group}\VNC server (Service-Mode)\Start VNC service"; FileName: "{app}\wi
 Name: "{group}\VNC server (Service-Mode)\Stop VNC service"; FileName: "{app}\winvnc4.exe"; Parameters: "-noconsole -stop";
 Name: "{group}\License"; FileName: "write.exe"; Parameters: "LICENCE.TXT"; WorkingDir: "{app}"; Flags: "useapppaths"
 Name: "{group}\Read me"; FileName: "write.exe"; Parameters: "README.rst"; WorkingDir: "{app}"; Flags: "useapppaths"
-Name: "{group}\Uninstall TigerVNC server"; FileName: "{uninstallexe}"; WorkingDir: "{app}";
+Name: "{group}\Uninstall TuPigVNC server"; FileName: "{uninstallexe}"; WorkingDir: "{app}";
 
 [Tasks]
-Name: installservice; Description: "&Register new TigerVNC server as a system service"; GroupDescription: "Server configuration:"; 
-Name: startservice; Description: "&Start or restart TigerVNC service"; GroupDescription: "Server configuration:";
+Name: installservice; Description: "&Register new TuPigVNC server as a system service"; GroupDescription: "Server configuration:"; 
+Name: startservice; Description: "&Start or restart TuPigVNC service"; GroupDescription: "Server configuration:";
 
 [Run]
 Filename: "{app}\winvnc4.exe"; Parameters: "-register"; Tasks: installservice
@@ -113,7 +113,7 @@ var
 function InitializeSetup: Boolean;
 begin
   GetWindowsVersionEx(OSVersion);
-  SuppressibleMsgBox('TigerVNC Windows server is currently unmaintained and may not function correctly.', mbError, MB_OK, IDOK);
+  SuppressibleMsgBox('TuPigVNC Windows server is currently unmaintained and may not function correctly.', mbError, MB_OK, IDOK);
   Result := True;
 end;
 

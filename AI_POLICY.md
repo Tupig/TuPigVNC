@@ -1,49 +1,21 @@
-TigerVNC AI policy
-==================
+TuPigVNC 人工智能使用政策
+==========================
 
-The legal and ethical status of LLM-generated content is currently
-uncertain. LLMs are trained on large amounts of existing work, much of
-it under licenses that require attribution or impose other conditions,
-and their output can reproduce or be derived from that work without any
-indication of its origin. TigerVNC is a Free Software project that
-depends on copyright and licenses being respected, and we want to show
-the same respect for the work of others. For now, the TigerVNC project
-has therefore decided to take a cautionary approach to such content.
-This policy reflects the current situation, and will be revisited as
-it becomes clearer.
+大语言模型（LLM）生成内容的法律与伦理地位目前尚不明确。大语言模型基于大量现有作品训练，其中许多作品受要求署名或施加其他条件的许可证约束，其输出可能再现或派生自这些作品，且不标明来源。TuPigVNC 是一个依赖版权与许可证得到尊重的自由软件项目，我们希望同样尊重他人的劳动成果。因此，目前 TuPigVNC 项目对此类内容采取谨慎态度。本政策反映当前情况，并将在情况明朗后重新审视。
 
-Any significant contribution to TigerVNC must not include LLM-generated
-content or be derived from LLM-generated content. This applies to all
-contributions, including code, documentation and translations.
+任何对 TuPigVNC 的重要贡献均不得包含大语言模型生成的内容，也不得派生自大语言模型生成的内容。此规定适用于所有贡献，包括代码、文档与翻译。
 
-Minor LLM-generated contributions can still be accepted, as long as they
-fulfill all other requirements on quality. The commits must be marked
-with an "Assisted-by:" tag for transparency.
+次要的大语言模型生成贡献仍可接受，前提是满足其他全部质量要求。相关提交必须标注 "Assisted-by:" 标签以保证透明。
 
-All contributions must be submitted by a human who has reviewed them,
-understands them, and is able to answer questions about them.
+所有贡献必须由人工提交，且提交者须已审阅、理解该贡献，并能够回答相关问题。
 
-There is no strict definition of what is a "significant" contribution.
-The decision will be made by the TigerVNC maintainer or maintainers that
-review the contribution. A guideline is the GNU project's definition[^1]
-of legally significant changes.
+“重要”贡献并无严格定义。该判定由审阅贡献的 TuPigVNC 维护者作出。可参考 GNU 项目对法律上重要变更的定义[^1]。
 
-As an exception, significant LLM-generated contributions to test cases
-can be accepted. Tests are largely constrained by the code they
-exercise, leaving less room for reproducing the work of others, and
-they can be removed without affecting TigerVNC itself. Such changes
-must be kept in separate commits, marked with an "Assisted-by:" tag, so
-that they can be identified and removed if needed in the future.
+作为例外，大语言模型生成的重要测试用例贡献可以接受。测试在很大程度上受其所检验代码的约束，再现他人作品的空间较小，且可在不影响 TuPigVNC 本身的情况下移除。此类变更必须单独提交，并标注 "Assisted-by:" 标签，以便将来在需要时识别并移除。
 
-Other uses of AI
-----------------
+人工智能的其他用途
+------------------
 
-This policy covers content included in contributions. It does not cover
-using AI tools for research, understanding the code, finding bugs,
-debugging, or as support when reviewing, as long as the output is not
-included in a contribution. Neither does it cover assistive uses such
-as spelling and grammar checking, or screen readers. Bug reports and
-comments written with AI assistance should be verified by the contributor
-before posting.
+本政策涵盖贡献中包含的内容，不涵盖使用人工智能工具进行研究、理解代码、查找缺陷、调试，或在审阅时作为辅助，前提是其输出未被包含在贡献中。本政策同样不涵盖拼写与语法检查、屏幕阅读器等辅助性用途。由人工智能辅助撰写的缺陷报告与评论，应由贡献者在发布前自行核实。
 
 [^1]: https://www.gnu.org/prep/maintain/maintain.html#Legally-Significant
