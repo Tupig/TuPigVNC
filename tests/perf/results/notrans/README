@@ -1,28 +1,18 @@
-This directory contains the test results in preparation for the removal
-of the PixelTransformer class.
+本目录包含在使用 -notrans 参数（即不进行传输）测量解码性能时的结果。
 
-Tests were performed on Linux with these CPUs:
+这些结果可用于了解在不同编码下，将解码委托给独立线程所带来的性能影响。
 
- - Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz
- - ARM i.MX6 DualLite @ 1 GHz
+测试在以下系统上进行：
 
-The tests show that the new bufferFromBuffer() has similar performance
-as PixelTransformer in most cases. It gets beaten in two cases:
+ - Windows 10 i3-4170 3.7 GHz
 
- - Input format is 16 BPP and PixelTransformer is in the
-   non-economical mode (the default mode).
+测试条件如下：
 
- - Input format is 8 BPP, mode irrelevant.
+ a) 启用全部 CPU
+ b) 仅启用单个 CPU
 
-PixelTransformer is about twice as fast in both these cases (more if
-converting between two low colour formats).
+你可以通过以下方式复现这些结果：
 
-Although this is significant, it is in cases that are already difficult
-to deal with performance wise, and exceedingly rare with modern
-hardware. As such it is difficult to motivate the extra complexity that
-PixelTransformer requires.
+  ./encperf -notrans <文件> [参数...]
 
-If it turns out that these cases are significant, than we can move
-PixelTransformer's massive lookup tables into a shared cache in
-PixelFormat. Implementation complexity would be similar, but at least
-we would have a friendly API.
+其中 <文件> 为 RFB 捕获文件。
