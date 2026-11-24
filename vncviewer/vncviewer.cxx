@@ -566,6 +566,21 @@ int main(int argc, char** argv)
 
   setlocale(LC_ALL, "");
 
+#ifdef WIN32
+  /*
+   * 避免 FLTK 在磁盘根目录（如 C:\\FLTK\\fltk.org\\fltk.prefs）创建配置文件。
+   * 将 FLTK 的偏好设置根目录重定向到用户的漫游配置目录。
+   * 参考上游 issue #822。
+   */
+  if (getenv("FLTK_PREFS_ROOT") == nullptr) {
+    char appdata[MAX_PATH];
+    if (GetEnvironmentVariableA("APPDATA", appdata, MAX_PATH) > 0) {
+      std::string prefsRoot = std::string(appdata) + "\\TuPigVNC";
+      _putenv_s("FLTK_PREFS_ROOT", prefsRoot.c_str());
+    }
+  }
+#endif
+
   fprintf(stderr,"\n%s\n", about_text());
 
   core::initStdIOLoggers();
