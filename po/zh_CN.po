@@ -53,7 +53,7 @@ msgid ""
 "Usage: %s\n"
 msgstr ""
 "\n"
-"用法：%s"
+"用法：%s\n"
 
 #: unix/w0vncserver/w0vncserver.cxx:82 unix/x0vncserver/x0vncserver.cxx:289
 msgid ""
