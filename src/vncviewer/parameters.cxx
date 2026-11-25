@@ -261,6 +261,14 @@ core::StringParameter
 
 static const char* IDENTIFIER_STRING = "TuPigVNC Configuration file Version 1.0";
 
+#ifdef WIN32
+/* 注册表基路径，集中定义避免多处硬编码 */
+static const wchar_t* const REGISTRY_BASE_PATH =
+    L"Software\\TuPigVNC\\vncviewer";
+static const wchar_t* const REGISTRY_HISTORY_PATH =
+    L"Software\\TuPigVNC\\vncviewer\\history";
+#endif
+
 /*
  * We only save the sub set of parameters that can be modified from
  * the graphical user interface
@@ -520,7 +528,7 @@ void saveHistoryToRegKey(const std::list<std::string>& serverHistory)
 {
   HKEY hKey;
   LONG res = RegCreateKeyExW(HKEY_CURRENT_USER,
-                             L"Software\\TuPigVNC\\vncviewer\\history", 0, nullptr,
+                             REGISTRY_HISTORY_PATH, 0, nullptr,
                              REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, nullptr,
                              &hKey, nullptr);
 
@@ -554,7 +562,7 @@ static void saveToReg(const char* servername) {
   HKEY hKey;
     
   LONG res = RegCreateKeyExW(HKEY_CURRENT_USER,
-                             L"Software\\TuPigVNC\\vncviewer", 0, nullptr,
+                             REGISTRY_BASE_PATH, 0, nullptr,
                              REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, nullptr,
                              &hKey, nullptr);
   if (res != ERROR_SUCCESS)
@@ -628,7 +636,7 @@ std::list<std::string> loadHistoryFromRegKey()
   std::list<std::string> serverHistory;
 
   LONG res = RegOpenKeyExW(HKEY_CURRENT_USER,
-                           L"Software\\TuPigVNC\\vncviewer\\history", 0,
+                           REGISTRY_HISTORY_PATH, 0,
                            KEY_READ, &hKey);
   if (res != ERROR_SUCCESS) {
     if (res == ERROR_FILE_NOT_FOUND) {
@@ -706,7 +714,7 @@ static std::string loadFromReg() {
   HKEY hKey;
 
   LONG res = RegOpenKeyExW(HKEY_CURRENT_USER,
-                           L"Software\\TuPigVNC\\vncviewer", 0,
+                           REGISTRY_BASE_PATH, 0,
                            KEY_READ, &hKey);
   if (res != ERROR_SUCCESS) {
     if (res == ERROR_FILE_NOT_FOUND) {
