@@ -37,11 +37,14 @@
 #include <windows.h>
 #include <wininet.h> /* MinGW needs it */
 #include <shlobj.h>
+#include <filesystem>
+#include <system_error>
 #define stat _stat
 #define mkdir(path, mode) mkdir(path)
 #endif
 
 #include <core/xdgdirs.h>
+#include <core/Platform.h>
 
 static const char* getvncdir(bool userDir, const char *xdg_env, const char *xdg_def)
 {
@@ -131,13 +134,25 @@ const char* core::getvncstatedir()
 
 int core::mkdir_p(const char *path_, mode_t mode)
 {
+#ifdef WIN32
+  /*
+   * Windows 上路径分隔符既可能是 '\' 也可能是 '/'，还可能是盘符
+   * 或 UNC 前缀，手写的逐级 mkdir 很容易漏判。改用标准库处理，
+   * 这些情况全部由它负责。
+   *
+   * 路径按 UTF-8 处理，先转成宽字符再交给文件系统，否则用户名等
+   * 含非 ASCII 字符时会被当成 ANSI 代码页而乱码。
+   */
+  (void)mode;
+
+  std::error_code ec;
+  std::filesystem::create_directories(core::widen(path_), ec);
+  return ec ? -1 : 0;
+#else
   char *path = strdup(path_);
   char *p;
 
-#ifdef WIN32
-  (void)mode;
-#endif
-
+  /* POSIX 路径必然以 '/' 分隔，逐级创建以应用正确的权限位。 */
   for (p = path + 1; *p; p++) {
     if (*p == '/') {
       *p = '\0';
@@ -159,4 +174,5 @@ int core::mkdir_p(const char *path_, mode_t mode)
   free(path);
 
   return 0;
+#endif
 }
