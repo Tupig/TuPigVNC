@@ -21,6 +21,8 @@
 #define __RFB_TIGHTDECODER_H__
 
 #include <rdr/ZlibInStream.h>
+
+#include <vector>
 #include <rfb/Decoder.h>
 
 namespace rfb {
@@ -69,6 +71,9 @@ namespace rfb {
     int readPalSize;
 
     rdr::ZlibInStream zis[4];
+
+    /* 中间像素缓冲。跨 decodeRect 调用复用，避免每帧重复分配。 */
+    std::vector<uint8_t> pixbuf;
   };
 }
 

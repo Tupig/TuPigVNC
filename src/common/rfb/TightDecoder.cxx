@@ -434,7 +434,6 @@ void TightDecoder::decodeRect(const core::Rect& r, const uint8_t* buffer,
   bool directDecode;
 
   uint8_t* outbuf;
-  std::vector<uint8_t> pixbuf;
   int stride;
 
   if (pb->getPF() == pf) {
@@ -448,6 +447,7 @@ void TightDecoder::decodeRect(const core::Rect& r, const uint8_t* buffer,
   if (directDecode)
     outbuf = pb->getBufferRW(r, &stride);
   else {
+    /* 复用成员缓冲，避免每帧重复分配 */
     pixbuf.resize(static_cast<size_t>(r.area()) * (pf.bpp/8));
     outbuf = pixbuf.data();
     stride = r.width();
