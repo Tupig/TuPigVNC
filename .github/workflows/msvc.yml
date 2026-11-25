@@ -22,6 +22,8 @@ jobs:
       contents: write
     env:
       VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg-cache
+      # 依赖集合（vcpkg install 列表）变化时手动递增，用于让缓存失效
+      VCPKG_CACHE_VERSION: v1
     steps:
       - uses: actions/checkout@v6
         with:
@@ -69,7 +71,10 @@ jobs:
       - uses: actions/cache@v6
         with:
           path: vcpkg-cache
-          key: vcpkg-msvc-${{ hashFiles('.github/workflows/msvc.yml') }}
+          # 依赖集合变化时才递增 VCPKG_CACHE_VERSION。
+          # 不要用 hashFiles('msvc.yml')：那样每次调整工作流都会让缓存失效，
+          # 白白多花二十多分钟重装依赖。
+          key: vcpkg-msvc-${{ env.VCPKG_CACHE_VERSION }}-${{ runner.os }}
 
       - name: Install dependencies
         run: |
@@ -172,3 +177,5 @@ jobs:
           name: 单元测试
           path: '*.xml'
           reporter: java-junit
+          # 构建失败时不会产生测试结果，此时不应让报告 job 额外报错
+          fail-on-empty: false
