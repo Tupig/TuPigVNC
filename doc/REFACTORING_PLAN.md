@@ -272,9 +272,24 @@ tupigvnc::viewer
 |------|------|
 | 阶段 1 目录结构 | ✅ |
 | 阶段 2 抽象层接口 | ✅ |
-| 阶段 2 迁移 | 🔄 0/24 |
+| 阶段 2 迁移 | 🔄 3/24 |
 | 阶段 3 日志统一 | ✅ |
 | 阶段 4 C++20 | ✅（标准已升级，代码待迁移） |
 | 阶段 5 模块化 | ⏳ |
+
+**已完成迁移**：
+
+| 文件 | 内容 |
+|------|------|
+| `parameters.cxx` | 4 处注册表路径硬编码 → 常量 |
+| `PlatformWin32.cxx` / `UpdateCheckerWin32.cxx` | `widen`/`narrow` 与 `executablePath` 去重 |
+| `xdgdirs.cxx` | `mkdir_p` 改用 `std::filesystem`，修复 Windows 多级目录 |
+
+**评估后保留（不迁移）**：
+
+| 文件 | 原因 |
+|------|------|
+| `Socket.cxx` | `errorNumber`/`closesocket`/`SHUT_RD` 是 C 层宏，热路径虚函数化反而增加开销 |
+| `vncviewer.cxx` | 图标与菜单差异属于 FLTK 层，不属于通用平台抽象 |
 
 **下一步**：从 P0 的 `vncviewer.cxx` 开始，逐个文件迁移。

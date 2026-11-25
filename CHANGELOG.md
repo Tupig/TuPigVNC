@@ -7,6 +7,22 @@
 
 ---
 
+## [未发布]
+
+### 修复
+
+- **CI 脚本注入**：`msvc.yml` 把提交信息直接内插进 PowerShell 脚本，提交信息中的引号会破坏脚本语法，且可被用于执行任意命令。改为通过环境变量传递。
+- **MSVC 构建失败**：阶段 1 目录重构把 `contrib/` 移到 `src/contrib/` 后，`CMakeLists.txt` 的 include 路径未同步更新，导致 `msvc_compat.h` 找不到。所有 MSVC 构建均受影响。
+- **Windows 日志丢失**：`mkdir_p` 只识别 `/` 分隔符，而 winvnc 传入纯反斜杠路径，多级目录创建失败且错误被静默丢弃。Windows 分支改用 `std::filesystem`。
+- **CodeQL 从未通过**：根因同上，另将 CodeQL Action 从 v3 升级到 v4（v3 将于 2026 年 12 月停止服务）。
+
+### 变更
+
+- **消除重复代码**：`PlatformWin32.cxx` 与 `UpdateCheckerWin32.cxx` 各自的 UTF-8 与 UTF-16 转换函数、可执行路径获取合并为 `core::widen` / `core::narrow` 与 `getPlatform().executablePath()`。
+- **注册表路径常量**：`parameters.cxx` 中 4 处硬编码的 `Software\TuPigVNC\vncviewer` 提取为具名常量。
+
+---
+
 ## [0.0.1] - 2026-11-25
 
 首个正式版本。基于 TigerVNC 1.16 代码库进行品牌化与现代化改造。

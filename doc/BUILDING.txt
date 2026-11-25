@@ -319,4 +319,4 @@ make installer
 ===============================
 
 针对当前版本 RHEL/CentOS 与 Ubuntu LTS 的打包配置
-可在 contrib/packages 下找到。
+可在 src/contrib/packages 下找到。

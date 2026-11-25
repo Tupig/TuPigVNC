@@ -47,6 +47,11 @@ option(INSTALL_SYSTEMD_UNITS "Install TuPigVNC systemd units" ON)
 if(MSVC)
   include_directories(BEFORE SYSTEM ${CMAKE_SOURCE_DIR}/src/contrib/msvc/include)
   add_compile_options(/FI msvc_compat.h)
+
+  # 源码全部为 UTF-8（含大量中文注释与字符串）。MSVC 默认使用系统
+  # 代码页（简体中文环境下为 GBK），会把 UTF-8 字节错误解码，轻则
+  # 警告 C4819，重则字符串乱码或编译失败。
+  add_compile_options(/utf-8)
 endif()
 
 if(NOT BUILD_TIMESTAMP)

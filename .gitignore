@@ -14,6 +14,9 @@ cmake_install.cmake
 cmake_uninstall.cmake
 install_manifest.txt
 
+# 本地构建目录
+build/
+
 # Claude 相关文件不提交
 .claude/
 
@@ -25,4 +28,4 @@ log/*
 !log/.gitkeep
 
 # 翻译备份文件
-po/*.bak*
+i18n/*.bak*
