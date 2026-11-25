@@ -2,7 +2,9 @@
 # Setup
 #
 
-cmake_minimum_required(VERSION 3.10.0)
+# 3.21 起 CMP0091 默认 NEW，CMAKE_MSVC_RUNTIME_LIBRARY 才会生效。
+# 更早的版本会忽略该变量，导致静态构建仍链接动态 CRT。
+cmake_minimum_required(VERSION 3.21)
 
 # Internal cmake modules
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
