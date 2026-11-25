@@ -1,5 +1,5 @@
 /* XPM */
-static char *secure[] = {
+static const char *secure[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 12 1 ",
 "  c #000000",
