@@ -88,6 +88,25 @@ Platform& getPlatform();
 3. 单元测试通过
 4. 手动 smoke test（连接 VNC）
 
+### 本地 MSVC 快速验证
+
+CI 单次构建约 40 分钟，迭代太慢。本机装有 Visual Studio 2022
+BuildTools，可先用它做语法检查（`/Zs` 只解析，不生成目标文件）：
+
+```bat
+@echo off
+call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul 2>&1
+cd /d G:\VNCView
+cl /nologo /std:c++20 /utf-8 /EHsc /Zs /I src\common /I src\contrib\msvc\include /FI msvc_compat.h %1
+```
+
+把上面存成 `log\msvc_check.bat`，然后 `cmd //c "G:\VNCView\log\msvc_check.bat 源文件.cxx"`。
+
+注意：
+- 依赖 pixman、gettext 的文件（`Region.cxx`、`i18n.cxx`）本地会因
+  缺头文件失败，属正常现象，以 CI 为准。
+- `Unix*.cxx`、`X11*.cxx` 等 Unix 专用文件在 Windows 上不参与编译。
+
 ---
 
 ## 阶段 4：现代 C++ 迁移
