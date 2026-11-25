@@ -1,81 +1,79 @@
-.TH vncsession 8 "" "TuPigVNC" "Virtual Network Computing"
+.TH vncsession 8 "" "TuPigVNC" "虚拟网络计算"
 .SH NAME
-vncsession \- start a VNC server
+vncsession \- 启动 VNC 服务器
 .SH SYNOPSIS
 .B vncsession
 .RI [-D]
-.RI < username >
-.RI <: display# >
+.RI < 用户名 >
+.RI <: 显示编号 >
 .SH DESCRIPTION
 .B vncsession
-is used to start a VNC (Virtual Network Computing) desktop.
+用于启动 VNC（虚拟网络计算）桌面。
 .B vncsession
-performs all the necessary steps to create a new user session, run Xvnc with
-appropriate options and starts a window manager on the VNC desktop.
+会完成创建新用户会话所需的全部步骤：以合适的选项运行 Xvnc，
+并在 VNC 桌面上启动窗口管理器。
 
 .B vncsession
-is rarely called directly and is normally started by the system service
-manager.
+很少被直接调用，通常由系统服务管理器启动。
 
-.SH -D OPTION
+.SH -D 选项
 .B vncsession
-by default forks and detaches. If the -D option is used, it does not fork and
-detach. This option is provided for use with system service managers that
-require services to run in the foreground. This option is not intended for
-debugging in a login shell from a terminal or for running
+默认会派生（fork）子进程并脱离终端。若指定 -D 选项，则不会派生
+和脱离。此选项用于那些要求服务以前台方式运行的系统服务管理器。
+此选项并非供用户在终端登录 shell 中调试，也不适合由普通用户
+从终端直接运行
 .B vncsession
-from a terminal as an ordinary user.
+时使用。
 
 .SH FILES
-Several VNC-related files are found in the directory \fI$HOME/.config/tigervnc\fP:
+与 VNC 相关的若干文件位于目录 \fI$HOME/.config/tigervnc\fP 中：
 .TP
 \fI@CMAKE_INSTALL_FULL_SYSCONFDIR@/tigervnc/vncserver-config-defaults\fP
-The optional system-wide equivalent of \fI$HOME/.config/tigervnc/config\fP.
-If this file exists and defines options to be passed to Xvnc, they will be used
-as defaults for users. The user's \fI$HOME/.config/tigervnc/config\fP overrides
-settings configured in this file. The overall configuration file load order is:
-this file, \fI$HOME/.config/tigervnc/config\fP, and then
-\fI@CMAKE_INSTALL_FULL_SYSCONFDIR@/tigervnc/vncserver-config-mandatory\fP.
-None are required to exist.
+\fI$HOME/.config/tigervnc/config\fP 的可选系统级对应文件。
+若该文件存在并定义了传给 Xvnc 的选项，这些选项将作为用户的
+默认值。用户的 \fI$HOME/.config/tigervnc/config\fP 会覆盖此文件中
+的配置。配置文件的整体加载顺序为：本文件、
+\fI$HOME/.config/tigervnc/config\fP，然后是
+\fI@CMAKE_INSTALL_FULL_SYSCONFDIR@/tigervnc/vncserver-config-mandatory\fP。
+这些文件均非必需存在。
 .TP
 \fI@CMAKE_INSTALL_FULL_SYSCONFDIR@/tigervnc/vncserver-config-mandatory\fP
-The optional system-wide equivalent of \fI$HOME/.config/tigervnc/config\fP.
-If this file exists and defines options to be passed to Xvnc, they will override
-any of the same options defined in a user's \fI$HOME/.config/tigervnc/config\fP.
-This file offers a mechanism to establish some basic form of system-wide policy.
-WARNING! There is nothing stopping users from constructing their own
-vncsession-like script that calls Xvnc directly to bypass any options defined in
-\fI@CMAKE_INSTALL_FULL_SYSCONFDIR@/tigervnc/vncserver-config-mandatory\fP. The
-overall configuration file load order is:
-\fI@CMAKE_INSTALL_FULL_SYSCONFDIR@/tigervnc/vncserver-config-defaults\fP,
-\fI$HOME/.config/tigervnc/config\fP, and then this file. None are required to
-exist.
+\fI$HOME/.config/tigervnc/config\fP 的可选系统级对应文件。
+若该文件存在并定义了传给 Xvnc 的选项，将覆盖用户
+\fI$HOME/.config/tigervnc/config\fP 中定义的同名选项。
+此文件提供了一种建立系统级基本策略的机制。
+注意！没有任何机制能阻止用户自行编写类
+vncsession 脚本直接调用 Xvnc，从而绕过
+\fI@CMAKE_INSTALL_FULL_SYSCONFDIR@/tigervnc/vncserver-config-mandatory\fP
+中定义的选项。配置文件的整体加载顺序为：
+\fI@CMAKE_INSTALL_FULL_SYSCONFDIR@/tigervnc/vncserver-config-defaults\fP、
+\fI$HOME/.config/tigervnc/config\fP，然后是此文件。这些文件均非必需
+存在。
 .TP
 \fI$XDG_CONFIG_HOME/tigervnc/config\fP
 .TQ
 \fI$HOME/.config/tigervnc/config\fP
-An optional server config file wherein options to be passed to Xvnc are listed
-to avoid hard-coding them to the physical invocation. List options in this file
-one per line. For those requiring an argument, simply separate the option from
-the argument with an equal sign, for example: "geometry=2000x1200" or
-"securitytypes=vncauth,tlsvnc". Options without an argument are simply listed
-as a single word, for example: "localhost" or "alwaysshared".
+可选的服务器配置文件，其中列出传给 Xvnc 的选项，以免将其
+硬编码在启动命令中。选项在此文件中每行一个。对于需要参数的
+选项，只需用等号将选项与参数分隔，例如："geometry=2000x1200"
+或 "securitytypes=vncauth,tlsvnc"。无参数的选项直接写成单个
+单词，例如："localhost" 或 "alwaysshared"。
 
-The special option
+特殊选项
 .B session
-can be used to control which session type will be started. This should match
-one of the files in \fI/usr/share/xsessions\fP. E.g. if there is a file called
-"gnome.desktop", then "session=gnome" would be set to use that session type.
+可用于控制启动哪类会话。该值应与 \fI/usr/share/xsessions\fP 中的
+某个文件名匹配。例如，若有名为 "gnome.desktop" 的文件，则将
+"session=gnome" 设为该会话类型即可。
 .TP
 \fI$XDG_CONFIG_HOME/tigervnc/passwd\fP
 .TQ
 \fI$HOME/.config/tigervnc/passwd\fP
-The VNC password file.
+VNC 密码文件。
 .TP
 \fI$XDG_STATE_HOME/tigervnc/\fIBhost\fI:\fIBdisplay#\fI.log\fP
 .TQ
 \fI$HOME/.local/state/tigervnc/\fIBhost\fI:\fIBdisplay#\fI.log\fP
-The log file for Xvnc and the session.
+Xvnc 与会话的日志文件。
 
 .SH SEE ALSO
 .BR vncviewer (1),
@@ -86,10 +84,9 @@ The log file for Xvnc and the session.
 https://github.com/TuPig/TuPigVNC
 
 .SH AUTHOR
-Tristan Richardson, RealVNC Ltd., D. R. Commander and others.
+Tristan Richardson、RealVNC Ltd.、D. R. Commander 及其他人。
 
-VNC was originally developed by the RealVNC team while at Olivetti
-Research Ltd / AT&T Laboratories Cambridge.  TightVNC additions were
-implemented by Constantin Kaplinsky. Many other people have since
-participated in development, testing and support. This manual is part
-of the TuPigVNC software suite.
+VNC 最初由 RealVNC 团队在 Olivetti Research Ltd / AT&T Laboratories
+Cambridge 工作期间开发。TightVNC 的增强功能由 Constantin Kaplinsky
+实现。此后有许多人参与了开发、测试与支持工作。本手册是
+TuPigVNC 软件套件的一部分。
