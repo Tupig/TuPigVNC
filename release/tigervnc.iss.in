@@ -1,4 +1,4 @@
-[Setup]
+﻿[Setup]
 #ifdef WIN64
 ArchitecturesInstallIn64BitMode=x64
 #endif
