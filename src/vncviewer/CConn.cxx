@@ -158,11 +158,9 @@ CConn::~CConn()
       if (done)
         break;
 
-  #ifdef WIN32
-      Sleep(10);
-  #else
+      /* Windows 上由 msvc_compat.h 引入的 unistd.h 提供了 usleep 包装，
+       * 无需再按平台分支。 */
       usleep(10000);
-  #endif
     }
 
     Fl::remove_fd(sock->getFd());
