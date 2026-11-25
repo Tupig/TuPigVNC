@@ -18,7 +18,9 @@ DisableDirPage=auto
 DisableProgramGroupPage=auto
 
 [Files]
-Source: "@CMAKE_BINARY_DIR@\vncviewer\vncviewer.exe"; DestDir: "{app}"; Flags: ignoreversion restartreplace; 
+Source: "@CMAKE_BINARY_DIR@\vncviewer\Release\vncviewer.exe"; DestDir: "{app}"; Flags: ignoreversion restartreplace;
+; 运行时依赖库（MSVC 动态链接）
+Source: "@CMAKE_BINARY_DIR@\vncviewer\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "@CMAKE_SOURCE_DIR@\README.rst"; DestDir: "{app}"; Flags: ignoreversion
 Source: "@CMAKE_SOURCE_DIR@\LICENCE.TXT"; DestDir: "{app}"; Flags: ignoreversion
 
