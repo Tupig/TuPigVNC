@@ -21,6 +21,7 @@
 #include <core/UpdateChecker.h>
 
 #include <windows.h>
+#include <bcrypt.h>
 #include <shellapi.h>
 #include <winhttp.h>
 
@@ -234,7 +235,51 @@ std::string UpdateChecker::executablePath() {
     return detail::narrow(std::wstring(path, len));
 }
 
+std::string UpdateChecker::sha256OfFile(const std::string& path) {
+    std::wstring wpath = detail::widen(path);
+    FILE* file = _wfopen(wpath.c_str(), L"rb");
+    if (!file)
+        return std::string();
+
+    std::string result;
+    BCRYPT_ALG_HANDLE alg = nullptr;
+    if (BCryptOpenAlgorithmProvider(&alg, BCRYPT_SHA256_ALGORITHM,
+                                    nullptr, 0) == 0) {
+        DWORD objLen = 0;
+        DWORD cbResult = 0;
+        if (BCryptGetProperty(alg, BCRYPT_OBJECT_LENGTH,
+                              reinterpret_cast<PUCHAR>(&objLen),
+                              sizeof(objLen), &cbResult, 0) == 0) {
+            std::vector<unsigned char> obj(objLen);
+            BCRYPT_HASH_HANDLE hash = nullptr;
+            if (BCryptCreateHash(alg, &hash, obj.data(), objLen,
+                                 nullptr, 0, 0) == 0) {
+                unsigned char buffer[65536];
+                size_t read;
+                while ((read = fread(buffer, 1, sizeof(buffer), file)) > 0)
+                    BCryptHashData(hash, buffer,
+                                   static_cast<ULONG>(read), 0);
+
+                unsigned char digest[32];
+                if (BCryptFinishHash(hash, digest, sizeof(digest), 0) == 0) {
+                    char hex[65];
+                    for (int i = 0; i < 32; ++i)
+                        sprintf(hex + i * 2, "%02x", digest[i]);
+                    hex[64] = '\0';
+                    result = hex;
+                }
+                BCryptDestroyHash(hash);
+            }
+        }
+        BCryptCloseAlgorithmProvider(alg, 0);
+    }
+
+    fclose(file);
+    return result;
+}
+
 bool UpdateChecker::downloadAndInstall(const std::string& url,
+                                       const std::string& checksumUrl,
                                        const std::string& version,
                                        std::string* error) {
     std::string tempDir = tempDirectory();
@@ -243,6 +288,30 @@ bool UpdateChecker::downloadAndInstall(const std::string& url,
     /* 1. 下载安装包 */
     if (!downloadFile(url, installer, error))
         return false;
+
+    /* 2. 校验 SHA-256（若发布提供了校验文件） */
+    if (!checksumUrl.empty()) {
+        std::string checksumText;
+        if (!detail::httpGet(checksumUrl, &checksumText, error)) {
+            DeleteFileW(detail::widen(installer).c_str());
+            return false;
+        }
+
+        /* 校验文件格式：<hash>  <filename> */
+        std::string expected;
+        size_t pos = checksumText.find_first_of(" \t\r\n");
+        expected = checksumText.substr(0, pos);
+        while (!expected.empty() && expected.back() == ' ')
+            expected.pop_back();
+
+        std::string actual = sha256OfFile(installer);
+        if (expected.empty() || actual != expected) {
+            DeleteFileW(detail::widen(installer).c_str());
+            if (error)
+                *error = "安装包校验失败（SHA-256 不匹配）";
+            return false;
+        }
+    }
 
     std::string exePath = executablePath();
     if (exePath.empty()) {

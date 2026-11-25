@@ -30,6 +30,7 @@ struct ReleaseInfo {
     std::string notes;        /* 发行说明（Markdown） */
     std::string htmlUrl;      /* 发行版页面地址 */
     std::string downloadUrl;  /* 当前平台的安装包下载地址 */
+    std::string checksumUrl;  /* 安装包 SHA-256 校验文件地址 */
     std::string publishedAt;  /* 发布日期（ISO 8601） */
     long long size = 0;       /* 安装包大小（字节） */
 };
@@ -73,12 +74,17 @@ public:
 
     /* 下载并静默安装更新，随后自动启动新版本。
      *
-     * 全自动流程：下载安装包 → 静默安装 → 启动新版本。
+     * 全自动流程：下载安装包 → 校验 SHA-256 → 静默安装 → 启动新版本。
+     * checksumUrl 为空时跳过校验。
      * 成功返回 true；失败返回 false 并填充 error。
      */
     static bool downloadAndInstall(const std::string& url,
+                                   const std::string& checksumUrl,
                                    const std::string& version,
                                    std::string* error);
+
+    /* 计算文件的 SHA-256 十六进制摘要。 */
+    static std::string sha256OfFile(const std::string& path);
 
     /* 返回当前程序可执行文件的完整路径。 */
     static std::string executablePath();

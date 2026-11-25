@@ -1106,6 +1106,7 @@ void Viewport::checkForUpdates()
              info.version.c_str());
 
   if (!core::UpdateChecker::downloadAndInstall(info.downloadUrl,
+                                                info.checksumUrl,
                                                 info.version, &error)) {
     fl_alert(_("Update failed: %s"), error.c_str());
     return;

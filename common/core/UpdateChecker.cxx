@@ -375,7 +375,7 @@ bool UpdateChecker::fetchLatestRelease(ReleaseInfo* info, std::string* error) {
     if (const JsonValue* date = root.find("published_at"))
         info->publishedAt = date->asString();
 
-    /* 选择当前平台对应的安装包 */
+    /* 选择当前平台对应的安装包及校验文件 */
     std::string keyword = platformKeyword();
     if (const JsonValue* assets = root.find("assets")) {
         if (assets->type == JsonValue::Array) {
@@ -384,11 +384,17 @@ bool UpdateChecker::fetchLatestRelease(ReleaseInfo* info, std::string* error) {
                 const JsonValue* url = asset.find("browser_download_url");
                 if (!name || !url)
                     continue;
-                if (name->asString().find(keyword) != std::string::npos) {
+                std::string assetName = name->asString();
+                if (assetName.size() > 7 &&
+                    assetName.compare(assetName.size() - 7, 7, ".sha256") == 0) {
+                    info->checksumUrl = url->asString();
+                    continue;
+                }
+                if (info->downloadUrl.empty() &&
+                    assetName.find(keyword) != std::string::npos) {
                     info->downloadUrl = url->asString();
                     if (const JsonValue* size = asset.find("size"))
                         info->size = size->asInteger();
-                    break;
                 }
             }
         }

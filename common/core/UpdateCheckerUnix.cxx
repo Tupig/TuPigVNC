@@ -120,7 +120,28 @@ std::string UpdateChecker::executablePath() {
     return std::string();
 }
 
+std::string UpdateChecker::sha256OfFile(const std::string& path) {
+    std::string command = "sha256sum " + detail::shellQuote(path) +
+                          " 2>/dev/null";
+    FILE* pipe = popen(command.c_str(), "r");
+    if (!pipe)
+        return std::string();
+
+    char buffer[128] = {};
+    char* ok = fgets(buffer, sizeof(buffer), pipe);
+    pclose(pipe);
+    if (!ok)
+        return std::string();
+
+    std::string result(buffer);
+    size_t pos = result.find_first_of(" \t\r\n");
+    if (pos != std::string::npos)
+        result = result.substr(0, pos);
+    return result;
+}
+
 bool UpdateChecker::downloadAndInstall(const std::string& url,
+                                       const std::string& checksumUrl,
                                        const std::string& version,
                                        std::string* error) {
     /* Unix 平台安装通常需要 root 权限，无法完全静默。
@@ -128,6 +149,22 @@ bool UpdateChecker::downloadAndInstall(const std::string& url,
     std::string dest = tempDirectory() + "/TuPigVNC-" + version + ".tar.gz";
     if (!downloadFile(url, dest, error))
         return false;
+
+    if (!checksumUrl.empty()) {
+        std::string checksumText;
+        if (!detail::httpGet(checksumUrl, &checksumText, error))
+            return false;
+
+        std::string expected =
+            checksumText.substr(0, checksumText.find_first_of(" \t\r\n"));
+        std::string actual = sha256OfFile(dest);
+        if (expected.empty() || actual != expected) {
+            std::remove(dest.c_str());
+            if (error)
+                *error = "安装包校验失败（SHA-256 不匹配）";
+            return false;
+        }
+    }
 
     openInBrowser("file://" + dest);
     return true;

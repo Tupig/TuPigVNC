@@ -37,7 +37,7 @@ if(ENABLE_NLS)
 endif()
 
 if(WIN32)
-  target_link_libraries(core PRIVATE ws2_32 winhttp)
+  target_link_libraries(core PRIVATE ws2_32 winhttp bcrypt)
 elseif(APPLE)
   target_link_libraries(core PRIVATE "-framework Carbon")
 endif()
