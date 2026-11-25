@@ -8,7 +8,7 @@ add_executable(vncconfig WIN32
   vncconfig.cxx
   vncconfig.rc)
 
-target_include_directories(vncconfig PUBLIC ${CMAKE_BINARY_DIR}/win)
+target_include_directories(vncconfig PUBLIC ${CMAKE_BINARY_DIR}/src/platform/windows)
 target_link_libraries(vncconfig PRIVATE rfb_win32 rfbserver rfb network rdr)
 target_link_libraries(vncconfig PRIVATE ws2_32)
 

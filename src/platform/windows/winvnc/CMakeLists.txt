@@ -12,7 +12,7 @@ add_executable(winvnc4 WIN32
   winvnc.cxx
   winvnc.rc)
 
-target_include_directories(winvnc4 PUBLIC ${CMAKE_BINARY_DIR}/win)
+target_include_directories(winvnc4 PUBLIC ${CMAKE_BINARY_DIR}/src/platform/windows)
 target_include_directories(winvnc4 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(winvnc4 PRIVATE rfbserver rfb rfb_win32 network rdr)
 target_link_libraries(winvnc4 PRIVATE ws2_32)

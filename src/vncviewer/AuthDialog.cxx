@@ -43,8 +43,8 @@
 /* xpm:s predate const, so they have invalid definitions */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wwrite-strings"
-#include "../media/secure.xpm"
-#include "../media/insecure.xpm"
+#include "../../assets/secure.xpm"
+#include "../../assets/insecure.xpm"
 #pragma GCC diagnostic pop
 
 static Fl_Pixmap secure_icon(secure);

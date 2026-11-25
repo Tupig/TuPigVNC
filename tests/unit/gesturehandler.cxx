@@ -26,7 +26,7 @@
 
 #include <gtest/gtest.h>
 
-#include "../../vncviewer/GestureHandler.h"
+#include "GestureHandler.h"
 
 class TestClass : public GestureHandler
 {

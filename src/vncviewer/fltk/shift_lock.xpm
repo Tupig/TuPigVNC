@@ -1,5 +1,5 @@
 /* XPM */
-static char *shift_lock[] = {
+static const char *shift_lock[] = {
 /* columns rows colors chars-per-pixel */
 "11 11 18 1 ",
 "  c #000000",
