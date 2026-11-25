@@ -523,7 +523,7 @@ msgstr "A(z) %s paraméter túl nagy volt a regisztrációs adatbázisba törté
 #: vncviewer/parameters.cxx:297 vncviewer/parameters.cxx:318
 #, c-format
 msgid "Failed to write parameter %s of type %s to the registry: %ld"
-msgstr "Nem sikerült a(z) %2$s típusú %1$s paraméter írása a regisztrációs adatbázisba: %3$ld"
+msgstr "Nem sikerült a(z) %s paramétert (típus: %s) írni a regisztrációs adatbázisba: %ld"
 
 #: vncviewer/parameters.cxx:334 vncviewer/parameters.cxx:377
 #, c-format

@@ -490,7 +490,7 @@ msgstr ""
 #: vncviewer/parameters.cxx:635 vncviewer/parameters.cxx:740
 #: vncviewer/vncviewer.cxx:459
 msgid "Could not obtain the home directory path"
-msgstr "VNC 홈 디렉토리 생성 불가: %s"
+msgstr "VNC 홈 디렉토리 경로를 가져올 수 없습니다"
 
 #: vncviewer/ServerDialog.cxx:333 vncviewer/ServerDialog.cxx:396
 #: vncviewer/parameters.cxx:646 vncviewer/parameters.cxx:753
@@ -945,7 +945,7 @@ msgstr "새 연결(&N)"
 #: vncviewer/vncviewer.cxx:463
 #, c-format
 msgid "Could not create VNC home directory: %s"
-msgstr "VNC 홈 디렉토리 생성 불가: %s"
+msgstr "VNC 홈 디렉토리를 생성할 수 없습니다: %s"
 
 #: vncviewer/vncviewer.cxx:562
 msgid "FullScreenAllMonitors is deprecated, set FullScreenMode to 'all' instead"

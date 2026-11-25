@@ -1606,7 +1606,7 @@ msgstr "无法解析键盘布局"
 #: vncviewer/parameters.cxx:916 vncviewer/parameters.cxx:952
 #: vncviewer/parameters.cxx:960
 msgid "Failed to read line %d in file \"%s\""
-msgstr "未能读取文件“%2$s”的第 %1$d 行"
+msgstr "未能读取第 %d 行，文件“%s”"
 
 #: vncviewer/parameters.cxx:698 vncviewer/parameters.cxx:726
 msgid "Failed to read parameter \"%s\": %s"

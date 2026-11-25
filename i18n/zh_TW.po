@@ -566,7 +566,7 @@ msgstr "無法開啟「%s」"
 #: vncviewer/parameters.cxx:844
 #, c-format
 msgid "Failed to read line %d in file \"%s\""
-msgstr "無法讀取「%2$s」檔案的第 %1$d 列"
+msgstr "無法讀取第 %d 列，檔案「%s」"
 
 #: vncviewer/ServerDialog.cxx:390 vncviewer/parameters.cxx:776
 msgid "Line too long"
