@@ -26,8 +26,8 @@ BraceWrapping:
 # 行宽
 ColumnLimit: 80
 
-# 指针对齐：`char* p`
-PointerAlignment: Right
+# 指针对齐：`char* p`（星号靠类型，与项目现有代码多数一致）
+PointerAlignment: Left
 
 # 允许短函数体与短语句单行
 AllowShortFunctionsOnASingleLine: Empty

@@ -21,7 +21,8 @@
 
 #include <string>
 
-namespace core {
+namespace core
+{
 
 /*
  * 平台服务的统一抽象。
@@ -30,24 +31,25 @@ namespace core {
  * 各平台分别在 PlatformWin32.cxx / PlatformUnix.cxx 中实现。
  * 调用方通过 getPlatform() 获取当前平台实例，无需条件编译。
  */
-class Platform {
+class Platform
+{
 public:
-    virtual ~Platform() = default;
+  virtual ~Platform() = default;
 
-    /* 当前可执行文件的完整路径。失败时返回空字符串。 */
-    virtual std::string executablePath() const = 0;
+  /* 当前可执行文件的完整路径。失败时返回空字符串。 */
+  virtual std::string executablePath() const = 0;
 
-    /* 系统临时目录（无末尾分隔符）。 */
-    virtual std::string tempDirectory() const = 0;
+  /* 系统临时目录（无末尾分隔符）。 */
+  virtual std::string tempDirectory() const = 0;
 
-    /* 在系统文件管理器中打开网址或路径。 */
-    virtual bool openInBrowser(const std::string& url) const = 0;
+  /* 在系统文件管理器中打开网址或路径。 */
+  virtual bool openInBrowser(const std::string& url) const = 0;
 
-    /* 本机 CPU 核心数。 */
-    virtual unsigned int cpuCount() const = 0;
+  /* 本机 CPU 核心数。 */
+  virtual unsigned int cpuCount() const = 0;
 
-    /* 平台名称，如 "windows"、"linux"、"macos"。 */
-    virtual const char* name() const = 0;
+  /* 平台名称，如 "windows"、"linux"、"macos"。 */
+  virtual const char* name() const = 0;
 };
 
 /* 返回当前平台的单例。 */

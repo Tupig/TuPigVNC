@@ -28,81 +28,84 @@
 #include <unistd.h>
 #endif
 
-namespace core {
+namespace core
+{
 
-namespace {
+namespace
+{
 
 /* 对 shell 参数做单引号转义 */
 std::string shellQuote(const std::string& s)
 {
-    std::string out = "'";
-    for (char c : s) {
-        if (c == '\'')
-            out += "'\\''";
-        else
-            out += c;
-    }
-    out += "'";
-    return out;
+  std::string out = "'";
+  for (char c : s)
+  {
+    if (c == '\'')
+      out += "'\\''";
+    else
+      out += c;
+  }
+  out += "'";
+  return out;
 }
 
-class PlatformUnix final : public Platform {
+class PlatformUnix final : public Platform
+{
 public:
-    std::string executablePath() const override
-    {
+  std::string executablePath() const override
+  {
 #if defined(__linux__)
-        char buffer[4096];
-        ssize_t len = readlink("/proc/self/exe", buffer, sizeof(buffer) - 1);
-        if (len > 0) {
-            buffer[len] = '\0';
-            return std::string(buffer);
-        }
+    char buffer[4096];
+    ssize_t len = readlink("/proc/self/exe", buffer, sizeof(buffer) - 1);
+    if (len > 0)
+    {
+      buffer[len] = '\0';
+      return std::string(buffer);
+    }
 #endif
-        return std::string();
-    }
+    return std::string();
+  }
 
-    std::string tempDirectory() const override
-    {
-        const char* tmp = std::getenv("TMPDIR");
-        if (tmp != nullptr && *tmp != '\0')
-            return tmp;
-        return "/tmp";
-    }
+  std::string tempDirectory() const override
+  {
+    const char* tmp = std::getenv("TMPDIR");
+    if (tmp != nullptr && *tmp != '\0')
+      return tmp;
+    return "/tmp";
+  }
 
-    bool openInBrowser(const std::string& url) const override
-    {
+  bool openInBrowser(const std::string& url) const override
+  {
 #if defined(__APPLE__)
-        std::string command = "open " + shellQuote(url) +
-                              " >/dev/null 2>&1 &";
+    std::string command = "open " + shellQuote(url) + " >/dev/null 2>&1 &";
 #else
-        std::string command = "xdg-open " + shellQuote(url) +
-                              " >/dev/null 2>&1 &";
+    std::string command = "xdg-open " + shellQuote(url) + " >/dev/null 2>&1 &";
 #endif
-        return std::system(command.c_str()) == 0;
-    }
+    return std::system(command.c_str()) == 0;
+  }
 
-    unsigned int cpuCount() const override
-    {
-        unsigned int count = std::thread::hardware_concurrency();
-        return count == 0 ? 1 : count;
-    }
+  unsigned int cpuCount() const override
+  {
+    unsigned int count = std::thread::hardware_concurrency();
+    return count == 0 ? 1 : count;
+  }
 
-    const char* name() const override
-    {
+  const char* name() const override
+  {
 #if defined(__APPLE__)
-        return "macos";
+    return "macos";
 #else
-        return "linux";
+    return "linux";
 #endif
-    }
+  }
 };
 
 } // anonymous namespace
 
 Platform& getPlatform()
 {
-    static PlatformUnix instance;
-    return instance;
+  static PlatformUnix instance;
+  return instance;
 }
 
 } // namespace core
