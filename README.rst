@@ -43,7 +43,7 @@ https://github.com/TuPig/TuPigVNC 。
 ========
 
 Windows 用户可以直接从 `GitHub Releases <https://github.com/TuPig/TuPigVNC/releases>`_
-下载最新的 ``TuPigVNC64-<版本>.exe`` 安装包，双击后按向导完成安装。
+下载最新的 ``TuPigVNC_x64.exe`` 安装包，双击后按向导完成安装。
 
 安装完成后，通过开始菜单启动 TuPigVNC 查看器，填写服务器地址即可连接远程桌面。
 如需更新，使用「检查更新」菜单：程序会访问 GitHub Releases 获取最新版本，下载后

@@ -9,25 +9,27 @@ endif()
 if(WIN32)
 
 if(CMAKE_SIZEOF_VOID_P MATCHES 8)
-  set(INST_SUFFIX 64)
+  set(INST_SUFFIX _x64)
   set(INST_DEFS -DWIN64)
 endif()
 
 # @ONLY 确保只替换 @VAR@ 形式，避免 Inno Setup 自身的 ${...} 语法被误替换
 configure_file(tigervnc.iss.in tigervnc.iss @ONLY)
 
-add_custom_command(OUTPUT ${CMAKE_PROJECT_NAME}${INST_SUFFIX}-${VERSION}.exe
-  COMMAND iscc -o. ${INST_DEFS} -F${CMAKE_PROJECT_NAME}${INST_SUFFIX}-${VERSION} tigervnc.iss
+# 安装包文件名固定为 TuPigVNC_x64.exe，版本号记录在文件属性
+# （VS_VERSION_INFO）与 Release 标签中，便于用户稳定识别与分享。
+add_custom_command(OUTPUT ${CMAKE_PROJECT_NAME}${INST_SUFFIX}.exe
+  COMMAND iscc -o. ${INST_DEFS} -F${CMAKE_PROJECT_NAME}${INST_SUFFIX} tigervnc.iss
   DEPENDS vncviewer tigervnc.iss)
-add_custom_target(installer DEPENDS ${CMAKE_PROJECT_NAME}${INST_SUFFIX}-${VERSION}.exe)
+add_custom_target(installer DEPENDS ${CMAKE_PROJECT_NAME}${INST_SUFFIX}.exe)
 
 if(BUILD_WINVNC)
   configure_file(winvnc.iss.in winvnc.iss @ONLY)
 
-  add_custom_command(OUTPUT ${CMAKE_PROJECT_NAME}${INST_SUFFIX}-winvnc-${VERSION}.exe
-    COMMAND iscc -o. ${INST_DEFS} -F${CMAKE_PROJECT_NAME}${INST_SUFFIX}-winvnc-${VERSION} winvnc.iss
+  add_custom_command(OUTPUT ${CMAKE_PROJECT_NAME}${INST_SUFFIX}_winvnc.exe
+    COMMAND iscc -o. ${INST_DEFS} -F${CMAKE_PROJECT_NAME}${INST_SUFFIX}_winvnc winvnc.iss
     DEPENDS winvnc4 wm_hooks vncconfig winvnc.iss)
-  add_custom_target(winvnc_installer DEPENDS ${CMAKE_PROJECT_NAME}${INST_SUFFIX}-winvnc-${VERSION}.exe)
+  add_custom_target(winvnc_installer DEPENDS ${CMAKE_PROJECT_NAME}${INST_SUFFIX}_winvnc.exe)
 endif()
 
 endif() # WIN32
