@@ -19,6 +19,7 @@
 #ifdef _WIN32
 
 #include <core/UpdateChecker.h>
+#include <core/Platform.h>
 
 #include <windows.h>
 #include <bcrypt.h>
@@ -31,30 +32,6 @@
 
 namespace core {
 namespace detail {
-
-namespace {
-
-std::wstring widen(const std::string& s) {
-    if (s.empty())
-        return std::wstring();
-    int len = MultiByteToWideChar(CP_UTF8, 0, s.c_str(), -1, nullptr, 0);
-    std::wstring out(len > 0 ? len - 1 : 0, L'\0');
-    if (len > 0)
-        MultiByteToWideChar(CP_UTF8, 0, s.c_str(), -1, &out[0], len);
-    return out;
-}
-
-std::string narrow(const std::wstring& s) {
-    if (s.empty())
-        return std::string();
-    int len = WideCharToMultiByte(CP_UTF8, 0, s.c_str(), -1, nullptr, 0,
-                                  nullptr, nullptr);
-    std::string out(len > 0 ? len - 1 : 0, '\0');
-    if (len > 0)
-        WideCharToMultiByte(CP_UTF8, 0, s.c_str(), -1, &out[0], len,
-                            nullptr, nullptr);
-    return out;
-}
 
 /* URL 分解结果 */
 struct UrlParts {
@@ -87,8 +64,6 @@ bool parseUrl(const std::string& url, UrlParts* parts) {
     parts->https = (uc.nScheme == INTERNET_SCHEME_HTTPS);
     return true;
 }
-
-} // anonymous namespace
 
 bool httpGet(const std::string& url, std::string* response,
              std::string* error) {
@@ -210,7 +185,7 @@ bool UpdateChecker::downloadFile(const std::string& url,
 }
 
 bool UpdateChecker::openInBrowser(const std::string& url) {
-    std::wstring wurl = detail::widen(url);
+    std::wstring wurl = widen(url);
     HINSTANCE result = ShellExecuteW(nullptr, L"open", wurl.c_str(),
                                      nullptr, nullptr, SW_SHOWNORMAL);
     return reinterpret_cast<INT_PTR>(result) > 32;
@@ -224,19 +199,16 @@ std::string UpdateChecker::tempDirectory() {
     std::wstring wdir(path);
     while (!wdir.empty() && (wdir.back() == L'\\' || wdir.back() == L'/'))
         wdir.pop_back();
-    return detail::narrow(wdir);
+    return narrow(wdir);
 }
 
 std::string UpdateChecker::executablePath() {
-    wchar_t path[MAX_PATH];
-    DWORD len = GetModuleFileNameW(nullptr, path, MAX_PATH);
-    if (len == 0 || len >= MAX_PATH)
-        return std::string();
-    return detail::narrow(std::wstring(path, len));
+    /* 与 Platform 的实现保持一致，直接复用，避免两份各自维护。 */
+    return getPlatform().executablePath();
 }
 
 std::string UpdateChecker::sha256OfFile(const std::string& path) {
-    std::wstring wpath = detail::widen(path);
+    std::wstring wpath = widen(path);
     FILE* file = _wfopen(wpath.c_str(), L"rb");
     if (!file)
         return std::string();
@@ -293,7 +265,7 @@ bool UpdateChecker::downloadAndInstall(const std::string& url,
     if (!checksumUrl.empty()) {
         std::string checksumText;
         if (!detail::httpGet(checksumUrl, &checksumText, error)) {
-            DeleteFileW(detail::widen(installer).c_str());
+            DeleteFileW(widen(installer).c_str());
             return false;
         }
 
@@ -306,7 +278,7 @@ bool UpdateChecker::downloadAndInstall(const std::string& url,
 
         std::string actual = sha256OfFile(installer);
         if (expected.empty() || actual != expected) {
-            DeleteFileW(detail::widen(installer).c_str());
+            DeleteFileW(widen(installer).c_str());
             if (error)
                 *error = "安装包校验失败（SHA-256 不匹配）";
             return false;
@@ -341,7 +313,7 @@ bool UpdateChecker::downloadAndInstall(const std::string& url,
     fclose(file);
 
     /* 3. 以隐藏窗口启动更新脚本 */
-    std::wstring wbatch = detail::widen(batchPath);
+    std::wstring wbatch = widen(batchPath);
     SHELLEXECUTEINFOW sei = {};
     sei.cbSize = sizeof(sei);
     sei.fMask = SEE_MASK_NOASYNC;

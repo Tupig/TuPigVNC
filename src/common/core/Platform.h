@@ -53,6 +53,18 @@ public:
 /* 返回当前平台的单例。 */
 Platform& getPlatform();
 
+#ifdef _WIN32
+/*
+ * Windows 专用：UTF-8 与 UTF-16 之间的转换。
+ *
+ * Win32 API 全部使用宽字符，而项目内部统一使用 UTF-8 的
+ * std::string。这两个函数是两者之间唯一且共享的转换入口，
+ * 供 Platform 实现与 UpdateChecker 等 Windows 专用代码复用。
+ */
+std::wstring widen(const std::string& s);
+std::string narrow(const std::wstring& s);
+#endif
+
 } // namespace core
 
 #endif // __CORE_PLATFORM_H__

@@ -27,8 +27,6 @@
 
 namespace core {
 
-namespace {
-
 std::wstring widen(const std::string& s)
 {
     if (s.empty())
@@ -52,6 +50,8 @@ std::string narrow(const std::wstring& s)
                             nullptr, nullptr);
     return out;
 }
+
+namespace {
 
 class PlatformWin32 final : public Platform {
 public:
