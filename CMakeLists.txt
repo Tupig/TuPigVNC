@@ -45,7 +45,7 @@ endif()
 option(INSTALL_SYSTEMD_UNITS "Install TuPigVNC systemd units" ON)
 
 if(MSVC)
-  include_directories(BEFORE SYSTEM ${CMAKE_SOURCE_DIR}/contrib/msvc/include)
+  include_directories(BEFORE SYSTEM ${CMAKE_SOURCE_DIR}/src/contrib/msvc/include)
   add_compile_options(/FI msvc_compat.h)
 endif()
 
