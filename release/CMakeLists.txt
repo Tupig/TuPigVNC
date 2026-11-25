@@ -13,7 +13,8 @@ if(CMAKE_SIZEOF_VOID_P MATCHES 8)
   set(INST_DEFS -DWIN64)
 endif()
 
-configure_file(tigervnc.iss.in tigervnc.iss)
+# @ONLY 确保只替换 @VAR@ 形式，避免 Inno Setup 自身的 ${...} 语法被误替换
+configure_file(tigervnc.iss.in tigervnc.iss @ONLY)
 
 add_custom_command(OUTPUT ${CMAKE_PROJECT_NAME}${INST_SUFFIX}-${VERSION}.exe
   COMMAND iscc -o. ${INST_DEFS} -F${CMAKE_PROJECT_NAME}${INST_SUFFIX}-${VERSION} tigervnc.iss
@@ -21,7 +22,7 @@ add_custom_command(OUTPUT ${CMAKE_PROJECT_NAME}${INST_SUFFIX}-${VERSION}.exe
 add_custom_target(installer DEPENDS ${CMAKE_PROJECT_NAME}${INST_SUFFIX}-${VERSION}.exe)
 
 if(BUILD_WINVNC)
-  configure_file(winvnc.iss.in winvnc.iss)
+  configure_file(winvnc.iss.in winvnc.iss @ONLY)
 
   add_custom_command(OUTPUT ${CMAKE_PROJECT_NAME}${INST_SUFFIX}-winvnc-${VERSION}.exe
     COMMAND iscc -o. ${INST_DEFS} -F${CMAKE_PROJECT_NAME}${INST_SUFFIX}-winvnc-${VERSION} winvnc.iss
