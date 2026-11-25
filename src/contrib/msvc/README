@@ -1,0 +1,15 @@
+使用 MSVC 构建 TuPigVNC
+===========================
+
+Windows 平台上受支持的编译工具链为 MinGW。include/ 目录中的头文件提供了源码所依赖、而 MSVC 缺少的 POSIX 接口，仅在 CMake 检测到 MSVC 时使用。
+
+大多数依赖均可通过 vcpkg 安装：
+
+  cmake -S . -B build -G "Visual Studio 17 2022" -A ARM64 \
+    -DCMAKE_TOOLCHAIN_FILE=<vcpkg>/scripts/buildsystems/vcpkg.cmake \
+    -DVCPKG_TARGET_TRIPLET=arm64-windows
+
+vcpkg 中未提供适用于 MSVC 的 GnuTLS，因此需单独构建并手动指定：
+
+  -DGNUTLS_INCLUDE_DIR=<gnutls>/include
+  -DGNUTLS_LIBRARY=<gnutls>/lib/gnutls.lib

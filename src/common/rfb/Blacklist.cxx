@@ -1,0 +1,135 @@
+/* Copyright (C) 2002-2005 RealVNC Ltd.  All Rights Reserved.
+ * 
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this software; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
+ * USA.
+ */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <rfb/Blacklist.h>
+#include <core/Configuration.h>
+#include <core/i18n.h>
+
+using namespace rfb;
+
+core::BoolParameter enabled("UseBlacklist",
+                            _("Temporarily reject connections from a "
+                              "host if it repeatedly fails to "
+                              "authenticate"),
+                            true);
+core::IntParameter threshold("BlacklistThreshold",
+                             _("The number of unauthenticated "
+                               "connection attempts allowed from any "
+                               "individual host before that host is "
+                               "black-listed"),
+                             5, 0, INT_MAX);
+core::IntParameter initialTimeout("BlacklistTimeout",
+                                  _("The initial timeout applied when "
+                                    "a host is first black-listed"),
+                                  10, 0, INT_MAX);
+
+// Sanity limit in case we are under some form of attack
+static const size_t MAXIMUM_ENTRIES = 65535;
+
+Blacklist::Blacklist() {
+}
+
+Blacklist::~Blacklist() {
+}
+
+bool Blacklist::isBlackmarked(const char* name) {
+  if (!enabled)
+    return false;
+
+  time_t now = time(nullptr);
+
+  BlacklistMap::iterator i = blm.find(name);
+  if (i == blm.end()) {
+    // Entry is not already black-marked.
+    // Create the entry unmarked, unblocked,
+    // with suitable defaults set.
+    BlacklistInfo bi;
+    bi.marks = 1;
+    bi.added = now;
+    bi.blockUntil = 0;
+    bi.blockTimeout = initialTimeout;
+
+    // Check that we aren't growing uncontrollably.
+    if (blm.size() >= MAXIMUM_ENTRIES) {
+      time_t oldestTime;
+      BlacklistMap::iterator j, oldest;
+
+      oldestTime = (*blm.begin()).second.added;
+      oldest = blm.begin();
+      for (j = blm.begin(); j != blm.end(); ++j) {
+        if ((*j).second.added < oldestTime) {
+          oldestTime = (*j).second.added;
+          oldest = j;
+        }
+      }
+
+      blm.erase(oldest);
+    }
+
+    blm[name] = bi;
+    i = blm.find(name);
+  }
+
+  // Entry exists - has it reached the threshold yet?
+  if ((*i).second.marks >= threshold) {
+    // Yes - entry is blocked - has the timeout expired?        
+    if (now >= (*i).second.blockUntil) {
+      // Timeout has expired.  Reset timeout and allow
+      // a re-try.
+      (*i).second.blockUntil = now + (*i).second.blockTimeout;
+      (*i).second.blockTimeout = (*i).second.blockTimeout * 2;
+      return false;
+    }
+    // Blocked and timeout still in effect - reject!
+    return true;
+  }
+
+  // We haven't reached the threshold yet.
+  // Increment the black-mark counter but allow
+  // the entry to pass.
+  (*i).second.marks++;
+
+  // Clean out any very old entries to free up memory
+  BlacklistMap::iterator j, next;
+  for (j = blm.begin(); j != blm.end(); j = next) {
+    time_t lastSeen;
+
+    next = j;
+    ++next;
+
+    if ((*j).second.blockUntil == 0)
+      lastSeen = (*j).second.added;
+    else
+      lastSeen = (*j).second.blockUntil;
+    if (lastSeen > now)
+      continue;
+
+    if (now - lastSeen > initialTimeout * 60)
+      blm.erase(j);
+  }
+
+  return false;
+}
+
+void Blacklist::clearBlackmark(const char* name) {
+  blm.erase(name);
+}

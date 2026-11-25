@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  (c) 2021-2022 Joachim Falk <joachim.falk@gmx.de>
+
+  Copying and distribution of this file, with or without modification, are
+  permitted in any medium without royalty provided the copyright notice and this
+  notice are preserved. This file is offered as-is, without any warranty.
+-->
+<component type="desktop-application">
+  <id>org.tigervnc.vncviewer</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-2.0-or-later</project_license>
+  <name>TuPigVNC</name>
+  <summary>连接到 VNC 服务器并显示远程桌面</summary>
+  <content_rating type="oars-1.1"/>
+  <description>
+    <p>
+      虚拟网络计算（VNC）是一种远程显示系统，允许用户查看并操作运行在网络中另一台计算机上的虚拟桌面环境。
+      借助 VNC，用户可以在远程计算机上运行图形应用程序，并仅将这些应用程序的显示内容发送至本地设备。
+      本软件包包含一个客户端，可连接到其他运行 VNC 服务器的桌面。
+      VNC 与平台无关，可作为服务器与客户端运行于多种操作系统和体系结构之上。
+    </p>
+    <p>
+      TuPigVNC 是基于 RealVNC 4 与 X.org 代码库构建的高速 VNC 实现。
+      TuPigVNC 最初是 TightVNC 在 Unix 与 Linux 平台上的下一代开发工作，后于 2009 年初从父项目中分离，以便 TightVNC 专注于 Windows 平台。
+      TuPigVNC 支持一种经过改进的 Tight 编码，借助 libjpeg-turbo JPEG 编解码器实现了显著加速。
+    </p>
+  </description>
+
+  <launchable type="desktop-id">vncviewer.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <caption>TuPigVNC 连接到 CentOS 机器</caption>
+      <image>https://raw.githubusercontent.com/TuPig/TuPigVNC/main/vncviewer/metainfo/tigervnc-connection-linux.jpg</image>
+    </screenshot>
+    <screenshot>
+      <caption>TuPigVNC 连接到 macOS 机器</caption>
+      <image>https://raw.githubusercontent.com/TuPig/TuPigVNC/main/vncviewer/metainfo/tigervnc-connection-macos.jpg</image>
+    </screenshot>
+    <screenshot>
+      <caption>TuPigVNC 连接到 Windows 机器</caption>
+      <image>https://raw.githubusercontent.com/TuPig/TuPigVNC/main/vncviewer/metainfo/tigervnc-connection-windows.jpg</image>
+    </screenshot>
+  </screenshots>
+  <!-- developer_name tag deprecated with Appstream 1.0 -->
+  <developer_name>TuPigVNC 团队</developer_name>
+  <developer id="org.tigervnc">
+    <name>TuPigVNC 团队</name>
+  </developer>
+  <url type="homepage">https://github.com/TuPig/TuPigVNC</url>
+  <url type="bugtracker">https://github.com/TuPig/TuPigVNC/issues</url>
+  <url type="vcs-browser">https://github.com/TuPig/TuPigVNC</url>
+  <releases>
+    <release version="0.0.1" date="2026-11-24">
+      <url>https://github.com/TuPig/TuPigVNC/releases/tag/v0.0.1</url>
+    </release>
+  </releases>
+</component>

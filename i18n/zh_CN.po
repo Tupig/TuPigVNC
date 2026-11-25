@@ -1,0 +1,4239 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: TuPigVNC 0.0.1\n"
+"Report-Msgid-Bugs-To: https://github.com/TuPig/TuPigVNC/issues\n"
+"POT-Creation-Date: 2026-11-24 20:30+0800\n"
+"PO-Revision-Date: 2026-11-24 20:30+0800\n"
+"Last-Translator: TuPigVNC Team\n"
+"Language-Team: Chinese (simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: TuPigVNC build script\n"
+
+#: vncviewer/vncviewer.cxx:415
+msgid ""
+"\n"
+"Options:\n"
+"\n"
+"  -display Xdisplay  - Specifies the X display for the viewer window\n"
+"  -geometry geometry - Initial position of the main TuPigVNC window. See the\n"
+"                       man page for details.\n"
+msgstr ""
+"\n"
+"选项：\n"
+"\n"
+"  -display Xdisplay  - 指定查看器窗口所在的 X display\n"
+"  -geometry geometry - TuPigVNC 主窗口的初始位置。详见 man 手册页。\n"
+
+#: unix/vncconfig/vncconfig.cxx:189 unix/w0vncserver/w0vncserver.cxx:87
+#: unix/x0vncserver/x0vncserver.cxx:294 unix/xserver/hw/vnc/xvnc.c:223
+#: vncviewer/vncviewer.cxx:422
+msgid ""
+"\n"
+"Parameters can be turned on with -<param> or off with -<param>=0\n"
+"Parameters which take a value can be specified as -<param> <value>\n"
+"Other valid forms are <param>=<value> -<param>=<value> --<param>=<value>\n"
+"Parameter names are case-insensitive.  The parameters are:\n"
+"\n"
+msgstr ""
+"\n"
+"参数可以用 -<param> 开启，或用 -<param>=0 关闭\n"
+"需要取值的参数可以写作 -<param> <value>\n"
+"其他有效形式为 <param>=<value> -<param>=<value> --<param>=<value>\n"
+"参数名不区分大小写。可用参数如下：\n"
+"\n"
+
+#: unix/w0vncserver/w0vncserver-forget.cxx:47
+msgid ""
+"\n"
+"Usage: %s\n"
+msgstr ""
+"\n"
+"用法：%s\n"
+
+#: unix/w0vncserver/w0vncserver.cxx:82 unix/x0vncserver/x0vncserver.cxx:289
+msgid ""
+"\n"
+"Usage: %s [<parameters>]\n"
+"       %s --version\n"
+msgstr ""
+"\n"
+"用法：%s [<参数>]\n"
+"       %s --version\n"
+
+#: vncviewer/vncviewer.cxx:396
+msgid ""
+"\n"
+"Usage: %s [parameters] [host][:displayNum]\n"
+"       %s [parameters] [host][::port]\n"
+"       %s [parameters] -listen [port]\n"
+"       %s [parameters] [.tigervnc file]\n"
+msgstr ""
+"\n"
+"用法：%s [参数] [主机][:显示号]\n"
+"       %s [参数] [主机][::端口]\n"
+"       %s [参数] -listen [端口]\n"
+"       %s [参数] [.tigervnc 文件]\n"
+
+#: vncviewer/vncviewer.cxx:404
+msgid ""
+"\n"
+"Usage: %s [parameters] [host][:displayNum]\n"
+"       %s [parameters] [host][::port]\n"
+"       %s [parameters] [unix socket]\n"
+"       %s [parameters] -listen [port]\n"
+"       %s [parameters] [.tigervnc file]\n"
+msgstr ""
+"\n"
+"用法：%s [参数] [主机][:显示编号]\n"
+"      %s [参数] [主机][::端口]\n"
+"      %s [参数] [unix 套接字]\n"
+"      %s [参数] -listen [端口]\n"
+"      %s [参数] [.tigervnc 文件]\n"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:372
+msgid " (view only)"
+msgstr "（仅查看）"
+
+#: vncviewer/vncviewer.cxx:488
+msgid ""
+"%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TuPigVNC "
+"location."
+msgstr "%%APPDATA%%\\vnc 已弃用，请切换到 %%APPDATA%%\\TuPigVNC 位置。"
+
+#: win/rfb_win32/DeviceContext.cxx:101
+msgid "%d-bit with masks: (%lx, %lx, %lx)"
+msgstr "%d 位，掩码：(%lx, %lx, %lx)"
+
+#: win/rfb_win32/DeviceContext.cxx:136
+msgid "%d-colour palettised"
+msgstr "%d 色调色板"
+
+#: vncviewer/vncviewer.cxx:199
+msgid ""
+"%s\n"
+"\n"
+"Attempt to reconnect?"
+msgstr ""
+"%s\n"
+"\n"
+"尝试重新连接？"
+
+#: win/winvnc/winvnc.cxx:64
+msgid "%s - %s, version %s\n"
+msgstr "%s - %s，版本 %s\n"
+
+#: vncviewer/DesktopWindow.cxx:304
+msgid "%s - TuPigVNC"
+msgstr "%s - TuPigVNC"
+
+#: vncviewer/DesktopWindow.cxx:302
+msgid "%s - TuPigVNC (keyboard grabbed)"
+msgstr "%s - TuPigVNC（已占用键盘）"
+
+#: vncviewer/ServerDialog.cxx:240
+msgid "%s already exists. Do you want to overwrite?"
+msgstr "%s 已经存在。是否要覆盖？"
+
+#: unix/vncconfig/vncconfig.cxx:268
+msgid "%s: Connecting to %s failed\n"
+msgstr "%s：连接到 %s 失败\n"
+
+#: unix/vncconfig/vncconfig.cxx:273
+msgid "%s: Disconnecting all clients failed\n"
+msgstr "%s：断开所有客户端失败\n"
+
+#: unix/vncpasswd/vncpasswd.cxx:230 unix/w0vncserver/w0vncserver-forget.cxx:71
+#: unix/w0vncserver/w0vncserver.cxx:154 unix/x0vncserver/x0vncserver.cxx:349
+#: vncviewer/vncviewer.cxx:637
+msgid "%s: Extra argument '%s'\n"
+msgstr "%s：多余的参数 '%s'\n"
+
+#: unix/vncconfig/vncconfig.cxx:297
+msgid "%s: Getting the description for parameter %s failed\n"
+msgstr "%s：获取参数 %s 的描述失败\n"
+
+#: unix/vncconfig/vncconfig.cxx:285
+msgid "%s: Getting the value of parameter %s failed\n"
+msgstr "%s：获取参数 %s 的值失败\n"
+
+#: unix/vncconfig/vncconfig.cxx:314 unix/vncconfig/vncconfig.cxx:336
+msgid "%s: Invalid parameter syntax '%s'\n"
+msgstr "%s：参数语法无效“%s”\n"
+
+#: unix/vncconfig/vncconfig.cxx:252
+msgid "%s: No VNC extension on display \"%s\"\n"
+msgstr "%s：显示“%s”上没有 VNC 扩展\n"
+
+#: unix/vncconfig/vncconfig.cxx:325 unix/vncconfig/vncconfig.cxx:347
+msgid "%s: Setting the parameter %s failed\n"
+msgstr "%s：设置参数 %s 失败\n"
+
+#: unix/vncpasswd/vncpasswd.cxx:225
+msgid "%s: Too long filename specified\n"
+msgstr "%s：指定的文件名过长\n"
+
+#: unix/vncconfig/vncconfig.cxx:246 unix/x0vncserver/x0vncserver.cxx:358
+msgid "%s: Unable to open display \"%s\"\n"
+msgstr "%s：无法打开显示“%s”\n"
+
+#: unix/vncconfig/vncconfig.cxx:328 unix/vncpasswd/vncpasswd.cxx:218
+#: unix/w0vncserver/w0vncserver.cxx:147 unix/x0vncserver/x0vncserver.cxx:342
+#: vncviewer/vncviewer.cxx:628
+msgid "%s: Unrecognized option '%s'\n"
+msgstr "%s：无法识别的选项 '%s'\n"
+
+#: common/network/TcpSocket.cxx:317 common/network/TcpSocket.cxx:331
+#: common/network/TcpSocket.cxx:345 common/network/TcpSocket.cxx:352
+msgid "(N/A)"
+msgstr "（不适用）"
+
+#: unix/x0vncserver/XDesktop.cxx:351 unix/xserver/hw/vnc/XserverDesktop.cc:467
+#: win/winvnc/QueryConnectDialog.cxx:95
+msgid "(anonymous)"
+msgstr "（匿名）"
+
+#: common/network/UnixSocket.cxx:109
+msgid "(unnamed UNIX socket)"
+msgstr "（未命名的 UNIX 套接字）"
+
+#: win/rfb_win32/DeviceContext.cxx:78
+msgid "16-bit high colour"
+msgstr "16 位高彩色"
+
+#: win/rfb_win32/DeviceContext.cxx:86
+msgid "24/32-bit high colour"
+msgstr "24/32 位高彩色"
+
+#: common/network/TcpSocket.cxx:743
+msgid "A mask is no longer supported for filters, use a prefix instead"
+msgstr "过滤器不再支持掩码，请改用前缀"
+
+#: vncviewer/Viewport.cxx:1087
+msgid ""
+"A new version %s is available (current version %s).\n"
+"\n"
+"The update will be downloaded and installed automatically.\n"
+"The program will restart after installation. Continue?"
+msgstr ""
+"发现新版本 %s（当前版本 %s）。\n"
+"\n"
+"将自动下载并安装更新。\n"
+"安装完成后程序将自动重启。是否继续？"
+
+#: unix/vncpasswd/vncpasswd.cxx:271
+msgid "A view-only password is not used\n"
+msgstr "未使用仅查看密码\n"
+
+#: vncviewer/vncviewer.cxx:158 vncviewer/vncviewer.cxx:356
+msgid "About TuPigVNC"
+msgstr "关于 TuPigVNC"
+
+#: vncviewer/ServerDialog.cxx:105
+msgid "About..."
+msgstr "关于..."
+
+#: common/rfb/ServerCore.cxx:93 unix/vncconfig/vncconfig.cxx:86
+msgid "Accept clipboard changes from clients"
+msgstr "接受来自客户端的剪贴板更改"
+
+#: vncviewer/parameters.cxx:213
+msgid "Accept clipboard changes from the server"
+msgstr "接受来自服务器的剪贴板更改"
+
+#: vncviewer/OptionsDialog.cxx:1007
+msgid "Accept clipboard from server"
+msgstr "接受来自服务器的剪切板内容"
+
+#: common/rfb/ServerCore.cxx:85
+msgid "Accept key events from clients"
+msgstr "接受来自客户端的按键事件"
+
+#: common/rfb/ServerCore.cxx:89
+msgid "Accept pointer events from clients"
+msgstr "接受来自客户端的指针事件"
+
+#: common/rfb/ServerCore.cxx:101
+msgid "Accept session size changes from clients"
+msgstr "接受来自客户端的会话大小更改"
+
+#: common/rfb/VNCServerST.cxx:184
+msgid "Accepted: %s"
+msgstr "已接受：%s"
+
+#: win/rfb_win32/SDisplay.cxx:62
+msgid "Action to perform when all clients have disconnected"
+msgstr "所有客户端断开连接时执行的操作"
+
+#: vncviewer/CConn.cxx:568 vncviewer/CConn.cxx:587 vncviewer/CConn.cxx:604
+#: vncviewer/CConn.cxx:621 vncviewer/CConn.cxx:641 vncviewer/CConn.cxx:673
+#: vncviewer/CConn.cxx:693 vncviewer/CConn.cxx:711 vncviewer/CConn.cxx:729
+#: vncviewer/CConn.cxx:750
+msgid "Add exception"
+msgstr "添加例外"
+
+#: vncviewer/vncviewer.cxx:336
+msgid "Add to Favorites"
+msgstr "添加到收藏夹"
+
+#: vncviewer/DesktopWindow.cxx:651
+msgid "Adjusting window size to avoid accidental full-screen request"
+msgstr "正在调整窗口大小以避免意外的全屏请求"
+
+#: common/core/Configuration.cxx:263
+msgid "Alias for %s"
+msgstr "%s 的别名"
+
+#: win/vncconfig/Authentication.h:79 win/vncconfig/Authentication.h:92
+msgid "All"
+msgstr "全部"
+
+#: vncviewer/vncviewer.cxx:337
+msgid "All Files (*)"
+msgstr "所有文件 (*)"
+
+#: vncviewer/OptionsDialog.cxx:1382
+msgid "All keyboard shortcuts are disabled."
+msgstr "所有键盘快捷键均已禁用。"
+
+#: vncviewer/OptionsDialog.cxx:568
+msgid "Allow JPEG compression"
+msgstr "允许 JPEG 压缩"
+
+#: unix/vncconfig/vncconfig.cxx:87 vncviewer/OptionsDialog.cxx:1015
+msgid "Also set primary selection"
+msgstr "同样设定鼠标选择内容"
+
+#: vncviewer/OptionsDialog.cxx:1087 vncviewer/ShortcutHandler.cxx:226
+msgid "Alt"
+msgstr "Alt"
+
+#: vncviewer/OptionsDialog.cxx:978
+msgid "Always send all keyboard input in full screen"
+msgstr "全屏时始终发送所有键盘输入"
+
+#: common/rfb/ServerCore.cxx:70
+msgid ""
+"Always treat incoming connections as shared, regardless of the client-"
+"specified setting"
+msgstr "始终将传入连接视为共享，无论客户端指定的设置如何"
+
+#: common/rfb/ServerCore.cxx:65
+msgid ""
+"Always use protocol version 3.3 for backwards compatibility with badly-"
+"behaved clients"
+msgstr "始终使用协议版本 3.3，以兼容行为不良的客户端"
+
+#: vncviewer/Viewport.cxx:785 vncviewer/Viewport.cxx:870
+#: vncviewer/vncviewer.cxx:147
+msgid ""
+"An unexpected error occurred when communicating with the server:\n"
+"\n"
+"%s"
+msgstr ""
+"与服务器通信时发生意外错误：\n"
+"\n"
+"%s"
+
+#: unix/x0vncserver/XDesktop.cxx:342 unix/xserver/hw/vnc/XserverDesktop.cc:177
+#: win/winvnc/VNCServerWin32.cxx:249
+msgid "Another connection is currently being queried."
+msgstr "当前正在查询另一个连接。"
+
+#: win/winvnc/STrayIcon.cxx:159
+msgid "Are you sure you want to close the server?"
+msgstr "确定要关闭服务器吗？"
+
+#: vncviewer/OptionsDialog.cxx:1259
+msgid "Ask to reconnect on connection errors"
+msgstr "连接错误时询问是否重新连接"
+
+#: common/rfb/SConnection.cxx:179
+msgid "Assuming compatibility with version %d.%d"
+msgstr "假定兼容版本 %d.%d"
+
+#: win/rfb_win32/SDisplay.cxx:459
+msgid "Attaching to device %s"
+msgstr "正在连接到设备 %s"
+
+#: win/rfb_win32/SDisplay.cxx:463
+msgid "Attaching to virtual desktop"
+msgstr "正在连接到虚拟桌面"
+
+#: win/winvnc/winvnc.cxx:177
+msgid "Attempting to register service...\n"
+msgstr "正在尝试注册服务...\n"
+
+#: win/winvnc/winvnc.cxx:149
+msgid "Attempting to start service...\n"
+msgstr "正在尝试启动服务...\n"
+
+#: win/winvnc/winvnc.cxx:154
+msgid "Attempting to stop service...\n"
+msgstr "正在尝试停止服务...\n"
+
+#: win/winvnc/winvnc.cxx:200
+msgid "Attempting to unregister service...\n"
+msgstr "正在尝试注销服务...\n"
+
+#: common/rfb/CMsgReader.cxx:144
+msgid "Audio data is too large"
+msgstr "音频数据过大"
+
+#: vncviewer/AudioOutputPulse.cxx:470
+msgid "Audio playback stream failed"
+msgstr "音频播放流失败"
+
+#: vncviewer/OptionsDialog.cxx:849
+msgid "Authentication"
+msgstr "认证"
+
+#: common/rfb/SConnection.cxx:264
+msgid "Authentication error: %s"
+msgstr "认证错误：%s"
+
+#: common/rfb/CConnection.cxx:365 common/rfb/SSecurityPlain.cxx:116
+#: common/rfb/SSecurityRSAAES.cxx:639 common/rfb/SSecurityRSAAES.cxx:669
+#: common/rfb/SSecurityVncAuth.cxx:121
+msgid "Authentication failed"
+msgstr "认证失败"
+
+#: vncviewer/CConn.cxx:319
+msgid "Authentication failed: %s"
+msgstr "认证失败：%s"
+
+#: common/rfb/SConnection.cxx:322
+msgid "Authentication timeout"
+msgstr "认证超时"
+
+#: vncviewer/OptionsDialog.cxx:561
+msgid "Auto select"
+msgstr "自动选择"
+
+#: vncviewer/parameters.cxx:106
+msgid "Auto select pixel format and encoding"
+msgstr "自动选择像素格式和编码"
+
+#: win/winvnc/winvnc.cxx:90
+msgid "Available configuration parameters:"
+msgstr "可用的配置参数："
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:91
+msgid "Avoid fake Shift presses for keys affected by NumLock"
+msgstr "避免为受 NumLock 影响的按键模拟按下 Shift"
+
+#: common/rfb/DecodeManager.cxx:236 common/rfb/DecodeManager.cxx:250
+#: common/rfb/EncodeManager.cxx:210 common/rfb/EncodeManager.cxx:244
+#: common/rfb/EncodeManager.cxx:259
+msgid "B"
+msgstr "B"
+
+#: common/rfb/TightDecoder.cxx:74
+msgid "Bad Tight subencoding value received"
+msgstr "收到错误的 Tight 子编码值"
+
+#: win/rfb_win32/Clipboard.cxx:68
+msgid "Bad clipboard chain change!"
+msgstr "剪贴板链更改错误！"
+
+#: common/rfb/EncodeManager.cxx:127
+msgid "Bitmap"
+msgstr "位图"
+
+#: common/rfb/EncodeManager.cxx:129
+msgid "Bitmap RLE"
+msgstr "位图 RLE"
+
+#: common/rfb/VNCServerST.cxx:150
+msgid "Blacklisted: %s"
+msgstr "已列入黑名单：%s"
+
+#: common/rdr/BufferedInStream.cxx:69 common/rdr/BufferedOutStream.cxx:143
+msgid "Buffer size of %lu bytes exceeds maximum of %lu bytes"
+msgstr "缓冲区大小 %lu 字节超过最大值 %lu 字节"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:530
+msgid "Built without GPU render support\n"
+msgstr "构建时未包含 GPU 渲染支持\n"
+
+#: vncviewer/OptionsDialog.cxx:110 vncviewer/ServerDialog.cxx:110
+#: vncviewer/Viewport.cxx:1090 vncviewer/vncviewer.cxx:331
+msgid "Cancel"
+msgstr "取消"
+
+#: unix/w0vncserver/portals/Clipboard.cxx:513
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:481
+msgid "Cancelled"
+msgstr "已取消"
+
+#: unix/vncpasswd/vncpasswd.cxx:122
+msgid "Cannot check password quality: %s\n"
+msgstr "无法检查密码质量：%s\n"
+
+#: unix/common/randr.cxx:341
+msgid "Cannot find an available output for new screen layout"
+msgstr "找不到可用于新屏幕布局的输出"
+
+#: unix/xserver/hw/vnc/XserverDesktop.cc:317
+msgid "Cannot find file descriptor for socket event"
+msgstr "找不到套接字事件的文件描述符"
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:470
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:512
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:533
+msgid "Cannot handle Wayland pixel format %d"
+msgstr "无法处理 Wayland 像素格式 %d"
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:179
+msgid "Cannot handle Wayland pixel format %d: %s"
+msgstr "无法处理 Wayland 像素格式 %d：%s"
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:358
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:627
+msgid "Cannot handle Wayland transform %d"
+msgstr "无法处理 Wayland 变换 %d"
+
+#: win/rfb_win32/CurrentUser.cxx:99
+msgid "Cannot impersonate unsafe or null token"
+msgstr "无法模拟不安全或空令牌"
+
+#: vncviewer/vncviewer.cxx:334
+msgid "Caps lock is active"
+msgstr "大写锁定已开启"
+
+#: vncviewer/CConn.cxx:640
+msgid "Certificate hostname mismatch"
+msgstr "证书主机名不匹配"
+
+#: vncviewer/CConn.cxx:586
+msgid "Certificate is not yet valid"
+msgstr "证书尚未生效"
+
+#: vncviewer/Viewport.cxx:1072
+msgid "Check for Updates"
+msgstr "检查更新"
+
+#: vncviewer/Viewport.cxx:1073
+msgid "Checking for updates, please wait..."
+msgstr "正在检查更新，请稍候……"
+
+#: common/rfb/CConnection.cxx:308 common/rfb/CSecurityVeNCrypt.cxx:181
+msgid "Choosing security type %s (%d)"
+msgstr "正在选择安全类型 %s (%d)"
+
+#: common/rfb/VNCSConnectionST.cxx:200
+msgid "Clean disconnection"
+msgstr "正常断开连接"
+
+#: unix/w0vncserver/GSocketSource.cxx:240 unix/x0vncserver/x0vncserver.cxx:509
+msgid "Client connection rejected"
+msgstr "客户端连接被拒绝"
+
+#: common/rfb/VNCSConnectionST.cxx:251
+msgid "Client does not support resizing the desktop"
+msgstr "客户端不支持调整桌面大小"
+
+#: common/rfb/SSecurityRSAAES.cxx:349
+msgid "Client encryption key is invalid"
+msgstr "客户端加密密钥无效"
+
+#: common/rfb/SSecurityRSAAES.cxx:336
+msgid "Client encryption key is too long"
+msgstr "客户端加密密钥过长"
+
+#: common/rfb/SSecurityRSAAES.cxx:334
+msgid "Client encryption key is too short"
+msgstr "客户端加密密钥过短"
+
+#: common/rfb/CSecurityRSAAES.cxx:289
+msgid "Client key length doesn't match length of random data"
+msgstr "客户端密钥长度与随机数据长度不匹配"
+
+#: common/rfb/SConnection.cxx:159
+msgid "Client needs protocol version %d.%d"
+msgstr "客户端需要协议版本 %d.%d"
+
+#: common/rfb/SConnection.cxx:165
+msgid "Client needs protocol version %d.%d, server has %d.%d"
+msgstr "客户端需要协议版本 %d.%d，服务器为 %d.%d"
+
+#: common/rfb/VNCSConnectionST.cxx:498
+msgid "Client pixel format: %s"
+msgstr "客户端像素格式：%s"
+
+#: common/rfb/SConnection.cxx:246 common/rfb/SSecurityVeNCrypt.cxx:169
+msgid "Client requests security type %s (%d)"
+msgstr "客户端请求安全类型 %s (%d)"
+
+#: common/rfb/VNCSConnectionST.cxx:762
+msgid "Client tried to enable continuous updates when not allowed"
+msgstr "客户端在未获允许时尝试启用连续更新"
+
+#: common/rfb/SConnection.cxx:171
+msgid "Client uses unofficial protocol version %d.%d"
+msgstr "客户端使用了非官方协议版本 %d.%d"
+
+#: vncviewer/OptionsDialog.cxx:995
+msgid "Clipboard"
+msgstr "剪贴板"
+
+#: common/rfb/CMsgReader.cxx:360 common/rfb/CMsgReader.cxx:386
+#: common/rfb/CMsgReader.cxx:437 common/rfb/SMsgReader.cxx:341
+#: common/rfb/SMsgReader.cxx:367 common/rfb/SMsgReader.cxx:418
+msgid "Clipboard too large (%d bytes)"
+msgstr "剪贴板内容过大（%d 字节）"
+
+#: vncviewer/vncviewer.cxx:332
+msgid "Close"
+msgstr "关闭"
+
+#: common/rfb/VNCServerST.cxx:220
+msgid "Closed: %s"
+msgstr "已关闭：%s"
+
+#: common/rfb/VNCSConnectionST.cxx:81
+msgid "Closing %s: %s"
+msgstr "正在关闭 %s：%s"
+
+#: win/winvnc/winvnc.cxx:207
+msgid "Closing console"
+msgstr "正在关闭控制台"
+
+#: vncviewer/OptionsDialog.cxx:646
+msgid "Color level"
+msgstr "颜色级别"
+
+#: vncviewer/parameters.cxx:114
+msgid ""
+"Color level to use on slow connections, 0 = Very Low, 1 = Low, 2 = Medium"
+msgstr "慢速连接时使用的颜色级别，0 = 极低，1 = 低，2 = 中等"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:95
+msgid ""
+"Comma separated list of parameters that are allowed to be modified after "
+"startup"
+msgstr "启动后允许修改的参数列表（用逗号分隔）"
+
+#: common/rfb/KeyRemapper.cxx:63
+msgid ""
+"Comma-separated list of incoming keysyms to remap.  Mappings are expressed "
+"as two hex values, prefixed by 0x, and separated by ->"
+msgstr "要重新映射的传入键符列表（用逗号分隔）。映射以两个十六进制值表示，以 0x 为前缀，用 -> 分隔"
+
+#: win/winvnc/winvnc.cxx:73
+msgid ""
+"Command-line options:\n"
+"  -connect [<host[::port]>]            - Connect an existing WinVNC server to a listening viewer.\n"
+"  -disconnect                          - Disconnect all clients from an existing WinVNC server.\n"
+"  -register <options...>               - Register WinVNC server as a system service.\n"
+"  -unregister                          - Remove WinVNC server from the list of system services.\n"
+"  -start                               - Start the WinVNC server system service.\n"
+"  -stop                                - Stop the WinVNC server system service.\n"
+"  -status                              - Query the WinVNC service status.\n"
+"  -help                                - Provide usage information.\n"
+"  -noconsole                           - Run without a console (i.e. no stderr/stdout)\n"
+"  <setting>=<value>                    - Set the named configuration parameter.\n"
+"    (Parameter values specified on the command-line override those specified by other configuration methods.)\n"
+msgstr ""
+"命令行选项：\n"
+"  -connect [<主机[::端口]>]          - 将现有 WinVNC 服务器连接到正在监听的查看器。\n"
+"  -disconnect                        - 断开现有 WinVNC 服务器的所有客户端。\n"
+"  -register <选项...>                - 将 WinVNC 服务器注册为系统服务。\n"
+"  -unregister                        - 从系统服务列表中移除 WinVNC 服务器。\n"
+"  -start                             - 启动 WinVNC 服务器系统服务。\n"
+"  -stop                              - 停止 WinVNC 服务器系统服务。\n"
+"  -status                            - 查询 WinVNC 服务状态。\n"
+"  -help                              - 显示用法信息。\n"
+"  -noconsole                         - 无控制台运行（即不使用 stderr/stdout）\n"
+"  <设置>=<值>                        - 设置指定的配置参数。\n"
+"    （命令行指定的参数值会覆盖其他配置方式指定的值。）\n"
+
+#: win/rfb_win32/Service.cxx:61
+msgid "Command: OS shutdown"
+msgstr "命令：系统关机"
+
+#: win/rfb_win32/Service.cxx:57
+msgid "Command: Parameters changed"
+msgstr "命令：参数已更改"
+
+#: win/rfb_win32/Service.cxx:53
+msgid "Command: Report status"
+msgstr "命令：报告状态"
+
+#: win/rfb_win32/Service.cxx:65
+msgid "Command: Stop"
+msgstr "命令：停止"
+
+#: vncviewer/OptionsDialog.cxx:544
+msgid "Compression"
+msgstr "压缩"
+
+#: vncviewer/parameters.cxx:893
+msgid "Configuration file %s is in an invalid format"
+msgstr "配置文件 %s 的格式无效"
+
+#: vncviewer/ServerDialog.cxx:114
+msgid "Connect"
+msgstr "连接"
+
+#: vncviewer/CConn.cxx:190
+msgid "Connected to host %s port %d"
+msgstr "已连接到主机 %s 的端口 %d"
+
+#: vncviewer/CConn.cxx:183
+msgid "Connected to socket %s"
+msgstr "连接到套接字 %s"
+
+#: win/winvnc/winvnc.cxx:134
+msgid "Connection failed."
+msgstr "连接失败。"
+
+#: common/rfb/SConnection.cxx:350
+msgid "Connection failed: %s"
+msgstr "连接失败：%s"
+
+#: common/rfb/SConnection.cxx:604 common/rfb/SConnection.cxx:621
+msgid "Connection rejected"
+msgstr "连接被拒绝"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:510
+#: unix/x0vncserver/XDesktop.cxx:1021 unix/xserver/hw/vnc/vncExtInit.cc:400
+#: win/winvnc/VNCServerWin32.cxx:312
+msgid "Connection rejected by local user"
+msgstr "连接被本地用户拒绝"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:456
+msgid "Connection to local session was cancelled"
+msgstr "与本地会话的连接已取消"
+
+#: win/rfb_win32/SDisplay.cxx:182
+msgid "Console is not session zero - reconnect to restore Console session"
+msgstr "控制台不是会话零 - 请重新连接以恢复控制台会话"
+
+#: win/rfb_win32/TsSessions.cxx:61
+msgid "Console session is %lu"
+msgstr "控制台会话为 %lu"
+
+#: vncviewer/CConn.cxx:787
+msgid "Continue"
+msgstr "继续"
+
+#: common/rfb/EncodeManager.cxx:202 common/rfb/EncodeManager.cxx:208
+msgid "Copies"
+msgstr "份"
+
+#: common/rdr/AESInStream.cxx:86
+msgid "Corrupted message received"
+msgstr "收到损坏的消息"
+
+#: common/rfb/H264LibavDecoderContext.cxx:65
+msgid "Could not allocate video codec context"
+msgstr "无法分配视频编解码器上下文"
+
+#: common/rfb/H264LibavDecoderContext.cxx:73
+msgid "Could not allocate video frame"
+msgstr "无法分配视频帧"
+
+#: vncviewer/AudioOutputPulse.cxx:152 vncviewer/AudioOutputPulse.cxx:174
+msgid "Could not connect to sound server: %s"
+msgstr "无法连接到声音服务器：%s"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:526
+msgid "Could not create GPU render device\n"
+msgstr "无法创建 GPU 渲染设备\n"
+
+#: unix/vncpasswd/vncpasswd.cxx:249 vncviewer/vncviewer.cxx:493
+msgid "Could not create VNC config directory \"%s\": %s"
+msgstr "未能创建 VNC 配置目录“%s”：%s"
+
+#: vncviewer/vncviewer.cxx:505
+msgid "Could not create VNC data directory \"%s\": %s"
+msgstr "未能创建 VNC 数据目录“%s”：%s"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:742 vncviewer/vncviewer.cxx:517
+msgid "Could not create VNC state directory \"%s\": %s"
+msgstr "未能创建 VNC 状态目录“%s”：%s"
+
+#: vncviewer/AudioOutputPulse.cxx:236
+msgid "Could not create audio playback stream: %s"
+msgstr "无法创建音频播放流：%s"
+
+#: common/rfb/H264LibavDecoderContext.cxx:59
+msgid "Could not create video parser"
+msgstr "无法创建视频解析器"
+
+#: unix/vncpasswd/vncpasswd.cxx:241 vncviewer/parameters.cxx:767
+#: vncviewer/parameters.cxx:845 vncviewer/vncviewer.cxx:477
+msgid "Could not determine VNC config directory path"
+msgstr "未能确定 VNC 配置目录路径"
+
+#: vncviewer/vncviewer.cxx:499
+msgid "Could not determine VNC data directory path"
+msgstr "未能确定 VNC 数据目录路径"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:688
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:736
+#: unix/w0vncserver/w0vncserver-forget.cxx:80 vncviewer/CConn.cxx:502
+#: vncviewer/ServerDialog.cxx:346 vncviewer/ServerDialog.cxx:428
+#: vncviewer/vncviewer.cxx:511
+msgid "Could not determine VNC state directory path"
+msgstr "未能确定 VNC 状态目录路径"
+
+#: vncviewer/parameters.cxx:787 vncviewer/parameters.cxx:799
+msgid "Could not encode parameter"
+msgstr "无法对参数进行编码"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:488 unix/xserver/hw/vnc/vncDRI3.c:507
+msgid "Could not find any available render nodes\n"
+msgstr "找不到任何可用的渲染节点\n"
+
+#: common/rfb/H264LibavDecoderContext.cxx:55
+#: common/rfb/H264WinDecoderContext.cxx:49
+#: common/rfb/H264WinDecoderContext.cxx:56
+msgid "Could not find video codec"
+msgstr "找不到视频编解码器"
+
+#: common/rfb/H264WinDecoderContext.cxx:46
+msgid "Could not initialize MediaFoundation"
+msgstr "无法初始化 MediaFoundation"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:301 unix/xserver/hw/vnc/vncDRI3.c:362
+msgid "Could not map GPU buffer: %s\n"
+msgstr "无法映射 GPU 缓冲区：%s\n"
+
+#: unix/x0vncserver/XDesktop.cxx:601 unix/xserver/hw/vnc/vncInput.c:507
+msgid "Could not map keysym XK_%s (0x%04x) to keycode"
+msgstr "无法将键符 XK_%s (0x%04x) 映射到键码"
+
+#: vncviewer/AudioOutputWin32.cxx:113
+msgid "Could not open audio playback device"
+msgstr "无法打开音频播放设备"
+
+#: vncviewer/AudioOutputPulse.cxx:266
+msgid "Could not open audio playback device: %s"
+msgstr "无法打开音频播放设备：%s"
+
+#: common/rfb/H264LibavDecoderContext.cxx:81
+msgid "Could not open video codec"
+msgstr "无法打开视频编解码器"
+
+#: unix/x0vncserver/x0vncserver.cxx:198
+msgid "Could not read IP filtering rules, rejecting all clients"
+msgstr "无法读取 IP 过滤规则，将拒绝所有客户端"
+
+#: unix/x0vncserver/XSelection.cxx:87 unix/xserver/hw/vnc/vncSelection.c:142
+msgid "Could not set CLIPBOARD selection"
+msgstr "无法设置 CLIPBOARD 选区"
+
+#: unix/x0vncserver/XSelection.cxx:92 unix/xserver/hw/vnc/vncSelection.c:137
+msgid "Could not set PRIMARY selection"
+msgstr "无法设置 PRIMARY 选区"
+
+#: common/rfb/H264WinDecoderContext.cxx:102
+msgid "Could not start video decoder"
+msgstr "无法启动视频解码器"
+
+#: vncviewer/AudioOutputPulse.cxx:396
+msgid "Could not write to audio playback device"
+msgstr "无法写入音频播放设备"
+
+#: vncviewer/touch.cxx:195
+msgid "Couldn't attach event handler to window (error 0x%x)"
+msgstr "未能将事件处理程序附加到窗口（错误 0x%x）"
+
+#: vncviewer/vncviewer.cxx:349
+msgid "Create a new directory."
+msgstr "创建一个新目录。"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:268
+msgid "Created VNC server for screen %d"
+msgstr "已为屏幕 %d 创建 VNC 服务器"
+
+#: common/rfb/DecodeManager.cxx:63
+msgid "Creating %d decoder thread(s)"
+msgstr "正在创建 %d 个解码器线程"
+
+#: vncviewer/OptionsDialog.cxx:1071 vncviewer/ShortcutHandler.cxx:210
+msgid "Ctrl"
+msgstr "Ctrl"
+
+#: vncviewer/OptionsDialog.cxx:944
+msgid "Cursor type"
+msgstr "光标类型"
+
+#: vncviewer/vncviewer.cxx:338
+msgid "Custom Filter"
+msgstr "自定义过滤器"
+
+#: vncviewer/OptionsDialog.cxx:701
+msgid "Custom compression level"
+msgstr "自定义压缩级别"
+
+#: unix/x0vncserver/XDesktop.cxx:178
+msgid "DAMAGE extension not present, will have to poll the screen for changes"
+msgstr "DAMAGE 扩展不存在，将必须轮询屏幕以检测更改"
+
+#: win/rfb_win32/SocketManager.cxx:229
+msgid "Deleting listening socket"
+msgstr "正在删除监听套接字"
+
+#: win/rfb_win32/DIBSectionBuffer.cxx:164 win/rfb_win32/DeviceContext.cxx:121
+msgid "Depth exceeds bits per pixel"
+msgstr "深度超过每像素位数"
+
+#: win/rfb_win32/CurrentUser.cxx:68
+msgid "Desktop \"%s\" inaccessible"
+msgstr "桌面“%s”无法访问"
+
+#: common/rfb/VNCServerST.cxx:668
+msgid "Desktop configured a different screen layout than requested"
+msgstr "桌面配置的屏幕布局与请求的不同"
+
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:114
+msgid "Desktop does not support clipboard control"
+msgstr "桌面不支持剪贴板控制"
+
+#: unix/w0vncserver/w0vncserver.cxx:222
+msgid "Desktop does not support remote connections"
+msgstr "桌面不支持远程连接"
+
+#: unix/x0vncserver/Geometry.cxx:66
+msgid "Desktop geometry is set to %dx%d+%d+%d"
+msgstr "桌面几何尺寸设置为 %dx%d+%d+%d"
+
+#: win/rfb_win32/SDisplay.cxx:392
+msgid "Desktop is not started"
+msgstr "桌面尚未启动"
+
+#: vncviewer/CConn.cxx:215
+msgid "Desktop name: %.80s"
+msgstr "桌面名称：%.80s"
+
+#: common/rfb/DecodeManager.cxx:56
+msgid "Detected %d CPU core(s)"
+msgstr "检测到 %d 个 CPU 核心"
+
+#: win/rfb_win32/SDisplay.cxx:70
+msgid "Disable desktop user interface effects when the server is in use"
+msgstr "服务器使用期间禁用桌面用户界面特效"
+
+#: win/rfb_win32/SDisplay.cxx:59
+msgid "Disable local keyboard and pointer input while the server is in use"
+msgstr "服务器使用期间禁用本地键盘和指针输入"
+
+#: common/rfb/CConnection.cxx:70
+msgid "Disable lossy JPEG compression"
+msgstr "禁用有损 JPEG 压缩"
+
+#: win/winvnc/STrayIcon.cxx:54
+msgid "Disable the Close entry in the VNC server tray menu"
+msgstr "在 VNC 服务器托盘菜单中禁用“关闭”项"
+
+#: win/winvnc/STrayIcon.cxx:51
+msgid "Disable the Options entry in the VNC server tray menu"
+msgstr "在 VNC 服务器托盘菜单中禁用“选项”项"
+
+#: common/rfb/ServerCore.cxx:80
+msgid "Disconnect existing clients if an incoming connection is not shared"
+msgstr "如果传入连接不是共享的，则断开现有客户端"
+
+#: vncviewer/OptionsDialog.cxx:1121
+msgid "Display"
+msgstr "显示"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:569
+msgid "Display choice restore token was not provided"
+msgstr "未提供显示选择还原令牌"
+
+#: win/rfb_win32/SDisplay.cxx:66
+msgid ""
+"Display device name of the monitor to be remoted, or empty to export the "
+"whole desktop"
+msgstr "要远程控制的显示器显示设备名称，留空则导出整个桌面"
+
+#: vncviewer/OptionsDialog.cxx:1135
+msgid "Display mode"
+msgstr "显示模式"
+
+#: vncviewer/CConn.cxx:565 vncviewer/CConn.cxx:584 vncviewer/CConn.cxx:601
+#: vncviewer/CConn.cxx:618 vncviewer/CConn.cxx:638 vncviewer/CConn.cxx:670
+#: vncviewer/CConn.cxx:690 vncviewer/CConn.cxx:708 vncviewer/CConn.cxx:726
+#: vncviewer/CConn.cxx:747
+msgid "Do you want to make an exception for this server?"
+msgstr "要为该服务器添加例外吗？"
+
+#: vncviewer/parameters.cxx:201
+msgid "Don't disconnect other viewers upon connection"
+msgstr "连接时不断开其他查看器"
+
+#: unix/vncconfig/vncconfig.cxx:57
+msgid "Don't display a window"
+msgstr "不显示窗口"
+
+#: vncviewer/parameters.cxx:197
+msgid "Don't send any mouse or keyboard events to the server"
+msgstr "不向服务器发送任何鼠标或键盘事件"
+
+#: vncviewer/OptionsDialog.cxx:946
+msgid "Dot"
+msgstr "点"
+
+#: vncviewer/parameters.cxx:982
+msgid ""
+"DotWhenNoCursor is deprecated, set AlwaysCursor to 1 and CursorType to 'Dot'"
+" instead"
+msgstr "DotWhenNoCursor 已弃用，请改为将 AlwaysCursor 设为 1、CursorType 设为“Dot”"
+
+#: vncviewer/Viewport.cxx:1103
+msgid ""
+"Downloading and installing version %s, please wait...\n"
+"The program will restart automatically after installation."
+msgstr ""
+"正在下载并安装 %s 版本，请稍候……\n"
+"安装完成后程序将自动重启。"
+
+#: vncviewer/parameters.cxx:191
+msgid ""
+"Dynamically resize the remote desktop size as the size of the local client "
+"window changes"
+msgstr "随着本地客户端窗口大小变化动态调整远程桌面尺寸"
+
+#: common/rfb/CSecurityTLS.cxx:330
+msgid "Empty certificate chain"
+msgstr "空证书链"
+
+#: common/rfb/CMsgReader.cxx:557
+msgid "Empty rectangle received"
+msgstr "收到空矩形"
+
+#: vncviewer/OptionsDialog.cxx:933
+msgid "Emulate middle mouse button"
+msgstr "模拟鼠标中键"
+
+#: vncviewer/parameters.cxx:64
+msgid ""
+"Emulate middle mouse button by pressing left and right mouse buttons "
+"simultaneously"
+msgstr "同时按下左右鼠标键来模拟中键"
+
+#: vncviewer/parameters.cxx:153
+msgid "Enable full screen as specified by FullScreenMode"
+msgstr "按 FullScreenMode 指定的方式启用全屏"
+
+#: common/rfb/CConnection.cxx:614
+msgid "Enabling continuous updates"
+msgstr "正在启用连续更新"
+
+#: vncviewer/OptionsDialog.cxx:782
+msgid "Encryption"
+msgstr "加密"
+
+#: common/rfb/VNCServerST.cxx:191
+msgid "Error accepting client: %s"
+msgstr "接受客户端时出错：%s"
+
+#: unix/w0vncserver/pipewire/PipeWireStream.cxx:177
+msgid "Error communicating with PipeWire: %s"
+msgstr "与 PipeWire 通信时出错：%s"
+
+#: unix/x0vncserver/x0vncserver.cxx:161
+msgid "Error getting listening sockets from systemd: %s"
+msgstr "从 systemd 获取监听套接字时出错：%s"
+
+#: win/vncconfig/Legacy.cxx:156
+msgid "Error reading default settings: %s"
+msgstr "读取默认设置时出错：%s"
+
+#: win/vncconfig/Legacy.cxx:178
+msgid "Error reading global user settings: %s"
+msgstr "读取全局用户设置时出错：%s"
+
+#: win/vncconfig/Legacy.cxx:167
+msgid "Error reading local user settings: %s"
+msgstr "读取本地用户设置时出错：%s"
+
+#: vncviewer/vncviewer.cxx:230 vncviewer/vncviewer.cxx:242
+msgid "Error starting new connection: %s"
+msgstr "启动新连接出错：%s"
+
+#: vncviewer/CConn.cxx:603
+msgid "Expired certificate"
+msgstr "证书已过期"
+
+#: common/network/TcpSocket.cxx:231
+msgid "Failed get address for hostname"
+msgstr "无法获取主机名的地址"
+
+#: common/rdr/FileInStream.cxx:57 common/rfb/SSecurityRSAAES.cxx:200
+msgid "Failed reading from \"%s\""
+msgstr "从“%s”读取失败"
+
+#: common/rdr/TLSSocket.cxx:164
+msgid "Failed receiving TLS data"
+msgstr "接收 TLS 数据失败"
+
+#: common/rdr/TLSSocket.cxx:187
+msgid "Failed sending TLS data"
+msgstr "发送 TLS 数据失败"
+
+#: common/network/Socket.cxx:210
+msgid "Failed to accept new connection"
+msgstr "接受新连接失败"
+
+#: unix/w0vncserver/wayland/objects/Keyboard.cxx:148
+msgid "Failed to access keyboard layout: %s"
+msgstr "无法访问键盘布局：%s"
+
+#: unix/x0vncserver/XDesktop.cxx:573 unix/xserver/hw/vnc/vncInput.c:492
+msgid "Failed to add new keysym XK_%s (0x%04x)"
+msgstr "添加新键符 XK_%s (0x%04x) 失败"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:375
+msgid "Failed to add reverse connection socket"
+msgstr "添加反向连接套接字失败"
+
+#: unix/xserver/hw/vnc/xvnc.c:368
+msgid "Failed to allocate a new file descriptor for -inetd: %s\n"
+msgstr "无法为 -inetd 分配新的文件描述符：%s\n"
+
+#: unix/w0vncserver/wayland/objects/Keyboard.cxx:182
+msgid "Failed to allocate keyboard state"
+msgstr "无法分配键盘状态"
+
+#: vncviewer/CConn.cxx:320
+msgid ""
+"Failed to authenticate with the server. Reason given by the server:\n"
+"\n"
+"%s"
+msgstr ""
+"未能通过服务器的身份认证。服务器给出的原因：\n"
+"\n"
+"%s"
+
+#: unix/w0vncserver/wayland/objects/Object.cxx:57
+msgid "Failed to bind to Wayland object %s"
+msgstr "无法绑定到 Wayland 对象 %s"
+
+#: unix/w0vncserver/portals/PortalProxy.cxx:139
+msgid "Failed to call D-Bus method \"%s\": %s"
+msgstr "调用 D-Bus 方法“%s”失败：%s"
+
+#: unix/w0vncserver/wayland/objects/ScreencopyManager.cxx:253
+msgid "Failed to capture screen contents"
+msgstr "无法捕获屏幕内容"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:301
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:308
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:312
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:316
+msgid "Failed to capture screen contents: %s"
+msgstr "无法捕获屏幕内容：%s"
+
+#: win/winvnc/QueryConnectDialog.cxx:76
+msgid "Failed to change to active desktop"
+msgstr "无法切换到活动桌面"
+
+#: vncviewer/Viewport.cxx:1076
+msgid "Failed to check for updates: %s"
+msgstr "检查更新失败：%s"
+
+#: vncviewer/parameters.cxx:549 vncviewer/parameters.cxx:622
+#: vncviewer/parameters.cxx:666 vncviewer/parameters.cxx:742
+msgid "Failed to close registry key"
+msgstr "关闭注册键值失败"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:309
+msgid "Failed to close remote desktop session: %s"
+msgstr "无法关闭远程桌面会话：%s"
+
+#: unix/w0vncserver/wayland/GWaylandSource.cxx:125
+#: unix/w0vncserver/wayland/objects/Display.cxx:87
+msgid "Failed to communicate with Wayland server: %s"
+msgstr "与 Wayland 服务器通信失败：%s"
+
+#: common/rdr/ZlibOutStream.cxx:138 common/rdr/ZlibOutStream.cxx:172
+msgid "Failed to compress data"
+msgstr "压缩数据失败"
+
+#: common/rfb/CSecurityTLS.cxx:154 common/rfb/CSecurityTLS.cxx:205
+#: common/rfb/CSecurityTLS.cxx:217 common/rfb/CSecurityTLS.cxx:234
+#: common/rfb/SSecurityTLS.cxx:157 common/rfb/SSecurityTLS.cxx:215
+#: common/rfb/SSecurityTLS.cxx:227 common/rfb/SSecurityTLS.cxx:244
+msgid "Failed to configure GnuTLS priority"
+msgstr "配置 GnuTLS 优先级失败"
+
+#: common/rfb/CSecurityTLS.cxx:286
+msgid "Failed to configure the server name for TLS handshake"
+msgstr "为 TLS 握手配置服务器名称失败"
+
+#: unix/w0vncserver/pipewire/PipeWireStream.cxx:154
+msgid "Failed to connect PipeWire stream"
+msgstr "无法连接 PipeWire 流"
+
+#: vncviewer/CConn.cxx:195
+msgid ""
+"Failed to connect to \"%s\":\n"
+"\n"
+"%s"
+msgstr ""
+"未能连接到“%s”：\n"
+"\n"
+"%s"
+
+#: unix/w0vncserver/portals/PortalProxy.cxx:61
+msgid "Failed to connect to D-Bus interface \"%s\" at \"%s\" from \"%s\": %s"
+msgstr "无法从“%s”连接到“%s”上的 D-Bus 接口“%s”：%s"
+
+#: unix/w0vncserver/portals/PortalProxy.cxx:225
+#: unix/w0vncserver/portals/PortalProxy.cxx:50
+msgid "Failed to connect to D-Bus: %s"
+msgstr "无法连接到 D-Bus：%s"
+
+#: unix/w0vncserver/pipewire/PipeWireStream.cxx:84
+msgid "Failed to connect to PipeWire server"
+msgstr "无法连接到 PipeWire 服务器"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:604
+msgid "Failed to connect to PipeWire: %s"
+msgstr "无法连接到 PipeWire：%s"
+
+#: unix/w0vncserver/wayland/objects/Display.cxx:58
+msgid "Failed to connect to Wayland server"
+msgstr "无法连接到 Wayland 服务器"
+
+#: common/network/TcpSocket.cxx:301
+msgid "Failed to connect to host"
+msgstr "连接主机失败"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:461
+msgid "Failed to connect to local session"
+msgstr "无法连接到本地会话"
+
+#: common/network/UnixSocket.cxx:76
+msgid "Failed to connect to socket"
+msgstr "连接套接字失败"
+
+#: win/rfb_win32/CleanDesktop.cxx:51
+msgid "Failed to contact Active Desktop"
+msgstr "联系活动桌面失败"
+
+#: common/network/TcpSocket.cxx:330 common/network/TcpSocket.cxx:344
+msgid "Failed to convert peer name to a string"
+msgstr "无法将对方名称转换为字符串"
+
+#: win/rfb_win32/DeviceContext.cxx:165
+msgid "Failed to create DeviceDC"
+msgstr "创建 DeviceDC 失败"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:223
+msgid "Failed to create GPU buffer: %s\n"
+msgstr "创建 GPU 缓冲区失败：%s\n"
+
+#: common/rfb/H264Decoder.cxx:132
+msgid "Failed to create H.264 context"
+msgstr "创建 H.264 上下文失败"
+
+#: unix/w0vncserver/pipewire/PipeWireStream.cxx:77
+msgid "Failed to create PipeWire context"
+msgstr "无法创建 PipeWire 上下文"
+
+#: unix/w0vncserver/portals/PortalDesktop.cxx:73
+msgid "Failed to create PipeWire pixel buffer: %s"
+msgstr "无法创建 PipeWire 像素缓冲区：%s"
+
+#: unix/w0vncserver/pipewire/PipeWireStream.cxx:125
+msgid "Failed to create PipeWire stream"
+msgstr "无法创建 PipeWire 流"
+
+#: unix/xserver/hw/vnc/vncInput.c:120 unix/xserver/hw/vnc/vncInput.c:129
+#: unix/xserver/hw/vnc/vncInput.c:133
+msgid "Failed to create TuPigVNC input devices\n"
+msgstr "创建 TuPigVNC 输入设备失败\n"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:239
+#: unix/w0vncserver/wayland/objects/ScreencopyManager.cxx:293
+msgid "Failed to create Wayland buffer object"
+msgstr "无法创建 Wayland 缓冲区对象"
+
+#: win/rfb_win32/DIBSectionBuffer.cxx:91
+msgid "Failed to create bitmap"
+msgstr "创建位图失败"
+
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:128
+msgid "Failed to create clipboard data device"
+msgstr "无法创建剪贴板数据设备"
+
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:561
+msgid "Failed to create clipboard data source"
+msgstr "无法创建剪贴板数据源"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureCursorSession.cxx:73
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureManager.cxx:99
+msgid "Failed to create cursor capture session"
+msgstr "无法创建光标捕获会话"
+
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:124
+#: unix/w0vncserver/wayland/objects/ScreencopyManager.cxx:180
+msgid "Failed to create framebuffer: %s"
+msgstr "无法创建帧缓冲：%s"
+
+#: vncviewer/parameters.cxx:528 vncviewer/parameters.cxx:561
+msgid "Failed to create registry key"
+msgstr "创建注册键值失败"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureManager.cxx:81
+msgid "Failed to create screen capture session"
+msgstr "无法创建屏幕捕获会话"
+
+#: unix/w0vncserver/wayland/objects/ImageCaptureSource.cxx:53
+#: unix/w0vncserver/wayland/objects/ImageCaptureSource.cxx:74
+msgid "Failed to create screen capture source"
+msgstr "无法创建屏幕捕获源"
+
+#: unix/x0vncserver/Image.cxx:357
+msgid "Failed to create shared memory image, falling back to Xlib image"
+msgstr "创建共享内存映像失败，回退到 Xlib 映像"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:211
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:218
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:229
+#: unix/w0vncserver/wayland/objects/ScreencopyManager.cxx:198
+#: unix/w0vncserver/wayland/objects/ScreencopyManager.cxx:203
+msgid "Failed to create shared memory pool: %s"
+msgstr "无法创建共享内存池：%s"
+
+#: common/network/TcpSocket.cxx:273 common/network/TcpSocket.cxx:398
+#: common/network/TcpSocket.cxx:94 common/network/UnixSocket.cxx:128
+#: common/network/UnixSocket.cxx:62
+msgid "Failed to create socket"
+msgstr "创建套接字失败"
+
+#: vncviewer/touch.cxx:190 vncviewer/touch.cxx:191
+msgid "Failed to create touch handler: %s"
+msgstr "未能创建触摸处理程序 %s"
+
+#: vncviewer/vncviewer.cxx:544
+msgid "Failed to create tunnel: '%s' returned %d"
+msgstr "创建隧道失败：“%s”返回 %d"
+
+#: unix/w0vncserver/wayland/objects/VirtualKeyboard.cxx:59
+msgid "Failed to create virtual keyboard"
+msgstr "无法创建虚拟键盘"
+
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:94
+msgid "Failed to create virtual keyboard device: %s"
+msgstr "无法创建虚拟键盘设备：%s"
+
+#: unix/w0vncserver/wayland/objects/VirtualPointer.cxx:73
+msgid "Failed to create virtual pointer"
+msgstr "无法创建虚拟指针"
+
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:88
+msgid "Failed to create virtual pointer device: %s"
+msgstr "无法创建虚拟指针设备：%s"
+
+#: common/rfb/TightDecoder.cxx:423
+msgid "Failed to decode Tight rectangle"
+msgstr "解码 Tight 矩形失败"
+
+#: common/rfb/ZRLEDecoder.cxx:249 common/rfb/ZRLEDecoder.cxx:274
+#: common/rfb/ZRLEDecoder.cxx:71
+msgid "Failed to decode ZRLE rectangle"
+msgstr "解码 ZRLE 矩形失败"
+
+#: vncviewer/CConn.cxx:530
+msgid "Failed to decode server certificate"
+msgstr "解码服务器证书失败"
+
+#: common/rdr/ZlibInStream.cxx:112
+msgid "Failed to decompress data"
+msgstr "解压数据失败"
+
+#: common/rfb/CSecurityRSAAES.cxx:301 common/rfb/SSecurityRSAAES.cxx:411
+msgid "Failed to decrypt data"
+msgstr "解密数据失败"
+
+#: unix/common/randr.cxx:417
+msgid "Failed to disable the output '%s'"
+msgstr "禁用输出“%s”失败"
+
+#: win/winvnc/winvnc.cxx:147
+msgid "Failed to disconnect clients."
+msgstr "断开客户端连接失败。"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:358
+msgid "Failed to disconnect clients: %s"
+msgstr "断开客户端连接失败：%s"
+
+#: common/rfb/CSecurityRSAAES.cxx:270 common/rfb/SSecurityRSAAES.cxx:380
+msgid "Failed to encrypt data"
+msgstr "加密数据失败"
+
+#: unix/w0vncserver/portals/PortalProxy.cxx:244
+#: unix/w0vncserver/portals/PortalProxy.cxx:256
+msgid "Failed to enumerate desktop portals: %s"
+msgstr "无法枚举桌面门户：%s"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:492
+msgid "Failed to enumerate render nodes\n"
+msgstr "枚举渲染节点失败\n"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:378
+msgid "Failed to establish reverse connection: %s"
+msgstr "建立反向连接失败：%s"
+
+#: unix/x0vncserver/XDesktop.cxx:806
+msgid "Failed to find a suitable screen size"
+msgstr "找不到合适的屏幕尺寸"
+
+#: common/network/TcpSocket.cxx:98
+msgid "Failed to find free port"
+msgstr "找不到空闲端口"
+
+#: common/network/Socket.cxx:127 common/rdr/TLSSocket.cxx:115
+#: common/rfb/CSecurityRSAAES.cxx:91 common/rfb/SSecurityRSAAES.cxx:112
+msgid "Failed to flush remaining socket data on close"
+msgstr "关闭时刷新剩余套接字数据失败"
+
+#: common/network/Socket.cxx:130 common/rdr/TLSSocket.cxx:118
+#: common/rfb/CSecurityRSAAES.cxx:95 common/rfb/SSecurityRSAAES.cxx:116
+msgid "Failed to flush remaining socket data on close: %s"
+msgstr "关闭时刷新剩余套接字数据失败：%s"
+
+#: common/rdr/ZlibInStream.cxx:55
+msgid "Failed to flush remaining stream data"
+msgstr "刷新剩余流数据失败"
+
+#: vncviewer/CConn.cxx:536
+msgid "Failed to format server certificate for display"
+msgstr "格式化服务器证书以供显示失败"
+
+#: common/rfb/CSecurityRSAAES.cxx:183
+msgid "Failed to generate encryption key"
+msgstr "生成加密密钥失败"
+
+#: common/rdr/RandomStream.cxx:101 common/rdr/RandomStream.cxx:93
+#: common/rfb/CSecurityDH.cxx:121 common/rfb/CSecurityDH.cxx:145
+#: common/rfb/CSecurityMSLogonII.cxx:109 common/rfb/CSecurityMSLogonII.cxx:131
+#: common/rfb/CSecurityRSAAES.cxx:162 common/rfb/CSecurityRSAAES.cxx:256
+#: common/rfb/SSecurityRSAAES.cxx:357 common/rfb/SSecurityRSAAES.cxx:366
+#: common/rfb/SSecurityVncAuth.cxx:91
+msgid "Failed to generate random data"
+msgstr "生成随机数据失败"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:627
+msgid "Failed to get PipeWire file descriptors: %s"
+msgstr "无法获取 PipeWire 文件描述符：%s"
+
+#: unix/w0vncserver/wayland/objects/Display.cxx:63
+msgid "Failed to get Wayland registry"
+msgstr "无法获取 Wayland 注册表"
+
+#: common/network/TcpSocket.cxx:543 common/network/TcpSocket.cxx:731
+msgid "Failed to get address for hostname"
+msgstr "获取主机名地址失败"
+
+#: vncviewer/CConn.cxx:475 vncviewer/CConn.cxx:491
+msgid "Failed to get certificate problem description"
+msgstr "获取证书问题描述失败"
+
+#: win/rfb_win32/CurrentUser.cxx:87
+msgid "Failed to get current user token"
+msgstr "获取当前用户令牌失败"
+
+#: win/rfb_win32/CurrentUser.cxx:121
+msgid "Failed to get current username"
+msgstr "获取当前用户名失败"
+
+#: win/rfb_win32/CleanDesktop.cxx:126
+msgid "Failed to get desktop item count: %ld"
+msgstr "获取桌面项目数量失败：%ld"
+
+#: vncviewer/touch.cxx:222
+msgid "Failed to get event data for X Input event"
+msgstr "未能获取 X Input 事件的事件数据"
+
+#: vncviewer/Win32TouchHandler.cxx:93
+msgid "Failed to get gesture information (error 0x%x)"
+msgstr "未能获取手势信息（错误 0x%x）"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:471
+msgid "Failed to get handle to local session"
+msgstr "无法获取本地会话句柄"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:538
+msgid "Failed to get image streams for local session"
+msgstr "无法获取本地会话的图像流"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:526
+msgid "Failed to get input devices"
+msgstr "无法获取输入设备"
+
+#: vncviewer/KeyboardMacOS.mm:271 vncviewer/KeyboardMacOS.mm:279
+#: vncviewer/KeyboardX11.cxx:220
+msgid "Failed to get keyboard LED state: %d"
+msgstr "未能获取键盘 LED 指示灯状态：%d"
+
+#: common/network/UnixSocket.cxx:100
+msgid "Failed to get local name for socket"
+msgstr "获取套接字本地名称失败"
+
+#: common/network/TcpSocket.cxx:316 common/network/UnixSocket.cxx:91
+msgid "Failed to get peer name for socket"
+msgstr "获取套接字对方名称失败"
+
+#: common/network/TcpSocket.cxx:102
+msgid "Failed to get port number"
+msgstr "获取端口号失败"
+
+#: unix/x0vncserver/XDesktop.cxx:631 unix/x0vncserver/XDesktop.cxx:704
+msgid "Failed to get screen layout"
+msgstr "获取屏幕布局失败"
+
+#: vncviewer/MonitorIndicesParameter.cxx:52
+#: vncviewer/MonitorIndicesParameter.cxx:84
+msgid "Failed to get system monitor configuration"
+msgstr "未能获取系统显示器配置"
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:200
+msgid "Failed to handle screen update"
+msgstr "无法处理屏幕更新"
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:199
+msgid "Failed to handle screen update: %s"
+msgstr "无法处理屏幕更新：%s"
+
+#: win/rfb_win32/CurrentUser.cxx:103
+msgid "Failed to impersonate user"
+msgstr "模拟用户失败"
+
+#: common/network/Socket.cxx:64
+msgid "Failed to initialise Winsock"
+msgstr "初始化 Winsock 失败"
+
+#: win/rfb_win32/WMHooks.cxx:150
+msgid "Failed to initialise hooks"
+msgstr "初始化钩子失败"
+
+#: unix/xserver/hw/vnc/xvnc.c:1105
+msgid "Failed to initialize DRI3 extension\n"
+msgstr "初始化 DRI3 扩展失败\n"
+
+#: common/rfb/CSecurityTLS.cxx:88 common/rfb/SSecurityTLS.cxx:90
+msgid "Failed to initialize GnuTLS"
+msgstr "初始化 GnuTLS 失败"
+
+#: common/rfb/CSecurityTLS.cxx:149 common/rfb/SSecurityTLS.cxx:152
+msgid "Failed to initialize GnuTLS session"
+msgstr "初始化 GnuTLS 会话失败"
+
+#: unix/xserver/hw/vnc/xvnc.c:1100
+msgid "Failed to initialize Present extension\n"
+msgstr "初始化 Present 扩展失败\n"
+
+#: unix/w0vncserver/portals/PortalDesktop.cxx:110
+msgid "Failed to initialize clipboard access: %s"
+msgstr "无法初始化剪贴板访问：%s"
+
+#: common/rdr/ZlibInStream.cxx:81 common/rdr/ZlibOutStream.cxx:50
+msgid "Failed to initialize zlib"
+msgstr "初始化 zlib 失败"
+
+#: common/rfb/UnixPasswordValidator.cxx:113
+msgid "Failed to initialized PAM: %d"
+msgstr "初始化 PAM 失败：%d"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:274
+msgid "Failed to listen for VNC connections on inetd socket"
+msgstr "在 inetd 套接字上监听 VNC 连接失败"
+
+#: vncviewer/CConn.cxx:524
+msgid "Failed to load list of servers with a security exception"
+msgstr "加载带安全例外的服务器列表失败"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:708
+msgid "Failed to load restore token from \"%s\""
+msgstr "无法从“%s”加载还原令牌"
+
+#: common/rfb/SSecurityTLS.cxx:290
+msgid "Failed to load the server certificate and private key"
+msgstr "加载服务器证书和私钥失败"
+
+#: common/rfb/CSecurityTLS.cxx:260
+msgid "Failed to load the system certificate trust store"
+msgstr "加载系统证书信任存储失败"
+
+#: common/rfb/CSecurityTLS.cxx:263
+msgid "Failed to load the user specified certificate authority"
+msgstr "加载用户指定的证书颁发机构失败"
+
+#: common/rfb/CSecurityTLS.cxx:266
+msgid "Failed to load the user specified certificate revocation list"
+msgstr "加载用户指定的证书吊销列表失败"
+
+#: win/rfb_win32/CleanDesktop.cxx:109
+msgid "Failed to modify Active Desktop options: %ld"
+msgstr "修改活动桌面选项失败：%ld"
+
+#: common/rdr/FileInStream.cxx:40 common/rfb/SSecurityRSAAES.cxx:187
+#: vncviewer/CConn.cxx:385 vncviewer/ServerDialog.cxx:359
+#: vncviewer/ServerDialog.cxx:436 vncviewer/parameters.cxx:778
+#: vncviewer/parameters.cxx:858
+msgid "Failed to open \"%s\""
+msgstr "打开“%s”失败"
+
+#: common/rfb/SSecurityVncAuth.cxx:144 unix/vncpasswd/vncpasswd.cxx:276
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:696
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:753
+#: unix/xserver/hw/vnc/vncDRI3.c:516
+msgid "Failed to open \"%s\": %s"
+msgstr "打开“%s”失败：%s"
+
+#: vncviewer/parameters.cxx:639 vncviewer/parameters.cxx:717
+msgid "Failed to open registry key"
+msgstr "无法打开注册键值"
+
+#: unix/w0vncserver/wayland/objects/Keyboard.cxx:171
+msgid "Failed to parse keyboard layout"
+msgstr "无法解析键盘布局"
+
+#: vncviewer/ServerDialog.cxx:374 vncviewer/ServerDialog.cxx:383
+#: vncviewer/parameters.cxx:872 vncviewer/parameters.cxx:879
+#: vncviewer/parameters.cxx:916 vncviewer/parameters.cxx:952
+#: vncviewer/parameters.cxx:960
+msgid "Failed to read line %d in file \"%s\""
+msgstr "未能读取文件“%2$s”的第 %1$d 行"
+
+#: vncviewer/parameters.cxx:698 vncviewer/parameters.cxx:726
+msgid "Failed to read parameter \"%s\": %s"
+msgstr "无法读取参数 %s：%s"
+
+#: vncviewer/parameters.cxx:656
+msgid "Failed to read server history entry %d: %s"
+msgstr "无法读取服务器历史记录条目 %d：%s"
+
+#: unix/common/randr.cxx:309 unix/common/randr.cxx:390
+msgid "Failed to reconfigure the output '%s' to %dx%d+%d+%d"
+msgstr "将输出“%s”重新配置为 %dx%d+%d+%d 失败"
+
+#: win/rfb_win32/Service.cxx:82
+msgid "Failed to register handler: %lu"
+msgstr "注册处理器失败：%lu"
+
+#: unix/w0vncserver/portals/Clipboard.cxx:255
+msgid "Failed to release clipboard ownership: %s"
+msgstr "无法释放剪贴板所有权：%s"
+
+#: unix/w0vncserver/w0vncserver-forget.cxx:88 vncviewer/parameters.cxx:581
+#: vncviewer/parameters.cxx:615
+msgid "Failed to remove \"%s\": %s"
+msgstr "未能移除“%s”：%s"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:347
+msgid "Failed to request control of input devices: %s"
+msgstr "无法请求输入设备控制权：%s"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:383
+msgid "Failed to request monitors to share: %s"
+msgstr "无法请求共享显示器：%s"
+
+#: common/rfb/CConnection.cxx:463
+msgid "Failed to resize remote session: %d"
+msgstr "调整远程会话大小失败：%d"
+
+#: unix/common/randr.cxx:239
+msgid "Failed to resize screen to %dx%d"
+msgstr "将屏幕调整为 %dx%d 失败"
+
+#: unix/w0vncserver/portals/Clipboard.cxx:326
+#: unix/w0vncserver/portals/Clipboard.cxx:355
+#: unix/w0vncserver/portals/Clipboard.cxx:512
+#: unix/w0vncserver/portals/Clipboard.cxx:515
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:254
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:480
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:483
+msgid "Failed to retrieve the clipboard: %s"
+msgstr "无法获取剪贴板内容：%s"
+
+#: vncviewer/parameters.cxx:568 vncviewer/parameters.cxx:601
+#: vncviewer/parameters.cxx:786 vncviewer/parameters.cxx:798
+msgid "Failed to save \"%s\": %s"
+msgstr "未能保存“%s”：%s"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:142
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:170
+msgid "Failed to send keyboard event: %s"
+msgstr "无法发送键盘事件：%s"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:225
+msgid "Failed to send pointer button event: %s"
+msgstr "无法发送指针按键事件：%s"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:191
+msgid "Failed to send pointer motion event: %s"
+msgstr "无法发送指针移动事件：%s"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:267
+msgid "Failed to send pointer scroll event: %s"
+msgstr "无法发送指针滚动事件：%s"
+
+#: common/network/TcpSocket.cxx:406
+msgid "Failed to set IPV6_V6ONLY"
+msgstr "设置 IPV6_V6ONLY 失败"
+
+#: common/rfb/UnixPasswordValidator.cxx:123
+msgid "Failed to set PAM_XDISPLAY: %s (%d)"
+msgstr "设置 PAM_XDISPLAY 失败：%s (%d)"
+
+#: common/network/TcpSocket.cxx:424
+msgid "Failed to set SO_REUSEADDR"
+msgstr "设置 SO_REUSEADDR 失败"
+
+#: common/network/TcpSocket.cxx:380
+msgid "Failed to set TCP_NODELAY: %d"
+msgstr "设置 TCP_NODELAY 失败：%d"
+
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:126
+msgid "Failed to set cursor: %s"
+msgstr "无法设置光标：%s"
+
+#: vncviewer/Win32TouchHandler.cxx:81
+msgid "Failed to set gesture configuration (error 0x%x)"
+msgstr "未能设置手势配置（错误 0x%x）"
+
+#: common/network/TcpSocket.cxx:431 common/network/UnixSocket.cxx:143
+msgid "Failed to set socket address"
+msgstr "设置套接字地址失败"
+
+#: common/network/UnixSocket.cxx:150
+msgid "Failed to set socket permissions"
+msgstr "设置套接字权限失败"
+
+#: common/network/Socket.cxx:230
+msgid "Failed to set socket to listening mode"
+msgstr "将套接字设置为监听模式失败"
+
+#: unix/w0vncserver/portals/PortalDesktop.cxx:129
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:449
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:457
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:462
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:472
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:502
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:511
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:515
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:516
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:527
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:539
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:606
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:616
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:630
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:125
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:181
+msgid "Failed to start remote desktop session"
+msgstr "无法启动远程桌面会话"
+
+#: unix/w0vncserver/portals/PortalDesktop.cxx:127
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:295
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:407
+msgid "Failed to start remote desktop session: %s"
+msgstr "无法启动远程桌面会话：%s"
+
+#: vncviewer/CConn.cxx:767
+msgid ""
+"Failed to store server certificate to list of servers with a security "
+"exception"
+msgstr "将服务器证书存储到带安全例外的服务器列表失败"
+
+#: common/rdr/TLSSocket.cxx:131 common/rdr/TLSSocket.cxx:134
+msgid "Failed to terminate TLS cleanly: %s"
+msgstr "无法干净地终止 TLS：%s"
+
+#: unix/w0vncserver/pipewire/PipeWirePixelBuffer.cxx:279
+msgid "Failed to update cursor image: %s"
+msgstr "无法更新光标图像：%s"
+
+#: unix/x0vncserver/XDesktop.cxx:1066
+msgid "Failed to update cursor: %s"
+msgstr "更新光标失败：%s"
+
+#: vncviewer/KeyboardMacOS.mm:296 vncviewer/KeyboardMacOS.mm:302
+#: vncviewer/KeyboardX11.cxx:265
+msgid "Failed to update keyboard LED state: %d"
+msgstr "无法更新键盘 LED 状态：%d"
+
+#: vncviewer/KeyboardWin32.cxx:613
+msgid "Failed to update keyboard LED state: %lu"
+msgstr "未能更新键盘 LED 状态：%lu"
+
+#: unix/w0vncserver/portals/Clipboard.cxx:153
+#: unix/w0vncserver/portals/Clipboard.cxx:183
+#: unix/w0vncserver/portals/Clipboard.cxx:197
+#: unix/w0vncserver/portals/Clipboard.cxx:211
+#: unix/w0vncserver/portals/Clipboard.cxx:222
+#: unix/w0vncserver/portals/Clipboard.cxx:234
+#: unix/w0vncserver/portals/Clipboard.cxx:277
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:177
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:197
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:307
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:323
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:438
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:442
+msgid "Failed to update the clipboard: %s"
+msgstr "无法更新剪贴板：%s"
+
+#: win/rfb_win32/Service.cxx:286
+msgid "Failed to write to event log: %ld\n"
+msgstr "写入事件日志失败：%ld\n"
+
+#: unix/vncpasswd/vncpasswd.cxx:284 unix/vncpasswd/vncpasswd.cxx:292
+msgid "Failed writing to \"%s\": %s"
+msgstr "写入“%s”失败：%s"
+
+#: vncviewer/DesktopWindow.cxx:1149 vncviewer/DesktopWindow.cxx:1150
+#: vncviewer/DesktopWindow.cxx:1158 vncviewer/DesktopWindow.cxx:1159
+#: vncviewer/DesktopWindow.cxx:1167 vncviewer/DesktopWindow.cxx:1168
+msgid "Failure grabbing control of the keyboard"
+msgstr "未能获取键盘控制权"
+
+#: vncviewer/XInputTouchHandler.cxx:144
+msgid "Failure grabbing device %i"
+msgstr "抓取设备 %i 失败"
+
+#: vncviewer/vncviewer.cxx:739
+msgid ""
+"Failure setting up encrypted tunnel:\n"
+"\n"
+"%s"
+msgstr ""
+"建立加密隧道失败：\n"
+"\n"
+"%s"
+
+#: vncviewer/vncviewer.cxx:718
+msgid ""
+"Failure waiting for incoming VNC connection:\n"
+"\n"
+"%s"
+msgstr ""
+"等待传入 VNC 连接失败：\n"
+"\n"
+"%s"
+
+#: vncviewer/vncviewer.cxx:340
+msgid "Favorites"
+msgstr "收藏夹"
+
+#: common/rfb/VNCSConnectionST.cxx:734
+msgid "Fence response of unexpected size received"
+msgstr "收到意外大小的 Fence 响应"
+
+#: common/rfb/VNCSConnectionST.cxx:748
+msgid "Fence response of unexpected type received"
+msgstr "收到意外类型的 Fence 响应"
+
+#: vncviewer/vncviewer.cxx:345
+msgid "File Systems"
+msgstr "文件系统"
+
+#: unix/x0vncserver/x0vncserver.cxx:98
+msgid "File with IP access control rules"
+msgstr "包含 IP 访问控制规则的文件"
+
+#: vncviewer/vncviewer.cxx:341
+msgid "Filename:"
+msgstr "文件名："
+
+#: win/vncconfig/Connections.h:42 win/winvnc/VNCServerWin32.cxx:57
+msgid "Filter describing which hosts are allowed access to this server"
+msgstr "描述哪些主机允许访问此服务器的过滤器"
+
+#: common/rfb/EncodeManager.cxx:190
+msgid "Framebuffer updates: %u"
+msgstr "帧缓冲更新：%u"
+
+#: vncviewer/OptionsDialog.cxx:658
+msgid "Full"
+msgstr "全部"
+
+#: common/rfb/EncodeManager.cxx:135
+msgid "Full color"
+msgstr "全彩"
+
+#: vncviewer/OptionsDialog.cxx:1164
+msgid "Full screen on all monitors"
+msgstr "为所有显示器开启全屏模式"
+
+#: vncviewer/OptionsDialog.cxx:1156
+msgid "Full screen on current monitor"
+msgstr "在当前显示器上全屏显示"
+
+#: vncviewer/OptionsDialog.cxx:1213
+msgid ""
+"Full screen on multiple monitors is not supported by the current desktop "
+"environment"
+msgstr "当前桌面环境不支持跨多个显示器全屏"
+
+#: vncviewer/OptionsDialog.cxx:1209
+msgid ""
+"Full screen on multiple monitors is not supported when the system setting "
+"\"Displays have separate Spaces\" is enabled"
+msgstr "启用系统设置“显示器具有独立空间”时，不支持跨多个显示器全屏"
+
+#: vncviewer/OptionsDialog.cxx:1172
+msgid "Full screen on selected monitor(s)"
+msgstr "为选定显示器开启全屏模式"
+
+#: vncviewer/parameters.cxx:977
+msgid ""
+"FullScreenAllMonitors is deprecated, set FullScreenMode to 'all' instead"
+msgstr "FullScreenAllMonitors 已弃用，请将 FullScreenMode 改为“all”"
+
+#: common/rfb/Security.cxx:42
+msgid ""
+"GnuTLS priority string that controls the TLS session's handshake algorithms"
+msgstr "控制 TLS 会话握手算法的 GnuTLS 优先级字符串"
+
+#: vncviewer/touch.cxx:75
+msgid "Got message (0x%x) for an unhandled window"
+msgstr "未处理窗口收到了消息（0x%x）"
+
+#: vncviewer/vncviewer.cxx:359
+msgid "Hide TuPigVNC"
+msgstr "隐藏 TuPigVNC"
+
+#: vncviewer/vncviewer.cxx:360
+msgid "Hide others"
+msgstr "隐藏其他"
+
+#: vncviewer/CConn.cxx:218
+msgid "Host: %.80s port: %d"
+msgstr "主机：%.80s 端口：%d"
+
+#: win/rfb_win32/SDisplay.cxx:56
+msgid ""
+"How to discover desktop updates; 0 - Polling, 1 - Application hooking, 2 - "
+"Driver hooking"
+msgstr "如何发现桌面更新；0 - 轮询，1 - 应用程序钩子，2 - 驱动钩子"
+
+#: common/rfb/VNCSConnectionST.cxx:839
+msgid "Idle for too long"
+msgstr "空闲时间过长"
+
+#: win/rfb_win32/SDisplay.cxx:142
+msgid "Ignoring DisconnectAction=Lock - no current user"
+msgstr "忽略 DisconnectAction=Lock - 没有当前用户"
+
+#: win/rfb_win32/SDisplay.cxx:137
+msgid "Ignoring DisconnectAction=Logoff - no current user"
+msgstr "忽略 DisconnectAction=Logoff - 没有当前用户"
+
+#: common/rfb/CMsgReader.cxx:515 common/rfb/SMsgReader.cxx:257
+msgid "Ignoring fence with too large payload"
+msgstr "忽略负载过大的 Fence"
+
+#: win/rfb_win32/SInput.cxx:478
+msgid "Ignoring unknown keysym 0x%x"
+msgstr "忽略未知键符 0x%x"
+
+#: win/rfb_win32/SInput.cxx:462
+msgid "Ignoring unrecognised Latin-1 keysym 0x%x"
+msgstr "忽略无法识别的 Latin-1 键符 0x%x"
+
+#: unix/x0vncserver/PollingManager.cxx:84
+msgid "Image types do not match (%s, %s, %s)"
+msgstr "图像类型不匹配（%s，%s，%s）"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:133
+msgid "Incompatible bits per pixel for GPU buffer\n"
+msgstr "GPU 缓冲区的每像素位数不兼容\n"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:211
+msgid "Incompatible bits per pixel for pixmap\n"
+msgstr "像素图的每像素位数不兼容\n"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:138 unix/xserver/hw/vnc/vncDRI3.c:228
+msgid "Incompatible stride for GPU buffer\n"
+msgstr "GPU 缓冲区的步幅不兼容\n"
+
+#: common/rfb/CSecurityRSAAES.cxx:472 common/rfb/SSecurityRSAAES.cxx:581
+msgid "Incorrect hash received"
+msgstr "收到不正确的哈希值"
+
+#: common/rfb/EncodeManager.cxx:131
+msgid "Indexed"
+msgstr "索引色"
+
+#: common/rfb/EncodeManager.cxx:133
+msgid "Indexed RLE"
+msgstr "索引色 RLE"
+
+#: vncviewer/OptionsDialog.cxx:901
+msgid "Input"
+msgstr "输入"
+
+#: common/rdr/HexInStream.cxx:51
+msgid "Input data is not hexadecimal"
+msgstr "输入数据不是十六进制"
+
+#: vncviewer/CConn.cxx:620
+msgid "Insecure certificate algorithm"
+msgstr "证书算法不安全"
+
+#: vncviewer/vncviewer.cxx:180
+msgid "Internal FLTK error. Exiting."
+msgstr "FLTK 内部错误。现在将退出。"
+
+#: common/rfb/HextileDecoder.cxx:214
+msgid "Invalid Hextile coordinates"
+msgstr "无效的 Hextile 坐标"
+
+#: common/rfb/JpegDecompressor.cxx:223
+msgid "Invalid JPEG data received"
+msgstr "收到无效的 JPEG 数据"
+
+#: unix/w0vncserver/pipewire/PipeWirePixelBuffer.cxx:119
+msgid "Invalid PipeWire chunk size: %d instead of %d"
+msgstr "无效的 PipeWire 块大小：%d 而非 %d"
+
+#: common/rfb/RREDecoder.cxx:112
+msgid "Invalid RRE coordinates"
+msgstr "无效的 RRE 坐标"
+
+#: common/rfb/SSecurityRSAAES.cxx:193 common/rfb/SSecurityRSAAES.cxx:220
+#: common/rfb/SSecurityRSAAES.cxx:231 common/rfb/SSecurityRSAAES.cxx:271
+msgid "Invalid RSA key"
+msgstr "无效的 RSA 密钥"
+
+#: common/rfb/CConnection.cxx:683
+msgid "Invalid SetColourMapEntries from server!"
+msgstr "来自服务器的 SetColourMapEntries 无效！"
+
+#: common/rfb/TightDecoder.cxx:160
+msgid "Invalid Tight filter code received"
+msgstr "收到无效的 Tight 过滤器代码"
+
+#: common/rfb/CConnection.cxx:793 common/rfb/SConnection.cxx:549
+#: unix/w0vncserver/portals/Clipboard.cxx:549
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:521
+#: unix/xserver/hw/vnc/vncSelection.c:616 vncviewer/Viewport.cxx:430
+msgid "Invalid UTF-8 sequence in clipboard"
+msgstr "剪贴板中的 UTF-8 序列无效"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:188
+msgid "Invalid Wayland buffer size: %u x %u"
+msgstr "无效的 Wayland 缓冲区大小：%u x %u"
+
+#: common/rfb/TightDecoder.cxx:153
+msgid "Invalid bits per pixel for gradient filter"
+msgstr "渐变过滤器的每像素位数无效"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:309
+msgid "Invalid buffer constraints"
+msgstr "无效的缓冲区约束"
+
+#: common/rfb/CMsgReader.cxx:856 common/rfb/CMsgReader.cxx:861
+msgid "Invalid desktop name received"
+msgstr "收到无效的桌面名称"
+
+#: common/rfb/CMsgReader.cxx:384 common/rfb/CMsgReader.cxx:406
+#: common/rfb/CMsgReader.cxx:432 common/rfb/CMsgReader.cxx:446
+#: common/rfb/CMsgReader.cxx:462 common/rfb/CMsgReader.cxx:486
+#: common/rfb/SMsgReader.cxx:365 common/rfb/SMsgReader.cxx:387
+#: common/rfb/SMsgReader.cxx:413 common/rfb/SMsgReader.cxx:426
+#: common/rfb/SMsgReader.cxx:442 common/rfb/SMsgReader.cxx:466
+msgid "Invalid extended clipboard message"
+msgstr "无效的扩展剪贴板消息"
+
+#: common/network/TcpSocket.cxx:707
+msgid "Invalid filter specified"
+msgstr "指定的过滤器无效"
+
+#: vncviewer/parameters.cxx:919
+msgid "Invalid format"
+msgstr "格式无效"
+
+#: vncviewer/parameters.cxx:817 vncviewer/parameters.cxx:932
+msgid "Invalid format or too large value"
+msgstr "格式无效或值太大"
+
+#: unix/x0vncserver/x0vncserver.cxx:378
+msgid "Invalid geometry"
+msgstr "几何尺寸无效"
+
+#: unix/xserver/hw/vnc/xvnc.c:312 unix/xserver/hw/vnc/xvnc.c:315
+msgid "Invalid geometry %s passed to -geometry\n"
+msgstr "传递给 -geometry 的几何尺寸 %s 无效\n"
+
+#: vncviewer/DesktopWindow.cxx:150
+msgid "Invalid geometry specified!"
+msgstr "指定的几何尺寸无效！"
+
+#: common/core/LogWriter.cxx:104
+msgid "Invalid log name: %s\n"
+msgstr "无效的日志名称：%s\n"
+
+#: common/core/LogWriter.cxx:89
+msgid "Invalid log target: %s\n"
+msgstr "无效的日志目标：%s\n"
+
+#: common/rfb/KeyRemapper.cxx:89
+msgid "Invalid mapping %s"
+msgstr "无效的映射 %s"
+
+#: vncviewer/Win32TouchHandler.cxx:361
+msgid "Invalid mouse button %d, must be a number between 1 and 7."
+msgstr "无效的鼠标按钮%d，必须是介于 1 和 7 之间的数字。"
+
+#: common/rfb/PixelFormat.cxx:187
+msgid "Invalid pixel format"
+msgstr "无效的像素格式"
+
+#: unix/xserver/hw/vnc/xvnc.c:335 unix/xserver/hw/vnc/xvnc.c:338
+#: unix/xserver/hw/vnc/xvnc.c:354 unix/xserver/hw/vnc/xvnc.c:357
+msgid "Invalid pixel format %s passed to -pixelformat\n"
+msgstr "传递给 -pixelformat 的像素格式 %s 无效\n"
+
+#: unix/xserver/hw/vnc/xvnc.c:285 unix/xserver/hw/vnc/xvnc.c:288
+msgid "Invalid pixmap depth %d passed to -pixdepths\n"
+msgstr "传递给 -pixdepths 的像素图深度 %d 无效\n"
+
+#: common/network/TcpSocket.cxx:179 common/network/TcpSocket.cxx:186
+msgid "Invalid port specified"
+msgstr "指定的端口无效"
+
+#: common/network/TcpSocket.cxx:766
+msgid "Invalid prefix length for filter: %u"
+msgstr "过滤器的前缀长度无效：%u"
+
+#: common/rfb/CMsgReader.cxx:553
+msgid "Invalid rectangle received"
+msgstr "收到无效的矩形"
+
+#: common/rfb/CMsgReader.cxx:550
+msgid "Invalid rectangle received: %dx%d at %d,%d exceeds %dx%d"
+msgstr "收到无效的矩形：%dx%d 位于 %d,%d，超出 %dx%d"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:465
+msgid "Invalid render node path: %s\n"
+msgstr "无效的渲染节点路径：%s\n"
+
+#: unix/w0vncserver/portals/Clipboard.cxx:338
+#: unix/w0vncserver/portals/Clipboard.cxx:476
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:447
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:501
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:614
+msgid "Invalid response to request \"%s\""
+msgstr "对请求“%s”的响应无效"
+
+#: vncviewer/KeyboardWin32.cxx:263
+msgid "Invalid scan code 0x%02x"
+msgstr "无效的键盘扫描码 0x%02x"
+
+#: vncviewer/DesktopWindow.cxx:1457
+msgid "Invalid screen layout computed for resize request!"
+msgstr "大小改变请求计算得到了无效的屏幕布局！"
+
+#: common/rfb/VNCServerST.cxx:654
+msgid "Invalid screen layout requested by client"
+msgstr "客户端请求的屏幕布局无效"
+
+#: vncviewer/CConn.cxx:478
+msgid "Invalid server certificate: %s"
+msgstr "无效的服务器证书：%s"
+
+#: vncviewer/EmulateMB.cxx:229 vncviewer/EmulateMB.cxx:292
+msgid "Invalid state for 3 button emulation"
+msgstr "三按钮仿真的状态无效"
+
+#: vncviewer/touch.cxx:141 vncviewer/touch.cxx:167
+msgid "Invalid window 0x%08lx specified for pointer grab"
+msgstr "为指针抓取指定的窗口 0x%08lx 无效"
+
+#: vncviewer/parameters.cxx:146
+msgid "JPEG quality level, 0 = Low, 9 = High"
+msgstr "JPEG 质量级别，0 = 低，9 = 高"
+
+#: vncviewer/AuthDialog.cxx:112
+msgid "Keep password for reconnect"
+msgstr "记住密码以便重新连接"
+
+#: common/rfb/SMsgReader.cxx:511
+msgid "Key event without keycode"
+msgstr "没有键码的按键事件"
+
+#: vncviewer/OptionsDialog.cxx:967
+msgid "Keyboard"
+msgstr "键盘"
+
+#: vncviewer/OptionsDialog.cxx:1051
+msgid "Keyboard shortcuts"
+msgstr "键盘快捷键"
+
+#: unix/xserver/hw/vnc/vncInput.c:642
+msgid "Keysym XK_%s (0x%04x) has been generated by both keys %d and %d"
+msgstr "键符 XK_%s (0x%04x) 同时由键 %d 和 %d 生成"
+
+#: vncviewer/CConn.cxx:236
+msgid "Last used encoding: %s"
+msgstr "最近使用的编码：%s"
+
+#: vncviewer/CConn.cxx:240
+msgid "Line speed estimate: %d kbit/s"
+msgstr "线路速度估计值：%d kbit/s"
+
+#: vncviewer/ServerDialog.cxx:387 vncviewer/parameters.cxx:883
+msgid "Line too long"
+msgstr "行过长"
+
+#: vncviewer/parameters.cxx:186
+msgid "Listen for incoming connections from VNC servers"
+msgstr "监听来自 VNC 服务器的传入连接"
+
+#: unix/w0vncserver/parameters.cxx:49 unix/x0vncserver/x0vncserver.cxx:105
+#: unix/xserver/hw/vnc/vncExtInit.cc:88
+msgid "Listen on the specified network address"
+msgstr "在指定的网络地址上监听"
+
+#: unix/w0vncserver/w0vncserver.cxx:163 unix/x0vncserver/x0vncserver.cxx:394
+#: unix/xserver/hw/vnc/vncExtInit.cc:224
+msgid "Listening for VNC connections on %s (mode %04o)"
+msgstr "正在 %s 上监听 VNC 连接（模式 %04o）"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:207 unix/xserver/hw/vnc/vncExtInit.cc:277
+msgid "Listening for VNC connections on inetd socket"
+msgstr "正在 inetd 套接字上监听 VNC 连接"
+
+#: unix/w0vncserver/w0vncserver.cxx:184 unix/x0vncserver/x0vncserver.cxx:415
+#: unix/xserver/hw/vnc/vncExtInit.cc:247
+msgid "Listening for VNC connections on interface %s, port %d"
+msgstr "正在接口 %s、端口 %d 上监听 VNC 连接"
+
+#: unix/w0vncserver/w0vncserver.cxx:181 unix/x0vncserver/x0vncserver.cxx:412
+#: unix/xserver/hw/vnc/vncExtInit.cc:244
+msgid "Listening for VNC connections on local interfaces, port %d"
+msgstr "正在本地接口、端口 %d 上监听 VNC 连接"
+
+#: unix/x0vncserver/x0vncserver.cxx:389
+msgid "Listening for VNC connections on systemd sockets"
+msgstr "正在 systemd 套接字上监听 VNC 连接"
+
+#: vncviewer/vncviewer.cxx:689
+msgid "Listening on port %d"
+msgstr "正在监听端口 %d"
+
+#: win/rfb_win32/SocketManager.cxx:112 win/rfb_win32/SocketManager.cxx:161
+#: win/rfb_win32/SocketManager.cxx:177
+msgid "Listening socket is not registered"
+msgstr "监听套接字未注册"
+
+#: vncviewer/ServerDialog.cxx:87
+msgid "Load..."
+msgstr "载入..."
+
+#: win/vncconfig/Legacy.cxx:153
+msgid "Loading default settings"
+msgstr "正在加载默认设置"
+
+#: win/vncconfig/Legacy.cxx:175
+msgid "Loading global user settings"
+msgstr "正在加载全局用户设置"
+
+#: win/vncconfig/Legacy.cxx:164
+msgid "Loading local user settings"
+msgstr "正在加载本地用户设置"
+
+#: win/winvnc/winvnc.cxx:88
+msgid "Log destinations:"
+msgstr "日志目标："
+
+#: win/winvnc/winvnc.cxx:86
+msgid "Log names:"
+msgstr "日志名称："
+
+#: vncviewer/AudioOutputPulse.cxx:454
+msgid "Lost connection to sound server"
+msgstr "与声音服务器的连接丢失"
+
+#: vncviewer/OptionsDialog.cxx:672
+msgid "Low"
+msgstr "低"
+
+#: unix/xserver/hw/vnc/xvnc.c:1161
+msgid "MAXFORMATS is too small for this server\n"
+msgstr "MAXFORMATS 对此服务器来说太小\n"
+
+#: vncviewer/vncviewer.cxx:347
+msgid "Manage Favorites"
+msgstr "管理收藏夹"
+
+#: vncviewer/parameters.cxx:150
+msgid "Maximize viewer window"
+msgstr "最大化查看器窗口"
+
+#: common/rfb/VNCServerST.cxx:759
+msgid "Maximum connected time reached, exiting"
+msgstr "已达到最长连接时间，正在退出"
+
+#: common/rfb/VNCServerST.cxx:756
+msgid "Maximum disconnected time reached, exiting"
+msgstr "已达到最长断开时间，正在退出"
+
+#: common/rfb/VNCServerST.cxx:753
+msgid "Maximum idle time reached, exiting"
+msgstr "已达到最长空闲时间，正在退出"
+
+#: unix/x0vncserver/x0vncserver.cxx:77
+msgid "Maximum percentage of CPU time to be consumed"
+msgstr "允许消耗的 CPU 时间最大百分比"
+
+#: common/rfb/CMsgReader.cxx:49 common/rfb/SMsgReader.cxx:51
+msgid "Maximum permitted length of an incoming clipboard update"
+msgstr "传入剪贴板更新的最大允许长度"
+
+#: vncviewer/OptionsDialog.cxx:665
+msgid "Medium"
+msgstr "中"
+
+#: unix/x0vncserver/x0vncserver.cxx:71
+msgid ""
+"Milliseconds per one polling cycle; actual interval may be dynamically "
+"adjusted to satisfy MaxProcessorUsage setting"
+msgstr "每个轮询周期的毫秒数；实际间隔可能动态调整以满足 MaxProcessorUsage 设置"
+
+#: vncviewer/OptionsDialog.cxx:1245
+msgid "Miscellaneous"
+msgstr "杂项"
+
+#: vncviewer/OptionsDialog.cxx:1058
+msgid "Modifier keys for keyboard shortcuts:"
+msgstr "键盘快捷键的修饰键："
+
+#: vncviewer/MonitorIndicesParameter.cxx:72
+msgid "Monitor index %d does not exist"
+msgstr "显示器索引%d不存在"
+
+#: vncviewer/OptionsDialog.cxx:921
+msgid "Mouse"
+msgstr "鼠标"
+
+#: vncviewer/vncviewer.cxx:343
+msgid "My Computer"
+msgstr "我的电脑"
+
+#: unix/w0vncserver/parameters.cxx:46 unix/x0vncserver/x0vncserver.cxx:81
+#: unix/xserver/hw/vnc/vncExtInit.cc:82
+msgid "Name of VNC desktop"
+msgstr "VNC 桌面名称"
+
+#: common/rfb/ServerCore.cxx:75
+msgid ""
+"Never treat incoming connections as shared, regardless of the client-"
+"specified setting"
+msgstr "绝不将传入连接视为共享，无论客户端指定的设置如何"
+
+#: vncviewer/vncviewer.cxx:348
+msgid "New Directory?"
+msgstr "新建目录？"
+
+#: vncviewer/ServerDialog.cxx:241 vncviewer/vncviewer.cxx:328
+msgid "No"
+msgstr "否"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:174
+msgid "No Wayland pixel formats provided"
+msgstr "未提供 Wayland 像素格式"
+
+#: vncviewer/AudioOutput.cxx:48
+msgid "No audio playback device available"
+msgstr "没有可用的音频播放设备"
+
+#: unix/xserver/hw/vnc/xvnc.c:389
+msgid "No free display number for -inetd\n"
+msgstr "-inetd 没有空闲的显示号\n"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:649
+msgid "No image streams provided for the session"
+msgstr "会话未提供图像流"
+
+#: vncviewer/Viewport.cxx:1096
+msgid ""
+"No installer was found for the current platform. The download page will be "
+"opened."
+msgstr "未找到适用于当前平台的安装包，将打开下载页面。"
+
+#: common/rfb/CConnection.cxx:315 common/rfb/CConnection.cxx:316
+msgid "No matching security types"
+msgstr "没有匹配的安全类型"
+
+#: common/rfb/SSecurityRSAAES.cxx:657 common/rfb/SSecurityVncAuth.cxx:108
+msgid "No password configured"
+msgstr "未配置密码"
+
+#: unix/w0vncserver/w0vncserver.cxx:195 unix/x0vncserver/x0vncserver.cxx:426
+#: unix/xserver/hw/vnc/vncExtInit.cc:255
+msgid "No path or port configured for incoming connections"
+msgstr "未为传入连接配置路径或端口"
+
+#: unix/xserver/hw/vnc/XorgGlue.c:86
+msgid "No pixmap format that matches the root window depth\n"
+msgstr "没有与根窗口深度匹配的像素图格式\n"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureManager.cxx:90
+msgid "No pointer available for desktop session"
+msgstr "桌面会话没有可用的指针"
+
+#: vncviewer/KeyboardWin32.cxx:255
+msgid "No scan code for extended virtual key 0x%02x"
+msgstr "扩展虚拟键 0x%02x 无扫描码"
+
+#: vncviewer/KeyboardWin32.cxx:257
+msgid "No scan code for virtual key 0x%02x"
+msgstr "虚拟键 0x%02x 无扫描码"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:370
+msgid "No supported Wayland pixel format"
+msgstr "没有受支持的 Wayland 像素格式"
+
+#: common/rfb/SConnection.cxx:196
+msgid "No supported security type for %d.%d client"
+msgstr "%d.%d 客户端没有支持的安全类型"
+
+#: common/rfb/SConnection.cxx:210
+msgid "No supported security types"
+msgstr "没有支持的安全类型"
+
+#: vncviewer/KeyboardWin32.cxx:334
+msgid "No symbol for extended virtual key 0x%02x"
+msgstr "扩展虚拟键 0x%02x 无符号"
+
+#: vncviewer/KeyboardMacOS.mm:199 vncviewer/KeyboardX11.cxx:169
+msgid "No symbol for key code %d (in the current state)"
+msgstr "键位码 %d 无符号（当前状态）"
+
+#: vncviewer/KeyboardWin32.cxx:336
+msgid "No symbol for virtual key 0x%02x"
+msgstr "虚拟键 0x%02x 无符号"
+
+#: common/rdr/RandomStream.cxx:73
+msgid "No system random source available"
+msgstr "没有可用的系统随机源"
+
+#: common/network/TcpSocket.cxx:299
+msgid "No useful address found for hostname"
+msgstr "找不到主机名的可用地址"
+
+#: common/rfb/CSecurityVeNCrypt.cxx:179 common/rfb/SSecurityVeNCrypt.cxx:174
+msgid "No valid VeNCrypt sub-type"
+msgstr "无效的 VeNCrypt 子类型"
+
+#: unix/xserver/hw/vnc/XorgGlue.c:99
+msgid "No visual that matches the root window visual\n"
+msgstr "没有与根窗口视觉类型匹配的视觉类型\n"
+
+#: unix/w0vncserver/portals/Clipboard.cxx:540
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:510
+msgid "Non-ASCII character in clipboard"
+msgstr "剪贴板中存在非 ASCII 字符"
+
+#: common/rfb/VNCServerST.cxx:811
+msgid "Non-shared connection requested"
+msgstr "请求了非共享连接"
+
+#: vncviewer/OptionsDialog.cxx:794 vncviewer/OptionsDialog.cxx:861
+msgid "None"
+msgstr "无"
+
+#: win/winvnc/VNCServerWin32.cxx:119
+msgid "Not accepting connections"
+msgstr "不接受连接"
+
+#: unix/x0vncserver/XDesktop.cxx:78 unix/xserver/hw/vnc/XserverDesktop.cc:73
+#: win/winvnc/QueryConnectDialog.cxx:43
+msgid ""
+"Number of seconds to show the 'Accept connection' dialog before rejecting "
+"the connection"
+msgstr "显示“接受连接”对话框后，在拒绝连接前等待的秒数"
+
+#: vncviewer/OptionsDialog.cxx:115 vncviewer/vncviewer.cxx:330
+msgid "OK"
+msgstr "确定"
+
+#: common/rfb/SSecurityVncAuth.cxx:57
+msgid "Obfuscated binary encoding of the password for VNC authentication"
+msgstr "用于 VNC 认证的密码混淆二进制编码"
+
+#: unix/common/randr.cxx:201
+msgid "One or more screens are mirrored. Cannot reconfigure screen layout."
+msgstr "一个或多个屏幕被镜像。无法重新配置屏幕布局。"
+
+#: unix/w0vncserver/parameters.cxx:43 unix/x0vncserver/x0vncserver.cxx:101
+#: unix/xserver/hw/vnc/vncExtInit.cc:85 win/vncconfig/Connections.h:44
+#: win/winvnc/VNCServerWin32.cxx:60
+msgid "Only allow connections from localhost"
+msgstr "仅允许来自 localhost 的连接"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:654
+msgid "Only one image stream supported, got %d"
+msgstr "仅支持一个图像流，实际为 %d 个"
+
+#: win/vncconfig/Authentication.h:43 win/winvnc/VNCServerWin32.cxx:63
+msgid ""
+"Only prompt for a local user to accept incoming connections if there is a "
+"user logged on"
+msgstr "仅当有用户登录时才提示本地用户接受传入连接"
+
+#: vncviewer/ServerDialog.cxx:83
+msgid "Options..."
+msgstr "选项..."
+
+#: vncviewer/ServerDialog.cxx:241
+msgid "Overwrite"
+msgstr "覆盖"
+
+#: common/rfb/UnixPasswordValidator.cxx:131
+msgid "PAM authentication failed: %s (%d)"
+msgstr "PAM 认证失败：%s (%d)"
+
+#: common/rfb/UnixPasswordValidator.cxx:137
+msgid "PAM authorization failed: %s (%d)"
+msgstr "PAM 授权失败：%s (%d)"
+
+#: common/core/Configuration.cxx:369
+msgid "Parameter %s: Invalid value '%d'"
+msgstr "参数 %s：无效值“%d”"
+
+#: common/core/Configuration.cxx:309 common/core/Configuration.cxx:359
+#: common/core/Configuration.cxx:464 common/core/Configuration.cxx:594
+#: common/core/Configuration.cxx:613 common/core/LogWriter.cxx:133
+msgid "Parameter %s: Invalid value '%s'"
+msgstr "参数 %s：无效值“%s”"
+
+#: vncviewer/vncviewer.cxx:672 vncviewer/vncviewer.cxx:673
+msgid "Parameters -listen and -via are incompatible"
+msgstr "-listen 及 -via 参数不兼容"
+
+#: vncviewer/parameters.cxx:253
+msgid ""
+"Pass special keys (like Alt+Tab) directly to the server when in full-screen "
+"mode"
+msgstr "全屏模式下将特殊按键（如 Alt+Tab）直接发送到服务器"
+
+#: unix/vncpasswd/vncpasswd.cxx:164
+msgid "Password can not be longer than 8 characters - try again\n"
+msgstr "密码不能超过 8 个字符 - 请重试\n"
+
+#: common/rfb/SSecurityVncAuth.cxx:53 vncviewer/parameters.cxx:99
+msgid "Password file for VNC authentication"
+msgstr "用于 VNC 认证的密码文件"
+
+#: common/rfb/SSecurityPlain.cxx:102
+msgid "Password is too long"
+msgstr "密码过长"
+
+#: unix/vncpasswd/vncpasswd.cxx:175
+msgid "Password must be at least 6 characters - try again\n"
+msgstr "密码至少需要 6 个字符 - 请重试\n"
+
+#: unix/vncpasswd/vncpasswd.cxx:159
+msgid "Password not changed\n"
+msgstr "密码未更改\n"
+
+#: unix/vncpasswd/vncpasswd.cxx:130
+msgid "Password quality check failed:\n"
+msgstr "密码质量检查失败：\n"
+
+#: unix/vncpasswd/vncpasswd.cxx:150 vncviewer/AuthDialog.cxx:104
+msgid "Password:"
+msgstr "密码："
+
+#: unix/vncpasswd/vncpasswd.cxx:187
+msgid "Passwords don't match - try again\n"
+msgstr "两次输入的密码不一致 - 请重试\n"
+
+#: vncviewer/OptionsDialog.cxx:814
+msgid "Path to X509 CA certificate"
+msgstr "X509 CA 证书路径"
+
+#: vncviewer/OptionsDialog.cxx:821
+msgid "Path to X509 CRL file"
+msgstr "X509 CRL 文件路径"
+
+#: common/rfb/SSecurityRSAAES.cxx:77
+msgid "Path to the RSA key for the RSA-AES security types"
+msgstr "RSA-AES 安全类型所用的 RSA 密钥路径"
+
+#: common/rfb/CSecurityTLS.cxx:57
+msgid "Path to the X.509 certificate for the trusted certificate authority"
+msgstr "受信任证书颁发机构的 X.509 证书路径"
+
+#: common/rfb/CSecurityTLS.cxx:62
+msgid "Path to the X.509 certificate revocation list"
+msgstr "X.509 证书吊销列表路径"
+
+#: common/rfb/SSecurityTLS.cxx:72
+msgid "Path to the private key of the server's X.509 certificate"
+msgstr "服务器 X.509 证书的私钥路径"
+
+#: common/rfb/SSecurityTLS.cxx:67
+msgid "Path to the server's X.509 certificate"
+msgstr "服务器 X.509 证书路径"
+
+#: common/rfb/ServerCore.cxx:56
+msgid ""
+"Perform pixel comparison on framebuffer to reduce unnecessary updates (0: "
+"never, 1: always, 2: auto)"
+msgstr "对帧缓冲执行像素比较以减少不必要的更新（0：从不，1：始终，2：自动）"
+
+#: unix/w0vncserver/pipewire/PipeWireSource.cxx:90
+msgid "PipeWire loop failed: %s"
+msgstr "PipeWire 循环失败：%s"
+
+#: vncviewer/CConn.cxx:229
+msgid "Pixel format: %s"
+msgstr "像素格式：%s"
+
+#: vncviewer/OptionsDialog.cxx:1266
+msgid "Play audio from the server"
+msgstr "播放来自服务器的音频"
+
+#: vncviewer/parameters.cxx:207
+msgid "Play audio sent by the server, if it offers any"
+msgstr "播放服务器发送的音频（如果提供）"
+
+#: vncviewer/vncviewer.cxx:339
+msgid "Please choose an existing file!"
+msgstr "请选择一个存在的文件！"
+
+#: vncviewer/OptionsDialog.cxx:578
+msgid "Preferred encoding"
+msgstr "首选编码"
+
+#: vncviewer/parameters.cxx:123
+msgid "Preferred encoding to use"
+msgstr "首选编码"
+
+#: vncviewer/DesktopWindow.cxx:1185
+msgid "Press %s to release keyboard control from the session"
+msgstr "按 %s 可从会话释放键盘控制权"
+
+#: vncviewer/DesktopWindow.cxx:867
+msgid "Press %sEnter to leave full-screen mode"
+msgstr "按 %sEnter 退出全屏模式"
+
+#: vncviewer/DesktopWindow.cxx:242
+msgid "Press %sM to open the context menu"
+msgstr "按 %sM 打开上下文菜单"
+
+#: vncviewer/vncviewer.cxx:350
+msgid "Preview"
+msgstr "预览"
+
+#: common/rfb/ServerCore.cxx:105
+msgid "Prompt the local user to accept or reject incoming connections"
+msgstr "提示本地用户接受或拒绝传入连接"
+
+#: vncviewer/CConn.cxx:244
+msgid "Protocol version: %d.%d"
+msgstr "协议版本：%d.%d"
+
+#: unix/x0vncserver/Image.cxx:252 unix/x0vncserver/Image.cxx:87
+#: unix/xserver/hw/vnc/vncExtInit.cc:153
+msgid "Pseudocolour is not supported"
+msgstr "不支持伪彩色"
+
+#: vncviewer/OptionsDialog.cxx:733
+msgid "Quality level"
+msgstr "质量级别"
+
+#: win/winvnc/winvnc.cxx:159
+msgid "Querying service status...\n"
+msgstr "正在查询服务状态...\n"
+
+#: vncviewer/vncviewer.cxx:362
+msgid "Quit TuPigVNC"
+msgstr "退出 TuPigVNC"
+
+#: unix/x0vncserver/XDesktop.cxx:216
+msgid "RANDR extension not present, will not be able to resize the desktop"
+msgstr "RANDR 扩展不存在，将无法调整桌面大小"
+
+#: common/rfb/SConnection.cxx:154
+msgid "Reading version failed, not an RFB client?"
+msgstr "读取版本失败，不是 RFB 客户端？"
+
+#: common/rfb/CConnection.cxx:203
+msgid "Reading version failed, not an RFB server?"
+msgstr "读取版本失败，不是 RFB 服务器？"
+
+#: common/rfb/CSecurityDH.cxx:94
+msgid "Received Diffie-Hellman key is too long"
+msgstr "收到的 Diffie-Hellman 密钥过长"
+
+#: common/rfb/CSecurityDH.cxx:92
+msgid "Received Diffie-Hellman key is too short"
+msgstr "收到的 Diffie-Hellman 密钥过短"
+
+#: common/rfb/CMsgReader.cxx:566 common/rfb/CMsgReader.cxx:631
+#: common/rfb/CMsgReader.cxx:678 common/rfb/CMsgReader.cxx:736
+msgid "Received cursor is too large"
+msgstr "收到的光标过大"
+
+#: common/rfb/CSecurityDH.cxx:106 common/rfb/CSecurityMSLogonII.cxx:94
+msgid "Received invalid Diffie-Hellman modulus"
+msgstr "收到无效的 Diffie-Hellman 模数"
+
+#: vncviewer/parameters.cxx:176
+msgid ""
+"Reconfigure the desktop size on the server to the specified size when "
+"connecting"
+msgstr "连接时将服务器上的桌面尺寸重新配置为指定大小"
+
+#: vncviewer/vncviewer.cxx:201
+msgid "Reconnect"
+msgstr "重新连接"
+
+#: vncviewer/DesktopWindow.cxx:171
+msgid "Reducing window size to fit on current monitor"
+msgstr "减小窗口大小以适应当前显示器"
+
+#: win/winvnc/VNCServerWin32.cxx:132
+msgid "Refreshing system tray icon"
+msgstr "正在刷新系统托盘图标"
+
+#: win/winvnc/winvnc.cxx:198
+msgid "Registered service successfully"
+msgstr "服务注册成功"
+
+#: win/rfb_win32/Service.cxx:78
+msgid "Registering handler..."
+msgstr "正在注册处理器..."
+
+#: common/rfb/VNCServerST.cxx:648
+msgid "Rejecting too large resize request"
+msgstr "拒绝过大的调整尺寸请求"
+
+#: unix/w0vncserver/portals/RemoteDesktop.cxx:67
+msgid "Remember display choice when user connects"
+msgstr "用户连接时记住显示选择"
+
+#: unix/w0vncserver/pipewire/PipeWirePixelBuffer.cxx:93
+#: unix/w0vncserver/wayland/WaylandPixelBuffer.cxx:75
+msgid "Remote desktop session stopped"
+msgstr "远程桌面会话已停止"
+
+#: win/rfb_win32/SDisplay.cxx:68
+msgid "Remove the desktop wallpaper when the server is in use"
+msgstr "服务器使用期间移除桌面壁纸"
+
+#: common/rfb/VNCServerST.cxx:362
+msgid ""
+"Removing screen %d (%x) as it is completely outside the new framebuffer"
+msgstr "正在移除屏幕 %d (%x)，因为它完全位于新帧缓冲之外"
+
+#: unix/x0vncserver/Geometry.cxx:89
+msgid "Requested area is outsize of the desktop boundaries"
+msgstr "请求的区域超出桌面边界"
+
+#: vncviewer/CConn.cxx:232
+msgid "Requested encoding: %s"
+msgstr "请求的编码：%s"
+
+#: common/rfb/SConnection.cxx:244
+msgid "Requested security type is not available"
+msgstr "请求的安全类型不可用"
+
+#: common/rfb/CConnection.cxx:639
+msgid "Requesting audio (format %d, %d channels, %d Hz)"
+msgstr "正在请求音频（格式 %d，%d 声道，%d Hz）"
+
+#: common/rfb/SSecurityRSAAES.cxx:81
+msgid "Require a username for the RSA-AES security types"
+msgstr "RSA-AES 安全类型需要用户名"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:371
+msgid "Reverse connection: %s:%d%s%s"
+msgstr "反向连接：%s:%d%s%s"
+
+#: win/winvnc/winvnc.cxx:168 win/winvnc/winvnc.cxx:173
+msgid "Run in service mode\n"
+msgstr "以服务模式运行\n"
+
+#: win/rfb_win32/Service.cxx:464
+msgid "Running"
+msgstr "运行中"
+
+#: vncviewer/parameters.cxx:259
+msgid "SSH gateway to tunnel the connection via"
+msgstr "用于通过隧道建立连接的 SSH 网关"
+
+#: vncviewer/vncviewer.cxx:351
+msgid "Save"
+msgstr "保存"
+
+#: vncviewer/ServerDialog.cxx:91
+msgid "Save as..."
+msgstr "保存为..."
+
+#: vncviewer/ServerDialog.cxx:214
+msgid "Save the TuPigVNC configuration to file"
+msgstr "将 TuPigVNC 配置保存到文件"
+
+#: unix/x0vncserver/Geometry.cxx:38
+msgid ""
+"Screen area shown to VNC clients in the format "
+"<width>x<height>+<offset_x>+<offset_y>, or empty to show the whole screen"
+msgstr "以 <宽度>x<高度>+<偏移x>+<偏移y> 格式显示给 VNC 客户端的屏幕区域，留空则显示整个屏幕"
+
+#: vncviewer/OptionsDialog.cxx:768
+msgid "Security"
+msgstr "安全"
+
+#: vncviewer/CConn.cxx:770
+msgid "Security exception added for server host"
+msgstr "已为服务器主机添加安全例外"
+
+#: vncviewer/CConn.cxx:248
+msgid "Security method: %s"
+msgstr "安全方式：%s"
+
+#: unix/vncconfig/vncconfig.cxx:316 unix/vncconfig/vncconfig.cxx:330
+#: unix/vncconfig/vncconfig.cxx:338 unix/vncpasswd/vncpasswd.cxx:220
+#: unix/vncpasswd/vncpasswd.cxx:231 unix/w0vncserver/w0vncserver-forget.cxx:72
+#: unix/w0vncserver/w0vncserver.cxx:149 unix/w0vncserver/w0vncserver.cxx:155
+#: unix/x0vncserver/x0vncserver.cxx:344 unix/x0vncserver/x0vncserver.cxx:350
+#: vncviewer/vncviewer.cxx:630 vncviewer/vncviewer.cxx:638
+msgid "See '%s --help' for more information.\n"
+msgstr "请运行 '%s --help' 以获取更多信息。\n"
+
+#: vncviewer/ServerDialog.cxx:173
+msgid "Select a TuPigVNC configuration file"
+msgstr "选择 TuPigVNC 配置文件"
+
+#: common/rfb/ServerCore.cxx:97
+msgid "Send clipboard changes to clients"
+msgstr "将剪贴板更改发送给客户端"
+
+#: vncviewer/parameters.cxx:217
+msgid "Send clipboard changes to the server"
+msgstr "将剪贴板更改发送给服务器"
+
+#: unix/vncconfig/vncconfig.cxx:88
+msgid "Send clipboard to clients"
+msgstr "将剪贴板发送给客户端"
+
+#: vncviewer/OptionsDialog.cxx:1022
+msgid "Send clipboard to server"
+msgstr "发送剪切板内容到服务器"
+
+#: unix/w0vncserver/parameters.cxx:53 unix/x0vncserver/XDesktop.cxx:73
+#: unix/xserver/hw/vnc/XserverDesktop.cc:68 win/rfb_win32/SInput.cxx:146
+msgid ""
+"Send keyboard events straight through and avoid mapping them to the current "
+"keyboard layout"
+msgstr "直接发送键盘事件，避免将它们映射到当前键盘布局"
+
+#: vncviewer/OptionsDialog.cxx:1030
+msgid "Send primary selection as clipboard"
+msgstr "将鼠标选择内容作为剪切板内容发送"
+
+#: unix/vncconfig/vncconfig.cxx:89
+msgid "Send primary selection to clients"
+msgstr "将 PRIMARY 选区发送给客户端"
+
+#: unix/w0vncserver/parameters.cxx:66 unix/x0vncserver/XSelection.cxx:43
+#: unix/xserver/hw/vnc/vncExtInit.cc:110
+msgid ""
+"Send the primary selection to the client as well as the clipboard selection"
+msgstr "除剪贴板选区外，还将 PRIMARY 选区发送给客户端"
+
+#: vncviewer/parameters.cxx:231
+msgid ""
+"Send the primary selection to the server as well as the clipboard selection"
+msgstr "除剪贴板选区外，还将 PRIMARY 选区发送给服务器"
+
+#: win/winvnc/winvnc.cxx:132
+msgid "Sending connect request to VNC Server...\n"
+msgstr "正在向 VNC 服务器发送连接请求...\n"
+
+#: win/winvnc/winvnc.cxx:145
+msgid "Sending disconnect request to VNC Server...\n"
+msgstr "正在向 VNC 服务器发送断开请求...\n"
+
+#: vncviewer/CConn.cxx:494
+msgid "Server certificate problems: %s"
+msgstr "服务器证书问题：%s"
+
+#: common/rfb/CSecurityTLS.cxx:318
+msgid "Server certificate verification failed"
+msgstr "服务器证书验证失败"
+
+#: common/rfb/CSecurityTLS.cxx:315
+msgid "Server certificate verification failed: %s"
+msgstr "服务器证书验证失败：%s"
+
+#: common/rfb/VNCSConnectionST.cxx:445
+msgid "Server default pixel format: %s"
+msgstr "服务器默认像素格式：%s"
+
+#: common/rfb/CSecurityRSAAES.cxx:217
+msgid "Server encryption key is invalid"
+msgstr "服务器加密密钥无效"
+
+#: common/rfb/CSecurityRSAAES.cxx:204
+msgid "Server encryption key is too long"
+msgstr "服务器加密密钥过长"
+
+#: common/rfb/CSecurityRSAAES.cxx:202
+msgid "Server encryption key is too short"
+msgstr "服务器加密密钥过短"
+
+#: common/rfb/CSecurityTLS.cxx:145
+msgid "Server failed to initialize TLS session"
+msgstr "服务器初始化 TLS 会话失败"
+
+#: common/rfb/CConnection.cxx:213 common/rfb/CConnection.cxx:217
+msgid "Server gave unsupported RFB protocol version %d.%d"
+msgstr "服务器给出了不支持的 RFB 协议版本 %d.%d"
+
+#: vncviewer/CConn.cxx:518
+msgid "Server has an existing security exception"
+msgstr "服务器已存在安全例外"
+
+#: vncviewer/CConn.cxx:656
+msgid "Server host certificate has changed"
+msgstr "服务器主机证书已更改"
+
+#: vncviewer/CConn.cxx:553
+msgid "Server host is not previously known"
+msgstr "服务器主机此前未知"
+
+#: common/rfb/VNCServerST.cxx:816
+msgid "Server is already in use"
+msgstr "服务器已在使用中"
+
+#: common/rfb/SSecurityRSAAES.cxx:399
+msgid "Server key length doesn't match length of random data"
+msgstr "服务器密钥长度与随机数据长度不匹配"
+
+#: win/rfb_win32/WMPoller.cxx:39
+msgid "Server should poll console windows for updates"
+msgstr "服务器应轮询控制台窗口以获取更新"
+
+#: common/rfb/VNCServerST.cxx:118
+msgid "Server shutting down"
+msgstr "服务器正在关闭"
+
+#: common/rfb/CConnection.cxx:208
+msgid "Server supports RFB protocol version %d.%d"
+msgstr "服务器支持 RFB 协议版本 %d.%d"
+
+#: common/rfb/UnixPasswordValidator.cxx:41
+msgid "Service name for PAM password validation"
+msgstr "用于 PAM 密码验证的服务名称"
+
+#: vncviewer/vncviewer.cxx:358
+msgid "Services"
+msgstr "服务"
+
+#: unix/w0vncserver/parameters.cxx:59 unix/x0vncserver/XSelection.cxx:36
+#: unix/xserver/hw/vnc/vncExtInit.cc:103 vncviewer/parameters.cxx:224
+msgid "Set the primary selection as well as the clipboard selection"
+msgstr "除剪贴板选区外，还设置 PRIMARY 选区"
+
+#: vncviewer/OptionsDialog.cxx:1253
+msgid "Shared (don't disconnect other viewers)"
+msgstr "共享（不要断开其他查看器）"
+
+#: vncviewer/OptionsDialog.cxx:1079 vncviewer/ShortcutHandler.cxx:218
+msgid "Shift"
+msgstr "Shift"
+
+#: vncviewer/vncviewer.cxx:361
+msgid "Show all"
+msgstr "全部显示"
+
+#: vncviewer/parameters.cxx:86
+msgid ""
+"Show an error dialog on connection problems, rather than exiting immediately"
+msgstr "连接出现问题时显示错误对话框，而不是立即退出"
+
+#: vncviewer/parameters.cxx:92
+msgid ""
+"Show an error dialog on connection problems, rather than exiting "
+"immediately, and allow the user to reconnect"
+msgstr "连接出现问题时显示错误对话框，而不是立即退出，并允许用户重新连接"
+
+#: vncviewer/vncviewer.cxx:353
+msgid "Show hidden files"
+msgstr "显示隐藏文件"
+
+#: vncviewer/OptionsDialog.cxx:939
+msgid "Show local cursor when not provided by server"
+msgstr "服务器未提供光标时，显示本地光标"
+
+#: vncviewer/parameters.cxx:74
+msgid "Show local cursor when not provided by the server"
+msgstr "服务器未提供时显示本地光标"
+
+#: win/winvnc/VNCServerWin32.cxx:66
+msgid "Show the configuration applet in the system tray"
+msgstr "在系统托盘中显示配置小程序"
+
+#: vncviewer/vncviewer.cxx:352
+msgid "Show:"
+msgstr "显示："
+
+#: vncviewer/CConn.cxx:222
+msgid "Size: %d x %d"
+msgstr "尺寸：%d x %d"
+
+#: win/rfb_win32/SocketManager.cxx:150
+msgid "Socket is not registered"
+msgstr "套接字未注册"
+
+#: common/rfb/EncodeManager.cxx:125
+msgid "Solid"
+msgstr "纯色"
+
+#: vncviewer/CConn.cxx:563 vncviewer/CConn.cxx:582 vncviewer/CConn.cxx:599
+#: vncviewer/CConn.cxx:616 vncviewer/CConn.cxx:636 vncviewer/CConn.cxx:668
+#: vncviewer/CConn.cxx:688 vncviewer/CConn.cxx:706 vncviewer/CConn.cxx:724
+#: vncviewer/CConn.cxx:745
+msgid ""
+"Someone could be trying to impersonate the site and you should not continue."
+msgstr "有人可能试图冒充该站点，不应继续操作。"
+
+#: unix/x0vncserver/Geometry.cxx:61 unix/x0vncserver/Geometry.cxx:94
+msgid "Specified desktop geometry is invalid"
+msgstr "指定的桌面几何尺寸无效"
+
+#: common/core/LogWriter.cxx:117
+msgid ""
+"Specifies which log output should be directed to which target logger, and "
+"the level of output to log, in the format <log>:<target>:<level>[, ...]"
+msgstr "指定哪些日志输出应定向到哪个目标日志记录器，以及输出级别，格式为 <日志>:<目标>:<级别>[, ...]"
+
+#: vncviewer/parameters.cxx:181
+msgid "Specify size and position of viewer window"
+msgstr "指定查看器窗口的大小和位置"
+
+#: vncviewer/parameters.cxx:80
+msgid ""
+"Specify which local cursor type should be used when AlwaysCursor is active"
+msgstr "指定 AlwaysCursor 激活时使用的本地光标类型"
+
+#: vncviewer/parameters.cxx:159
+msgid "Specify which monitors to use when in full screen"
+msgstr "指定全屏时使用哪些显示器"
+
+#: common/rfb/SecurityClient.cxx:54 common/rfb/SecurityServer.cxx:50
+msgid "Specify which security scheme to use"
+msgstr "指定要使用的安全方案"
+
+#: vncviewer/OptionsDialog.cxx:867
+msgid "Standard VNC (insecure without encryption)"
+msgstr "标准 VNC（不安全且无加密）"
+
+#: unix/vncconfig/vncconfig.cxx:58
+msgid "Start with window iconified"
+msgstr "以最小化窗口启动"
+
+#: win/winvnc/winvnc.cxx:152
+msgid "Started service successfully"
+msgstr "服务启动成功"
+
+#: win/vncconfig/vncconfig.cxx:95
+msgid "Starting vncconfig applet"
+msgstr "正在启动 vncconfig 小程序"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:313
+#: win/rfb_win32/Service.cxx:465
+msgid "Stopped"
+msgstr "已停止"
+
+#: win/winvnc/winvnc.cxx:157
+msgid "Stopped service successfully"
+msgstr "服务停止成功"
+
+#: win/rfb_win32/Service.cxx:466
+msgid "Stopping"
+msgstr "正在停止"
+
+#: common/rfb/CSecurityTLS.cxx:203 common/rfb/CSecurityTLS.cxx:215
+#: common/rfb/CSecurityTLS.cxx:232 common/rfb/SSecurityTLS.cxx:213
+#: common/rfb/SSecurityTLS.cxx:225 common/rfb/SSecurityTLS.cxx:242
+msgid "Syntax error in GnuTLS priority string: %s"
+msgstr "GnuTLS 优先级字符串语法错误：%s"
+
+#: vncviewer/OptionsDialog.cxx:947
+msgid "System"
+msgstr "系统"
+
+#: unix/w0vncserver/parameters.cxx:34 unix/x0vncserver/x0vncserver.cxx:87
+#: unix/xserver/hw/vnc/vncExtInit.cc:73 win/vncconfig/Connections.h:39
+#: win/winvnc/VNCServerWin32.cxx:54
+msgid "TCP port to listen for RFB protocol"
+msgstr "用于监听 RFB 协议的 TCP 端口"
+
+#: common/rdr/TLSSocket.cxx:95
+msgid "TLS handshake failed"
+msgstr "TLS 握手失败"
+
+#: common/rdr/TLSSocket.cxx:93
+msgid "TLS handshake failed: %s"
+msgstr "TLS 握手失败：%s"
+
+#: vncviewer/OptionsDialog.cxx:807
+msgid "TLS with X509 certificates"
+msgstr "带有 X509 证书的 TLS"
+
+#: vncviewer/OptionsDialog.cxx:801
+msgid "TLS with anonymous certificates"
+msgstr "带有匿名证书的 TLS"
+
+#: common/rfb/Blacklist.cxx:30
+msgid ""
+"Temporarily reject connections from a host if it repeatedly fails to "
+"authenticate"
+msgstr "如果某主机反复认证失败，则暂时拒绝来自该主机的连接"
+
+#: common/rfb/ServerCore.cxx:51
+msgid ""
+"Terminate after the specified number of seconds of user inactivity (zero "
+"means no timeout)"
+msgstr "用户无操作超过指定秒数后终止（零表示无超时）"
+
+#: common/rfb/ServerCore.cxx:46
+msgid ""
+"Terminate when a client has been connected for the specified number of "
+"seconds (zero means no timeout)"
+msgstr "客户端连接超过指定秒数后终止（零表示无超时）"
+
+#: common/rfb/ServerCore.cxx:41
+msgid ""
+"Terminate when no client has been connected for the specified number of "
+"seconds (zero means no timeout)"
+msgstr "无客户端连接超过指定秒数后终止（零表示无超时）"
+
+#: unix/x0vncserver/x0vncserver.cxx:548
+msgid "Terminated"
+msgstr "已终止"
+
+#: vncviewer/vncviewer.cxx:251
+msgid "Termination signal %d has been received. TuPigVNC will now exit."
+msgstr "已收到终止信号 %d。TuPigVNC 现在将退出。"
+
+#: win/vncconfig/Legacy.cxx:234
+msgid "The AllowEditClients option is not supported by this release."
+msgstr "此版本不支持 AllowEditClients 选项。"
+
+#: win/vncconfig/Legacy.cxx:232
+msgid "The AllowShutdown option is not supported by this release."
+msgstr "此版本不支持 AllowShutdown 选项。"
+
+#: win/vncconfig/Legacy.cxx:191
+msgid ""
+"The AutoPortSelect setting is not supported by this release.The port number "
+"will default to 5900."
+msgstr "此版本不支持 AutoPortSelect 设置。端口号将默认为 5900。"
+
+#: win/vncconfig/Legacy.cxx:203
+msgid ""
+"The QuerySetting option has been replaced by QueryConnect.Please see the "
+"documentation for details of the QueryConnect option."
+msgstr "QuerySetting 选项已被 QueryConnect 取代。请参阅文档了解 QueryConnect 选项的详细信息。"
+
+#: win/vncconfig/Authentication.h:111
+msgid ""
+"The VNC authentication method is disabled, but a password is still stored for it.\n"
+"Do you want to remove the VNC authentication password from the registry?"
+msgstr ""
+"VNC 认证方式已禁用，但仍为其存储了密码。\n"
+"是否要从注册表中删除 VNC 认证密码？"
+
+#: win/vncconfig/Authentication.h:149
+msgid ""
+"The VNC authentication method is enabled, but no password is specified.\n"
+"The password dialog will now be shown."
+msgstr ""
+"VNC 认证方式已启用，但未指定密码。\n"
+"现在将显示密码对话框。"
+
+#: unix/vncconfig/vncconfig.cxx:56 unix/x0vncserver/x0vncserver.cxx:84
+#: vncviewer/parameters.cxx:235
+msgid "The X display to use"
+msgstr "要使用的 X 显示"
+
+#: unix/xserver/hw/vnc/XserverDesktop.cc:578
+msgid "The attempt to prompt the user to accept the connection failed"
+msgstr "提示用户接受连接的尝试失败"
+
+#: common/rfb/SSecurityVeNCrypt.cxx:109
+msgid "The client cannot support the server's VeNCrypt version"
+msgstr "客户端无法支持服务器的 VeNCrypt 版本"
+
+#: common/rfb/SSecurityVeNCrypt.cxx:119
+msgid "The client returned an unsupported VeNCrypt version"
+msgstr "客户端返回了不支持的 VeNCrypt 版本"
+
+#: vncviewer/parameters.cxx:243
+msgid ""
+"The combination of modifier keys that triggers special actions in the viewer"
+" instead of being sent to the remote session (possible keys are a "
+"combination of Ctrl, Shift, Alt, and Super)"
+msgstr "在查看器中触发特殊操作而不是发送到远程会话的修饰键组合（可用键为 Ctrl、Shift、Alt 和 Super 的组合）"
+
+#: vncviewer/CConn.cxx:306 vncviewer/CConn.cxx:308
+msgid ""
+"The connection was dropped by the server before the session could be "
+"established."
+msgstr "在建立会话之前，服务器已断开连接。"
+
+#: common/rfb/Blacklist.cxx:41
+msgid "The initial timeout applied when a host is first black-listed"
+msgstr "首次将主机列入黑名单时应用的初始超时"
+
+#: common/rfb/ServerCore.cxx:61
+msgid "The maximum number of updates per second sent to each client"
+msgstr "每秒发送给每个客户端的最大更新数"
+
+#: common/rfb/ServerCore.cxx:36
+msgid ""
+"The number of seconds after which an idle VNC connection will be dropped "
+"(zero means no timeout)"
+msgstr "空闲 VNC 连接被断开前的秒数（零表示无超时）"
+
+#: common/rfb/Blacklist.cxx:35
+msgid ""
+"The number of unauthenticated connection attempts allowed from any "
+"individual host before that host is black-listed"
+msgstr "任何单个主机在被列入黑名单前允许的未认证连接尝试次数"
+
+#: unix/common/randr.cxx:287 unix/common/randr.cxx:368
+msgid "The output '%s' does not support the required mode %dx%d"
+msgstr "输出“%s”不支持所需的模式 %dx%d"
+
+#: unix/common/randr.cxx:277 unix/common/randr.cxx:358
+msgid "The required output '%s' is not usable"
+msgstr "所需的输出“%s”不可用"
+
+#: vncviewer/CConn.cxx:780
+msgid ""
+"The server has provided the following identifying information:\n"
+"\n"
+"Fingerprint: %s\n"
+"\n"
+"Do you want to continue connecting to this server?"
+msgstr ""
+"服务器提供了以下标识信息：\n"
+"\n"
+"指纹：%s\n"
+"\n"
+"是否要继续连接到此服务器？"
+
+#: common/rfb/VNCServerST.cxx:778
+msgid "The server is already in use"
+msgstr "服务器已在使用中"
+
+#: common/rfb/CSecurityVeNCrypt.cxx:111
+msgid "The server reported an unsupported VeNCrypt version"
+msgstr "服务器报告了不支持的 VeNCrypt 版本"
+
+#: common/rfb/CSecurityVeNCrypt.cxx:138
+msgid "The server reported no VeNCrypt sub-types"
+msgstr "服务器未报告任何 VeNCrypt 子类型"
+
+#: common/rfb/CSecurityVeNCrypt.cxx:123
+msgid ""
+"The server reported that it could not support the client's VeNCrypt version"
+msgstr "服务器报告无法支持客户端的 VeNCrypt 版本"
+
+#: win/winvnc/winvnc.cxx:163
+msgid "The service \"%s\" is in the state: %s"
+msgstr "服务“%s”的状态为：%s"
+
+#: vncviewer/CConn.cxx:632
+msgid ""
+"The specified hostname \"%s\" does not match the certificate provided by the"
+" server:"
+msgstr "指定的主机名“%s”与服务器提供的证书不匹配："
+
+#: common/rfb/SSecurityVeNCrypt.cxx:149
+msgid "There are no VeNCrypt sub-types to send to the client"
+msgstr "没有可发送给客户端的 VeNCrypt 子类型"
+
+#: vncviewer/CConn.cxx:561
+msgid "This certificate has been signed by an unknown authority:"
+msgstr "此证书由未知机构签名："
+
+#: vncviewer/CConn.cxx:597
+msgid "This certificate has expired:"
+msgstr "此证书已过期："
+
+#: vncviewer/CConn.cxx:580
+msgid "This certificate is not yet valid:"
+msgstr "此证书尚未生效："
+
+#: vncviewer/CConn.cxx:614
+msgid "This certificate uses an insecure algorithm:"
+msgstr "此证书使用了不安全的算法："
+
+#: vncviewer/AuthDialog.cxx:72
+msgid "This connection is not secure"
+msgstr "此连接不安全"
+
+#: vncviewer/AuthDialog.cxx:68
+msgid "This connection is secure"
+msgstr "此连接是安全的"
+
+#: vncviewer/CConn.cxx:664
+msgid ""
+"This host is previously known with a different certificate, and the new "
+"certificate has been signed by an unknown authority:"
+msgstr "此主机此前已知使用不同的证书，且新证书由未知机构签名："
+
+#: vncviewer/CConn.cxx:703
+msgid ""
+"This host is previously known with a different certificate, and the new "
+"certificate has expired:"
+msgstr "此主机此前已知使用不同的证书，且新证书已过期："
+
+#: vncviewer/CConn.cxx:685
+msgid ""
+"This host is previously known with a different certificate, and the new "
+"certificate is not yet valid:"
+msgstr "此主机此前已知使用不同的证书，且新证书尚未生效："
+
+#: vncviewer/CConn.cxx:721
+msgid ""
+"This host is previously known with a different certificate, and the new "
+"certificate uses an insecure algorithm:"
+msgstr "此主机此前已知使用不同的证书，且新证书使用了不安全的算法："
+
+#: vncviewer/CConn.cxx:740
+msgid ""
+"This host is previously known with a different certificate, and the "
+"specified hostname \"%s\" does not match the new certificate provided by the"
+" server:"
+msgstr "此主机此前已知使用不同的证书，且指定的主机名“%s”与服务器提供的新证书不匹配："
+
+#: vncviewer/CConn.cxx:999
+msgid "Throughput %d kbit/s - changing to quality %d"
+msgstr "吞吐量 %d kbit/s - 改变质量级别为 %d"
+
+#: vncviewer/CConn.cxx:1024
+msgid "Throughput %d kbit/s - full color is now disabled"
+msgstr "吞吐量 %d kbit/s - 现已禁用全彩"
+
+#: vncviewer/CConn.cxx:1021
+msgid "Throughput %d kbit/s - full color is now enabled"
+msgstr "吞吐量 %d kbit/s - 现已启用全彩"
+
+#: vncviewer/parameters.cxx:59
+msgid "Time in milliseconds to rate-limit successive pointer events"
+msgstr "对连续指针事件进行限速的毫秒数"
+
+#: vncviewer/AudioOutputPulse.cxx:180
+msgid "Timed out connecting to sound server"
+msgstr "连接声音服务器超时"
+
+#: vncviewer/OptionsDialog.cxx:1407
+msgid "To open the session context menu, press %sM."
+msgstr "要打开会话的上下文菜单，请按 %sM。"
+
+#: vncviewer/OptionsDialog.cxx:1398
+msgid "To pass all keyboard input to the session, press %sG."
+msgstr "要将所有键盘输入传递给会话，请按 %sG。"
+
+#: vncviewer/OptionsDialog.cxx:1393
+msgid "To release keyboard control from the session, press %s."
+msgstr "要从会话释放键盘控制权，请按 %s。"
+
+#: vncviewer/OptionsDialog.cxx:1411
+msgid ""
+"To send a key combination that includes %s directly to the session, press "
+"%sSpace, release the space bar without releasing %s, and press the desired "
+"key."
+msgstr "要将包含 %s 的组合键直接发送给会话，请按 %sSpace，在不松开 %s 的情况下松开空格键，然后按下所需的按键。"
+
+#: vncviewer/OptionsDialog.cxx:1403
+msgid "To toggle full-screen mode, press %sEnter."
+msgstr "要切换全屏模式，请按 %sEnter。"
+
+#: common/rfb/TightDecoder.cxx:108
+msgid "Too large Tight rectangle"
+msgstr "Tight 矩形过大"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:179
+msgid "Too many screens for VNC extension\n"
+msgstr "VNC 扩展的屏幕过多\n"
+
+#: common/rfb/VNCServerST.cxx:157
+msgid "Too many security failures"
+msgstr "安全失败次数过多"
+
+#: common/rfb/VNCServerST.cxx:178
+msgid "Too many unauthenticated connections: %s"
+msgstr "未认证连接过多：%s"
+
+#: common/rfb/DecodeManager.cxx:242 common/rfb/DecodeManager.cxx:248
+#: common/rfb/EncodeManager.cxx:251 common/rfb/EncodeManager.cxx:257
+msgid "Total:"
+msgstr "总计："
+
+#: vncviewer/ServerDialog.cxx:171 vncviewer/ServerDialog.cxx:212
+msgid "TuPigVNC configuration (*.tigervnc)"
+msgstr "TuPigVNC 配置（*.tigervnc）"
+
+#: vncviewer/OptionsDialog.cxx:76
+msgid "TuPigVNC options"
+msgstr "TuPigVNC 选项"
+
+#: unix/w0vncserver/w0vncserver-forget.cxx:40
+msgid "TuPigVNC server version %s\n"
+msgstr "TuPigVNC 服务器版本 %s\n"
+
+#: unix/w0vncserver/w0vncserver.cxx:74 unix/x0vncserver/x0vncserver.cxx:281
+msgid "TuPigVNC server version %s, built %s\n"
+msgstr "TuPigVNC 服务器版本 %s，构建于 %s\n"
+
+#: vncviewer/vncviewer.cxx:94
+msgid ""
+"TuPigVNC v%s\n"
+"Built on: %s\n"
+"Copyright (C) 1999-%d TuPigVNC team and many others (see README.rst)\n"
+"See https://github.com/TuPig/TuPigVNC for information on TuPigVNC."
+msgstr ""
+"TuPigVNC v%s\n"
+"构建于：%s\n"
+"版权所有 1999-%d TuPigVNC 团队及众多开发者（参见 README.rst）\n"
+"访问 https://github.com/TuPig/TuPigVNC 以获取更多关于 TuPigVNC 的信息。"
+
+#: unix/w0vncserver/parameters.cxx:40 unix/x0vncserver/x0vncserver.cxx:95
+#: unix/xserver/hw/vnc/vncExtInit.cc:79
+msgid "UNIX socket access mode"
+msgstr "UNIX 套接字访问模式"
+
+#: common/network/UnixSocket.cxx:123 common/network/UnixSocket.cxx:56
+msgid "UNIX socket path is too long"
+msgstr "UNIX 套接字路径过长"
+
+#: unix/w0vncserver/parameters.cxx:37 unix/x0vncserver/x0vncserver.cxx:91
+#: unix/xserver/hw/vnc/vncExtInit.cc:76
+msgid "UNIX socket path to listen for RFB protocol"
+msgstr "用于监听 RFB 协议的 UNIX 套接字路径"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:302
+msgid "Uknown reason"
+msgstr "未知原因"
+
+#: win/rfb_win32/SDisplay.cxx:210
+msgid "Unable to access desktop"
+msgstr "无法访问桌面"
+
+#: win/rfb_win32/SocketManager.cxx:123
+msgid "Unable to add connection"
+msgstr "无法添加连接"
+
+#: win/rfb_win32/SocketManager.cxx:84
+msgid "Unable to add listening socket"
+msgstr "无法添加监听套接字"
+
+#: win/rfb_win32/SocketManager.cxx:198
+msgid "Unable to adjust socket event mask"
+msgstr "无法调整套接字事件掩码"
+
+#: win/winvnc/winvnc.cxx:209
+msgid "Unable to close console: %lu"
+msgstr "无法关闭控制台：%lu"
+
+#: win/rfb_win32/CurrentUser.cxx:73
+msgid "Unable to close desktop: %ld"
+msgstr "无法关闭桌面：%ld"
+
+#: win/rfb_win32/TsSessions.cxx:63
+msgid "Unable to connect session to Console"
+msgstr "无法将会话连接到控制台"
+
+#: win/vncconfig/Legacy.cxx:125
+msgid "Unable to convert AuthHosts setting to Hosts format."
+msgstr "无法将 AuthHosts 设置转换为 Hosts 格式。"
+
+#: win/rfb_win32/MsgWindow.cxx:110
+msgid "Unable to create WMNotifier window instance"
+msgstr "无法创建 WMNotifier 窗口实例"
+
+#: unix/xserver/hw/vnc/xvnc.c:665
+msgid "Unable to create a custom display mode for %dx%d\n"
+msgstr "无法为 %dx%d 创建自定义显示模式\n"
+
+#: unix/common/randr.cxx:217 unix/common/randr.cxx:226
+msgid "Unable to create more screens, as needed by the new client layout."
+msgstr "无法按新客户端布局的需要创建更多屏幕。"
+
+#: win/rfb_win32/Service.cxx:343
+msgid "Unable to create service"
+msgstr "无法创建服务"
+
+#: unix/xserver/hw/vnc/xvnc.c:675
+msgid "Unable to crop CRTC to new screen dimensions\n"
+msgstr "无法将 CRTC 裁剪到新的屏幕尺寸\n"
+
+#: win/rfb_win32/DeviceContext.cxx:57 win/rfb_win32/DeviceContext.cxx:60
+msgid "Unable to determine device pixel format"
+msgstr "无法确定设备像素格式"
+
+#: common/rfb/DecodeManager.cxx:53
+msgid "Unable to determine the number of CPU cores on this system"
+msgstr "无法确定此系统的 CPU 核心数"
+
+#: unix/xserver/hw/vnc/xvnc.c:657
+msgid "Unable to disable a CRTC that is outside of the new screen dimensions\n"
+msgstr "无法禁用位于新屏幕尺寸之外的 CRTC\n"
+
+#: win/rfb_win32/SocketManager.cxx:252
+msgid "Unable to disable socket events"
+msgstr "无法禁用套接字事件"
+
+#: win/rfb_win32/Clipboard.cxx:149
+msgid "Unable to empty clipboard"
+msgstr "无法清空剪贴板"
+
+#: unix/xserver/hw/vnc/vncInput.c:614
+msgid "Unable to find a modifier key for AltGr"
+msgstr "无法找到 AltGr 的修饰键"
+
+#: unix/xserver/hw/vnc/vncInput.c:593
+msgid "Unable to find a modifier key for Shift"
+msgstr "无法找到 Shift 的修饰键"
+
+#: unix/xserver/hw/vnc/vncInput.c:623
+msgid "Unable to find the modifier key(s) for releasing AltGr"
+msgstr "无法找到释放 AltGr 的修饰键"
+
+#: unix/xserver/hw/vnc/vncInput.c:602
+msgid "Unable to find the modifier key(s) for releasing Shift"
+msgstr "无法找到释放 Shift 的修饰键"
+
+#: vncviewer/XInputTouchHandler.cxx:103 vncviewer/touch.cxx:107
+msgid "Unable to get X Input 2 event mask for window 0x%08lx"
+msgstr "未能获取窗口 0x%08lx 的 X Input 2 事件掩码"
+
+#: win/rfb_win32/SocketManager.cxx:248
+msgid "Unable to get socket events"
+msgstr "无法获取套接字事件"
+
+#: vncviewer/vncviewer.cxx:687
+msgid "Unable to listen for incoming connections"
+msgstr "未能侦听传入连接"
+
+#: vncviewer/ServerDialog.cxx:145
+msgid "Unable to load the server history: %s"
+msgstr "无法加载服务器历史记录：%s"
+
+#: vncviewer/ServerDialog.cxx:195 vncviewer/vncviewer.cxx:464
+msgid ""
+"Unable to load the specified configuration file:\n"
+"\n"
+"%s"
+msgstr ""
+"未能加载指定的配置文件：\n"
+"\n"
+"%s"
+
+#: win/winvnc/winvnc.cxx:127 win/winvnc/winvnc.cxx:140
+msgid "Unable to locate existing VNC Server"
+msgstr "无法定位现有 VNC 服务器"
+
+#: win/rfb_win32/Service.cxx:384
+msgid "Unable to locate the service"
+msgstr "无法定位服务"
+
+#: win/rfb_win32/Service.cxx:334 win/rfb_win32/Service.cxx:379
+#: win/rfb_win32/Service.cxx:406 win/rfb_win32/Service.cxx:426
+#: win/rfb_win32/Service.cxx:447
+msgid "Unable to open Service Control Manager"
+msgstr "无法打开服务控制管理器"
+
+#: win/rfb_win32/Clipboard.cxx:134
+msgid "Unable to open clipboard"
+msgstr "无法打开剪贴板"
+
+#: win/rfb_win32/Service.cxx:272
+msgid "Unable to open event log: %ld\n"
+msgstr "无法打开事件日志：%ld\n"
+
+#: win/rfb_win32/Service.cxx:411 win/rfb_win32/Service.cxx:431
+#: win/rfb_win32/Service.cxx:452
+msgid "Unable to open the service"
+msgstr "无法打开服务"
+
+#: unix/w0vncserver/portals/PortalDesktop.cxx:156
+#: unix/w0vncserver/wayland/WaylandDesktop.cxx:187
+#: unix/xserver/hw/vnc/XserverDesktop.cc:185
+msgid "Unable to query the local user to accept the connection."
+msgstr "无法查询本地用户以接受连接。"
+
+#: win/rfb_win32/Service.cxx:457
+msgid "Unable to query the service"
+msgstr "无法查询服务"
+
+#: win/rfb_win32/SocketManager.cxx:272
+msgid "Unable to re-enable socket events"
+msgstr "无法重新启用套接字事件"
+
+#: win/rfb_win32/MsgWindow.cxx:88
+msgid "Unable to register MsgWindow window class"
+msgstr "无法注册 MsgWindow 窗口类"
+
+#: win/rfb_win32/Service.cxx:386
+msgid "Unable to remove the service"
+msgstr "无法移除服务"
+
+#: vncviewer/ServerDialog.cxx:290
+msgid "Unable to save the default configuration: %s"
+msgstr "无法保存默认配置：%s"
+
+#: vncviewer/ServerDialog.cxx:301
+msgid "Unable to save the server history: %s"
+msgstr "无法保存服务器历史记录：%s"
+
+#: vncviewer/ServerDialog.cxx:257
+msgid ""
+"Unable to save the specified configuration file:\n"
+"\n"
+"%s"
+msgstr ""
+"未能保存指定的配置文件：\n"
+"\n"
+"%s"
+
+#: win/rfb_win32/Clipboard.cxx:153
+msgid "Unable to set clipboard"
+msgstr "无法设置剪贴板"
+
+#: win/rfb_win32/Service.cxx:139
+msgid "Unable to set service status: %lu"
+msgstr "无法设置服务状态：%lu"
+
+#: win/rfb_win32/Service.cxx:117
+msgid "Unable to set shutdown parameters: %lu"
+msgstr "无法设置关机参数：%lu"
+
+#: win/rfb_win32/Service.cxx:120 win/rfb_win32/Service.cxx:415
+msgid "Unable to start the service"
+msgstr "无法启动服务"
+
+#: win/rfb_win32/Service.cxx:436
+msgid "Unable to stop the service"
+msgstr "无法停止服务"
+
+#: win/rfb_win32/SDisplay.cxx:187
+msgid "Unable to switch into input desktop"
+msgstr "无法切换到输入桌面"
+
+#: win/rfb_win32/SocketManager.cxx:62
+msgid "Unable to track socket address changes: 0x%08x"
+msgstr "无法跟踪套接字地址更改：0x%08x"
+
+#: unix/xserver/hw/vnc/xvnc.c:124
+msgid "Underlying X server release %d\n"
+msgstr "底层 X 服务器版本 %d\n"
+
+#: common/rfb/CConnection.cxx:653 common/rfb/CConnection.cxx:661
+#: common/rfb/CConnection.cxx:669
+msgid "Unexpected audio message"
+msgstr "意外的音频消息"
+
+#: vncviewer/CConn.cxx:672 vncviewer/CConn.cxx:692 vncviewer/CConn.cxx:710
+#: vncviewer/CConn.cxx:728 vncviewer/CConn.cxx:749
+msgid "Unexpected server certificate"
+msgstr "意外的服务器证书"
+
+#: vncviewer/Win32TouchHandler.cxx:426
+msgid "Unhandled key 0x%x - can't generate keyboard event."
+msgstr "未处理的键 0x%x - 未能生成键盘事件。"
+
+#: win/rfb_win32/Service.cxx:469
+msgid "Unknown (%lu)"
+msgstr "未知（%lu）"
+
+#: common/rfb/CConnection.cxx:265
+msgid "Unknown 3.3 security type"
+msgstr "未知的 3.3 安全类型"
+
+#: common/rfb/CConnection.cxx:264
+msgid "Unknown 3.3 security type %d"
+msgstr "未知的 3.3 安全类型 %d"
+
+#: common/rfb/CMsgReader.cxx:135
+msgid "Unknown QEMU audio operation %d"
+msgstr "未知的 QEMU 音频操作 %d"
+
+#: common/rfb/CMsgReader.cxx:120
+msgid "Unknown QEMU submessage %d"
+msgstr "未知的 QEMU 子消息 %d"
+
+#: common/rfb/SMsgReader.cxx:491
+msgid "Unknown QEMU submessage type %d"
+msgstr "未知的 QEMU 子消息类型 %d"
+
+#: common/rfb/CSecurityRSAAES.cxx:502
+msgid "Unknown RSA-AES subtype"
+msgstr "未知的 RSA-AES 子类型"
+
+#: common/network/TcpSocket.cxx:351 common/network/TcpSocket.cxx:757
+msgid "Unknown address family"
+msgstr "未知的地址族"
+
+#: vncviewer/CConn.cxx:567
+msgid "Unknown certificate issuer"
+msgstr "未知的证书颁发者"
+
+#: win/winvnc/VNCServerWin32.cxx:318
+msgid "Unknown command %d queued"
+msgstr "未知命令 %d 已排队"
+
+#: common/rfb/CMsgReader.cxx:830
+msgid "Unknown cursor type"
+msgstr "未知的光标类型"
+
+#: win/rfb_win32/SDisplay.cxx:380
+msgid "Unknown display event received"
+msgstr "收到未知的显示事件"
+
+#: common/rfb/EncodeManager.cxx:118
+msgid "Unknown encoder class"
+msgstr "未知的编码器类"
+
+#: common/rfb/EncodeManager.cxx:140
+msgid "Unknown encoder type"
+msgstr "未知的编码器类型"
+
+#: common/rfb/DecodeManager.cxx:108 common/rfb/DecodeManager.cxx:115
+msgid "Unknown encoding"
+msgstr "未知编码"
+
+#: common/rfb/DecodeManager.cxx:107 common/rfb/DecodeManager.cxx:114
+msgid "Unknown encoding %d"
+msgstr "未知编码 %d"
+
+#: unix/x0vncserver/XDesktop.cxx:144
+msgid "Unknown keycodes name '%s'"
+msgstr "未知的键码名称“%s”"
+
+#: common/rfb/SMsgReader.cxx:117
+msgid "Unknown message type"
+msgstr "未知的消息类型"
+
+#: common/rfb/CMsgReader.cxx:194 common/rfb/SMsgReader.cxx:116
+msgid "Unknown message type %d"
+msgstr "未知的消息类型 %d"
+
+#: unix/w0vncserver/wayland/objects/VirtualPointer.cxx:60
+msgid "Unknown mouse button"
+msgstr "未知鼠标按键"
+
+#: common/rfb/KeyRemapper.cxx:84
+msgid "Unknown operation %c>, assuming ->"
+msgstr "未知操作 %c>，假定为 ->"
+
+#: vncviewer/parameters.cxx:963
+msgid "Unknown parameter"
+msgstr "未知参数"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:317
+msgid "Unknown reason %d"
+msgstr "未知原因 %d"
+
+#: common/rfb/CConnection.cxx:360
+msgid "Unknown security result from server"
+msgstr "来自服务器的未知安全结果"
+
+#: win/rfb_win32/SocketManager.cxx:235
+msgid "Unknown socket event: %lx"
+msgstr "未知套接字事件：%lx"
+
+#: vncviewer/KeyboardWin32.cxx:292 vncviewer/KeyboardWin32.cxx:308
+#: vncviewer/KeyboardWin32.cxx:320
+msgid "Unmatched UTF-16 surrogate pair through VK_PACKET"
+msgstr "通过 VK_PACKET 收到不匹配的 UTF-16 代理对"
+
+#: common/network/TcpSocket.cxx:140
+msgid "Unmatched [ in hostname"
+msgstr "主机名中存在不匹配的 ["
+
+#: win/winvnc/winvnc.cxx:203
+msgid "Unregistered service successfully"
+msgstr "服务注销成功"
+
+#: common/rfb/CSecurityTLS.cxx:308
+msgid "Unsupported certificate type"
+msgstr "不支持的证书类型"
+
+#: unix/w0vncserver/wayland/objects/Keyboard.cxx:197
+msgid "Unsupported keymap format: %d"
+msgstr "不支持的键映射格式：%d"
+
+#: unix/w0vncserver/portals/Clipboard.cxx:212
+#: unix/w0vncserver/portals/Clipboard.cxx:400
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:308
+#: unix/w0vncserver/wayland/objects/DataControl.cxx:439
+msgid "Unsupported mime type '%s'"
+msgstr "不支持的 MIME 类型“%s”"
+
+#: unix/xserver/hw/vnc/vncDRI3.c:112
+msgid "Unsupported pixel depth: %d\n"
+msgstr "不支持的像素深度：%d\n"
+
+#: vncviewer/Viewport.cxx:1090
+msgid "Update Now"
+msgstr "立即更新"
+
+#: vncviewer/Viewport.cxx:1109
+msgid "Update failed: %s"
+msgstr "更新失败：%s"
+
+#: common/rfb/VNCSConnectionST.cxx:656
+msgid "Update request %dx%d at %d,%d exceeds framebuffer %dx%d"
+msgstr "位于 %d,%d 的更新请求 %dx%d 超出帧缓冲 %dx%d"
+
+#: vncviewer/Viewport.cxx:1102
+msgid "Updating"
+msgstr "正在更新"
+
+#: unix/vncpasswd/vncpasswd.cxx:51
+msgid ""
+"Usage: %s [file]\n"
+"       %s -f\n"
+msgstr ""
+"用法：%s [文件]\n"
+"       %s -f\n"
+
+#: unix/vncconfig/vncconfig.cxx:180
+msgid ""
+"Usage: %s [parameters]\n"
+"       %s [parameters] -connect [-view-only] <host>[:<port>]\n"
+"       %s [parameters] -disconnect\n"
+"       %s [parameters] [-set] <Xvnc-param>=<value> ...\n"
+"       %s [parameters] -list\n"
+"       %s [parameters] -get <param>\n"
+"       %s [parameters] -desc <param>\n"
+msgstr ""
+"用法：%s [参数]\n"
+"       %s [参数] -connect [-view-only] <主机>[:<端口>]\n"
+"       %s [参数] -disconnect\n"
+"       %s [参数] [-set] <Xvnc 参数>=<值> ...\n"
+"       %s [参数] -list\n"
+"       %s [参数] -get <参数>\n"
+"       %s [参数] -desc <参数>\n"
+
+#: common/network/TcpSocket.cxx:79
+msgid "Use IPv4 for incoming and outgoing connections"
+msgstr "传入和传出连接使用 IPv4"
+
+#: common/network/TcpSocket.cxx:82
+msgid "Use IPv6 for incoming and outgoing connections"
+msgstr "传入和传出连接使用 IPv6"
+
+#: unix/x0vncserver/XDesktop.cxx:70
+msgid "Use MIT-SHM extension if available"
+msgstr "如果可用，使用 MIT-SHM 扩展"
+
+#: win/rfb_win32/DeviceFrameBuffer.cxx:47
+msgid ""
+"Use a slower capture method that ensures that alpha blended windows will "
+"appear correctly"
+msgstr "使用较慢的截取方法，以确保 alpha 混合窗口能正确显示"
+
+#: vncviewer/parameters.cxx:109
+msgid "Use all available colors"
+msgstr "使用所有可用颜色"
+
+#: vncviewer/parameters.cxx:137
+msgid "Use custom compression level as specified by CompressLevel"
+msgstr "按 CompressLevel 指定的方式使用自定义压缩级别"
+
+#: common/rfb/HextileEncoder.cxx:43
+msgid ""
+"Use improved compression algorithm for Hextile encoding which achieves "
+"better compression ratios at the cost of using more CPU time"
+msgstr "为 Hextile 编码使用改进的压缩算法，以消耗更多 CPU 时间为代价获得更好的压缩比"
+
+#: vncviewer/parameters.cxx:142
+msgid "Use specified compression level, 0 = Low, 9 = High"
+msgstr "使用指定的压缩级别，0 = 低，9 = 高"
+
+#: vncviewer/parameters.cxx:170
+msgid ""
+"Use the given list of monitors in full screen when FullScreenMode is set to "
+"Selected"
+msgstr "当 FullScreenMode 设为 Selected 时，全屏使用给定的显示器列表"
+
+#: unix/xserver/hw/vnc/XserverDesktop.cc:436
+msgid "User requested disconnection"
+msgstr "用户请求断开连接"
+
+#: vncviewer/OptionsDialog.cxx:873
+msgid "Username and password (insecure without encryption)"
+msgstr "用户名及密码（不安全且无加密）"
+
+#: common/rfb/SSecurityPlain.cxx:98
+msgid "Username is too long"
+msgstr "用户名过长"
+
+#: vncviewer/AuthDialog.cxx:94
+msgid "Username:"
+msgstr "用户名："
+
+#: common/rfb/SSecurityPlain.cxx:48
+msgid "Users permitted to access the server"
+msgstr "允许访问服务器的用户"
+
+#: unix/x0vncserver/XDesktop.cxx:138 unix/x0vncserver/XDesktop.cxx:142
+msgid "Using %s codemap"
+msgstr "正在使用 %s 代码映射"
+
+#: common/rfb/CConnection.cxx:232
+msgid "Using RFB protocol version %d.%d"
+msgstr "正在使用 RFB 协议版本 %d.%d"
+
+#: vncviewer/CConn.cxx:1043
+msgid "Using pixel format %s"
+msgstr "正在使用像素格式 %s"
+
+#: vncviewer/AuthDialog.cxx:54
+msgid "VNC authentication"
+msgstr "VNC 认证"
+
+#: unix/vncconfig/vncconfig.cxx:108
+msgid "VNC config"
+msgstr "VNC 配置"
+
+#: vncviewer/Viewport.cxx:1055
+msgid "VNC connection info"
+msgstr "VNC 连接信息"
+
+#: unix/xserver/hw/vnc/xvnc.c:1116
+msgid ""
+"VNC extension does not support -reset, terminating instead. Use -noreset to "
+"prevent termination.\n"
+msgstr "VNC 扩展不支持 -reset，将改为终止。使用 -noreset 可防止终止。\n"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:172
+msgid "VNC extension incorrectly initialized twice in same generation"
+msgstr "VNC 扩展在同一世代中被错误地初始化了两次"
+
+#: unix/xserver/hw/vnc/vncExtInit.cc:185
+msgid "VNC extension running"
+msgstr "VNC 扩展正在运行"
+
+#: unix/xserver/hw/vnc/xvnc.c:221
+msgid "VNC parameters:\n"
+msgstr "VNC 参数：\n"
+
+#: win/winvnc/VNCServerWin32.cxx:112
+msgid "VNC server (service):"
+msgstr "VNC 服务器（服务）："
+
+#: win/winvnc/VNCServerWin32.cxx:110
+msgid "VNC server (user):"
+msgstr "VNC 服务器（用户）："
+
+#: win/vncconfig/vncconfig.cxx:167
+msgid "VNC server properties (service-mode)"
+msgstr "VNC 服务器属性（服务模式）"
+
+#: win/vncconfig/vncconfig.cxx:169
+msgid "VNC server properties (user-mode)"
+msgstr "VNC 服务器属性（用户模式）"
+
+#: vncviewer/ServerDialog.cxx:74
+msgid "VNC server:"
+msgstr "VNC 服务器："
+
+#: vncviewer/CConn.cxx:786
+msgid "Verify server key"
+msgstr "验证服务器密钥"
+
+#: unix/vncpasswd/vncpasswd.cxx:180
+msgid "Verify:"
+msgstr "验证："
+
+#: vncviewer/OptionsDialog.cxx:679
+msgid "Very low"
+msgstr "非常低"
+
+#: vncviewer/OptionsDialog.cxx:914
+msgid "View only (ignore mouse and keyboard)"
+msgstr "仅显示（忽略鼠标及键盘）"
+
+#: common/rfb/ZRLEEncoder.cxx:50
+msgid ""
+"Warning: The ZlibLevel option is deprecated and is ignored by the server. "
+"The compression level can be set by the client instead."
+msgstr "警告：ZlibLevel 选项已弃用，服务器会忽略它。压缩级别可由客户端设置。"
+
+#: win/rfb_win32/SInput.cxx:98
+msgid "Warning: Two mouse buttons pressed in the same event"
+msgstr "警告：同一事件中按下了两个鼠标键"
+
+#: unix/w0vncserver/wayland/objects/ImageCopyCaptureSession.cxx:195
+msgid "Wayland buffer is too large: %u x %u"
+msgstr "Wayland 缓冲区过大：%u x %u"
+
+#: win/rfb_win32/SInput.cxx:143
+msgid ""
+"Whether to assume the viewer has already interpreted dead key sequences into"
+" latin-1 characters"
+msgstr "是否假定查看器已将死键序列解释为 Latin-1 字符"
+
+#: vncviewer/OptionsDialog.cxx:1095 vncviewer/ShortcutHandler.cxx:234
+msgid "Win"
+msgstr "Win"
+
+#: vncviewer/XInputTouchHandler.cxx:113 vncviewer/touch.cxx:114
+msgid "Window 0x%08lx has more than one X Input 2 event mask"
+msgstr "窗口 0x%08lx 具有多个 X Input 2 事件掩码"
+
+#: vncviewer/XInputTouchHandler.cxx:105
+msgid "Window 0x%08lx has no X Input 2 event mask"
+msgstr "窗口 0x%08lx 没有 X Input 2 事件掩码"
+
+#: vncviewer/Win32TouchHandler.cxx:46
+msgid "Window is registered for touch instead of gestures"
+msgstr "窗口为触摸而不是手势注册"
+
+#: vncviewer/OptionsDialog.cxx:1148
+msgid "Windowed"
+msgstr "窗口化"
+
+#: win/vncconfig/vncconfig.cxx:136
+msgid ""
+"Windows reported an error trying to secure the VNC server settings for this "
+"user. Your settings may not be secure!"
+msgstr "Windows 在尝试保护此用户的 VNC 服务器设置时报告了错误。你的设置可能不安全！"
+
+#: unix/vncpasswd/vncpasswd.cxx:263
+msgid "Would you like to enter a view-only password (y/n)? "
+msgstr "要输入仅查看密码吗（y/n）？ "
+
+#: unix/vncpasswd/vncpasswd.cxx:96
+msgid "Writing VNC password to stdout failed"
+msgstr "将 VNC 密码写入标准输出失败"
+
+#: vncviewer/touch.cxx:266
+msgid "X Input 2 (or newer) is not available."
+msgstr "X Input 2（或更高版本）不可用。"
+
+#: vncviewer/touch.cxx:271
+msgid ""
+"X Input 2.2 (or newer) is not available. Touch gestures will not be "
+"supported."
+msgstr "X Input 2.2（或更高版本）不可用。不支持触摸手势。"
+
+#: vncviewer/touch.cxx:235
+msgid "X Input event for unknown window"
+msgstr "未知窗口的 X Input 事件"
+
+#: vncviewer/touch.cxx:259
+msgid "X Input extension not available."
+msgstr "X Input 扩展不可用。"
+
+#: win/vncconfig/Authentication.h:83
+msgid "X.509 certificate"
+msgstr "X.509 证书"
+
+#: win/vncconfig/Authentication.h:74
+msgid "X.509 certificates"
+msgstr "X.509 证书"
+
+#: win/vncconfig/Authentication.h:96
+msgid "X.509 key"
+msgstr "X.509 密钥"
+
+#: win/vncconfig/Authentication.h:87
+msgid "X.509 keys"
+msgstr "X.509 密钥"
+
+#: unix/x0vncserver/XDesktop.cxx:197
+msgid ""
+"XFIXES extension not present, will not be able to display the cursor or "
+"monitor the clipboard"
+msgstr "XFIXES 扩展不存在，将无法显示光标或监视剪贴板"
+
+#: unix/x0vncserver/XDesktop.cxx:105 unix/x0vncserver/XDesktop.cxx:106
+msgid "XKEYBOARD extension not present"
+msgstr "XKEYBOARD 扩展不存在"
+
+#: unix/x0vncserver/XDesktop.cxx:165
+msgid "XTest extension not present, all connections will be view only"
+msgstr "XTest 扩展不存在，所有连接将仅为查看模式"
+
+#: unix/xserver/hw/vnc/xvnc.c:122
+msgid "Xvnc %s - built %s\n"
+msgstr "Xvnc %s - 构建于 %s\n"
+
+#: vncviewer/vncviewer.cxx:329
+msgid "Yes"
+msgstr "是"
+
+#: vncviewer/Viewport.cxx:1081
+msgid "You are running the latest version (%s)."
+msgstr "当前已是最新版本（%s）。"
+
+#: win/vncconfig/vncconfig.cxx:182
+msgid ""
+"You do not have sufficient access rights to run the VNC Configuration applet"
+msgstr "你没有足够的访问权限来运行 VNC 配置小程序"
+
+#: vncviewer/parameters.cxx:165
+msgid "[DEPRECATED] Enable full screen over all monitors"
+msgstr "[已弃用] 在所有显示器上启用全屏"
+
+#: vncviewer/parameters.cxx:69
+msgid ""
+"[DEPRECATED] Show a dot cursor when the server sends an invisible cursor"
+msgstr "[已弃用] 服务器发送不可见光标时显示圆点光标"
+
+#: common/rfb/ZRLEEncoder.cxx:42
+msgid "[DEPRECATED] Zlib compression level"
+msgstr "[已弃用] Zlib 压缩级别"
+
+#: common/rfb/Security.cxx:191 common/rfb/encodings.cxx:55
+msgid "[unknown]"
+msgstr "[未知]"
+
+#: common/core/Configuration.cxx:94
+msgid "default"
+msgstr "默认"
+
+#: unix/xserver/hw/vnc/xvnc.c:1222
+msgid "inetd client gone. Terminating...\n"
+msgstr "inetd 客户端已消失。正在终止...\n"
+
+#: vncviewer/OptionsDialog.cxx:714
+msgid "level (0=fast, 9=best)"
+msgstr "级别（0=最快，9=最好）"
+
+#: common/rfb/DecodeManager.cxx:232 common/rfb/DecodeManager.cxx:246
+#: common/rfb/EncodeManager.cxx:206 common/rfb/EncodeManager.cxx:240
+#: common/rfb/EncodeManager.cxx:255
+msgid "pixels"
+msgstr "像素"
+
+#: vncviewer/OptionsDialog.cxx:744
+msgid "quality (0=poor, 9=best)"
+msgstr "质量（0=最差，9=最好）"
+
+#: common/rfb/DecodeManager.cxx:237 common/rfb/DecodeManager.cxx:251
+#: common/rfb/EncodeManager.cxx:211 common/rfb/EncodeManager.cxx:245
+#: common/rfb/EncodeManager.cxx:260
+msgid "ratio"
+msgstr "比例"
+
+#: common/rfb/DecodeManager.cxx:230 common/rfb/DecodeManager.cxx:244
+#: common/rfb/EncodeManager.cxx:204 common/rfb/EncodeManager.cxx:238
+#: common/rfb/EncodeManager.cxx:253
+msgid "rects"
+msgstr "矩形"
+
+#: unix/vncpasswd/vncpasswd.cxx:268
+msgid "yY"
+msgstr "yY"
+
+#: vncviewer/vncviewer.cxx:484
+msgid ""
+"~/.vnc is deprecated, please consult 'man vncviewer' for paths to migrate "
+"to."
+msgstr "~/.vnc 已弃用，请查阅 'man vncviewer' 以获取新路径。"
+
+#: vncviewer/OptionsDialog.cxx:1103
+msgid "⇧ Shift"
+msgstr "⇧ Shift"
+
+#: vncviewer/OptionsDialog.cxx:1101
+msgid "⌃ Ctrl"
+msgstr "⌃ Ctrl"
+
+#: vncviewer/OptionsDialog.cxx:1107
+msgid "⌘ Cmd"
+msgstr "⌘ Cmd"
+
+#: vncviewer/OptionsDialog.cxx:1105
+msgid "⌥ Option"
+msgstr "⌥ Option"
+
+#: vncviewer/Viewport.cxx:950
+msgctxt "ContextMenu|"
+msgid "&Alt"
+msgstr "&Alt"
+
+#: vncviewer/Viewport.cxx:947
+msgctxt "ContextMenu|"
+msgid "&Ctrl"
+msgstr "&Ctrl"
+
+#: vncviewer/Viewport.cxx:962
+msgctxt "ContextMenu|"
+msgid "ℹ Connection &info..."
+msgstr "ℹ 连接信息(&I)..."
+
+#: vncviewer/Viewport.cxx:942
+msgctxt "ContextMenu|"
+msgid "⇲ Resize &window to session"
+msgstr "⇲ 调整窗口以适应会话(&W)"
+
+#: vncviewer/Viewport.cxx:940
+msgctxt "ContextMenu|"
+msgid "− Minimi&ze"
+msgstr "− 最小化(&Z)"
+
+#: vncviewer/Viewport.cxx:954
+msgctxt "ContextMenu|"
+msgid "⌨ Send Ctrl-Alt-&Del"
+msgstr "⌨ 发送 Ctrl-Alt-Del(&D)"
+
+#: vncviewer/Viewport.cxx:934
+msgctxt "ContextMenu|"
+msgid "⏻ Disconn&ect"
+msgstr "⏻ 断开(&E)"
+
+#: vncviewer/Viewport.cxx:966
+msgctxt "ContextMenu|"
+msgid "ⓘ About &TuPigVNC..."
+msgstr "ⓘ 关于 TuPigVNC(&T)..."
+
+#: vncviewer/Viewport.cxx:960
+msgctxt "ContextMenu|"
+msgid "⚙ &Options..."
+msgstr "⚙ 选项(&O)..."
+
+#: vncviewer/Viewport.cxx:937
+msgctxt "ContextMenu|"
+msgid "⛶ &Full screen"
+msgstr "⛶ 全屏(&F)"
+
+#: vncviewer/Viewport.cxx:957
+msgctxt "ContextMenu|"
+msgid "⟳ &Refresh screen"
+msgstr "⟳ 刷新屏幕(&R)"
+
+#: vncviewer/Viewport.cxx:964
+msgctxt "ContextMenu|"
+msgid "⤓ Check for &updates..."
+msgstr "⤓ 检查更新(&U)..."
+
+#: vncviewer/vncviewer.cxx:371
+msgctxt "SysMenu|"
+msgid "&File"
+msgstr "文件(&F)"
+
+#: vncviewer/vncviewer.cxx:374
+msgctxt "SysMenu|File|"
+msgid "&New connection"
+msgstr "新建连接(&N)"

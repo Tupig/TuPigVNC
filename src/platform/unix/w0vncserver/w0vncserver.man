@@ -1,0 +1,241 @@
+.TH w0vncserver 1 "" "TuPigVNC" "TuPigVNC 手册"
+.SH NAME
+w0vncserver \- 适用于 Wayland 合成器的 TuPigVNC 服务器
+.SH SYNOPSIS
+.B w0vncserver
+.RI [ 选项 ]
+.br
+.B w0vncserver -version
+.SH DESCRIPTION
+.B w0vncserver
+是一款 TuPigVNC 服务器，可将基于 wlroots 或已实现 RemoteDesktop 门户的 Wayland 合成器通过 VNC、TuPigVNC 或兼容查看器进行远程访问。它不创建虚拟显示，而是共享现有显示（通常是连接至物理屏幕的显示）。
+
+.SH OPTIONS
+.B w0vncserver
+将命令行解释为带可选值的参数列表。运行 \fBw0vncserver \-h\fP 可显示所有有效参数及其简短描述。所有参数均为可选，但通常需要使用 \fBPasswordFile\fP 参数（详见下文）。
+
+指定命令行参数有多种形式（以下以“\fI某参数\fP”为例说明参数名）：
+
+.TP
+.B -\fI某参数\fP
+启用该参数，即开启对应功能。此形式适用于仅用于启用或禁用某项功能的参数。
+.
+.TP
+.B -\fI某参数\fP=0
+禁用该参数，即关闭对应功能。
+.
+.TP
+.B -\fI某参数\fP=\fI值\fP
+将指定的 \fI值\fP 赋给该参数。前缀短横线可省略，也可使用双短横线（如 GNU 风格长选项）。
+.PP
+参数名不区分大小写，其在命令行中的顺序可任意。
+
+.SH PARAMETERS
+
+.TP
+.B \-AcceptCutText
+接受来自客户端的剪贴板更新。默认开启。
+.
+.TP
+.B \-AcceptKeyEvents
+接受来自客户端的按键按下与释放事件。默认开启。
+.
+.TP
+.B \-AcceptPointerEvents
+接受来自客户端的指针移动与按键事件。默认开启。
+.
+.TP
+.B \-AlwaysShared
+始终将传入连接视为共享，无论客户端指定的设置如何。默认关闭。
+.
+.TP
+.B \-BlacklistThreshold \fI次数\fP
+任何单个主机在被列入黑名单前允许的未认证连接尝试次数。默认值为 5。
+.
+.TP
+.B \-BlacklistTimeout \fI秒数\fP
+主机首次被列入黑名单时应用的初始超时。超时到期前，该主机无法重新尝试连接。默认值为 10。
+.
+.TP
+.B \-CompareFB \fI模式\fP
+对帧缓冲执行像素比较以减少不必要的更新。可为 \fB0\fP（关闭）、\fB1\fP（始终）或 \fB2\fP（自动）。默认值为
+\fB2\fP。
+.
+.TP
+.B \-desktop \fI桌面名称\fP
+每个桌面都有一个可被查看器显示的名称。默认值为“<用户>@<主机名>”。
+.
+.TP
+.B \-DisconnectClients
+当传入连接为非共享连接时，断开现有客户端。默认开启。若 \fBDisconnectClients\fP 为 false，则当存在活动客户端时将拒绝新的非共享连接。与
+\fBNeverShared\fP 结合使用时，表示同一时间仅允许一个客户端。
+.
+.TP
+.B \-FrameRate \fI帧率\fP
+每秒发送给每个客户端的最大更新数。若屏幕更新速度快于此值，则这些更改将聚合为单个更新发送给客户端。请注意，此参数仅控制最大速率，资源受限时客户端的实际速率可能更低。默认值为 \fB60\fP。
+.
+.TP
+.B \-GnuTLSPriority \fI优先级\fP
+控制 TLS 会话握手算法的 GnuTLS 优先级字符串。可能的值请参阅 GnuTLS 手册。默认值为 \fBNORMAL\fP。
+.
+.TP
+.B \-IdleTimeout \fI秒数\fP
+空闲 VNC 连接被断开前的秒数。默认值为 0，表示空闲连接永不断开。
+.
+.TP
+.B \-ImprovedHextile
+为 Hextile 编码使用改进的压缩算法，以略微增加 CPU 时间为代价获得更好的压缩比。默认开启。
+.
+.TP
+.B \-interface \fIIP 地址\fP
+在指定接口上监听。默认情况下，w0vncserver 在所有可用接口上监听。
+.
+.TP
+.B \-localhost
+仅允许来自本机的连接。若你使用 SSH 并希望阻止来自其他主机的非 SSH 连接，此选项很有用。
+.
+.TP
+.B \-Log \fI日志名\fP:\fI目标\fP:\fI级别\fP[, ...]
+配置调试日志设置。\fI目标\fP 当前可为 \fBstderr\fP、\fBstdout\fP 或 \fBsyslog\fP，\fI级别\fP 介于 0 至 100 之间，100 表示输出最详细。\fI日志名\fP 通常为 \fB*\fP，表示全部；若知道特定源文件的“LogWriter”名称，也可针对该文件。默认值为
+\fB*:stderr:30\fP。
+.
+.TP
+.B \-MaxConnectionTime \fI秒数\fP
+当客户端已连接 \fIN\fP 秒后终止。默认值为 0。
+.TP
+.B \-MaxCutText \fI字节数\fP
+传入剪贴板更新的最大允许大小。默认值为 \fB262144\fP。
+.
+.
+.TP
+.B \-MaxDisconnectionTime \fI秒数\fP
+当无客户端连接达 \fIN\fP 秒后终止。默认值为 0。
+.
+.TP
+.B \-MaxIdleTime \fI秒数\fP
+用户无操作 \fIN\fP 秒后终止。默认值为 0。
+.
+.TP
+.B \-NeverShared
+绝不将传入连接视为共享，无论客户端指定的设置如何。默认关闭。
+.
+.TP
+.B \-pam_service \fI名称\fP, \-PAMService \fI名称\fP
+使用任何“Plain”安全类型认证用户时所用的 PAM 服务名称。默认值为 \fBvnc\fP。
+.
+.TP
+.B \-Password \fI密码\fP
+客户端访问服务器时必须提供的密码混淆二进制编码。使用此参数不安全，请改用 \fBPasswordFile\fP 参数。
+.
+.TP
+.B \-PasswordFile \fI密码文件\fP, \-rfbauth \fI密码文件\fP
+用于 VNC 认证的密码文件。无默认值，应显式指定密码文件。密码文件应使用
+\fBvncpasswd\fP(1) 工具创建。每次连接到来时都会访问该文件，因此可动态更改。
+.
+.TP
+.B \-PlainUsers \fI用户列表\fP
+允许通过任何“Plain”安全类型（Plain、TLSPlain 等）认证的用户名列表（以逗号分隔）。指定 \fB*\fP 以允许任何用户使用此安全类型认证。指定 \fB%u\fP 以允许服务器进程的用户。默认拒绝所有用户。
+.
+.TP
+.B \-Protocol3.3
+始终使用协议版本 3.3，以兼容行为不良的客户端。默认关闭。
+.
+.TP
+.B \-QueryConnect
+提示桌面用户明确接受或拒绝传入连接。默认关闭。
+.
+.TP
+.B \-RawKeyboard
+直接发送键盘事件，避免将其映射到当前键盘布局。这实际上使键盘按服务器上配置的布局而非客户端上配置的布局工作。默认关闭。
+.
+.TP
+.B \-RemapKeys \fI映射\fP
+设置键盘映射。
+.I 映射
+为以逗号分隔的字符映射字符串，每个映射形式为
+.IR 字符 -> 字符
+或
+.IR 字符 <> 字符
+，其中
+.I 字符
+为十六进制键符。例如，要互换“和 @ 符号，可指定如下：
+
+.RS 10
+RemapKeys=0x22<>0x40
+.RE
+.
+.TP
+.B \-RememberDisplayChoice \fI模式\fP
+在用户连接时记住显示选择。可为 \fBAlways\fP、\fBNever\fP 或 \fBSession\fP。选择 \fBNever\fP 表示每次用户连接服务器时都会显示提示对话框。\fBSession\fP 表示仅在程序生命周期内显示一次提示。选择 \fBAlways\fP 时，所作选择将被记住并持久保存。要重置选择，请参阅
+\fBw0vncserver-forget\fP(1)。默认值为 \fBSession\fP。
+.
+.TP
+.B \-RequireUsername
+RSA-AES 安全类型需要用户名。默认关闭。
+.
+.TP
+.B \-rfbport \fI端口\fP
+指定 w0vncserver 监听查看器连接的 TCP 端口（VNC 所用协议称为 RFB，即“远程帧缓冲”）。指定 \fB-1\fP 以禁用 TCP 端口监听。直接启动时默认端口为
+5900，由 systemd 套接字激活时为 -1。
+.
+.TP
+.B \-rfbunixmode \fI模式\fP
+指定 Unix 域套接字的模式。默认值为 0600。
+.
+.TP
+.B \-rfbunixpath \fI路径\fP
+指定 w0vncserver 监听查看器连接的 Unix 域套接字路径。默认不监听任何 Unix 域套接字。
+.
+.TP
+.B \-RSAKey \fI路径\fP
+RSA-AES 安全类型（\fBRA2\fP、\fBRA2ne\fP、\fBRA2_256\fP 和 \fBRA2ne_256\fP）所用 RSA 密钥的路径，PEM 格式。
+.
+.TP
+.B \-SecurityTypes \fI安全类型\fP
+指定传入连接使用的安全方案。有效值为以逗号分隔的 \fBNone\fP、\fBVncAuth\fP、\fBPlain\fP、
+\fBTLSNone\fP、\fBTLSVnc\fP、\fBTLSPlain\fP、\fBX509None\fP、\fBX509Vnc\fP、
+\fBX509Plain\fP、\fBRA2\fP、\fBRA2ne\fP、\fBRA2_256\fP 和 \fBRA2ne_256\fP 列表。默认值为 \fBTLSVnc,VncAuth\fP。
+.
+.TP
+.B \-SendCutText
+将剪贴板更改发送给客户端。默认开启。
+.
+.B \-SendPrimary
+除选择剪贴板外，还将 PRIMARY 发送给客户端。请注意，此功能并非适用于所有合成器。默认开启。
+.
+.TP
+.B \-SetPrimary
+除选择剪贴板外，还设置 PRIMARY。请注意，此功能并非适用于所有合成器。默认开启。
+.
+.TP
+.B \-UseBlacklist
+当某主机反复认证失败时，暂时拒绝来自该主机的连接。默认开启。
+.
+.TP
+.B \-UseIPv4
+传入与传出连接使用 IPv4。默认开启。
+.
+.TP
+.B \-UseIPv6
+传入与传出连接使用 IPv6。默认开启。
+.
+.TP
+.B \-X509Cert \fI路径\fP
+用于所有基于 X509 的安全类型（X509None、X509Vnc 等）的 X509 证书路径，PEM 格式。
+.
+.TP
+.B \-X509Key \fI路径\fP
+\fBX509Cert\fP 中所给证书对应的私钥。同样必须为 PEM 格式。
+
+.SH SEE ALSO
+.BR w0vncserver-forget (1),
+.BR x0vncserver (1),
+.BR Xvnc (1),
+.BR vncpasswd (1),
+.br
+https://github.com/TuPig/TuPigVNC/
+
+.SH AUTHOR
+TuPigVNC 团队
+
+VNC 最初由 RealVNC 团队在 Olivetti Research Ltd / AT&T Laboratories Cambridge 期间开发。TightVNC 的补充功能由 Constantin Kaplinsky 实现。此后许多人参与了开发、测试与支持工作。本手册属于 TuPigVNC 软件套件的一部分。

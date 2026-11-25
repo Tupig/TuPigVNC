@@ -1,0 +1,98 @@
+.TH vncconfig 1 "" "TuPigVNC" "虚拟网络计算"
+.SH NAME
+vncconfig \- 配置和控制 VNC 服务器
+.SH SYNOPSIS
+.B vncconfig
+.RI [ 参数 ]
+.br
+.B vncconfig
+.RI [ 参数 ]
+.B \-connect \fP[\fB-view-only\fP]
+.IR 主机 [: 端口 ]
+.br
+.B vncconfig
+.RI [ 参数 ]
+.B \-disconnect
+.br
+.B vncconfig
+.RI [ 参数 ]
+.RB [ -set ]
+.IR Xvnc-参数 = 值 " ..."
+.br
+.B vncconfig
+.RI [ 参数 ]
+.B \-list
+.br
+.B vncconfig
+.RI [ 参数 ]
+\fB\-get\fP \fIXvnc-参数\fP
+.br
+.B vncconfig
+.RI [ 参数 ]
+\fB\-desc\fP \fIXvnc-参数\fP
+.SH DESCRIPTION
+.B vncconfig
+用于配置和控制正在运行的 Xvnc 实例，或任何带有 VNC 扩展的 X 服务器。请注意，它无法用于控制 4 之前的 VNC 服务器版本。
+
+不带选项运行时，它作为 Xvnc 的某种“辅助”应用程序运行。在此模式下，其主要用途是询问用户应如何处理新连接（前提是已启用此功能）。若你始终需要查询支持但不希望在桌面上堆满设置窗口，可使用
+\fB-nowin\fP 标志；或者使用 \fB-iconic\fP 选项使其默认以图标化方式启动。
+
+以其他任何模式运行时，\fBvncconfig\fP 是一个一次性程序，用于按需配置或控制 Xvnc。它可指示 Xvnc 连接或断开监听中的查看器，并可设置和获取 Xvnc 的参数。
+
+请注意，必须根据需要设置 DISPLAY 环境变量或 \fB\-display\fP 选项以控制 Xvnc。若在普通 X 服务器（或 3.x 版 Xvnc）上运行，将得到一条错误消息，提示不存在 VNC 扩展。
+
+.SH OPTIONS
+.TP
+.B \-connect \fP[\fB-view-only\fP] \fI主机\fP[:\fI端口\fP]
+指示 Xvnc 服务器向正在监听的 VNC 查看器发起“反向”连接（通常连接方向相反——由查看器连接服务器）。\fI主机\fP 为监听查看器所在主机。若其未监听默认端口 5500，可改用 \fI主机:端口\fP 指定。\fB-view-only\fP 选项指定服务器必须忽略客户端发送的所有键盘或鼠标事件。
+.
+.TP
+.B \-desc \fIXvnc-参数\fP
+打印给定 Xvnc 参数的简短描述。
+.
+.TP
+.B \-disconnect
+使 Xvnc 断开与所有查看器的连接，从而不再在任何位置显示 VNC 桌面。
+.
+.TP
+.B \-get \fIXvnc-参数\fP
+打印给定 Xvnc 参数的当前值。
+.
+.TP
+.B \-list
+列出 Xvnc 支持的所有参数。
+.
+.TP
+[\fB-set\fP] \fIXvnc-参数\fP=\fI值\fP
+将 Xvnc 参数设置为给定值。请注意，Xvnc 的部分参数仅在启动时读取一次，因此以此方式更改可能不会生效。
+
+.SH PARAMETERS
+.B vncconfig
+自身也有可在命令行设置的参数。请勿将其与通过 \fB-set\fP、\fB-get\fP、\fB-list\fP 和 \fB-desc\fP 选项操作的 Xvnc 参数混淆。
+
+参数可通过 -\fI参数\fP 开启，或通过 -\fI参数\fP=0 关闭。带值的参数可指定为 -\fI参数\fP \fI值\fP。其他有效形式包括 \fI参数\fP\fB=\fP\fI值\fP、-\fI参数\fP=\fI值\fP、--\fI参数\fP=\fI值\fP。参数名不区分大小写。
+
+.TP
+.B \-display \fIX显示\fP
+指定要控制的 Xvnc 服务器。
+.
+.TP
+.B \-iconic
+作为“辅助”应用程序运行时，启动时使窗口图标化。
+.
+.TP
+.B \-nowin
+作为“辅助”应用程序运行时，不显示窗口。
+
+.SH SEE ALSO
+.BR vncpasswd (1),
+.BR vncviewer (1),
+.BR Xvnc (1),
+.BR vncsession (8)
+.br
+https://github.com/TuPig/TuPigVNC
+
+.SH AUTHOR
+Tristan Richardson, RealVNC Ltd. 及其他人。
+
+VNC 最初由 RealVNC 团队在 Olivetti Research Ltd / AT&T Laboratories Cambridge 期间开发。TightVNC 的补充功能由 Constantin Kaplinsky 实现。此后许多人参与了开发、测试与支持工作。本手册属于 TuPigVNC 软件套件的一部分。

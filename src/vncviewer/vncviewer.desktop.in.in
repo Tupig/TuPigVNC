@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=TuPigVNC
+GenericName=远程桌面查看器
+Comment=连接到 VNC 服务器并显示远程桌面
+Exec=@CMAKE_INSTALL_FULL_BINDIR@/vncviewer
+Icon=tupigvnc
+Terminal=false
+Type=Application
+StartupWMClass=vncviewer
+Categories=Network;RemoteAccess;

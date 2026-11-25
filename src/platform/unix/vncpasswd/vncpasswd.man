@@ -1,0 +1,43 @@
+.TH vncpasswd 1 "" "TuPigVNC" "虚拟网络计算"
+.SH NAME
+vncpasswd \- 更改 VNC 密码
+.SH SYNOPSIS
+\fBvncpasswd\fR [\fI密码文件\fR]
+.br
+\fBvncpasswd\fR \-f
+.SH DESCRIPTION
+.B vncpasswd
+用于设置访问 VNC 桌面所需的密码。其默认行为是提示输入 VNC 密码，然后将该密码的混淆版本存储至 \fI密码文件\fR（若未指定密码文件，则存储至
+\fI$XDG_CONFIG_HOME/tigervnc/passwd\fP）。首次启动 VNC 桌面时，\fBvncserver\fP 脚本会运行 \fBvncpasswd\fP，并以适当的 \fB\-rfbauth\fP 选项调用 \fBXvnc\fP。
+\fBvncviewer\fP 也可通过 \fB\-passwd\fP 选项指定要使用的密码文件。
+
+密码长度至少为六个字符（使用 \fB\-f\fR 命令行选项时除外——详见下文），且仅前八个字符有效。请注意，所存储的密码\fB并非\fP以安全方式加密——任何能访问该文件的人均可轻易获取明文密码，因此 \fBvncpasswd\fP 始终设置适当的权限（仅限所有者读写）。不过，访问 VNC 桌面时，网络传输中采用质询-响应机制，使他人难以仅通过网络嗅探破解密码。
+
+.SH OPTIONS
+
+.TP
+.B \-f
+过滤模式。从标准输入读取明文密码，并将加密版本写入标准输出。请注意，在过滤模式下，过短甚至为空的密码将被静默接受。
+
+仅查看密码与普通密码之间必须以换行符分隔。
+
+
+.SH FILES
+.TP
+\fI$XDG_CONFIG_HOME/tigervnc/passwd\fP
+.TQ
+\fI$HOME/.config/tigervnc/passwd\fP
+VNC 密码文件的默认位置。
+
+.SH SEE ALSO
+.BR vncviewer (1),
+.BR Xvnc (1)
+.BR vncconfig (1),
+.BR vncsession (8)
+.br
+https://github.com/TuPig/TuPigVNC
+
+.SH AUTHORS
+Tristan Richardson, RealVNC Ltd.、Antoine Martin、D. R. Commander 及其他人。
+
+VNC 最初由 RealVNC 团队在 Olivetti Research Ltd / AT&T Laboratories Cambridge 期间开发。TightVNC 的补充功能由 Constantin Kaplinsky 实现。此后许多人参与了开发、测试与支持工作。本手册属于 TuPigVNC 软件套件的一部分。

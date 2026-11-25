@@ -1,0 +1,42 @@
+[
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "ℹ Connection &info..."
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "⇲ Resize &window to session"
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "− Minimi&ze"
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "⌨ Send Ctrl-Alt-&Del"
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "⏻ Disconn&ect"
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "ⓘ About &TuPigVNC..."
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "⚙ &Options..."
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "⛶ &Full screen"
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "⟳ &Refresh screen"
+ },
+ {
+  "msgctxt": "ContextMenu|",
+  "msgid": "⤓ Check for &updates..."
+ }
+]

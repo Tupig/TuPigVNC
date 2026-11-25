@@ -1,0 +1,23 @@
+.TH w0vncserver-forget 1 "" "TuPigVNC" "TuPigVNC 手册"
+.SH NAME
+w0vncserver-forget \- 清除 w0vncserver 的显示选择记录
+.SH SYNOPSIS
+.B w0vncserver-forget
+.SH DESCRIPTION
+.B w0vncserver-forget
+是 \fBw0vncserver\fP(1) 的实用工具，用于清除已保存的显示选择配置。
+
+.SH FILES
+.TP
+\fI$XDG_STATE_HOME/tigervnc/restoretoken\fP
+restoretoken 文件的默认位置。
+
+.SH SEE ALSO
+.BR w0vncserver (1),
+.br
+https://github.com/TuPig/TuPigVNC/
+
+.SH AUTHOR
+TuPigVNC 团队
+
+VNC 最初由 RealVNC 团队在 Olivetti Research Ltd / AT&T Laboratories Cambridge 期间开发。TightVNC 的补充功能由 Constantin Kaplinsky 实现。此后许多人参与了开发、测试与支持工作。本手册属于 TuPigVNC 软件套件的一部分。

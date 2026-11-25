@@ -1,0 +1,327 @@
+.TH vncviewer 1 "" "TuPigVNC" "虚拟网络计算"
+.SH NAME
+vncviewer \- 适用于 X 的 VNC 查看器
+.SH SYNOPSIS
+.B vncviewer
+.RI [ 选项 ]
+.RI [ 主机 ][: 显示号 ]
+.br
+.B vncviewer
+.RI [ 选项 ]
+.RI [ 主机 ][:: 端口 ]
+.br
+.B vncviewer
+.RI [ 选项 ]
+.RI [ unix\ 套接字 ]
+.br
+.B vncviewer
+.RI [ 选项 ]
+.B \-listen
+.RI [ 端口 ]
+.br
+.B vncviewer
+.RI [ 选项 ]
+.RI [ .tigervnc\ 文件 ]
+.SH DESCRIPTION
+.B vncviewer
+是用于虚拟网络计算的查看器（客户端）。本手册页适用于 X 窗口系统的第 4 版。
+
+若不带任何参数运行查看器，程序将提示你输入要连接的 VNC 服务器。也可以将 VNC 服务器作为参数指定，例如：
+
+.RS
+vncviewer snoopy:2
+.RE
+
+其中“snoopy”为机器名，“2”为该机器上 VNC 服务器的显示号。机器名与显示号均可省略。例如，“:1”表示本机上的显示号 1，“snoopy”表示“snoopy:0”，即机器“snoopy”上的显示 0。
+
+另一种快速建立 VNC 服务器连接的方式，是将 .tigervnc 配置文件作为参数传给查看器，例如：
+
+.RS
+vncviewer ./some.tigervnc
+.RE
+
+其中“./some.tigervnc”为已存在的有效 TuPigVNC 配置文件。文件名需包含路径分隔符。也可同时提供其他选项，但所指定的配置文件将覆盖任何冲突的参数。
+
+若成功连接至 VNC 服务器，程序将提示你输入密码进行认证。你也可以将“VNC_USERNAME”和“VNC_PASSWORD”添加为环境变量。密码正确后，将出现显示 VNC 服务器桌面的窗口。
+
+.SH AUTOMATIC PROTOCOL SELECTION
+
+查看器会测试与服务器的连接速度，并据此选择合适的编码与像素格式（颜色级别）。与需要用户指定晦涩命令行参数的旧版相比，此方式显著更易用。
+
+查看器通常假定链路较慢，初始时采用压缩率最高的编码。若发现链路足够快，则切换到压缩率较低但生成更快的编码，从而改善交互体验。
+
+查看器通常以全彩模式启动，若带宽不足则切换为低色彩模式。但此功能仅在服务器支持 3.8 或更高协议版本时生效，因为许多旧版服务器无法安全地处理颜色模式变更。
+
+将 \fBAutoSelect\fP 参数设为 false，或通过选项对话框，均可关闭自动选择。
+
+.SH KEYBOARD SHORTCUTS
+
+查看器可通过特定的组合键进行控制，触发特殊操作而非将键盘事件传递至远程会话。默认情况下，按下 Ctrl+Alt 加其他按键将被解释为查看器的键盘快捷键，但可通过 \fBShortcutModifiers\fP 参数修改。
+
+可用的键盘快捷键如下：
+
+.TP
+Ctrl+Alt
+释放键盘控制，允许在本地使用系统按键。
+.
+.TP
+Ctrl+Alt+G
+抓取键盘控制，允许将系统按键（如 Alt+Tab）发送至远程会话。
+.
+.TP
+Ctrl+Alt+Enter
+切换全屏模式。
+.
+.TP
+Ctrl+Alt+M
+打开弹出菜单，可执行各种额外操作，例如退出查看器或打开选项对话框。
+.
+.TP
+Ctrl+Alt+Space
+临时绕过键盘快捷键，允许将相同的组合键发送至远程会话。
+.
+
+.SH FULL-SCREEN MODE
+程序支持全屏模式。当连接至与本地屏幕尺寸相同的远程屏幕时，此模式尤为实用。若远程屏幕更大，可将鼠标移至屏幕边缘以滚动查看。
+
+.SH OPTIONS (PARAMETERS)
+向 vncviewer 传入 \fB\-h\fP 命令行选项可获取参数列表。参数可通过 -\fI参数\fP 开启，或通过 -\fI参数\fP=0 关闭。带值的参数可指定为 -\fI参数\fP \fI值\fP。其他有效形式包括 \fI参数\fP\fB=\fP\fI值\fP、-\fI参数\fP=\fI值\fP 以及 --\fI参数\fP=\fI值\fP。参数名不区分大小写。
+
+许多参数也可通过选项对话框以图形方式设置。可从弹出菜单或“连接详情”对话框打开该对话框。
+
+.TP
+.B \-AcceptClipboard
+接受来自服务器的剪贴板更改。默认开启。
+.
+.TP
+.B \-AlertOnFatalError
+退出前显示包含致命错误的对话框。默认开启。
+.
+.TP
+.B \-AlwaysCursor
+服务器发送不可见光标时显示本地光标。默认关闭。
+.
+.TP
+.B \-Audio
+播放服务器发送的音频（如果提供）。仅部分服务器可发送音频，且仅部分平台可播放。更改此项仅影响后续连接。默认开启。
+.
+.TP
+.B \-AutoSelect
+自动选择编码与像素格式（默认开启）。通常查看器会测试与服务器的连接速度，并据此选择合适的编码与像素格式。可通过 \fB-AutoSelect=0\fP 关闭。
+.
+.TP
+.B \-CompressLevel \fI级别\fP
+使用指定的无损压缩级别。0 = 低，9 = 高。默认值为 2。
+.
+.TP
+.B \-CursorType \fI类型\fP
+指定显示本地光标时使用的光标类型。应为“Dot”或“System”。若 AlwaysCursor 关闭则忽略此项。默认值为“Dot”。
+.
+.TP
+.B \-CustomCompressLevel
+使用 \fBCompressLevel\fP 指定的自定义压缩级别。默认关闭。
+.
+.TP
+.B \-DesktopSize \fI宽度\fPx\fI高度\fP
+连接时，客户端将尝试切换到指定尺寸，而非保持现有远程屏幕尺寸。若服务器不支持 SetDesktopSize 消息，则屏幕将保持原尺寸。
+.
+.TP
+.B \-display \fIX显示\fP
+指定 TuPigVNC 窗口应出现的 X 显示。
+.
+.TP
+.B \-DotWhenNoCursor (已弃用)
+服务器发送不可见光标时显示圆点光标。已由 \fB-AlwaysCursor\fP 和 \fB-CursorType=Dot\fP 取代。
+.
+.TP
+.B \-EmulateMiddleButton
+同时按下左右鼠标键以模拟中键。默认关闭。
+.
+.TP
+.B \-FullColor, \-FullColour
+告知 VNC 服务器以此显示设备的最佳格式发送全彩像素。此项为默认设置。
+.
+.TP
+.B \-FullScreen
+以全屏模式启动。
+.
+.TP
+.B \-FullScreenAllMonitors (已弃用)
+切换至全屏模式时使用所有本地显示器，而非仅当前显示器。已由 \fB-FullScreenMode=all\fP 取代。
+.
+.TP
+.B \-FullScreenMode \fI模式\fP
+指定全屏时使用的显示器。应为“Current”、“Selected”（由 \fB-FullScreenSelectedMonitors\fP 指定）或“All”。默认值为“Current”。
+.
+.TP
+.B \-FullScreenSelectedMonitors \fI显示器\fP
+此选项指定与 \fB-FullScreenMode=selected\fP 配合使用的显示器。显示器按系统配置从左至右排序，若存在冲突则从上至下排序。例如，“1,2,3”表示使用从左数第一、第二和第三个显示器。默认值为“1”。
+.
+.TP
+.B \-FullscreenSystemKeys
+进入全屏时自动抓取所有键盘输入，并将特殊按键（如 Alt+Tab）直接传递至服务器。
+.
+.TP
+.B \-geometry \fI几何尺寸\fP
+TuPigVNC 主窗口的初始位置。格式为
+.B \fI宽度\fPx\fI高度\fP+\fIx\fP偏移+\fIy\fP偏移
+，其中“+”可替换为“\-”以指定距屏幕右侧和/或底部的偏移量。偏移量可选，默认由窗口管理器放置窗口。
+.
+.TP
+.B \-GnuTLSPriority \fI优先级\fP
+控制 TLS 会话握手算法的 GnuTLS 优先级字符串。可能的值请参阅 GnuTLS 手册。默认值为 \fBNORMAL\fP。
+.
+.TP
+.B \-listen \fI[端口]\fP
+使 vncviewer 在给定端口（默认 5500）上监听来自 VNC 服务器的反向连接。WinVNC 支持通过“添加新客户端”菜单选项或“\-connect”命令行选项发起的反向连接。Xvnc 通过名为
+.B vncconfig
+的辅助程序支持反向连接。
+.
+.TP
+.B \-Log \fI日志名\fP:\fI目标\fP:\fI级别\fP[, ...]
+配置调试日志设置。\fI目标\fP 当前可为 \fBstderr\fP 或
+\fBstdout\fP，\fI级别\fP 介于 0 至 100 之间，100 表示输出最详细。\fI日志名\fP 通常为 \fB*\fP，表示全部；若知道特定源文件的“LogWriter”名称，也可针对该文件。默认值为
+\fB*:stderr:30\fP。
+.
+.TP
+.B \-LowColorLevel, \-LowColourLevel \fI级别\fP
+选择慢速链路上使用的降低颜色级别。\fI级别\fP 范围为 0 至 2，0 表示 8 色，1 表示 64 色（默认），2 表示 256 色。请注意，是否使用降低颜色级别由 vncviewer 决定。若希望强制 vncviewer 使用降低颜色级别，请使用 \fB-AutoSelect=0\fP 参数。
+.
+.TP
+.B \-MaxCutText \fI字节数\fP
+接受来自服务器的剪贴板更新的最大大小。默认值为 \fB262144\fP。
+.
+.TP
+.B \-Maximize
+最大化查看器窗口。
+.
+.TP
+.B \-NoJpeg
+禁用有损 JPEG 压缩。默认关闭。
+.
+.TP
+.B \-passwd, \-PasswordFile \fI密码文件\fP
+若文件系统允许访问服务器使用的密码文件，可在此指定以免手动输入。通常为
+\fI$XDG_CONFIG_HOME/tigervnc/passwd\fP，若前者未设置则为 \fI~/.config/tigervnc/passwd\fP。
+.
+.TP
+.B \-PointerEventInterval \fI时间\fP
+对连续指针事件进行限速的毫秒数。默认值为 17 毫秒（60 Hz）。
+.
+.TP
+.B \-PreferredEncoding \fI编码\fP
+此选项指定首选编码，可选“Tight”、“JPEG”、“ZRLE”、“Hextile”、“H.264”或“Raw”。
+.
+.TP
+.B \-QualityLevel \fI级别\fP
+JPEG 质量级别。0 = 低，9 = 高。若 \fB-AutoSelect\fP 开启，可能会自动调整。默认值为 8。
+.
+.TP
+.B \-ReconnectOnError
+显示包含错误的对话框，并提供重试建立连接的可能。若关闭，则不提供重新连接的对话框。默认开启。
+.
+.TP
+.B \-RemoteResize
+随着本地客户端窗口大小变化动态调整远程桌面尺寸。请注意，此功能并非适用于所有 VNC 服务器。
+.
+.TP
+.B \-SecurityTypes \fI安全类型\fP
+指定与服务器认证时尝试使用的安全方案。有效值为以逗号分隔的 \fBNone\fP、
+\fBVncAuth\fP、\fBPlain\fP、\fBTLSNone\fP、\fBTLSVnc\fP、\fBTLSPlain\fP、
+\fBX509None\fP、\fBX509Vnc\fP、\fBX509Plain\fP、\fBRA2\fP、\fBRA2ne\fP、
+\fBRA2_256\fP 和 \fBRA2ne_256\fP 列表。默认尝试所有受支持的方案。
+.
+.TP
+.B \-SendClipboard
+将剪贴板更改发送至服务器。默认开启。
+.
+.TP
+.B \-SendPrimary
+除剪贴板选区外，还将 PRIMARY 选区发送至服务器。默认开启。
+.
+.TP
+.B \-SetPrimary
+除剪贴板选区外，还设置 PRIMARY 选区。默认开启。
+.
+.TP
+.B \-Shared
+连接 VNC 服务器时，通常会关闭所有其他现有连接。此选项请求保持这些连接开放，允许你与已在使用该桌面的用户共享。
+.
+.TP
+.B \-ShortcutModifiers \fI按键\fP
+在查看器中触发特殊操作而非发送至远程会话的修饰键组合。可能值为 \fBCtrl\fP、\fBShift\fP、\fBAlt\fP 和 \fBSuper\fP 的组合。默认值为 \fBCtrl,Alt\fP。
+.
+.TP
+.B \-UseIPv4
+传入与传出连接使用 IPv4。默认开启。
+.
+.TP
+.B \-UseIPv6
+传入与传出连接使用 IPv6。默认开启。
+.
+.TP
+\fB\-via\fR \fI网关\fR
+连接前自动创建至 \fI网关\fR 机器的加密 TCP 隧道，并通过该隧道连接 \fI主机\fR
+（TuPigVNC 特有）。默认情况下，此选项调用 SSH 本地端口转发，假定 SSH 客户端二进制文件可通过
+/usr/bin/ssh 访问。请注意，使用 \fB\-via\fR 选项时，主机名应按网关机器所知晓的方式指定，例如
+“localhost”表示 \fI网关\fR 本身，而非启动 vncviewer 的机器。环境变量 \fIVNC_VIA_CMD\fR 可覆盖
+默认隧道命令
+\fB/usr/bin/ssh\ \-f\ \-L\ "$L":"$H":"$R"\ "$G"\ sleep\ 20\fR。隧道命令执行时，环境变量 \fIL\fR、\fIH\fR、
+\fIR\fR 和 \fIG\fR 分别对应本地端口号、远程主机、远程主机上的端口号以及网关机器。
+.
+.TP
+.B \-ViewOnly
+指定不向服务器发送任何键盘或鼠标事件。适用于希望查看桌面而不进行干扰的场景，通常需与
+.B \-Shared
+配合使用。
+.
+.TP
+.B \-X509CA \fI路径\fP
+使用任意 X509 安全方案（X509None、X509Vnc 等）认证远程服务器时所用的 CA 证书路径。必须为 PEM 格式。默认值为 \fI$XDG_CONFIG_HOME/tigervnc/x509_ca.pem\fP，或
+\fI~/.config/tigervnc/x509_ca.pem\fP。
+.
+.TP
+.B \-X509CRL \fI路径\fP
+与 \fB-X509CA\fP 配合使用的证书吊销列表路径。同样必须为 PEM 格式。默认值为
+\fI$XDG_CONFIG_HOME/tigervnc/x509_crl.pem\fP，或
+\fI~/.config/tigervnc/x509_crl.pem\fP。
+
+.SH FILES
+.TP
+\fI$XDG_CONFIG_HOME/tigervnc/default.tigervnc\fP
+.TQ
+\fI$HOME/.config/tigervnc/default.tigervnc\fP
+默认配置选项。此文件首行必须为“TuPigVNC Configuration file Version 1.0”（不含引号）作为“魔数”，其后为自行选择的简单 <设置>=<值> 对。可用设置即本手册页中所示各项。
+.TP
+\fI$XDG_CONFIG_HOME/tigervnc/x509_ca.pem\fP
+.TQ
+\fI$HOME/.config/tigervnc/x509_ca.pem\fP
+用于认证服务器的默认 CA 证书。
+.TP
+\fI$XDG_CONFIG_HOME/tigervnc/x509_crl.pem\fP
+.TQ
+\fI$HOME/.config/tigervnc/x509_crl.pem\fP
+默认证书吊销列表。
+.TP
+\fI$XDG_DATA_HOME/tigervnc/x509_known_hosts\fP
+.TQ
+\fI$HOME/.local/share/tigervnc/x509_known_hosts\fP
+基于证书认证的已知主机数据库。
+.TP
+\fI$XDG_STATE_HOME/tigervnc/tigervnc.history\fP
+.TQ
+\fI$HOME/.local/state/tigervnc/tigervnc.history\fP
+最近连接过的主机名历史文件。
+
+.SH SEE ALSO
+.BR Xvnc (1),
+.BR vncpasswd (1),
+.BR vncconfig (1),
+.BR vncsession (8)
+.br
+https://github.com/TuPig/TuPigVNC
+
+.SH AUTHOR
+Tristan Richardson, RealVNC Ltd. 及其他人。
+
+VNC 最初由 RealVNC 团队在 Olivetti Research Ltd / AT&T Laboratories Cambridge 期间开发。TightVNC 的补充功能由 Constantin Kaplinsky 实现。此后许多人参与了开发、测试与支持工作。本手册属于 TuPigVNC 软件套件的一部分。

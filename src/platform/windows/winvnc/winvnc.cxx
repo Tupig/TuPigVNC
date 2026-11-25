@@ -1,0 +1,304 @@
+/* Copyright (C) 2002-2005 RealVNC Ltd.  All Rights Reserved.
+ * 
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this software; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
+ * USA.
+ */
+
+// -=- VNC server 4.0 for Windows (WinVNC4)
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <string.h>
+
+#include "VNCServerWin32.h"
+#include "VNCServerService.h"
+#include "AddNewClientDialog.h"
+
+#include <core/Logger_file.h>
+#include <core/Logger_stdio.h>
+#include <core/LogWriter.h>
+#include <core/xdgdirs.h>
+#include <string>
+#include <core/i18n.h>
+#include <core/string.h>
+
+#include <rfb_win32/AboutDialog.h>
+#include <rfb_win32/MsgBox.h>
+
+#include <network/TcpSocket.h>
+
+using namespace winvnc;
+using namespace core;
+using namespace rfb;
+using namespace win32;
+
+static LogWriter vlog("main");
+
+const char* rfb::win32::AppName = "TuPigVNC Server";
+
+
+extern bool runAsService;
+static bool runServer = true;
+static bool close_console = false;
+
+
+//
+// -=- processParams
+//     Read in the command-line parameters and interpret them.
+//
+
+static void programInfo() {
+  win32::FileVersionInfo inf;
+  printf(_("%s - %s, version %s\n"),
+    inf.getVerString("ProductName"),
+    inf.getVerString("FileDescription"),
+    inf.getVerString("FileVersion"));
+  printf("Built on %s\n", BUILD_TIMESTAMP);
+  printf("%s\n\n", inf.getVerString("LegalCopyright"));
+}
+
+static void programUsage() {
+  printf(_(
+    "Command-line options:\n"
+    "  -connect [<host[::port]>]            - Connect an existing WinVNC server to a listening viewer.\n"
+    "  -disconnect                          - Disconnect all clients from an existing WinVNC server.\n"
+    "  -register <options...>               - Register WinVNC server as a system service.\n"
+    "  -unregister                          - Remove WinVNC server from the list of system services.\n"
+    "  -start                               - Start the WinVNC server system service.\n"
+    "  -stop                                - Stop the WinVNC server system service.\n"
+    "  -status                              - Query the WinVNC service status.\n"
+    "  -help                                - Provide usage information.\n"
+    "  -noconsole                           - Run without a console (i.e. no stderr/stdout)\n"
+    "  <setting>=<value>                    - Set the named configuration parameter.\n"
+    "    (Parameter values specified on the command-line override those specified by other configuration methods.)\n"));
+  printf("\n%s\n", _("Log names:"));
+  LogWriter::listLogWriters();
+  printf("\n%s\n", _("Log destinations:"));
+  Logger::listLoggers();
+  printf("\n%s\n", _("Available configuration parameters:"));
+  Configuration::listParams(79, 14);
+}
+
+static void MsgBoxOrLog(const char* msg, bool isError=false) {
+  if (close_console) {
+    MsgBox(nullptr, msg, (isError ? MB_ICONERROR : MB_ICONINFORMATION) | MB_OK);
+  } else {
+    if (isError) {
+      try {
+        vlog.error("%s", msg);
+        return;
+      } catch (...) {
+      }
+    }
+    fprintf(stderr, "%s\n", msg);
+  }
+}
+
+static void processParams(int argc, char** argv) {
+  for (int i=1; i<argc; i++) {
+    try {
+
+      if (strcasecmp(argv[i], "-connect") == 0) {
+        runServer = false;
+        const char *host = nullptr;
+        if (i+1 < argc) {
+          host = argv[i+1];
+          i++;
+        } else {
+          AddNewClientDialog ancd;
+          if (ancd.showDialog())
+            host = ancd.getHostName();
+        }
+        if (host != nullptr) {
+          HWND hwnd = FindWindow(nullptr, "winvnc::IPC_Interface");
+          if (!hwnd)
+            throw std::runtime_error(_("Unable to locate existing VNC Server"));
+          COPYDATASTRUCT copyData;
+          copyData.dwData = 1; // *** AddNewClient
+          copyData.cbData = strlen(host);
+          copyData.lpData = (void*)host;
+          printf(_("Sending connect request to VNC Server...\n"));
+          if (!SendMessage(hwnd, WM_COPYDATA, 0, (LPARAM)&copyData))
+            MsgBoxOrLog(_("Connection failed."), true);
+        }
+      } else if (strcasecmp(argv[i], "-disconnect") == 0) {
+        runServer = false;
+        HWND hwnd = FindWindow(nullptr, "winvnc::IPC_Interface");
+        if (!hwnd)
+          throw std::runtime_error(_("Unable to locate existing VNC Server"));
+        COPYDATASTRUCT copyData;
+        copyData.dwData = 2; // *** DisconnectClients
+        copyData.lpData = nullptr;
+        copyData.cbData = 0;
+        printf(_("Sending disconnect request to VNC Server...\n"));
+        if (!SendMessage(hwnd, WM_COPYDATA, 0, (LPARAM)&copyData))
+          MsgBoxOrLog(_("Failed to disconnect clients."), true);
+      } else if (strcasecmp(argv[i], "-start") == 0) {
+        printf(_("Attempting to start service...\n"));
+        runServer = false;
+        if (rfb::win32::startService(VNCServerService::Name))
+          MsgBoxOrLog(_("Started service successfully"));
+      } else if (strcasecmp(argv[i], "-stop") == 0) {
+        printf(_("Attempting to stop service...\n"));
+        runServer = false;
+        if (rfb::win32::stopService(VNCServerService::Name))
+          MsgBoxOrLog(_("Stopped service successfully"));
+      } else if (strcasecmp(argv[i], "-status") == 0) {
+        printf(_("Querying service status...\n"));
+        runServer = false;
+        std::string result;
+        DWORD state = rfb::win32::getServiceState(VNCServerService::Name);
+        result = format(_("The service \"%s\" is in the state: %s"),
+                        VNCServerService::Name,
+                        rfb::win32::serviceStateName(state));
+        MsgBoxOrLog(result.c_str());
+      } else if (strcasecmp(argv[i], "-service") == 0) {
+        printf(_("Run in service mode\n"));
+        runServer = false;
+        runAsService = true;
+
+      } else if (strcasecmp(argv[i], "-service_run") == 0) {
+        printf(_("Run in service mode\n"));
+        runAsService = true;
+
+      } else if (strcasecmp(argv[i], "-register") == 0) {
+        printf(_("Attempting to register service...\n"));
+        runServer = false;
+        int j = i;
+        i = argc;
+
+        // Try to clean up earlier services we've had
+        try {
+          rfb::win32::unregisterService("WinVNC4");
+        } catch (core::win32_error&) {
+          // Do nothing as we might fail simply because there was no
+          // service to remove
+        }
+        try {
+          rfb::win32::unregisterService("TuPigVNC Server");
+        } catch (core::win32_error&) {
+        }
+
+        if (rfb::win32::registerService(VNCServerService::Name,
+                                        "TuPigVNC Server",
+                                        "Provides remote access to this machine via the VNC/RFB protocol.",
+                                        argc-(j+1), &argv[j+1]))
+          MsgBoxOrLog(_("Registered service successfully"));
+      } else if (strcasecmp(argv[i], "-unregister") == 0) {
+        printf(_("Attempting to unregister service...\n"));
+        runServer = false;
+        if (rfb::win32::unregisterService(VNCServerService::Name))
+          MsgBoxOrLog(_("Unregistered service successfully"));
+
+      } else if (strcasecmp(argv[i], "-noconsole") == 0) {
+        close_console = true;
+        vlog.info(_("Closing console"));
+        if (!FreeConsole())
+          vlog.info(_("Unable to close console: %lu"), GetLastError());
+
+      } else if ((strcasecmp(argv[i], "-help") == 0) ||
+        (strcasecmp(argv[i], "--help") == 0) ||
+        (strcasecmp(argv[i], "-h") == 0) ||
+        (strcasecmp(argv[i], "/?") == 0)) {
+        runServer = false;
+        programUsage();
+        break;
+
+      } else {
+        int ret;
+
+        ret = Configuration::handleParamArg(argc, argv, i);
+        if (ret > 0) {
+          i += ret - 1;
+          continue;
+        }
+
+        // Nope.  Show them usage and don't run the server
+        runServer = false;
+        programUsage();
+        break;
+      }
+
+    } catch (std::exception& e) {
+      MsgBoxOrLog(e.what(), true);
+    }
+  }
+}
+
+
+//
+// -=- main
+//
+
+int WINAPI WinMain(HINSTANCE /*inst*/, HINSTANCE /*prevInst*/, char* /*cmdLine*/, int /*cmdShow*/) {
+  int result = 0;
+
+  try {
+    // - Initialise the available loggers
+    //freopen("\\\\drupe\\tjr\\WinVNC4.log","ab",stderr);
+#ifdef _DEBUG
+    AllocConsole();
+	freopen("CONIN$", "rb", stdin);
+	freopen("CONOUT$", "wb", stdout);
+	freopen("CONOUT$", "wb", stderr);
+    setbuf(stderr, nullptr);
+	initStdIOLoggers();
+	logParams.setParam("*:stderr:100");
+#else
+	logParams.setParam("*:stderr:0");
+#endif
+    /* 日志统一写入用户状态目录下的 logs 子目录，
+     * 避免在磁盘根目录（如 C:\temp）中散落文件。 */
+    {
+      const char* statedir = getvncstatedir();
+      if (statedir != nullptr) {
+        std::string logdir = std::string(statedir) + "\\logs";
+        mkdir_p(logdir.c_str(), 0700);
+        initFileLogger((logdir + "\\WinVNC4.log").c_str());
+      }
+    }
+    rfb::win32::initEventLogLogger(VNCServerService::Name);
+
+    // - By default, just log errors to stderr
+    
+
+    // - Print program details and process the command line
+    programInfo();
+
+	int argc = __argc;
+	char **argv = __argv;
+    processParams(argc, argv);
+
+    // - Run the server if required
+    if (runServer) {
+      // Start the network subsystem and run the server
+      VNCServerWin32 server;
+      result = server.run();
+    } else if (runAsService) {
+      VNCServerService service;
+      service.start();
+      result = service.getStatus().dwWin32ExitCode;
+    }
+
+    vlog.debug("WinVNC service destroyed");
+  } catch (std::exception& e) {
+    MsgBoxOrLog(e.what(), true);
+  }
+
+  vlog.debug("WinVNC process quitting");
+  return result;
+}

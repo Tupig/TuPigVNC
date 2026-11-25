@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用问题或讨论
+    url: https://github.com/TuPig/TuPigVNC/discussions
+    about: 提出关于如何使用 TuPigVNC 的问题或发起讨论
+  - name: 开发问题或讨论
+    url: https://github.com/TuPig/TuPigVNC/discussions
+    about: 提出关于 TuPigVNC 代码的问题或发起讨论
