@@ -569,16 +569,17 @@ int main(int argc, char** argv)
 
 #ifdef WIN32
   /*
-   * 避免 FLTK 在磁盘根目录（如 C:\\FLTK\\fltk.org\\fltk.prefs）创建配置文件。
+   * 避免 FLTK 在磁盘根目录（如 C:\FLTK\fltk.org\fltk.prefs）创建配置文件。
    * 将 FLTK 的偏好设置根目录重定向到用户的漫游配置目录。
    * 参考上游 issue #822。
+   *
+   * 目录解析复用 core::getvncconfigdir()，不再自行读取 APPDATA，
+   * 保证与其余配置路径（%APPDATA%\TuPigVNC）始终一致。
    */
   if (getenv("FLTK_PREFS_ROOT") == nullptr) {
-    char appdata[MAX_PATH];
-    if (GetEnvironmentVariableA("APPDATA", appdata, MAX_PATH) > 0) {
-      std::string prefsRoot = std::string(appdata) + "\\TuPigVNC";
-      _putenv_s("FLTK_PREFS_ROOT", prefsRoot.c_str());
-    }
+    const char* configDir = core::getvncconfigdir();
+    if (configDir != nullptr && configDir[0] != '\0')
+      _putenv_s("FLTK_PREFS_ROOT", configDir);
   }
 #endif
 

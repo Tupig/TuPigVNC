@@ -303,12 +303,32 @@ tupigvnc::viewer
 | `parameters.cxx` | 4 处注册表路径硬编码 → 常量 |
 | `PlatformWin32.cxx` / `UpdateCheckerWin32.cxx` | `widen`/`narrow` 与 `executablePath` 去重 |
 | `xdgdirs.cxx` | `mkdir_p` 改用 `std::filesystem`，修复 Windows 多级目录 |
+| `vncviewer.cxx` | `FLTK_PREFS_ROOT` 改用 `core::getvncconfigdir()` |
+
+**vncviewer.cxx 逐处评估（13 处 `#ifdef`）**：
+
+| 行 | 内容 | 结论 |
+|----|------|------|
+| 37-40 | `<core/winerrno.h>`、`<direct.h>` | 保留：Windows 专有头文件 |
+| 71-74 | `resource.h`、`win32.h` | 保留：资源与 Win32 辅助 |
+| 266-320 | 图标加载（`LoadImage` vs PNG 文件） | 保留：FLTK 层差异，非通用平台抽象 |
+| 343-347 | `Fl_File_Chooser::filesystems_label` | 保留：属于 i18n 范畴 |
+| 382-394 | `AllocConsole` 控制台创建 | 保留：GUI 子系统专有逻辑 |
+| 396-413 | usage 文本差异（displayNum vs unix socket） | 保留：协议能力差异 |
+| 432-435 | `Sleep(INFINITE)` | 保留：等待用户关闭控制台 |
+| 447-457 | Unix socket 检测 | 保留：平台专有 |
+| 482-490 | 弃用提示的路径分隔符 | 保留：文本差异 |
+| 523-562 | `getenv("VNC_VIA_CMD")` | 保留：跨平台环境变量 |
+| 570-583 | `FLTK_PREFS_ROOT` | **已迁移** |
+| 675-695 | `-via`/`-listen` 互斥检查 | 保留：Unix 专有 |
+| 740-760 | `mktunnel()` | 保留：Unix 专有 |
 
 **评估后保留（不迁移）**：
 
 | 文件 | 原因 |
 |------|------|
 | `Socket.cxx` | `errorNumber`/`closesocket`/`SHUT_RD` 是 C 层宏，热路径虚函数化反而增加开销 |
-| `vncviewer.cxx` | 图标与菜单差异属于 FLTK 层，不属于通用平台抽象 |
+| `vncviewer.cxx` 其余 12 处 | 见上表：语音差异、FLTK 层、协议能力各不相同，抽象后只会更难读 |
 
-**下一步**：从 P0 的 `vncviewer.cxx` 开始，逐个文件迁移。
+**结论**：阶段 2 的有效迁移已全部完成。剩余 `#ifdef` 属于「平台差异本就该存在」的范畴，
+继续机械抽象会降低可读性并引入间接调用开销。
