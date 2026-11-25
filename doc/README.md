@@ -17,6 +17,7 @@
 |------|------|
 | [UPSTREAM_ISSUES.md](UPSTREAM_ISSUES.md) | 上游 175 个 open issue 的分类整理与处理优先级 |
 | [PROJECT_REVIEW.md](PROJECT_REVIEW.md) | 项目审查与重构建议（目录结构、平台抽象、现代 C++ 迁移） |
+| [REFACTORING_PLAN.md](REFACTORING_PLAN.md) | 重构实施计划（阶段划分、迁移清单、本地 MSVC 验证方法） |
 | [SECURITY_AUDIT.md](SECURITY_AUDIT.md) | 安全审计报告（依赖、构建、发布流程） |
 | [PERFORMANCE.md](PERFORMANCE.md) | 性能优化专项（编译优化、热点分析、优化建议） |
 
