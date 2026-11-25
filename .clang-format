@@ -1,0 +1,47 @@
+# TuPigVNC 代码格式化配置
+#
+# 风格以 TigerVNC 上游为准：2 空格缩进、Allman 大括号、行宽 80。
+# 新代码请用 `clang-format -i <文件>` 格式化；历史代码不做批量重排，
+# 以免产生大量无意义的空白差异。
+
+---
+Language: Cpp
+BasedOnStyle: LLVM
+
+# 缩进
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+ContinuationIndentWidth: 4
+
+# 大括号独立成行（Allman 风格）
+BreakBeforeBraces: Allman
+BraceWrapping:
+  AfterFunction: true
+  AfterControlStatement: false
+  AfterClass: true
+  AfterStruct: true
+  AfterNamespace: false
+
+# 行宽
+ColumnLimit: 80
+
+# 指针对齐：`char* p`
+PointerAlignment: Right
+
+# 允许短函数体与短语句单行
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+
+# 包含排序
+SortIncludes: Never
+
+# 访问修饰符：public 与 class 同缩进（TigerVNC 风格）
+AccessModifierOffset: -2
+
+# 其他
+AlignAfterOpenBracket: Align
+BreakBeforeBinaryOperators: None
+Cpp11BracedListStyle: true
+SpaceAfterCStyleCast: true
+Standard: c++20
