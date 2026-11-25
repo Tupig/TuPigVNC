@@ -31,9 +31,13 @@ jobs:
       - name: Compute next version
         id: version
         shell: pwsh
+        # 提交信息通过环境变量传入，绝不直接内插进脚本。
+        # 直接内插会让提交信息里的引号 / $() 破坏脚本，构成脚本注入漏洞。
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
-          $isMain = "${{ github.ref }}" -eq "refs/heads/main"
-          $skip = "${{ github.event.head_commit.message }}" -match '\[skip ci\]'
+          $isMain = $env:GITHUB_REF -eq "refs/heads/main"
+          $skip = $env:COMMIT_MSG -match '\[skip ci\]'
           $content = Get-Content CMakeLists.txt -Raw
           if ($content -match 'set\(VERSION ([\d.]+)\)') {
             $current = $matches[1]
