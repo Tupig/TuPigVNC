@@ -21,9 +21,15 @@ jobs:
     permissions:
       contents: write
     env:
+      # 显式固定 vcpkg 安装根目录。runner 自带的是 C:\vcpkg，
+      # 但它是 runner 自动设的环境变量，不能出现在 ${{ env.* }} 上下文里，
+      # 所以这里显式声明，供 cache 步骤的 path 引用。
+      VCPKG_INSTALLATION_ROOT: C:\vcpkg
       VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg-cache
-      # 依赖集合（vcpkg install 列表）变化时手动递增，用于让缓存失效
-      VCPKG_CACHE_VERSION: v1
+      # 依赖集合（vcpkg install 列表）或缓存布局变化时手动递增，用于让缓存失效
+      VCPKG_CACHE_VERSION: v2
+      # sccache 使用 GitHub Actions 缓存后端，无需额外对象存储
+      SCCACHE_GHA_ENABLED: "true"
     steps:
       - uses: actions/checkout@v6
         with:
@@ -70,7 +76,14 @@ jobs:
 
       - uses: actions/cache@v6
         with:
-          path: vcpkg-cache
+          # 同时缓存 vcpkg 的二进制包目录与已安装的库。
+          # 只缓存 vcpkg-cache 时，vcpkg 仍会逐包重算 ABI 并解压全部依赖；
+          # 缓存 installed 后，命中时 vcpkg install 直接判定已安装，几秒完成。
+          # downloads 缓存源码压缩包，避免联网重复下载。
+          path: |
+            vcpkg-cache
+            ${{ env.VCPKG_INSTALLATION_ROOT }}/installed
+            ${{ env.VCPKG_INSTALLATION_ROOT }}/downloads
           # 依赖集合变化时才递增 VCPKG_CACHE_VERSION。
           # 不要用 hashFiles('msvc.yml')：那样每次调整工作流都会让缓存失效，
           # 白白多花二十多分钟重装依赖。
@@ -82,6 +95,12 @@ jobs:
           vcpkg install --triplet x64-windows-static `
             zlib libjpeg-turbo pixman fltk nettle gtest "gettext[tools]"
 
+      # 编译缓存：跨 run 复用 .obj，全量编译从三十分钟降到几分钟。
+      - name: Setup sccache
+        uses: mozilla-actions/sccache-action@v0.0.9
+        with:
+          version: "v0.8.1"
+
       - name: Configure
         run: |
           $vcpkg = $env:VCPKG_INSTALLATION_ROOT
@@ -91,6 +110,8 @@ jobs:
             -DCMAKE_TOOLCHAIN_FILE="$vcpkg/scripts/buildsystems/vcpkg.cmake" `
             -DVCPKG_TARGET_TRIPLET=x64-windows-static `
             -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded `
+            -DCMAKE_C_COMPILER_LAUNCHER=sccache `
+            -DCMAKE_CXX_COMPILER_LAUNCHER=sccache `
             -DENABLE_NLS=ON `
             -DENABLE_H264=ON `
             -DENABLE_AUDIO=ON `
@@ -194,14 +215,18 @@ jobs:
       contents: read
       security-events: write
     env:
+      VCPKG_INSTALLATION_ROOT: C:\vcpkg
       VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg-cache
-      VCPKG_CACHE_VERSION: v1
+      VCPKG_CACHE_VERSION: v2
     steps:
       - uses: actions/checkout@v6
 
       - uses: actions/cache@v6
         with:
-          path: vcpkg-cache
+          path: |
+            vcpkg-cache
+            ${{ env.VCPKG_INSTALLATION_ROOT }}/installed
+            ${{ env.VCPKG_INSTALLATION_ROOT }}/downloads
           key: vcpkg-msvc-${{ env.VCPKG_CACHE_VERSION }}-${{ runner.os }}
 
       - name: Install dependencies
