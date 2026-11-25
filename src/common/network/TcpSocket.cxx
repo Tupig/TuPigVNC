@@ -94,12 +94,18 @@ int network::findFreeTcpPort (void)
     throw core::socket_error(_("Failed to create socket"), errorNumber);
 
   addr.sin_port = 0;
-  if (bind (sock, (struct sockaddr *)&addr, sizeof (addr)) < 0)
-    throw core::socket_error(_("Failed to find free port"), errorNumber);
+  if (bind (sock, (struct sockaddr *)&addr, sizeof (addr)) < 0) {
+    int err = errorNumber;
+    closesocket (sock);
+    throw core::socket_error(_("Failed to find free port"), err);
+  }
 
   socklen_t n = sizeof(addr);
-  if (getsockname (sock, (struct sockaddr *)&addr, &n) < 0)
-    throw core::socket_error(_("Failed to get port number"), errorNumber);
+  if (getsockname (sock, (struct sockaddr *)&addr, &n) < 0) {
+    int err = errorNumber;
+    closesocket (sock);
+    throw core::socket_error(_("Failed to get port number"), err);
+  }
 
   closesocket (sock);
   return ntohs(addr.sin_port);
@@ -162,7 +168,9 @@ void network::getHostAndPort(const char* hi, std::string* host,
   }
 
   // Back up past trailing space
-  while(isspace(*(hostEnd - 1)) && hostEnd > hostStart)
+  // 必须先判空再解引用：hostEnd == hostStart 时若先求值 *(hostEnd - 1)，
+  // 会读到缓冲区前一个字节（越界读）。
+  while(hostEnd > hostStart && isspace(*(hostEnd - 1)))
     hostEnd--;
 
   if (hostStart == hostEnd)
@@ -720,10 +728,12 @@ TcpFilter::Pattern TcpFilter::parsePattern(const char* p) {
     hints.ai_flags = AI_NUMERICHOST;
 
     // Take out brackets, if present
+    // 注意：parts 是按 '/' 拆分出的段列表，parts.size() 是段数，
+    // 不是 parts[0] 的字符长度。用错会导致 ']' 永远删不掉。
     if (parts[0][0] == '[') {
       parts[0].erase(0, 1);
-      if (!parts[0].empty() && parts[0][parts.size()-1] == ']')
-        parts[0].erase(parts.size()-1, 1);
+      if (!parts[0].empty() && parts[0][parts[0].size()-1] == ']')
+        parts[0].erase(parts[0].size()-1, 1);
     }
 
     if ((result = getaddrinfo (parts[0].c_str(), nullptr, &hints, &ai)) != 0) {

@@ -394,11 +394,17 @@ bool UpdateChecker::isNewer(const std::string& remote,
 
 std::string UpdateChecker::platformKeyword()
 {
+  /*
+   * 返回值必须能匹配发布资产的文件名。
+   * 安装包由 release/CMakeLists.txt 的 INST_SUFFIX 生成，形如
+   * TuPigVNC_x64.exe / TuPigVNC_x86.exe，因此这里用 x64 / x86，
+   * 而不是 win64 / win32——后者永远匹配不到，会让检查更新形同虚设。
+   */
 #if defined(_WIN32)
 #if defined(_M_X64) || defined(__x86_64__)
-  return "win64";
+  return "x64";
 #else
-  return "win32";
+  return "x86";
 #endif
 #elif defined(__APPLE__)
   return "macos";
@@ -445,6 +451,7 @@ bool UpdateChecker::fetchLatestRelease(ReleaseInfo* info, std::string* error)
   {
     if (assets->type == JsonValue::Array)
     {
+      /* 第一遍：定位安装包（只认 .exe，避免误匹配 .sha256 等） */
       for (const JsonValue& asset : assets->array)
       {
         const JsonValue* name = asset.find("name");
@@ -452,18 +459,42 @@ bool UpdateChecker::fetchLatestRelease(ReleaseInfo* info, std::string* error)
         if (!name || !url)
           continue;
         std::string assetName = name->asString();
-        if (assetName.size() > 7 &&
-            assetName.compare(assetName.size() - 7, 7, ".sha256") == 0)
-        {
-          info->checksumUrl = url->asString();
+        if (assetName.size() <= 4 ||
+            assetName.compare(assetName.size() - 4, 4, ".exe") != 0)
           continue;
-        }
         if (info->downloadUrl.empty() &&
             assetName.find(keyword) != std::string::npos)
         {
           info->downloadUrl = url->asString();
           if (const JsonValue* size = asset.find("size"))
             info->size = size->asInteger();
+        }
+      }
+
+      /*
+       * 第二遍：精确取出「选中安装包名 + .sha256」的校验文件。
+       * 不能见到 .sha256 就赋值——发布里可能同时存在多个 exe
+       * 的校验文件，最后写入的那个会赢，导致哈希必然对不上。
+       */
+      if (!info->downloadUrl.empty())
+      {
+        std::string expected = info->downloadUrl;
+        std::string::size_type slash = expected.rfind('/');
+        if (slash != std::string::npos)
+          expected = expected.substr(slash + 1);
+        expected += ".sha256";
+
+        for (const JsonValue& asset : assets->array)
+        {
+          const JsonValue* name = asset.find("name");
+          const JsonValue* url = asset.find("browser_download_url");
+          if (!name || !url)
+            continue;
+          if (name->asString() == expected)
+          {
+            info->checksumUrl = url->asString();
+            break;
+          }
         }
       }
     }

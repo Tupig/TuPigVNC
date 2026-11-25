@@ -148,23 +148,50 @@ bool httpGet(const std::string& url, std::string* response, std::string* error)
   }
 
   response->clear();
+
+  /*
+   * 读取循环必须区分「正常结束」与「读取失败」。
+   * 原实现失败时只 break，循环后无条件 return true，会把截断的
+   * 响应当成完整内容写盘；若发布没有 .sha256 资产，残缺的安装包
+   * 会被直接执行。
+   */
+  bool failed = false;
+  std::string failReason;
   for (;;)
   {
     DWORD available = 0;
     if (!WinHttpQueryDataAvailable(request, &available))
+    {
+      failed = true;
+      failReason = "查询可用数据失败（错误码 " +
+                   std::to_string(GetLastError()) + "）";
       break;
+    }
     if (available == 0)
-      break;
+      break; /* 正常结束 */
     std::string buffer(available, '\0');
     DWORD read = 0;
     if (!WinHttpReadData(request, &buffer[0], available, &read))
+    {
+      failed = true;
+      failReason = "读取响应数据失败（错误码 " +
+                   std::to_string(GetLastError()) + "）";
       break;
+    }
     response->append(buffer.data(), read);
   }
 
   WinHttpCloseHandle(request);
   WinHttpCloseHandle(connection);
   WinHttpCloseHandle(session);
+
+  if (failed)
+  {
+    response->clear(); /* 丢弃残缺数据，避免被当成完整下载 */
+    if (error)
+      *error = "下载中断：" + failReason;
+    return false;
+  }
   return true;
 }
 
@@ -178,7 +205,7 @@ bool UpdateChecker::downloadFile(const std::string& url,
   if (!detail::httpGet(url, &content, error))
     return false;
 
-  FILE* file = fopen(destPath.c_str(), "wb");
+  FILE* file = _wfopen(widen(destPath).c_str(), L"wb");
   if (!file)
   {
     if (error)
@@ -319,6 +346,8 @@ bool UpdateChecker::downloadAndInstall(const std::string& url,
   std::string batchPath = tempDir + "\\TuPigVNC-update.cmd";
   std::string script;
   script += "@echo off\r\n";
+  /* 脚本以 UTF-8 写入，先切到 65001 代码页，中文路径才不会被 cmd 打乱 */
+  script += "chcp 65001 >nul\r\n";
   script += "ping 127.0.0.1 -n 3 >nul\r\n";
   script +=
       "\"" + installer + "\" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-\r\n";
@@ -327,7 +356,7 @@ bool UpdateChecker::downloadAndInstall(const std::string& url,
   script += "del /f /q \"" + installer + "\" 2>nul\r\n";
   script += "del /f /q \"%~f0\" 2>nul\r\n";
 
-  FILE* file = fopen(batchPath.c_str(), "wb");
+  FILE* file = _wfopen(widen(batchPath).c_str(), L"wb");
   if (!file)
   {
     if (error)
