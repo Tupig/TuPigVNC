@@ -179,3 +179,64 @@ jobs:
           reporter: java-junit
           # 构建失败时不会产生测试结果，此时不应让报告 job 额外报错
           fail-on-empty: false
+
+  # ---------------- 安全扫描（构建通过后执行） ----------------
+  # 合并进本工作流而非独立文件：CodeQL 需要编译期插桩，独立运行会
+  # 重复安装 vcpkg 依赖并重复编译，白白多花一倍时间。此处通过
+  # needs 建立前后关系，并复用同一份 vcpkg 缓存。
+  codeql-analyze:
+    name: 安全扫描 (CodeQL)
+    runs-on: windows-latest
+    needs: build-windows-msvc
+    timeout-minutes: 120
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    env:
+      VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg-cache
+      VCPKG_CACHE_VERSION: v1
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/cache@v6
+        with:
+          path: vcpkg-cache
+          key: vcpkg-msvc-${{ env.VCPKG_CACHE_VERSION }}-${{ runner.os }}
+
+      - name: Install dependencies
+        run: |
+          New-Item -ItemType Directory -Force vcpkg-cache
+          vcpkg install --triplet x64-windows-static `
+            zlib libjpeg-turbo pixman fltk nettle gtest "gettext[tools]"
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: c-cpp
+          build-mode: manual
+
+      - name: Configure
+        run: |
+          $vcpkg = $env:VCPKG_INSTALLATION_ROOT
+          $env:PATH = "$vcpkg\installed\x64-windows-static\bin;$env:PATH"
+          cmake `
+            -A x64 `
+            -DCMAKE_TOOLCHAIN_FILE="$vcpkg/scripts/buildsystems/vcpkg.cmake" `
+            -DVCPKG_TARGET_TRIPLET=x64-windows-static `
+            -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded `
+            -DENABLE_NLS=ON `
+            -DENABLE_H264=ON `
+            -DENABLE_AUDIO=ON `
+            -DENABLE_GNUTLS=OFF `
+            -DENABLE_NETTLE=ON `
+            -DBUILD_VIEWER=ON `
+            -S . -B build
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:c-cpp"
