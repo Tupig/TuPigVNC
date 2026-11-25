@@ -17,9 +17,9 @@ add_library(core STATIC
   xdgdirs.cxx)
 
 if(WIN32)
-  target_sources(core PRIVATE UpdateCheckerWin32.cxx)
+  target_sources(core PRIVATE UpdateCheckerWin32.cxx PlatformWin32.cxx)
 else()
-  target_sources(core PRIVATE UpdateCheckerUnix.cxx)
+  target_sources(core PRIVATE UpdateCheckerUnix.cxx PlatformUnix.cxx)
 endif()
 
 target_include_directories(core PUBLIC ${CMAKE_SOURCE_DIR}/src/common)
