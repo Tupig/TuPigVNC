@@ -74,7 +74,9 @@ jobs:
           $content = $content -replace 'set\(VERSION [\d.]+\)', "set(VERSION ${{ steps.version.outputs.next }})"
           Set-Content CMakeLists.txt $content -NoNewline
 
-      - uses: actions/cache@v6
+      - name: Restore vcpkg cache
+        id: vcpkg-cache
+        uses: actions/cache/restore@v6
         with:
           # 同时缓存 vcpkg 的二进制包目录与已安装的库。
           # 只缓存 vcpkg-cache 时，vcpkg 仍会逐包重算 ABI 并解压全部依赖；
@@ -94,6 +96,18 @@ jobs:
           New-Item -ItemType Directory -Force vcpkg-cache
           vcpkg install --triplet x64-windows-static `
             zlib libjpeg-turbo pixman fltk nettle gtest "gettext[tools]"
+
+      # 依赖装完立即保存缓存：actions/cache 的 post 默认 success()，
+      # 后续编译失败时不会保存，导致每次重装五十分钟依赖。
+      - name: Save vcpkg cache
+        if: always() && steps.vcpkg-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            vcpkg-cache
+            ${{ env.VCPKG_INSTALLATION_ROOT }}/installed
+            ${{ env.VCPKG_INSTALLATION_ROOT }}/downloads
+          key: vcpkg-msvc-${{ env.VCPKG_CACHE_VERSION }}-${{ runner.os }}
 
       # 编译缓存：跨 run 复用 .obj，全量编译从三十分钟降到几分钟。
       - name: Setup sccache
@@ -221,7 +235,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/cache@v6
+      - name: Restore vcpkg cache
+        uses: actions/cache/restore@v6
         with:
           path: |
             vcpkg-cache
