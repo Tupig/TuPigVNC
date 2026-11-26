@@ -40,14 +40,27 @@
 #include <FL/Fl_File_Chooser.H>
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Browser.H>
+#include <FL/Fl_Check_Button.H>
+#include <FL/Fl_Choice.H>
+#include <FL/Fl_Int_Input.H>
+#include <FL/Fl_Toggle_Button.H>
+#include <FL/Fl_Progress.H>
 
 #include <core/Exception.h>
 #include <core/LogWriter.h>
 #include <core/i18n.h>
 #include <core/string.h>
 #include <core/xdgdirs.h>
+#include <core/UpdateChecker.h>
 
 #include <network/TcpSocket.h>
+
+#include <rfb/encodings.h>
+#include <rfb/CConnection.h>
+#if defined(HAVE_GNUTLS) || defined(HAVE_NETTLE)
+#include <rfb/Security.h>
+#include <rfb/SecurityClient.h>
+#endif
 
 #include "fltk/layout.h"
 #include "fltk/util.h"
@@ -60,6 +73,11 @@
 
 static core::LogWriter vlog("ServerDialog");
 
+/* 当前存活的 ServerDialog 实例。
+ * 后台更新线程经 Fl::awake 回到主线程时，若对话框已销毁则丢弃结果，
+ * 避免访问悬空指针。 */
+static std::atomic<ServerDialog*> g_updOwner{nullptr};
+
 const char* SERVER_HISTORY="tigervnc.history";        // 旧格式（仅用于迁移）
 const char* SERVER_HISTORY_JSON="history.json";       // 新格式：User/history.json
 static const size_t SERVER_HISTORY_MAX = 250;         // 历史上限
@@ -69,14 +87,32 @@ static bool same_server(const std::string& a, const std::string& b);
 
 ServerDialog::ServerDialog()
   : Fl_Window(540, 760, "TuPigVNC"),
-    scroll(nullptr), historyBrowser(nullptr), activePanel(-1), panelTopY(0)
+    scroll(nullptr), historyBrowser(nullptr), activePanel(-1), panelTopY(0),
+    activeOpt(0),
+    optAutoSelect(nullptr), optJpeg(nullptr), optEncoding(nullptr),
+    optColorLevel(nullptr), optCustomCompress(nullptr),
+    optCompressLevel(nullptr), optQualityLevel(nullptr),
+    optEncryption(nullptr), optAuth(nullptr),
+    optViewOnly(nullptr), optMouseMode(nullptr), optCursorType(nullptr),
+    optSystemKeys(nullptr), optAcceptClip(nullptr), optSendClip(nullptr),
+    optDisplayMode(nullptr),
+    optShared(nullptr), optReconnect(nullptr), optAudio(nullptr)
 {
   for (int i = 0; i < 4; i++) {
     panels[i] = nullptr;
     entries_[i] = nullptr;
   }
+  for (int i = 0; i < 6; i++) {
+    optPanes[i] = nullptr;
+    optTabs[i] = nullptr;
+  }
+  for (int i = 0; i < 4; i++)
+    optMod[i] = nullptr;
 
   buildLayout();
+  loadOptions();
+
+  g_updOwner = this;
 }
 
 
@@ -215,7 +251,7 @@ void ServerDialog::buildLayout()
 
   // ---- 展开面板（初始全部隐藏）----
   for (int i = 0; i < 4; i++) {
-    panels[i] = new Fl_Group(PAD, panelTopY, cw, 240);
+    panels[i] = new Fl_Group(PAD, panelTopY, cw, 450);
     panels[i]->box(FL_FLAT_BOX);
     panels[i]->color(M_BG);
     switch (i) {
@@ -268,26 +304,616 @@ void ServerDialog::buildHistoryPanel(Fl_Group *g)
   historyBrowser->textcolor(M_TEXT);
 }
 
+// ============================================================
+// 选项面板 · 6 个分类页
+// ============================================================
+
+/* 分类页内的说明小标题 */
+static Fl_Box *optCaption(int x, int y, int w, const char *text)
+{
+  Fl_Box *b = new Fl_Box(x, y, w, 18, text);
+  b->labelsize(11);
+  b->labelcolor(M_TEXT3);
+  b->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
+  return b;
+}
+
+/* 分类页内的复选按钮 */
+static Fl_Check_Button *optCheck(int x, int y, int w, const char *text)
+{
+  Fl_Check_Button *b = new Fl_Check_Button(x, y, w, 24, text);
+  b->box(FL_NO_BOX);
+  b->down_box(FL_DOWN_BOX);
+  b->labelsize(12);
+  b->labelcolor(M_TEXT);
+  b->clear_visible_focus();
+  return b;
+}
+
+/* 分类页内的下拉框 */
+static Fl_Choice *optChoice(int x, int y, int w, int h)
+{
+  Fl_Choice *c = new Fl_Choice(x, y, w, h);
+  c->box(THEME_UP_BOX);
+  c->color(M_CARD);
+  c->textsize(12);
+  c->textcolor(M_TEXT);
+  c->clear_visible_focus();
+  return c;
+}
+
+/* 分类页内的数字输入框 */
+static Fl_Int_Input *optSpin(int x, int y, int w, int h)
+{
+  Fl_Int_Input *i = new Fl_Int_Input(x, y, w, h);
+  i->box(THEME_UP_BOX);
+  i->color(M_CARD);
+  i->textsize(12);
+  i->textcolor(M_TEXT);
+  return i;
+}
+
 void ServerDialog::buildOptionsPanel(Fl_Group *g)
 {
   buildPanelHeader(g, "选项设置", onClosePanel, this);
 
-  Fl_Box *placeholder = new Fl_Box(0, 40, g->w(), 60,
-                                   "（6 分类：压缩 / 安全 / 输入 / 键盘快捷键 / 显示 / 杂项）");
-  placeholder->labelsize(11);
-  placeholder->labelcolor(M_TEXT3);
-  placeholder->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
+  const int cw = g->w();
+  const int TAB_Y = 38;
+  const int TAB_H = 26;
+
+  // ---- 6 个分类子标签（互斥切换）----
+  const char *tabNames[6] = {"压缩", "安全", "输入", "键盘", "显示", "杂项"};
+  const int tw = cw / 6;
+  for (int i = 0; i < 6; i++) {
+    Fl_Toggle_Button *t = new Fl_Toggle_Button(i * tw, TAB_Y, tw - 2, TAB_H,
+                                               tabNames[i]);
+    t->type(FL_RADIO_BUTTON);   // 同一父组内自动互斥
+    t->box(THEME_UP_BOX);
+    t->labelsize(11);
+    t->labelcolor(M_TEXT2);
+    t->clear_visible_focus();
+    t->user_data((void*)(intptr_t)i);
+    t->callback(onOptionTab, this);
+    optTabs[i] = t;
+  }
+
+  // ---- 6 个分类页（同一时刻只显示一个）----
+  const int PANE_Y = TAB_Y + TAB_H + 12;
+  for (int i = 0; i < 6; i++) {
+    Fl_Group *p = new Fl_Group(0, PANE_Y, cw, 370);
+    p->box(FL_NO_BOX);
+    switch (i) {
+    case 0: buildOptionCompress(p, 0); break;
+    case 1: buildOptionSecurity(p, 0); break;
+    case 2: buildOptionInput(p, 0);    break;
+    case 3: buildOptionKeys(p, 0);     break;
+    case 4: buildOptionDisplay(p, 0);  break;
+    case 5: buildOptionMisc(p, 0);     break;
+    }
+    p->end();
+    p->hide();
+    optPanes[i] = p;
+  }
+
+  showOptionPane(0);
+}
+
+void ServerDialog::buildOptionCompress(Fl_Group *p, int y)
+{
+  const int cw = p->w();
+  const int half = cw / 2 - 8;
+
+  optAutoSelect = optCheck(0, y, half, "自动选择");
+  optJpeg = optCheck(0, y + 28, half, "允许 JPEG 压缩");
+
+  int yy = y + 62;
+  optCaption(0, yy, half, "首选编码");
+  optCaption(half + 16, yy, half, "颜色级别");
+  yy += 20;
+
+  optEncoding = optChoice(0, yy, half, 26);
+  const char *encs[6] = {"Tight", "JPEG", "ZRLE", "Hextile", "H.264", "Raw"};
+  for (int i = 0; i < 6; i++)
+    optEncoding->add(encs[i]);
+
+  optColorLevel = optChoice(half + 16, yy, half, 26);
+  optColorLevel->add("全部");
+  optColorLevel->add("中");
+  optColorLevel->add("低");
+  optColorLevel->add("非常低");
+
+  yy += 42;
+  optCustomCompress = optCheck(0, yy, 130, "自定义压缩级别");
+  optCompressLevel = optSpin(134, yy + 2, 46, 22);
+  optCaption(186, yy, cw - 186, "（0=最快，9=最好）");
+
+  yy += 34;
+  optCaption(0, yy, 80, "质量级别");
+  optQualityLevel = optSpin(80, yy + 1, 46, 22);
+  optCaption(132, yy, cw - 132, "（0=最差，9=最好）");
+}
+
+void ServerDialog::buildOptionSecurity(Fl_Group *p, int y)
+{
+  const int half = p->w() / 2 - 8;
+
+  optCaption(0, y, half, "加密");
+  optEncryption = optChoice(0, y + 20, half, 26);
+  optEncryption->add("无");
+  optEncryption->add("RSA-AES");
+
+  optCaption(0, y + 60, half, "认证");
+  optAuth = optChoice(0, y + 80, half, 26);
+  optAuth->add("无");
+  optAuth->add("标准 VNC（不安全且无加密）");
+  optAuth->add("用户名及密码（不安全且无加密）");
+}
+
+void ServerDialog::buildOptionInput(Fl_Group *p, int y)
+{
+  const int cw = p->w();
+  const int half = cw / 2 - 8;
+
+  optViewOnly = optCheck(0, y, cw, "仅显示（忽略鼠标及键盘）");
+
+  int yy = y + 32;
+  optCaption(0, yy, half, "鼠标");
+  optMouseMode = optChoice(0, yy + 18, half, 26);
+  optMouseMode->add("模拟鼠标中键");
+  optMouseMode->add("服务器未提供光标时，显示本地光标");
+
+  optCaption(half + 16, yy, half, "光标类型");
+  optCursorType = optChoice(half + 16, yy + 18, half, 26);
+  optCursorType->add("点");
+  optCursorType->add("系统");
+
+  yy += 60;
+  optSystemKeys = optCheck(0, yy, cw, "全屏时始终发送所有键盘输入");
+
+  yy += 32;
+  optCaption(0, yy, cw, "剪贴板");
+  optAcceptClip = optCheck(0, yy + 18, cw, "接受来自服务器的剪切板内容");
+  optSendClip = optCheck(0, yy + 44, cw, "发送剪切板内容到服务器");
+}
+
+void ServerDialog::buildOptionKeys(Fl_Group *p, int y)
+{
+  const int cw = p->w();
+
+  optCaption(0, y, cw, "键盘快捷键的修饰键：");
+
+  const char *modNames[4] = {"Ctrl", "Shift", "Alt", "Win"};
+  for (int i = 0; i < 4; i++) {
+    Fl_Toggle_Button *b = new Fl_Toggle_Button(i * 66, y + 22, 60, 28,
+                                               modNames[i]);
+    b->box(THEME_UP_BOX);
+    b->labelsize(11);
+    b->labelcolor(M_TEXT);
+    b->clear_visible_focus();
+    optMod[i] = b;
+  }
+
+  Fl_Box *text = new Fl_Box(0, y + 62, cw, 140,
+    "要从会话释放键盘控制权，请按 Ctrl+Alt。\n"
+    "要将所有键盘输入传递给会话，请按 Ctrl+Alt+G。\n"
+    "要切换全屏模式，请按 Ctrl+Alt+Enter。\n"
+    "要打开会话的上下文菜单，请按 Ctrl+Alt+M。\n"
+    "要将包含 Ctrl+Alt 的组合键直接发送给会话，请按 Ctrl+Alt+Space，\n"
+    "在不松开 Ctrl+Alt 的情况下松开空格键，然后按下所需的按键。");
+  text->labelsize(11);
+  text->labelcolor(M_TEXT2);
+  text->align(FL_ALIGN_LEFT | FL_ALIGN_TOP | FL_ALIGN_WRAP);
+}
+
+void ServerDialog::buildOptionDisplay(Fl_Group *p, int y)
+{
+  const int cw = p->w();
+
+  optCaption(0, y, cw, "显示模式");
+  optDisplayMode = optChoice(0, y + 20, cw / 2, 26);
+  optDisplayMode->add("窗口化");
+  optDisplayMode->add("在当前显示器上全屏显示");
+  optDisplayMode->add("为所有显示器开启全屏模式");
+  optDisplayMode->add("为选定显示器开启全屏模式");
+}
+
+void ServerDialog::buildOptionMisc(Fl_Group *p, int y)
+{
+  const int cw = p->w();
+
+  optShared = optCheck(0, y, cw, "共享（不要断开其他查看器）");
+  optReconnect = optCheck(0, y + 28, cw, "连接错误时询问是否重新连接");
+  optAudio = optCheck(0, y + 56, cw, "播放来自服务器的音频");
+}
+
+void ServerDialog::onOptionTab(Fl_Widget *widget, void *data)
+{
+  ServerDialog *dialog = (ServerDialog*)data;
+  dialog->showOptionPane((int)(intptr_t)widget->user_data());
+}
+
+void ServerDialog::showOptionPane(int idx)
+{
+  if (idx < 0 || idx >= 6)
+    return;
+  activeOpt = idx;
+  for (int i = 0; i < 6; i++) {
+    if (optPanes[i] == nullptr)
+      continue;
+    if (i == idx)
+      optPanes[i]->show();
+    else
+      optPanes[i]->hide();
+  }
+  if (optTabs[idx] != nullptr)
+    optTabs[idx]->value(1);
+  panels[1]->redraw();
+}
+
+void ServerDialog::loadOptions()
+{
+  if (optAutoSelect == nullptr)
+    return;
+
+  optAutoSelect->value(autoSelect ? 1 : 0);
+  optJpeg->value(rfb::CConnection::noJpeg ? 0 : 1);
+
+  // 首选编码
+  const char *encs[6] = {"Tight", "JPEG", "ZRLE", "Hextile", "H.264", "Raw"};
+  int ei = 0;
+  for (int i = 0; i < 6; i++) {
+    if (preferredEncoding == encs[i]) {
+      ei = i;
+      break;
+    }
+  }
+  optEncoding->value(ei);
+
+  // 颜色级别：0=全部 1=中 2=低 3=非常低
+  int ci = 0;
+  if (!fullColour) {
+    switch ((int)lowColourLevel) {
+    case 0: ci = 3; break;
+    case 1: ci = 2; break;
+    case 2: ci = 1; break;
+    default: ci = 0; break;
+    }
+  }
+  optColorLevel->value(ci);
+
+  optCustomCompress->value(customCompressLevel ? 1 : 0);
+  char buf[8];
+  snprintf(buf, sizeof(buf), "%d", (int)compressLevel);
+  optCompressLevel->value(buf);
+  snprintf(buf, sizeof(buf), "%d", (int)qualityLevel);
+  optQualityLevel->value(buf);
+
+  // 安全：从 secTypes 字符串反推
+#if defined(HAVE_GNUTLS) || defined(HAVE_NETTLE)
+  const std::string secTypes = rfb::SecurityClient::secTypes;
+  optEncryption->value(secTypes.find("RA2") != std::string::npos ? 1 : 0);
+  if (secTypes.find("Plain") != std::string::npos)
+    optAuth->value(2);
+  else if (secTypes.find("VncAuth") != std::string::npos)
+    optAuth->value(1);
+  else
+    optAuth->value(0);
+#else
+  optEncryption->value(0);
+  optAuth->value(1);
+#endif
+
+  // 输入
+  optViewOnly->value(viewOnly ? 1 : 0);
+  optMouseMode->value(emulateMiddleButton ? 0 : 1);
+  optCursorType->value(cursorType == "System" ? 1 : 0);
+  optSystemKeys->value(fullscreenSystemKeys ? 1 : 0);
+  optAcceptClip->value(acceptClipboard ? 1 : 0);
+  optSendClip->value(sendClipboard ? 1 : 0);
+
+  // 键盘修饰键（默认 Ctrl+Alt）
+  optMod[0]->value(1);
+  optMod[1]->value(0);
+  optMod[2]->value(1);
+  optMod[3]->value(0);
+
+  // 显示模式
+  if (!fullScreen)
+    optDisplayMode->value(0);
+  else if (fullScreenMode == "All")
+    optDisplayMode->value(2);
+  else if (fullScreenMode == "Selected")
+    optDisplayMode->value(3);
+  else
+    optDisplayMode->value(1);
+
+  // 杂项
+  optShared->value(shared ? 1 : 0);
+  optReconnect->value(reconnectOnError ? 1 : 0);
+#ifdef HAVE_AUDIO
+  optAudio->value(playAudio ? 1 : 0);
+#else
+  optAudio->value(0);
+  optAudio->deactivate();
+#endif
+}
+
+void ServerDialog::storeOptions()
+{
+  if (optAutoSelect == nullptr)
+    return;
+
+  autoSelect.setParam(optAutoSelect->value());
+  rfb::CConnection::noJpeg.setParam(!optJpeg->value());
+
+  const char *encs[6] = {"Tight", "JPEG", "ZRLE", "Hextile", "H.264", "Raw"};
+  int ei = optEncoding->value();
+  if (ei < 0 || ei > 5)
+    ei = 0;
+  preferredEncoding.setParam(encs[ei]);
+
+  switch (optColorLevel->value()) {
+  case 1: fullColour.setParam(false); lowColourLevel.setParam(2); break;
+  case 2: fullColour.setParam(false); lowColourLevel.setParam(1); break;
+  case 3: fullColour.setParam(false); lowColourLevel.setParam(0); break;
+  default: fullColour.setParam(true); break;
+  }
+
+  customCompressLevel.setParam(optCustomCompress->value());
+  compressLevel.setParam(atoi(optCompressLevel->value()));
+  qualityLevel.setParam(atoi(optQualityLevel->value()));
+
+  // 安全：按「加密 + 认证」组合出 secTypes 列表
+#if defined(HAVE_GNUTLS) || defined(HAVE_NETTLE)
+  {
+    std::string s;
+    if (optEncryption->value() == 1) {
+      s = "RA2ne,RA2,RA256";
+      if (optAuth->value() == 1)
+        s += ",VncAuth";
+      else if (optAuth->value() == 2)
+        s += ",Plain";
+    } else {
+      if (optAuth->value() == 0)
+        s = "None";
+      else if (optAuth->value() == 1)
+        s = "VncAuth";
+      else
+        s = "Plain";
+    }
+    rfb::SecurityClient::secTypes.setParam(s);
+  }
+#endif
+
+  viewOnly.setParam(optViewOnly->value());
+  emulateMiddleButton.setParam(optMouseMode->value() == 0);
+  acceptClipboard.setParam(optAcceptClip->value());
+  sendClipboard.setParam(optSendClip->value());
+  fullscreenSystemKeys.setParam(optSystemKeys->value());
+  cursorType.setParam(optCursorType->value() == 1 ? "System" : "Dot");
+
+  switch (optDisplayMode->value()) {
+  case 1: fullScreen.setParam(true); fullScreenMode.setParam("Current"); break;
+  case 2: fullScreen.setParam(true); fullScreenMode.setParam("All"); break;
+  case 3: fullScreen.setParam(true); fullScreenMode.setParam("Selected"); break;
+  default: fullScreen.setParam(false); break;
+  }
+
+  shared.setParam(optShared->value());
+  reconnectOnError.setParam(optReconnect->value());
+#ifdef HAVE_AUDIO
+  playAudio.setParam(optAudio->value());
+#endif
+}
+
+// ============================================================
+// 自动更新面板
+// ============================================================
+
+namespace {
+/* 后台任务的返回结果（由工作线程 new，主线程 delete） */
+struct UpdateTask {
+  ServerDialog *self;
+  bool install;              // 这次任务是「安装」而非「检查」
+  bool ok;
+  core::ReleaseInfo info;
+  std::string error;
+};
+}
+
+/* 主线程侧：后台任务完成后刷新界面 */
+void ServerDialog::updateTaskDone(void *ptr)
+{
+  UpdateTask *t = (UpdateTask*)ptr;
+  if (g_updOwner == t->self)
+    t->self->handleUpdateTask(t->ok, t->info, t->error, t->install);
+  delete t;
+}
+
+void ServerDialog::handleUpdateTask(bool ok, const core::ReleaseInfo &info,
+                                    const std::string &error, bool install)
+{
+  updBusy = false;
+  if (updThread.joinable())
+    updThread.join();
+
+  if (install) {
+    if (!ok) {
+      updStage->label(("安装失败：" + error).c_str());
+      updButton->activate();
+      updButton->redraw();
+    }
+    // 安装成功时安装器会接管进程，无需再更新界面
+    return;
+  }
+
+  updButton->activate();
+
+  if (!ok) {
+    updStage->label(("检查失败：" + error).c_str());
+    updButton->label("重试");
+    updButton->redraw();
+    return;
+  }
+
+  if (core::UpdateChecker::isNewer(info.version, PACKAGE_VERSION)) {
+    updLatestVersion = info.version;
+    updDownloadUrl = info.downloadUrl;
+    updChecksumUrl = info.checksumUrl;
+    updNotes = info.notes;
+    updTotalSize = info.size;
+
+    updVersion->label(("v" PACKAGE_VERSION "  →  v" + info.version).c_str());
+    updStage->label("当前阶段：发现新版本");
+    updSpeed->label("下载速度：—");
+    updEta->label("剩余时间：—");
+    updChangelog->label(info.notes.empty()
+                        ? "（该版本未提供更新说明）"
+                        : info.notes.c_str());
+    updButton->label("立即更新");
+  } else {
+    updLatestVersion.clear();
+    updVersion->label(("v" PACKAGE_VERSION "  ·  已是最新版本").c_str());
+    updStage->label("当前阶段：无可用更新");
+    updSpeed->label("下载速度：—");
+    updEta->label("剩余时间：—");
+    updChangelog->label("当前已是最新版本。");
+    updButton->label("已是最新");
+    updButton->deactivate();
+  }
+
+  updButton->redraw();
+  panels[2]->redraw();
+}
+
+void ServerDialog::onUpdateButton(Fl_Widget*, void *data)
+{
+  ServerDialog *dialog = (ServerDialog*)data;
+  if (dialog->updLatestVersion.empty())
+    dialog->startUpdateCheck();
+  else
+    dialog->startUpdateInstall();
+}
+
+void ServerDialog::startUpdateCheck()
+{
+  if (updBusy.exchange(true))
+    return;
+  if (updThread.joinable())
+    updThread.join();
+
+  updStage->label("当前阶段：正在检查新版本...");
+  updButton->deactivate();
+  panels[2]->redraw();
+
+  updThread = std::thread([this]() {
+    UpdateTask *t = new UpdateTask;
+    t->self = this;
+    t->install = false;
+    t->ok = core::UpdateChecker::fetchLatestRelease(&t->info, &t->error);
+    Fl::awake(updateTaskDone, t);
+  });
+}
+
+void ServerDialog::startUpdateInstall()
+{
+  if (updDownloadUrl.empty())
+    return;
+  if (updBusy.exchange(true))
+    return;
+  if (updThread.joinable())
+    updThread.join();
+
+  updStage->label("当前阶段：正在下载并安装...");
+  updButton->deactivate();
+  panels[2]->redraw();
+
+  const std::string url = updDownloadUrl;
+  const std::string checksum = updChecksumUrl;
+  const std::string version = updLatestVersion;
+
+  updThread = std::thread([this, url, checksum, version]() {
+    UpdateTask *t = new UpdateTask;
+    t->self = this;
+    t->install = true;
+    t->ok = core::UpdateChecker::downloadAndInstall(url, checksum, version,
+                                                    &t->error);
+    Fl::awake(updateTaskDone, t);
+  });
 }
 
 void ServerDialog::buildUpdatePanel(Fl_Group *g)
 {
   buildPanelHeader(g, "自动更新", onClosePanel, this);
 
-  Fl_Box *placeholder = new Fl_Box(0, 40, g->w(), 60,
-                                   "（版本对比 / 下载速度 / 进度条 / 规范化更新说明）");
-  placeholder->labelsize(11);
-  placeholder->labelcolor(M_TEXT3);
-  placeholder->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
+  const int cw = g->w();
+
+  // ---- 版本对比 ----
+  updVersion = new Fl_Box(0, 38, cw, 26,
+                          ("v" PACKAGE_VERSION "  ·  点击下方按钮检查更新").c_str());
+  updVersion->labelfont(FL_HELVETICA_BOLD);
+  updVersion->labelsize(14);
+  updVersion->labelcolor(M_TEXT);
+  updVersion->align(FL_ALIGN_CENTER | FL_ALIGN_INSIDE);
+
+  // ---- 统计三行 ----
+  int y = 74;
+  const int statH = 22;
+  updStage = new Fl_Box(0, y, cw, statH, "当前阶段：待检查");
+  updStage->labelsize(11);
+  updStage->labelcolor(M_TEXT2);
+  updStage->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
+
+  updSpeed = new Fl_Box(0, y + statH, cw, statH, "下载速度：—");
+  updSpeed->labelsize(11);
+  updSpeed->labelcolor(M_TEXT2);
+  updSpeed->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
+
+  updEta = new Fl_Box(0, y + statH * 2, cw, statH, "剩余时间：—");
+  updEta->labelsize(11);
+  updEta->labelcolor(M_TEXT2);
+  updEta->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
+
+  // ---- 进度条 ----
+  y += statH * 3 + 10;
+  updProgress = new Fl_Progress(0, y, cw, 16);
+  updProgress->box(THEME_UP_BOX);
+  updProgress->color(M_CARD);
+  updProgress->selection_color(M_ACCENT);
+  updProgress->minimum(0);
+  updProgress->maximum(100);
+  updProgress->value(0);
+
+  // ---- 百分比 / 大小 ----
+  y += 22;
+  updPct = new Fl_Box(0, y, 80, 18, "0%");
+  updPct->labelsize(11);
+  updPct->labelcolor(M_TEXT2);
+  updPct->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
+
+  updSize = new Fl_Box(cw - 200, y, 200, 18, "");
+  updSize->labelsize(11);
+  updSize->labelcolor(M_TEXT3);
+  updSize->align(FL_ALIGN_RIGHT | FL_ALIGN_INSIDE);
+
+  // ---- 更新说明 ----
+  y += 26;
+  updChangelog = new Fl_Box(0, y, cw, 120, "尚未检查更新。");
+  updChangelog->box(FL_BORDER_BOX);
+  updChangelog->color(M_CARD);
+  updChangelog->labelsize(11);
+  updChangelog->labelcolor(M_TEXT2);
+  updChangelog->align(FL_ALIGN_LEFT | FL_ALIGN_TOP | FL_ALIGN_INSIDE |
+                      FL_ALIGN_WRAP);
+
+  // ---- 立即更新 ----
+  y += 132;
+  updButton = new Fl_Button(cw / 2 - 70, y, 140, 32, "检查更新");
+  updButton->box(THEME_UP_BOX);
+  updButton->color(M_ACCENT);
+  updButton->labelcolor(FL_WHITE);
+  updButton->labelsize(12);
+  updButton->callback(onUpdateButton, this);
 }
 
 void ServerDialog::buildAboutPanel(Fl_Group *g)
@@ -342,6 +968,10 @@ void ServerDialog::refreshHistory()
 
 void ServerDialog::showPanel(int idx)
 {
+  // 离开选项面板时保存设置
+  if (activePanel == 1 && idx != 1)
+    storeOptions();
+
   for (int i = 0; i < 4; i++) {
     if (i == idx)
       panels[i]->show();
@@ -380,6 +1010,10 @@ void ServerDialog::onClosePanel(Fl_Widget* /*widget*/, void *data)
 
 ServerDialog::~ServerDialog()
 {
+  g_updOwner = nullptr;
+  updQuit = true;
+  if (updThread.joinable())
+    updThread.join();
 }
 
 

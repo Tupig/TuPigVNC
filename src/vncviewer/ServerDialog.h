@@ -19,6 +19,8 @@
 #include <string>
 #include <list>
 #include <cstdint>
+#include <atomic>
+#include <thread>
 
 #include "fltk/Fl_Suggestion_Input.h"
 
@@ -35,6 +37,15 @@ class Fl_Group;
 class Fl_Scroll;
 class Fl_Browser;
 class Fl_Input_Choice;
+class Fl_Check_Button;
+class Fl_Int_Input;
+class Fl_Choice;
+class Fl_Toggle_Button;
+class Fl_Box;
+class Fl_Progress;
+class Fl_Button;
+
+namespace core { struct ReleaseInfo; }
 
 class ServerDialog : public Fl_Window {
 protected:
@@ -73,6 +84,18 @@ private:
   static void onEntryClicked(Fl_Widget*, void* data);
   static void onClosePanel(Fl_Widget*, void* data);
 
+  // ---- 选项面板：6 个分类页 ----
+  void buildOptionCompress(Fl_Group* pane, int y);   // 压缩
+  void buildOptionSecurity(Fl_Group* pane, int y);   // 安全
+  void buildOptionInput(Fl_Group* pane, int y);      // 输入
+  void buildOptionKeys(Fl_Group* pane, int y);       // 键盘快捷键
+  void buildOptionDisplay(Fl_Group* pane, int y);    // 显示
+  void buildOptionMisc(Fl_Group* pane, int y);       // 杂项
+  void showOptionPane(int idx);        // 切换分类页
+  void loadOptions();                  // 从全局参数读取初始值
+  void storeOptions();                 // 写回全局参数
+  static void onOptionTab(Fl_Widget*, void* data);
+
 protected:
   Fl_Suggestion_Input *serverName;
   std::list<ServerHistoryEntry> serverHistory;
@@ -84,6 +107,70 @@ protected:
   Fl_Widget *entries_[4];      // 2×2 功能入口
   int activePanel;             // 当前展开的面板，-1 表示收起
   int panelTopY;               // 面板起始 y（entries 下方）
+
+  // 选项面板：6 个分类页 + 子标签
+  Fl_Group *optPanes[6];
+  Fl_Toggle_Button *optTabs[6];
+  int activeOpt;
+
+  // 压缩页
+  Fl_Check_Button *optAutoSelect;
+  Fl_Check_Button *optJpeg;
+  Fl_Choice *optEncoding;
+  Fl_Choice *optColorLevel;
+  Fl_Check_Button *optCustomCompress;
+  Fl_Int_Input *optCompressLevel;
+  Fl_Int_Input *optQualityLevel;
+
+  // 安全页
+  Fl_Choice *optEncryption;
+  Fl_Choice *optAuth;
+
+  // 输入页
+  Fl_Check_Button *optViewOnly;
+  Fl_Choice *optMouseMode;
+  Fl_Choice *optCursorType;
+  Fl_Check_Button *optSystemKeys;
+  Fl_Check_Button *optAcceptClip;
+  Fl_Check_Button *optSendClip;
+
+  // 键盘快捷键页
+  Fl_Toggle_Button *optMod[4];
+
+  // 显示页
+  Fl_Choice *optDisplayMode;
+
+  // 杂项页
+  Fl_Check_Button *optShared;
+  Fl_Check_Button *optReconnect;
+  Fl_Check_Button *optAudio;
+
+  // 自动更新页
+  static void onUpdateButton(Fl_Widget*, void* data);
+  static void updateTaskDone(void* ptr); // 后台任务完成（主线程回调）
+  void handleUpdateTask(bool ok, const core::ReleaseInfo& info,
+                        const std::string& error, bool install);
+  void startUpdateCheck();               // 后台查询最新版本
+  void startUpdateInstall();             // 后台下载并静默安装
+
+  Fl_Box *updVersion;                    // 版本对比行
+  Fl_Box *updStage;                      // 当前阶段
+  Fl_Box *updSpeed;                      // 下载速度
+  Fl_Box *updEta;                        // 剩余时间
+  Fl_Box *updPct;                        // 百分比
+  Fl_Box *updSize;                       // 已下载 / 总大小
+  Fl_Box *updChangelog;                  // 更新说明
+  Fl_Progress *updProgress;              // 进度条
+  Fl_Button *updButton;                  // 立即更新
+
+  std::string updLatestVersion;
+  std::string updDownloadUrl;
+  std::string updChecksumUrl;
+  std::string updNotes;
+  long long updTotalSize = 0;
+  std::atomic<bool> updBusy{false};      // 后台任务进行中
+  std::atomic<bool> updQuit{false};      // 退出时通知后台线程
+  std::thread updThread;                 // 后台线程句柄
 };
 
 #endif
