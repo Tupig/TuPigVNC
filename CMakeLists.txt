@@ -23,6 +23,11 @@ include(CMakeMacroLibtoolFile)
 
 project(TuPigVNC)
 
+# TuPigVNC 仅支持 64 位构建，32 位直接拒绝
+if(NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
+  message(FATAL_ERROR "TuPigVNC 仅支持 64 位构建（当前 CMAKE_SIZEOF_VOID_P=${CMAKE_SIZEOF_VOID_P}）。")
+endif()
+
 # 版本号采用语义化版本（SemVer）：MAJOR.MINOR.PATCH[-PRERELEASE]
 #   0.x.y  —— 初始开发阶段，API 与功能可能随时变化
 #   1.0.0  —— 首个稳定版本

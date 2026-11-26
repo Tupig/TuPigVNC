@@ -395,17 +395,11 @@ bool UpdateChecker::isNewer(const std::string& remote,
 std::string UpdateChecker::platformKeyword()
 {
   /*
-   * 返回值必须能匹配发布资产的文件名。
-   * 安装包由 release/CMakeLists.txt 的 INST_SUFFIX 生成，形如
-   * TuPigVNC_x64.exe / TuPigVNC_x86.exe，因此这里用 x64 / x86，
-   * 而不是 win64 / win32——后者永远匹配不到，会让检查更新形同虚设。
+   * 只发布 64 位安装包（TuPigVNC_x64.exe），返回值需匹配发布资产文件名。
+   * 项目已不再支持 32 位，Windows 固定返回 x64。
    */
 #if defined(_WIN32)
-#if defined(_M_X64) || defined(__x86_64__)
   return "x64";
-#else
-  return "x86";
-#endif
 #elif defined(__APPLE__)
   return "macos";
 #else
