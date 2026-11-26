@@ -66,3 +66,43 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\TuPigVNC"; FileNam
 [Run]
 ; 安装完成后可直接启动
 Filename: "{app}\vncviewer.exe"; Description: "{cm:LaunchProgram,TuPigVNC}"; Flags: nowait postinstall skipifsilent
+
+[Code]
+{ 递归删除注册表键及其所有子键 }
+procedure RegDeleteTree(RootKey: Integer; const SubKey: String);
+var
+  Names: TArrayOfString;
+  I: Integer;
+begin
+  if RegGetSubkeyNames(RootKey, SubKey, Names) then
+    for I := 0 to GetArrayLength(Names) - 1 do
+      RegDeleteTree(RootKey, SubKey + '\' + Names[I]);
+  RegDeleteKey(RootKey, SubKey);
+end;
+
+{ 安装前清理旧版本（前两个版本）残留的配置 / 日志 / 注册表。
+  之后版本完全靠自身自动更新升级，不再依赖安装包迁移。 }
+procedure DeleteOldVersionData();
+var
+  Dir: String;
+begin
+  Dir := ExpandConstant('{userappdata}\TuPigVNC');
+  if DirExists(Dir) then DelTree(Dir, True, True, True);
+
+  Dir := ExpandConstant('{localappdata}\TuPigVNC');
+  if DirExists(Dir) then DelTree(Dir, True, True, True);
+
+  Dir := ExpandConstant('{app}\logs');
+  if DirExists(Dir) then DelTree(Dir, True, True, True);
+
+  Dir := ExpandConstant('{app}\User');
+  if DirExists(Dir) then DelTree(Dir, True, True, True);
+
+  RegDeleteTree(HKEY_CURRENT_USER, 'Software\TuPigVNC');
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssInstall then
+    DeleteOldVersionData();
+end;
