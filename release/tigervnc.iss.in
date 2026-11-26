@@ -1,6 +1,11 @@
 ﻿[Setup]
 #ifdef WIN64
-ArchitecturesInstallIn64BitMode=x64
+; ArchitecturesInstallIn64BitMode 只控制「装到哪」（64 位目录/注册表），
+; 安装器进程本身仍是 32 位 PE。要安装器也是 64 位，需 Inno Setup 6.3+
+; 的 SetupArchitecture 指令；x64compatible 同时允许在 ARM64 上安装。
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+SetupArchitecture=x64
 #endif
 AppName=TuPigVNC
 AppVerName=TuPigVNC @VERSION@ (@BUILD@)
