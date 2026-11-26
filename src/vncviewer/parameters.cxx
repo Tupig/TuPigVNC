@@ -1,21 +1,17 @@
 /* Copyright (C) 2002-2005 RealVNC Ltd.  All Rights Reserved.
  * Copyright 2011 Pierre Ossman <ossman@cendio.se> for Cendio AB
  * Copyright 2012 Samuel Mannehed <samuel@cendio.se> for Cendio AB
- * 
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this software; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
- * USA.
+ *
+ * 本软件为自由软件；你可以依据自由软件基金会发布的 GNU 通用公共许可证
+ * （GNU General Public License）的条款（第 2 版，或你选择的任何更高版本）
+ * 重新分发和/或修改本软件。
+ *
+ * 本软件的发布是希望它有用，但不附带任何担保；甚至不附带适销性或
+ * 特定用途适用性的默示担保。详见 GNU 通用公共许可证。
+ *
+ * 你应已收到随本软件一同提供的 GNU 通用公共许可证副本；如果没有，
+ * 请致信自由软件基金会：Inc., 59 Temple Place - Suite 330, Boston,
+ * MA  02111-1307, USA。
  */
 
 #ifdef HAVE_CONFIG_H
@@ -219,15 +215,15 @@ core::BoolParameter
 #if !defined(WIN32) && !defined(__APPLE__)
 core::BoolParameter
   setPrimary("SetPrimary",
-             // TRANSLATORS: This refers to the two different X11
-             //              clipboards
+             // 翻译者注意：这里指的是 X11 的两块不同的
+             //              剪贴板
              _("Set the primary selection as well as the clipboard "
                "selection"),
              true);
 core::BoolParameter
   sendPrimary("SendPrimary",
-              // TRANSLATORS: This refers to the two different X11
-              //              clipboards
+              // 翻译者注意：这里指的是 X11 的两块不同的
+              //              剪贴板
               _("Send the primary selection to the server as well as "
                 "the clipboard selection"),
               true);
@@ -235,11 +231,11 @@ core::StringParameter
   display("display", _("The X display to use"), "");
 #endif
 
-// Keep list of valid values in sync with ShortcutHandler
+// 有效值列表需与 ShortcutHandler 保持同步
 core::EnumListParameter
   shortcutModifiers("ShortcutModifiers",
-                    // TRANSLATORS: The key names must be specified in
-                    //              English
+                    // 翻译者注意：按键名必须使用
+                    //              英文填写
                     _("The combination of modifier keys that triggers "
                       "special actions in the viewer instead of being "
                       "sent to the remote session (possible keys are a "
@@ -270,23 +266,22 @@ static const wchar_t* const REGISTRY_HISTORY_PATH =
 #endif
 
 /*
- * We only save the sub set of parameters that can be modified from
- * the graphical user interface
+ * 我们只保存可以通过图形界面修改的那部分参数
  */
 static core::Parameter* parameterArray[] = {
-  /* Security */
+  /* 安全 */
 #ifdef HAVE_GNUTLS
   &rfb::CSecurityTLS::X509CA,
   &rfb::CSecurityTLS::X509CRL,
 #endif // HAVE_GNUTLS
   &rfb::SecurityClient::secTypes,
-  /* Misc. */
+  /* 杂项 */
   &reconnectOnError,
   &shared,
 #ifdef HAVE_AUDIO
   &playAudio,
 #endif
-  /* Compression */
+  /* 压缩 */
   &autoSelect,
   &fullColour,
   &lowColourLevel,
@@ -295,11 +290,11 @@ static core::Parameter* parameterArray[] = {
   &compressLevel,
   &rfb::CConnection::noJpeg,
   &qualityLevel,
-  /* Display */
+  /* 显示 */
   &fullScreen,
   &fullScreenMode,
   &fullScreenSelectedMonitors,
-  /* Input */
+  /* 输入 */
   &viewOnly,
   &emulateMiddleButton,
   &alwaysCursor,
@@ -311,7 +306,7 @@ static core::Parameter* parameterArray[] = {
   &setPrimary,
 #endif
   &fullscreenSystemKeys,
-  /* Keyboard shortcuts */
+  /* 键盘快捷键 */
   &shortcutModifiers,
 };
 
@@ -320,7 +315,7 @@ static core::Parameter* readOnlyParameterArray[] = {
   &dotWhenNoCursor
 };
 
-// Encoding Table
+// 编码表
 static const struct EscapeMap {
   const char first;
   const char second;
@@ -335,7 +330,7 @@ static bool encodeValue(const char* val, char* dest, size_t destSize) {
   for (size_t i = 0; (val[i] != '\0') && (i < (destSize - 1)); i++) {
     bool normalCharacter;
     
-    // Check for sequences which will need encoding
+    // 检查需要编码的字符序列
     normalCharacter = true;
     for (EscapeMap esc : replaceMap) {
 
@@ -371,7 +366,7 @@ static bool decodeValue(const char* val, char* dest, size_t destSize) {
   
   for (size_t i = 0; (val[i] != '\0') && (i < (destSize - 1)); i++) {
     
-    // Check for escape sequences
+    // 检查转义序列
     if (val[i] == '\\') {
       bool escapedCharacter;
       
@@ -462,7 +457,7 @@ static bool getKeyString(const char* _name, char* dest, size_t destSize, HKEY* h
     delete [] value;
     if (res != ERROR_FILE_NOT_FOUND)
       throw core::win32_error("RegQueryValueExW", res);
-    // The value does not exist, defaults will be used.
+    // 该值不存在，将使用默认值。
     return false;
   }
 
@@ -499,7 +494,7 @@ static bool getKeyInt(const char* _name, int* dest, HKEY* hKey) {
   if (res != ERROR_SUCCESS){
     if (res != ERROR_FILE_NOT_FOUND)
       throw core::win32_error("RegQueryValueExW", res);
-    // The value does not exist, defaults will be used.
+    // 该值不存在，将使用默认值。
     return false;
   }
 
@@ -519,7 +514,7 @@ static void removeValue(const char* _name, HKEY* hKey) {
   if (res != ERROR_SUCCESS) {
     if (res != ERROR_FILE_NOT_FOUND)
       throw core::win32_error("RegDeleteValueW", res);
-    // The value does not exist, no need to remove it.
+    // 该值不存在，无需删除。
     return;
   }
 }
@@ -578,9 +573,8 @@ static void saveToReg(const char* servername) {
     }
   }
 
-  // Remove read-only parameters to replicate the behaviour of Linux/macOS when they
-  // store a config to disk. If the parameter hasn't been migrated at this point it
-  // will be lost.
+  // 移除只读参数，以与 Linux/macOS 将配置写入磁盘时的行为保持一致。
+  // 如果此时该参数尚未迁移，它将会丢失。
   for (core::Parameter* param : readOnlyParameterArray) {
     try {
       removeValue(param->getName(), &hKey);
@@ -607,7 +601,7 @@ std::list<std::string> loadHistoryFromRegKey()
                            KEY_READ, &hKey);
   if (res != ERROR_SUCCESS) {
     if (res == ERROR_FILE_NOT_FOUND) {
-      // The key does not exist, defaults will be used.
+      // 该键不存在，将使用默认值。
       return serverHistory;
     }
 
@@ -627,7 +621,7 @@ std::list<std::string> loadHistoryFromRegKey()
                         buffersize, &hKey))
         break;
     } catch (std::exception& e) {
-      // Just ignore this entry and try the next one
+      // 忽略这一项，继续尝试下一项
       vlog.error(_("Failed to read server history entry %d: %s"),
                  (int)index, e.what());
       continue;
@@ -669,7 +663,7 @@ static void getParametersFromReg(core::Parameter* parameters[],
           parameters[i]->setParam(stringValue);
       }
     } catch(std::exception& e) {
-      // Just ignore this entry and continue with the rest
+      // 忽略这一项，继续处理其余项
       vlog.error(_("Failed to read parameter \"%s\": %s"),
                  parameters[i]->getName(), e.what());
     }
@@ -685,7 +679,7 @@ static std::string loadFromReg() {
                            KEY_READ, &hKey);
   if (res != ERROR_SUCCESS) {
     if (res == ERROR_FILE_NOT_FOUND) {
-      // The key does not exist, defaults will be used.
+      // 该键不存在，将使用默认值。
       return "";
     }
 
@@ -729,7 +723,7 @@ void saveViewerParameters(const char *filename, const char *servername) {
   char filepath[PATH_MAX];
   char encodingBuffer[buffersize];
 
-  // Write to the registry or a predefined file if no filename was specified.
+  // 如果未指定文件名，则写入注册表或预定义文件。
   if(filename == nullptr) {
 
 #ifdef _WIN32
@@ -746,7 +740,7 @@ void saveViewerParameters(const char *filename, const char *servername) {
     snprintf(filepath, sizeof(filepath), "%s", filename);
   }
 
-  /* Write parameters to file */
+  /* 将参数写入文件 */
   FILE* f = fopen(filepath, "w+");
   if (!f)
     throw core::posix_error(
@@ -785,7 +779,7 @@ static bool findAndSetViewerParameterFromValue(
   const size_t buffersize = 256;
   char decodingBuffer[buffersize];
 
-  // Find and set the correct parameter
+  // 查找并设置正确的参数
   for (size_t i = 0; i < parameters_len; i++) {
     if (strcasecmp(line, parameters[i]->getName()) == 0) {
       if(!decodeValue(value, decodingBuffer, sizeof(decodingBuffer)))
@@ -808,7 +802,7 @@ std::string loadViewerParameters(const char *filename) {
 
   memset(servername, '\0', sizeof(servername));
 
-  // Load from the registry or a predefined file if no filename was specified.
+  // 如果未指定文件名，则从注册表或预定义文件加载。
   if(filename == nullptr) {
 
 #ifdef _WIN32
@@ -824,11 +818,11 @@ std::string loadViewerParameters(const char *filename) {
     snprintf(filepath, sizeof(filepath), "%s", filename);
   }
 
-  /* Read parameters from file */
+  /* 从文件读取参数 */
   FILE* f = fopen(filepath, "r");
   if (!f) {
     if (!filename)
-      return ""; // Use defaults.
+      return ""; // 使用默认值。
     throw core::posix_error(
       core::format(_("Failed to open \"%s\""), filepath), errno);
   }
@@ -836,7 +830,7 @@ std::string loadViewerParameters(const char *filename) {
   int lineNr = 0;
   while (!feof(f)) {
 
-    // Read the next line
+    // 读取下一行
     lineNr++;
     if (!fgets(line, sizeof(line), f)) {
       if (feof(f))
@@ -858,7 +852,7 @@ std::string loadViewerParameters(const char *filename) {
         core::format("%s: %s", msg.c_str(), _("Line too long")));
     }
 
-    // Make sure that the first line of the file has the file identifier string
+    // 确保文件第一行包含文件标识字符串
     if(lineNr == 1) {
       if(strncmp(line, IDENTIFIER_STRING, strlen(IDENTIFIER_STRING)) == 0)
         continue;
@@ -868,10 +862,10 @@ std::string loadViewerParameters(const char *filename) {
         _("Configuration file %s is in an invalid format"), filepath));
     }
 
-    // Skip empty lines and comments
+    // 跳过空行和注释
     if ((line[0] == '\n') || (line[0] == '#') || (line[0] == '\r'))
       continue;
-    // Ignore any stray NULL in the file
+    // 忽略文件中多余的 NULL
     if (line[0] == '\0')
       continue;
 
@@ -885,7 +879,7 @@ std::string loadViewerParameters(const char *filename) {
       len--;
     }
 
-    // Find the parameter value
+    // 查找参数值
     char *value = strchr(line, '=');
     if (value == nullptr) {
       std::string msg = core::format(_("Failed to read line %d in "
@@ -894,11 +888,11 @@ std::string loadViewerParameters(const char *filename) {
       vlog.error("%s: %s", msg.c_str(), _("Invalid format"));
       continue;
     }
-    *value = '\0'; // line only contains the parameter name below.
+    *value = '\0'; // 此时 line 中只剩参数名。
     value++;
     
-    bool invalidParameterName = true; // Will be set to false below if 
-                                      // the line contains a valid name.
+    bool invalidParameterName = true; // 如果该行包含有效名称，
+                                      // 下面会将其置为 false。
 
     try {
       if (strcasecmp(line, "ServerName") == 0) {
@@ -923,7 +917,7 @@ std::string loadViewerParameters(const char *filename) {
         }
       }
     } catch(std::exception& e) {
-      // Just ignore this entry and continue with the rest
+      // 忽略这一项，继续处理其余项
       std::string msg = core::format(_("Failed to read line %d in "
                                        "file \"%s\""),
                                      lineNr, filepath);

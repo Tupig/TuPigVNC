@@ -1,20 +1,16 @@
 /* Copyright (C) 2010 TightVNC Team.  All Rights Reserved.
  * Copyright 2021-2023 Pierre Ossman for Cendio AB
  *
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this software; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
- * USA.
+ * 本软件为自由软件；你可以依据自由软件基金会发布的 GNU 通用公共许可证
+ * （GNU General Public License）的条款（第 2 版，或你选择的任何更高版本）
+ * 重新分发和/或修改本软件。
+ *
+ * 本软件的发布是希望它有用，但不附带任何担保；甚至不附带适销性或
+ * 特定用途适用性的默示担保。详见 GNU 通用公共许可证。
+ *
+ * 你应已收到随本软件一同提供的 GNU 通用公共许可证副本；如果没有，
+ * 请致信自由软件基金会：Inc., 59 Temple Place - Suite 330, Boston,
+ * MA  02111-1307, USA。
  */
 
 #ifndef CORE_XDGDIRS_H
@@ -25,63 +21,59 @@
 namespace core {
 
   /*
-   * Get user home directory.
-   * If HOME environment variable is set then it is used.
-   * Otherwise home directory is obtained via getpwuid function.
+   * 获取用户主目录。
+   * 如果设置了 HOME 环境变量，则使用它。
+   * 否则通过 getpwuid 函数获取主目录。
    *
-   * Returns NULL on failure.
+   * 失败时返回 NULL。
    */
   const char* getuserhomedir();
 
   /*
-   * Get VNC config directory. On Unix-like systems, this is either:
+   * 获取 VNC 配置目录。在类 Unix 系统上，为以下之一：
    * - $XDG_CONFIG_HOME/tigervnc
    * - $HOME/.config/tigervnc
-   * On Windows, this is the installation directory's "User" folder
-   * (falls back to %LOCALAPPDATA%/TuPigVNC when that folder is not
-   * writable).
+   * 在 Windows 上，为安装目录下的 "User" 文件夹
+   * （当该文件夹不可写时，回退到 %LOCALAPPDATA%/TuPigVNC）。
    *
-   * Returns NULL on failure.
+   * 失败时返回 NULL。
    */
   const char* getvncconfigdir();
 
   /*
-   * Get VNC data directory used for X.509 known hosts.
-   * On Unix-like systems, this is either:
+   * 获取用于 X.509 已知主机的 VNC 数据目录。
+   * 在类 Unix 系统上，为以下之一：
    * - $XDG_DATA_HOME/tigervnc
    * - $HOME/.local/share/tigervnc
-   * On Windows, this is the installation directory's "User" folder
-   * (falls back to %LOCALAPPDATA%/TuPigVNC when that folder is not
-   * writable).
+   * 在 Windows 上，为安装目录下的 "User" 文件夹
+   * （当该文件夹不可写时，回退到 %LOCALAPPDATA%/TuPigVNC）。
    *
-   * Returns NULL on failure.
+   * 失败时返回 NULL。
    */
   const char* getvncdatadir();
 
   /*
-   * Get VNC state (logs) directory. On Unix-like systems, this is either:
+   * 获取 VNC 状态（日志）目录。在类 Unix 系统上，为以下之一：
    * - $XDG_STATE_HOME/tigervnc
    * - $HOME/.local/state/tigervnc
-   * On Windows, this is the installation directory's "User" folder
-   * (falls back to %LOCALAPPDATA%/TuPigVNC when that folder is not
-   * writable).
+   * 在 Windows 上，为安装目录下的 "User" 文件夹
+   * （当该文件夹不可写时，回退到 %LOCALAPPDATA%/TuPigVNC）。
    *
-   * Returns NULL on failure.
+   * 失败时返回 NULL。
    */
   const char* getvncstatedir();
 
   /*
-   * Get the VNC installation root directory (the folder containing the
-   * executable). Used for the rolling log directory. On Windows this is
-   * the exe's folder; on other platforms returns NULL.
+   * 获取 VNC 安装根目录（包含可执行文件的文件夹）。
+   * 用于滚动日志目录。在 Windows 上为 exe 所在文件夹；
+   * 其他平台返回 NULL。
    *
-   * Returns NULL on failure.
+   * 失败时返回 NULL。
    */
   const char* getvncinstallroot();
 
   /*
-   * Create directory recursively. Useful to create the nested directory
-   * structures needed for the above directories.
+   * 递归创建目录。便于创建上述目录所需的嵌套目录结构。
    */
   int mkdir_p(const char *path, mode_t mode);
 }

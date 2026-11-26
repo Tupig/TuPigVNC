@@ -1,21 +1,17 @@
 /* Copyright (C) 2002-2005 RealVNC Ltd.  All Rights Reserved.
  * Copyright 2011-2024 Pierre Ossman <ossman@cendio.se> for Cendio AB
  * Copyright (C) 2011 D. R. Commander.  All Rights Reserved.
- * 
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this software; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
- * USA.
+ *
+ * 本软件为自由软件；你可以依据自由软件基金会发布的 GNU 通用公共许可证
+ * （GNU General Public License）的条款（第 2 版，或你选择的任何更高版本）
+ * 重新分发和/或修改本软件。
+ *
+ * 本软件的发布是希望它有用，但不附带任何担保；甚至不附带适销性或
+ * 特定用途适用性的默示担保。详见 GNU 通用公共许可证。
+ *
+ * 你应已收到随本软件一同提供的 GNU 通用公共许可证副本；如果没有，
+ * 请致信自由软件基金会：Inc., 59 Temple Place - Suite 330, Boston,
+ * MA  02111-1307, USA。
  */
 
 #ifdef HAVE_CONFIG_H
@@ -89,9 +85,8 @@ static const char *about_text()
 {
   static char buffer[1024];
 
-  // This is used in multiple places with potentially different
-  // encodings, so we need to make sure we get a fresh string every
-  // time.
+  // 这段文本会在多处使用，且编码可能各不相同，
+  // 因此需要确保每次都拿到一个新字符串。
   snprintf(buffer, sizeof(buffer),
            _("TuPigVNC v%s\n"
              "Built on: %s\n"
@@ -107,8 +102,7 @@ void abort_vncviewer(const char *error, ...)
 {
   fatalError = true;
 
-  // Prioritise the first error we get as that is probably the most
-  // relevant one.
+  // 优先采用我们遇到的第一个错误，因为它可能是最相关的。
   if (exitError.empty()) {
     va_list ap;
 
@@ -120,7 +114,7 @@ void abort_vncviewer(const char *error, ...)
   if (inMainloop)
     exitMainloop = true;
   else {
-    // We're early in the startup. Assume we can just exit().
+    // 此时仍处于启动早期，假定直接 exit() 即可。
     if (alertOnFatalError && !exitError.empty())
       fl_alert("%s", exitError.c_str());
     exit(EXIT_FAILURE);
@@ -131,8 +125,7 @@ void abort_connection(const char *error, ...)
 {
   assert(inMainloop);
 
-  // Prioritise the first error we get as that is probably the most
-  // relevant one.
+  // 优先采用我们遇到的第一个错误，因为它可能是最相关的。
   if (exitError.empty()) {
     va_list ap;
 
@@ -248,22 +241,21 @@ static void new_connection_cb(Fl_Widget* /*widget*/, void* /*data*/)
 
 static void CleanupSignalHandler(int sig)
 {
-  // CleanupSignalHandler allows C++ object cleanup to happen because it calls
-  // exit() rather than the default which is to abort.
+  // CleanupSignalHandler 允许执行 C++ 对象清理，因为它调用 exit()，
+  // 而不是默认的 abort。
   vlog.info(_("Termination signal %d has been received. TuPigVNC will now exit."), sig);
   exit(1);
 }
 
 static void init_fltk()
 {
-  // Adjust look of FLTK
+  // 调整 FLTK 的外观
   init_theme();
 
-  // Proper Gnome Shell integration requires that we set a sensible
-  // WM_CLASS for the window.
+  // 要正确集成到 Gnome Shell，需要为窗口设置一个合理的 WM_CLASS。
   Fl_Window::default_xclass("vncviewer");
 
-  // Set the default icon for all windows.
+  // 为所有窗口设置默认图标。
 #ifdef WIN32
   HICON lg, sm;
 
@@ -287,7 +279,7 @@ static void init_fltk()
 
   count = 0;
 
-  // FIXME: Follow icon theme specification
+  // FIXME: 遵循图标主题规范
   for (int icon_size : icon_sizes) {
       char icon_path[PATH_MAX];
       bool exists;
@@ -320,13 +312,13 @@ static void init_fltk()
       delete icons[i];
 #endif
 
-  // Turn off the annoying behaviour where popups track the mouse.
+  // 关闭弹窗跟随鼠标这一烦人行为。
   fl_message_hotspot(false);
 
-  // Avoid empty titles for popups
+  // 避免弹窗标题为空
   fl_message_title_default("TuPigVNC");
 
-  // FLTK exposes these so that we can translate them.
+  // FLTK 暴露这些字符串以便我们翻译它们。
   fl_no     = _("No");
   fl_yes    = _("Yes");
   fl_ok     = _("OK");
@@ -356,7 +348,7 @@ static void init_fltk()
 
 #ifdef __APPLE__
   Fl_Mac_App_Menu::about = _("About TuPigVNC");
-  Fl_Mac_App_Menu::print = ""; // Don't want the print item
+  Fl_Mac_App_Menu::print = ""; // 不需要打印项
   Fl_Mac_App_Menu::services = _("Services");
   Fl_Mac_App_Menu::hide = _("Hide TuPigVNC");
   Fl_Mac_App_Menu::hide_others = _("Hide others");
@@ -367,8 +359,8 @@ static void init_fltk()
 
   Fl_Sys_Menu_Bar *menubar;
   menubar = new Fl_Sys_Menu_Bar(0, 0, 500, 25);
-  // Fl_Sys_Menu_Bar overrides methods without them being virtual,
-  // which means we cannot use our generic Fl_Menu_ helpers.
+  // Fl_Sys_Menu_Bar 覆盖方法时并未将它们声明为虚函数，
+  // 这意味着我们无法使用通用的 Fl_Menu_ 辅助函数。
   menubar->add(
     fltk_menu_escape(C_("SysMenu|", "&File")).c_str(),
     0, nullptr, nullptr, FL_SUBMENU);
@@ -381,7 +373,7 @@ static void init_fltk()
 static void usage(const char *programName)
 {
 #ifdef WIN32
-  // If we don't have a console then we need to create one for output
+  // 如果没有控制台，则需要创建一个用于输出
   if (GetConsoleWindow() == nullptr) {
     HANDLE handle;
     int fd;
@@ -431,7 +423,7 @@ static void usage(const char *programName)
   core::Configuration::listParams(79, 14);
 
 #ifdef WIN32
-  // Just wait for the user to kill the console window
+  // 等待用户关闭控制台窗口即可
   Sleep(INFINITE);
 #endif
 
@@ -448,9 +440,9 @@ potentiallyLoadConfigurationFile(const char *filename)
 #ifndef WIN32
     struct stat sb;
 
-    // This might be a UNIX socket, we need to check
+    // 这可能是一个 UNIX 套接字，需要检查一下
     if (stat(filename, &sb) == -1) {
-      // Some access problem; let loadViewerParameters() deal with it...
+      // 存在某种访问问题；交给 loadViewerParameters() 处理……
     } else {
       if ((sb.st_mode & S_IFMT) == S_IFSOCK)
         return;
@@ -458,8 +450,8 @@ potentiallyLoadConfigurationFile(const char *filename)
 #endif
 
     try {
-      // The server name might be empty, but we still need to clear it
-      // so we don't try to connect to the filename
+      // 服务器名可能为空，但仍需要清空它，
+      // 以免尝试连接到该文件名
       vncServerName = loadViewerParameters(filename);
     } catch (std::exception& e) {
       vlog.error("%s", e.what());
@@ -537,7 +529,7 @@ createTunnel(const char *gatewayHost, const char *remoteHost,
   setenv("L", lport, 1);
   if (!cmd)
     cmd = "/usr/bin/ssh -f -L \"$L\":\"$H\":\"$R\" -- \"$G\" sleep 20";
-  /* Compatibility with TuPigVNC's method. */
+  /* 兼容 TuPigVNC 的做法。 */
   cmd2 = strdup(cmd);
   while ((percent = strchr(cmd2, '%')) != nullptr)
     *percent = '$';
@@ -622,7 +614,7 @@ int main(int argc, char** argv)
   signal(SIGINT, CleanupSignalHandler);
   signal(SIGTERM, CleanupSignalHandler);
 
-  /* Load the default parameter settings */
+  /* 加载默认参数设置 */
   std::string defaultServerName;
   try {
     defaultServerName = loadViewerParameters(nullptr);
@@ -646,7 +638,7 @@ int main(int argc, char** argv)
 
     if (strcmp(argv[i], "-v") == 0 ||
         strcmp(argv[i], "--version") == 0) {
-      /* We already print version on every start */
+      /* 每次启动时已经打印过版本号 */
       return 0;
     }
 
@@ -671,7 +663,7 @@ int main(int argc, char** argv)
     i++;
   }
 
-  // Handle any old settings specified on the command line
+  // 处理命令行中指定的任何旧式设置
   migrateDeprecatedOptions();
 
 #if !defined(WIN32) && !defined(__APPLE__)
@@ -684,7 +676,7 @@ int main(int argc, char** argv)
   init_fltk();
   enable_touch();
 
-  // Check if the server name in reality is a configuration file
+  // 检查服务器名实际上是否是一个配置文件
   potentiallyLoadConfigurationFile(vncServerName.c_str());
 
   create_base_dirs();
@@ -692,13 +684,13 @@ int main(int argc, char** argv)
   network::Socket* sock = nullptr;
 
 #ifndef WIN32
-  /* Specifying -via and -listen together is nonsense */
+  /* 同时指定 -via 和 -listen 毫无意义 */
   if (listenMode && strlen(via) > 0) {
-    // TRANSLATORS: "Parameters" are command line arguments, or settings
-    // from a file or the Windows registry.
+    // 翻译者注意：这里的“Parameters”（参数）指命令行参数，或来自
+    // 文件或 Windows 注册表的设置。
     vlog.error(_("Parameters -listen and -via are incompatible"));
     abort_vncviewer(_("Parameters -listen and -via are incompatible"));
-    return 1; /* Not reached */
+    return 1; /* 不会执行到这里 */
   }
 #endif
 
@@ -715,7 +707,7 @@ int main(int argc, char** argv)
 
       vlog.info(_("Listening on port %d"), port);
 
-      /* Wait for a connection */
+      /* 等待连接 */
       while (sock == nullptr) {
         fd_set rfds;
         FD_ZERO(&rfds);
@@ -736,14 +728,14 @@ int main(int argc, char** argv)
           if (FD_ISSET(listener->getFd(), &rfds)) {
             sock = listener->accept();
             if (sock)
-              /* Got a connection */
+              /* 已获得连接 */
               break;
           }
       }
     } catch (std::exception& e) {
       vlog.error("%s", e.what());
       abort_vncviewer(_("Failure waiting for incoming VNC connection:\n\n%s"), e.what());
-      return 1; /* Not reached */
+      return 1; /* 不会执行到这里 */
     }
 
     while (!listeners.empty()) {

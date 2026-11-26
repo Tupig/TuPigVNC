@@ -1,20 +1,16 @@
-/* 
+/*
  * Copyright (C) 2022 Dinglan Peng
- *    
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this software; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
- * USA.
+ *
+ * 本软件为自由软件；你可以依据自由软件基金会发布的 GNU 通用公共许可证
+ * （GNU General Public License）的条款（第 2 版，或你选择的任何更高版本）
+ * 重新分发和/或修改本软件。
+ *
+ * 本软件的发布是希望它有用，但不附带任何担保；甚至不附带适销性或
+ * 特定用途适用性的默示担保。详见 GNU 通用公共许可证。
+ *
+ * 你应已收到随本软件一同提供的 GNU 通用公共许可证副本；如果没有，
+ * 请致信自由软件基金会：Inc., 59 Temple Place - Suite 330, Boston,
+ * MA  02111-1307, USA。
  */
 
 #ifdef HAVE_CONFIG_H
@@ -138,7 +134,7 @@ void CSecurityMSLogonII::writeCredentials()
     throw std::length_error("Password is too long");
   memcpy(pass, password.c_str(), password.size() + 1);
 
-  // DES-CBC with the original key as IV, and the reversed one as the DES key.
+  // 使用原始密钥作为 IV、反转后的密钥作为 DES 密钥的 DES-CBC 加密。
   // MSLogonII 是 UltraVNC 的 Windows 域登录扩展，协议强制使用 DES-CBC
   // （服务端兼容性要求，客户端无法更换算法），因此这里的 DES 属于协议
   // 实现，而非本客户端可选的弱加密。

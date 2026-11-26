@@ -1,26 +1,21 @@
 /* Copyright (C) 2002-2005 RealVNC Ltd.  All Rights Reserved.
  * Copyright 2014 Pierre Ossman for Cendio AB
- * 
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this software; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
- * USA.
+ *
+ * 本软件为自由软件；你可以依据自由软件基金会发布的 GNU 通用公共许可证
+ * （GNU General Public License）的条款（第 2 版，或你选择的任何更高版本）
+ * 重新分发和/或修改本软件。
+ *
+ * 本软件的发布是希望它有用，但不附带任何担保；甚至不附带适销性或
+ * 特定用途适用性的默示担保。详见 GNU 通用公共许可证。
+ *
+ * 你应已收到随本软件一同提供的 GNU 通用公共许可证副本；如果没有，
+ * 请致信自由软件基金会：Inc., 59 Temple Place - Suite 330, Boston,
+ * MA  02111-1307, USA。
  */
 
 // -=- PixelBuffer.cxx
 //
-// The PixelBuffer class encapsulates the PixelFormat and dimensions
-// of a block of pixel data.
+// PixelBuffer 类封装了一块像素数据的 PixelFormat 和尺寸。
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -39,16 +34,15 @@ using namespace rfb;
 
 static core::LogWriter vlog("PixelBuffer");
 
-// We do a lot of byte offset calculations that assume the result fits
-// inside a signed 32 bit integer. Limit the maximum size of pixel
-// buffers so that these calculations never overflow.
+// 我们会做大量字节偏移计算，并假定结果能放进有符号 32 位整数。
+// 因此限制像素缓冲区的最大尺寸，确保这些计算永不溢出。
 
 const int maxPixelBufferWidth = 16384;
 const int maxPixelBufferHeight = 16384;
 const int maxPixelBufferStride = 16384;
 
 
-// -=- Generic pixel buffer class
+// -=- 通用像素缓冲区类
 
 PixelBuffer::PixelBuffer(const PixelFormat& pf, int w, int h)
   : format(pf), width_(0), height_(0)
@@ -136,7 +130,7 @@ void PixelBuffer::setSize(int width, int height)
   height_ = height;
 }
 
-// -=- Modifiable generic pixel buffer class
+// -=- 可修改的通用像素缓冲区类
 
 ModifiablePixelBuffer::ModifiablePixelBuffer(const PixelFormat& pf,
                                              int w, int h)
@@ -268,7 +262,7 @@ void ModifiablePixelBuffer::copyRect(const core::Rect& rect,
   dstData = getBufferRW(drect, &dstStride);
 
   if (move_by_delta.y == 0) {
-    // Possible overlap. Be careful and use memmove().
+    // 可能存在重叠，务必小心，使用 memmove()。
     int h = drect.height();
     while (h--) {
       memmove(dstData, srcData, (size_t)drect.width() * bytesPerPixel);
@@ -276,7 +270,7 @@ void ModifiablePixelBuffer::copyRect(const core::Rect& rect,
       srcData += srcStride * bytesPerPixel;
     }
   } else if (move_by_delta.y < 0) {
-    // The data shifted upwards. Copy from top to bottom.
+    // 数据向上移动，从顶部向底部复制。
     int h = drect.height();
     while (h--) {
       memcpy(dstData, srcData, (size_t)drect.width() * bytesPerPixel);
@@ -284,7 +278,7 @@ void ModifiablePixelBuffer::copyRect(const core::Rect& rect,
       srcData += srcStride * bytesPerPixel;
     }
   } else {
-    // The data shifted downwards. Copy from bottom to top.
+    // 数据向下移动，从底部向顶部复制。
     int h = drect.height();
     dstData += (h-1) * dstStride * bytesPerPixel;
     srcData += (h-1) * srcStride * bytesPerPixel;
@@ -330,7 +324,7 @@ void ModifiablePixelBuffer::imageRect(const PixelFormat& pf,
   commitBufferRW(dest);
 }
 
-// -=- Simple pixel buffer with a continuous block of memory
+// -=- 使用连续内存块的简单像素缓冲区
 
 FullFramePixelBuffer::FullFramePixelBuffer(const PixelFormat& pf, int w, int h,
                                            uint8_t* data_, int stride_)
@@ -393,12 +387,12 @@ void FullFramePixelBuffer::setBuffer(int width, int height,
 
 void FullFramePixelBuffer::setSize(int /*w*/, int /*h*/)
 {
-  // setBuffer() should be used
+  // 应使用 setBuffer()
   throw std::logic_error("Invalid call to FullFramePixelBuffer::setSize()");
 }
 
-// -=- Managed pixel buffer class
-// Automatically allocates enough space for the specified format & area
+// -=- 托管像素缓冲区类
+// 自动为指定的像素格式和区域分配足够的空间
 
 ManagedPixelBuffer::ManagedPixelBuffer()
   : data_(nullptr), datasize(0)

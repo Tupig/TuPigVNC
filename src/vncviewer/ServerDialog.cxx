@@ -1,20 +1,16 @@
 /* Copyright 2011 Pierre Ossman <ossman@cendio.se> for Cendio AB
  * Copyright 2012 Samuel Mannehed <samuel@cendio.se> for Cendio AB
- * 
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this software; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
- * USA.
+ *
+ * 本软件为自由软件；你可以依据自由软件基金会发布的 GNU 通用公共许可证
+ * （GNU General Public License）的条款（第 2 版，或你选择的任何更高版本）
+ * 重新分发和/或修改本软件。
+ *
+ * 本软件的发布是希望它有用，但不附带任何担保；甚至不附带适销性或
+ * 特定用途适用性的默示担保。详见 GNU 通用公共许可证。
+ *
+ * 你应已收到随本软件一同提供的 GNU 通用公共许可证副本；如果没有，
+ * 请致信自由软件基金会：Inc., 59 Temple Place - Suite 330, Boston,
+ * MA  02111-1307, USA。
  */
 
 #ifdef HAVE_CONFIG_H
@@ -28,7 +24,7 @@
 #include <cstdlib>
 #include <libgen.h>
 
-// FIXME: Workaround for FLTK including windows.h
+// FIXME: 规避 FLTK 引入 windows.h 的问题
 #ifdef WIN32
 #include <winsock2.h>
 #endif
@@ -233,7 +229,7 @@ void ServerDialog::buildLayout()
 
   scroll->end();
 
-  /* Needed for resize to work sanely */
+  /* 为保证缩放行为正常所必需 */
   resizable(nullptr);
 
   callback(this->handleCancel, this);
@@ -389,11 +385,11 @@ void ServerDialog::handleLoad(Fl_Widget* /*widget*/, void* data)
   file_chooser->previewButton->hide();
   file_chooser->show();
   
-  // Block until user picks something.
+  // 阻塞等待，直到用户做出选择。
   while(file_chooser->shown())
     Fl::wait();
   
-  // Did the user hit cancel?
+  // 用户是否点了取消？
   if (file_chooser->value() == nullptr) {
     delete(file_chooser);
     return;
@@ -433,11 +429,11 @@ void ServerDialog::handleSaveAs(Fl_Widget* /*widget*/, void* data)
   
   while(1) {
     
-    // Block until user picks something.
+    // 阻塞等待，直到用户做出选择。
     while(file_chooser->shown())
       Fl::wait();
     
-    // Did the user hit cancel?
+    // 用户是否点了取消？
     if (file_chooser->value() == nullptr) {
       delete(file_chooser);
       return;
@@ -449,13 +445,13 @@ void ServerDialog::handleSaveAs(Fl_Widget* /*widget*/, void* data)
     FILE* f = fopen(filename, "r");
     if (f) {
 
-      // The file already exists.
+      // 文件已存在。
       fclose(f);
       int overwrite_choice = fl_choice(_("%s already exists. Do you want to overwrite?"), 
                                        nullptr, _("No"), _("Overwrite"), filename);
       if (overwrite_choice != 2) {
 
-        // If the user doesn't want to overwrite:
+        // 如果用户不想覆盖：
         file_chooser->show();
         continue;
       }
@@ -784,7 +780,7 @@ void ServerDialog::onServerHistoryRemove(Fl_Widget*, std::string s, void* data)
 
 std::string ServerDialog::serverHistoryNormalize(const std::string s)
 {
-  // Convert to lowercase for case-insensitity
+  // 转成小写以实现大小写不敏感
   std::string result = s;
   transform(result.begin(), result.end(), result.begin(), ::tolower);
   return result;

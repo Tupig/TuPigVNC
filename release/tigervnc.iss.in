@@ -1,11 +1,11 @@
 ﻿[Setup]
 #ifdef WIN64
 ; 只允许在 64 位系统上安装，并装到 64 位目录/注册表。
-; 注意：SetupArchitecture 是 Inno Setup 6.3+ 才有的指令，CI 里通过
-; choco 安装的版本可能更老，会导致「Unrecognized directive」编译失败。
-; 安装器进程是 32 位 PE 不影响安装 64 位程序，故此处不使用该指令。
+; SetupArchitecture=x64 让安装器进程本身也是 64 位 PE（需 Inno Setup 6.3+）。
+; CI 通过 choco --pre 安装最新版以支持该指令。
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
+SetupArchitecture=x64
 #endif
 AppName=TuPigVNC
 AppVerName=TuPigVNC @VERSION@ (@BUILD@)

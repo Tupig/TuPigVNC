@@ -1,21 +1,17 @@
 /* Copyright (C) 2002-2005 RealVNC Ltd.  All Rights Reserved.
  * Copyright (C) 2011 D. R. Commander.  All Rights Reserved.
  * Copyright 2009-2014 Pierre Ossman for Cendio AB
- * 
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this software; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
- * USA.
+ *
+ * 本软件为自由软件；你可以依据自由软件基金会发布的 GNU 通用公共许可证
+ * （GNU General Public License）的条款（第 2 版，或你选择的任何更高版本）
+ * 重新分发和/或修改本软件。
+ *
+ * 本软件的发布是希望它有用，但不附带任何担保；甚至不附带适销性或
+ * 特定用途适用性的默示担保。详见 GNU 通用公共许可证。
+ *
+ * 你应已收到随本软件一同提供的 GNU 通用公共许可证副本；如果没有，
+ * 请致信自由软件基金会：Inc., 59 Temple Place - Suite 330, Boston,
+ * MA  02111-1307, USA。
  */
 
 #ifdef HAVE_CONFIG_H
@@ -75,17 +71,17 @@ std::string CConn::savedPassword;
 
 static core::LogWriter vlog("CConn");
 
-// 8 colours (1 bit per component)
+// 8 色（每个分量 1 位）
 static const rfb::PixelFormat verylowColourPF(8, 3,false, true,
                                               1, 1, 1, 2, 1, 0);
-// 64 colours (2 bits per component)
+// 64 色（每个分量 2 位）
 static const rfb::PixelFormat lowColourPF(8, 6, false, true,
                                           3, 3, 3, 4, 2, 0);
-// 256 colours (2-3 bits per component)
+// 256 色（每个分量 2-3 位）
 static const rfb::PixelFormat mediumColourPF(8, 8, false, true,
                                              7, 7, 3, 5, 2, 0);
 
-// Time new bandwidth estimates are weighted against (in ms)
+// 新的带宽估计值所依据的加权时间窗口（单位：毫秒）
 static const unsigned bpsEstimateWindow = 1000;
 
 CConn::CConn()
@@ -103,9 +99,8 @@ CConn::CConn()
   supportsLEDState = true;
 
 #ifdef HAVE_AUDIO
-  // Only ask the server to send audio if there is a device that can
-  // play it. Opening that device is deferred until the server actually
-  // has something for us.
+  // 只有在存在可播放音频的设备时才向服务器请求音频。
+  // 打开该设备的操作会推迟到服务器确实有音频要发送时再进行。
   if (playAudio) {
     audioOutput = AudioOutput::create();
     supportsAudio = audioOutput != nullptr;
@@ -137,8 +132,8 @@ CConn::~CConn()
 
     sock->shutdownWrite();
 
-    // Do a graceful close by waiting for the peer (up to 250 ms)
-    // FIXME: should do this asynchronously
+    // 通过等待对端（最多 250 毫秒）来优雅关闭
+    // FIXME: 应以异步方式完成
     gettimeofday(&now, nullptr);
     while (core::msSince(&now) < 250) {
       bool done;
@@ -223,8 +218,8 @@ std::string CConn::connectionInfo()
                            server.width(), server.height());
   infoText += "\n";
 
-  // TRANSLATORS: Will be filled in with a string describing the
-  // protocol pixel format in a fairly language neutral way
+  // 翻译者注意：这里会填入一段以尽量语言无关的方式描述
+  // 协议像素格式的字符串
   server.pf().print(pfStr, 100);
   infoText += core::format(_("Pixel format: %s"), pfStr);
   infoText += "\n";
@@ -274,12 +269,11 @@ void CConn::socketEvent(FL_SOCKET fd, void *data)
   assert(data);
   cc = (CConn*)data;
 
-  // Stop monitoring the socket for now and start processing incoming
-  // data asynchronously
+  // 暂时停止监视该套接字，改为异步处理到达的数据
   Fl::remove_fd(fd);
   cc->msgTimer.start(0);
 
-  // Coalesce data until we're fully done processing things
+  // 先合并数据，直到我们彻底处理完毕
   cc->getOutStream()->cork(true);
 }
 
@@ -289,14 +283,14 @@ void CConn::processNextMsg(core::Timer*)
   bool again;
   int when;
 
-  // I don't think processMsg() is recursion safe, so add this check
+  // 我认为 processMsg() 不是递归安全的，所以加上这个检查
   assert(!recursing);
 
   recursing = true;
 
   again = false;
   try {
-    // We might have been called to flush unwritten socket data
+    // 我们可能是为了冲刷尚未写出的套接字数据而被调用
     sock->outStream().flush();
 
     again = processMsg();
@@ -331,7 +325,7 @@ void CConn::processNextMsg(core::Timer*)
     return;
   }
 
-  // Out of data, go back to waiting
+  // 数据已处理完，回到等待状态
 
   getOutStream()->cork(false);
 
@@ -342,7 +336,7 @@ void CConn::processNextMsg(core::Timer*)
   Fl::add_fd(sock->getFd(), when, socketEvent, this);
 }
 
-////////////////////// CConnection callback methods //////////////////////
+////////////////////// CConnection 回调方法 //////////////////////
 
 void CConn::getUserPasswd(std::string *user, std::string *password)
 {
@@ -421,16 +415,15 @@ void CConn::getUserPasswd(std::string *user, std::string *password)
     throw rfb::auth_cancelled();
 }
 
-// initDone() is called when the serverInit message has been received.  At
-// this point we create the desktop window and display it.  We also tell the
-// server the pixel format and encodings to use and request the first update.
+// 收到 serverInit 消息后会调用 initDone()。此时我们创建桌面窗口并
+// 显示它。我们还会告诉服务器要使用的像素格式和编码，并请求第一次更新。
 void CConn::initDone()
 {
   vlog.info(_("连接已建立，远端桌面 %dx%d"),
             server.width(), server.height());
   desktop = new DesktopWindow(server.width(), server.height(), this);
 
-  // Force a switch to the format and encoding we'd like
+  // 强制切换到我们想要的格式和编码
   updateEncoding();
   updatePixelFormat();
 }
@@ -497,7 +490,7 @@ bool CConn::verifyCertificate(unsigned int status,
 
   gnutls_free(status_str.data);
 
-  /* Certificate has some user overridable problems, so TOFU time */
+  /* 证书存在一些用户可覆盖的问题，于是进入 TOFU 环节 */
 
   hostsDir = core::getvncstatedir();
   if (hostsDir == nullptr) {
@@ -515,7 +508,7 @@ bool CConn::verifyCertificate(unsigned int status,
                                       getServerName(), nullptr,
                                       GNUTLS_CRT_X509, &cert_datum, 0);
 
-  /* Previously known? */
+  /* 之前是否已知？ */
   if (known == GNUTLS_E_SUCCESS) {
     vlog.info(_("Server has an existing security exception"));
     return true;
@@ -548,7 +541,7 @@ bool CConn::verifyCertificate(unsigned int status,
 
   gnutls_free(info_datum.data);
 
-  /* New host */
+  /* 新主机 */
   if (known == GNUTLS_E_NO_CERTIFICATE_FOUND) {
     std::string text;
 
@@ -790,7 +783,7 @@ bool CConn::verifyHostKey(const uint8_t* key, size_t length,
                 fltk_escape(text).c_str()) != 2)
     return false;
 
-  // FIXME: Should save this for TOFU
+  // FIXME: 应将其保存下来用于 TOFU
   (void)key;
   (void)length;
 
@@ -807,33 +800,31 @@ void CConn::setExtendedDesktopSize(unsigned reason, unsigned result,
     desktop->setDesktopSizeDone(result);
 }
 
-// setName() is called when the desktop name changes
+// 桌面名称发生变化时会调用 setName()
 void CConn::setName(const char* name)
 {
   CConnection::setName(name);
   desktop->updateCaption();
 }
 
-// framebufferUpdateStart() is called at the beginning of an update.
-// Here we try to send out a new framebuffer update request so that the
-// next update can be sent out in parallel with us decoding the current
-// one.
+// 一次更新开始时调用 framebufferUpdateStart()。
+// 这里我们尝试发出新的帧缓冲更新请求，以便下一个更新可以
+// 在我们解码当前更新的同时并行发出。
 void CConn::framebufferUpdateStart()
 {
   CConnection::framebufferUpdateStart();
 
-  // For bandwidth estimate
+  // 用于估算带宽
   gettimeofday(&updateStartTime, nullptr);
   updateStartPos = sock->inStream().pos();
 
-  // Update the screen prematurely for very slow updates
+  // 对于非常慢的更新，提前刷新屏幕
   Fl::add_timeout(1.0, handleUpdateTimeout, this);
 }
 
-// framebufferUpdateEnd() is called at the end of an update.
-// For each rectangle, the FdInStream will have timed the speed
-// of the connection, allowing us to select format and encoding
-// appropriately, and then request another incremental update.
+// 一次更新结束时调用 framebufferUpdateEnd()。
+// 对每个矩形，FdInStream 会记录连接速度的计时，
+// 使我们能够恰当地选择格式和编码，然后请求下一次增量更新。
 void CConn::framebufferUpdateEnd()
 {
   unsigned long long elapsed, bps, weight;
@@ -843,7 +834,7 @@ void CConn::framebufferUpdateEnd()
 
   updateCount++;
 
-  // Calculate bandwidth everything managed to maintain during this update
+  // 计算本次更新期间维持的带宽
   gettimeofday(&now, nullptr);
   elapsed = (now.tv_sec - updateStartTime.tv_sec) * 1000000;
   elapsed += now.tv_usec - updateStartTime.tv_usec;
@@ -852,8 +843,7 @@ void CConn::framebufferUpdateEnd()
   bps = (unsigned long long)(sock->inStream().pos() -
                              updateStartPos) * 8 *
                             1000000 / elapsed;
-  // Allow this update to influence things more the longer it took, to a
-  // maximum of 20% of the new value.
+  // 本次更新耗时越长，让它对结果的影响越大，但最多占新值的 20%。
   weight = elapsed * 1000 / bpsEstimateWindow;
   if (weight > 200000)
     weight = 200000;
@@ -863,7 +853,7 @@ void CConn::framebufferUpdateEnd()
   Fl::remove_timeout(handleUpdateTimeout, this);
   desktop->updateWindow();
 
-  // Compute new settings based on updated bandwidth values
+  // 根据更新后的带宽值计算新设置
   if (autoSelect) {
     updateEncoding();
     updateQualityLevel();
@@ -871,7 +861,7 @@ void CConn::framebufferUpdateEnd()
   }
 }
 
-// The rest of the callbacks are fairly self-explanatory...
+// 其余回调基本都能望文知义……
 
 void CConn::bell()
 {
@@ -953,7 +943,7 @@ void CConn::handleAudioData(const uint8_t* data, size_t length)
 }
 
 
-////////////////////// Internal methods //////////////////////
+////////////////////// 内部方法 //////////////////////
 
 void CConn::resizeFramebuffer()
 {
@@ -988,9 +978,9 @@ void CConn::updateQualityLevel()
   if (!autoSelect)
     newQualityLevel = ::qualityLevel;
   else {
-    // Above 16Mbps (i.e. LAN), we choose the second highest JPEG
-    // quality, which should be perceptually lossless. If the bandwidth
-    // is below that, we choose a more lossy JPEG quality.
+    // 高于 16Mbps（即局域网）时，选择次高的 JPEG 质量，这在
+    // 感知上应是无损的。如果带宽低于该值，则选择有损程度更高的
+    // JPEG 质量。
 
     if (bpsEstimate > 16000000)
       newQualityLevel = 8;
@@ -1015,7 +1005,7 @@ void CConn::updatePixelFormat()
 
   fullColourPF = getFramebuffer()->getPF();
 
-  // If the bandwidth drops below 256 Kbps, we switch to palette mode.
+  // 如果带宽降到 256 Kbps 以下，则切换到调色板模式。
   if (autoSelect) {
     useFullColour = (bpsEstimate > 256000);
     if (useFullColour != (server.pf() == fullColourPF)) {

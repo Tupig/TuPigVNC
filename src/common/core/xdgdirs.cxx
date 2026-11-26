@@ -1,20 +1,16 @@
 /* Copyright (C) 2010 TightVNC Team.  All Rights Reserved.
  * Copyright 2021-2023 Pierre Ossman for Cendio AB
  *
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this software; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
- * USA.
+ * 本软件为自由软件；你可以依据自由软件基金会发布的 GNU 通用公共许可证
+ * （GNU General Public License）的条款（第 2 版，或你选择的任何更高版本）
+ * 重新分发和/或修改本软件。
+ *
+ * 本软件的发布是希望它有用，但不附带任何担保；甚至不附带适销性或
+ * 特定用途适用性的默示担保。详见 GNU 通用公共许可证。
+ *
+ * 你应已收到随本软件一同提供的 GNU 通用公共许可证副本；如果没有，
+ * 请致信自由软件基金会：Inc., 59 Temple Place - Suite 330, Boston,
+ * MA  02111-1307, USA。
  */
 
 #ifdef HAVE_CONFIG_H
@@ -35,7 +31,7 @@
 #include <unistd.h>
 #else
 #include <windows.h>
-#include <wininet.h> /* MinGW needs it */
+#include <wininet.h> /* MinGW 需要它 */
 #include <shlobj.h>
 #include <stdio.h>
 #include <string.h>
@@ -65,7 +61,7 @@ static const char* getvncdir(bool userDir, const char *xdg_env, const char *xdg_
     uid = getuid();
     passwd = getpwuid(uid);
     if (passwd == nullptr) {
-      /* Do we want emit error msg here? */
+      /* 这里要不要输出错误信息？ */
       return nullptr;
     }
     homedir = passwd->pw_dir;
