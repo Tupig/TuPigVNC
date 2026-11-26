@@ -614,6 +614,8 @@ int main(int argc, char** argv)
     }
   }
 
+  vlog.info(_("TuPigVNC 客户端启动"));
+
 #ifdef SIGHUP
   signal(SIGHUP, CleanupSignalHandler);
 #endif

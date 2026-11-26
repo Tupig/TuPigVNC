@@ -171,6 +171,8 @@ CConn::~CConn()
 
 void CConn::connect(const char* vncServerName, network::Socket* socket)
 {
+  vlog.info(_("开始连接 %s ..."),
+            vncServerName ? vncServerName : _("(socket)"));
   sock = socket;
   if(sock == nullptr) {
     try {
@@ -424,6 +426,8 @@ void CConn::getUserPasswd(std::string *user, std::string *password)
 // server the pixel format and encodings to use and request the first update.
 void CConn::initDone()
 {
+  vlog.info(_("连接已建立，远端桌面 %dx%d"),
+            server.width(), server.height());
   desktop = new DesktopWindow(server.width(), server.height(), this);
 
   // Force a switch to the format and encoding we'd like
