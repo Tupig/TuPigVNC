@@ -1,11 +1,11 @@
 ﻿[Setup]
 #ifdef WIN64
 ; 只允许在 64 位系统上安装，并装到 64 位目录/注册表。
-; SetupArchitecture=x64 让安装器进程本身也是 64 位 PE（需 Inno Setup 6.3+）。
-; CI 通过 choco --pre 安装最新版以支持该指令。
+; 注意：让安装器 exe 本身是 64 位 PE 需要 Inno Setup 7 的 SetupArchitecture 指令，
+; 当前 CI 用 6.7.1 稳定版不支持（7.x 仍是 beta）。安装器为 32 位 PE 不影响
+; 安装 64 位程序——真正的 64 位安装模式由 ArchitecturesInstallIn64BitMode 控制。
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
-SetupArchitecture=x64
 #endif
 AppName=TuPigVNC
 AppVerName=TuPigVNC @VERSION@ (@BUILD@)
