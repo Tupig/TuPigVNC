@@ -39,6 +39,7 @@
 #include <FL/Fl_Box.H>
 #include <FL/Fl_File_Chooser.H>
 #include <FL/Fl_Scroll.H>
+#include <FL/Fl_Browser.H>
 
 #include <core/Exception.h>
 #include <core/LogWriter.h>
@@ -68,7 +69,7 @@ static bool same_server(const std::string& a, const std::string& b);
 
 ServerDialog::ServerDialog()
   : Fl_Window(540, 760, "TuPigVNC"),
-    scroll(nullptr), activePanel(-1), panelTopY(0)
+    scroll(nullptr), historyBrowser(nullptr), activePanel(-1), panelTopY(0)
 {
   for (int i = 0; i < 4; i++) {
     panels[i] = nullptr;
@@ -260,11 +261,11 @@ void ServerDialog::buildHistoryPanel(Fl_Group *g)
 {
   buildPanelHeader(g, "连接历史", onClosePanel, this);
 
-  Fl_Box *placeholder = new Fl_Box(0, 40, g->w(), 60,
-                                   "（历史表格接入后显示：主机 / 名称 / 次数 / 最后连接 / 操作）");
-  placeholder->labelsize(11);
-  placeholder->labelcolor(M_TEXT3);
-  placeholder->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
+  historyBrowser = new Fl_Browser(0, 38, g->w(), 4 * 22);
+  historyBrowser->box(FL_FLAT_BOX);
+  historyBrowser->color(M_CARD);
+  historyBrowser->textsize(12);
+  historyBrowser->textcolor(M_TEXT);
 }
 
 void ServerDialog::buildOptionsPanel(Fl_Group *g)
@@ -298,6 +299,19 @@ void ServerDialog::buildAboutPanel(Fl_Group *g)
   placeholder->labelsize(12);
   placeholder->labelcolor(M_TEXT2);
   placeholder->align(FL_ALIGN_CENTER | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
+}
+
+void ServerDialog::refreshHistory()
+{
+  if (historyBrowser == nullptr)
+    return;
+  historyBrowser->clear();
+  for (const ServerHistoryEntry& e : serverHistory) {
+    char line[512];
+    snprintf(line, sizeof(line), "%s    |    %s    |    %d 次",
+             e.host.c_str(), e.name.c_str(), e.useCount);
+    historyBrowser->add(line);
+  }
 }
 
 void ServerDialog::showPanel(int idx)
@@ -357,6 +371,7 @@ std::string ServerDialog::run(const char* servername)
     for (const ServerHistoryEntry& e : dialog.serverHistory)
       names.push_back(e.host);
     dialog.serverName->set_suggestions(names);
+    dialog.refreshHistory();
   } catch (std::exception& e) {
     vlog.error(_("Unable to load the server history: %s"), e.what());
   }

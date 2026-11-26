@@ -33,6 +33,7 @@ struct ServerHistoryEntry {
 class Fl_Widget;
 class Fl_Group;
 class Fl_Scroll;
+class Fl_Browser;
 class Fl_Input_Choice;
 
 class ServerDialog : public Fl_Window {
@@ -68,6 +69,7 @@ private:
   void buildAboutPanel(Fl_Group* g);    // 关于面板
   void showPanel(int idx);     // 展开/收起面板：-1 全部收起
   void repositionWidgets();    // 面板显隐后重排
+  void refreshHistory();       // 根据 serverHistory 刷新历史列表
   static void onEntryClicked(Fl_Widget*, void* data);
   static void onClosePanel(Fl_Widget*, void* data);
 
@@ -77,6 +79,7 @@ protected:
   std::string usedDir;
 
   Fl_Scroll *scroll;           // 主滚动容器
+  Fl_Browser *historyBrowser;  // 连接历史列表
   Fl_Group *panels[4];         // 0历史 1选项 2更新 3关于
   Fl_Widget *entries_[4];      // 2×2 功能入口
   int activePanel;             // 当前展开的面板，-1 表示收起
