@@ -294,11 +294,37 @@ void ServerDialog::buildAboutPanel(Fl_Group *g)
 {
   buildPanelHeader(g, "关于", onClosePanel, this);
 
-  Fl_Box *placeholder = new Fl_Box(0, 40, g->w(), 60,
-                                   "TuPigVNC\n跨平台 VNC 远程桌面客户端");
-  placeholder->labelsize(12);
-  placeholder->labelcolor(M_TEXT2);
-  placeholder->align(FL_ALIGN_CENTER | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
+  int cw = g->w();
+
+  // 版本
+  Fl_Box *ver = new Fl_Box(0, 42, cw, 26,
+                           "TuPigVNC  v" PACKAGE_VERSION " · x64");
+  ver->labelfont(FL_HELVETICA_BOLD);
+  ver->labelsize(14);
+  ver->labelcolor(M_TEXT);
+  ver->align(FL_ALIGN_CENTER | FL_ALIGN_INSIDE);
+
+  // 简介
+  Fl_Box *desc = new Fl_Box(0, 74, cw, 40,
+                            "跨平台 VNC 远程桌面客户端\n"
+                            "基于 TigerVNC，Material 3 极简单页界面");
+  desc->labelsize(11);
+  desc->labelcolor(M_TEXT2);
+  desc->align(FL_ALIGN_CENTER | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
+
+  // 链接按钮
+  const char *links[4] = {"项目主页", "问题反馈", "版本发布", "许可证"};
+  int bw = 92, gap = 6;
+  int total = 4 * bw + 3 * gap;
+  int bx = (cw - total) / 2;
+  for (int i = 0; i < 4; i++) {
+    Fl_Button *b = new Fl_Button(bx + i * (bw + gap), 122, bw, 28, links[i]);
+    b->box(THEME_UP_BOX);
+    b->color(M_CARD);
+    b->labelcolor(M_ACCENT);
+    b->labelsize(11);
+    b->clear_visible_focus();
+  }
 }
 
 void ServerDialog::refreshHistory()
