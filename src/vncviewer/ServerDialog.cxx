@@ -73,10 +73,11 @@
 
 static core::LogWriter vlog("ServerDialog");
 
-/* 当前存活的 ServerDialog 实例。
- * 后台更新线程经 Fl::awake 回到主线程时，若对话框已销毁则丢弃结果，
- * 避免访问悬空指针。 */
-static std::atomic<ServerDialog*> g_updOwner{nullptr};
+/* 后台更新线程的存活判定。
+ * 用单调递增的实例 token 而非裸指针：ServerDialog 是栈对象，
+ * 地址会被复用，裸指针比较可能把旧结果套到新对话框上。 */
+static std::atomic<uint64_t> g_tokenSeq{0};      // 单调递增
+static std::atomic<uint64_t> g_currentToken{0};  // 当前存活实例，0 表示无
 
 const char* SERVER_HISTORY="tigervnc.history";        // 旧格式（仅用于迁移）
 const char* SERVER_HISTORY_JSON="history.json";       // 新格式：User/history.json
@@ -88,7 +89,6 @@ static bool same_server(const std::string& a, const std::string& b);
 ServerDialog::ServerDialog()
   : Fl_Window(540, 760, "TuPigVNC"),
     scroll(nullptr), historyBrowser(nullptr), activePanel(-1), panelTopY(0),
-    activeOpt(0),
     optAutoSelect(nullptr), optJpeg(nullptr), optEncoding(nullptr),
     optColorLevel(nullptr), optCustomCompress(nullptr),
     optCompressLevel(nullptr), optQualityLevel(nullptr),
@@ -112,7 +112,8 @@ ServerDialog::ServerDialog()
   buildLayout();
   loadOptions();
 
-  g_updOwner = this;
+  updToken = ++g_tokenSeq;
+  g_currentToken = updToken;
 
   // 启动 2 秒后静默检查更新（不阻塞界面，有新版给入口加红点）
   Fl::add_timeout(2.0, startupCheck, this);
@@ -137,7 +138,6 @@ static Fl_Color M_TEXT2     = fl_rgb_color(107, 101, 128);
 static Fl_Color M_TEXT3     = fl_rgb_color(162, 155, 184);
 static Fl_Color M_ACCENT    = fl_rgb_color(108, 92, 231);
 static Fl_Color M_ACC_SOFT  = fl_rgb_color(239, 235, 255);
-static Fl_Color M_STROKE2   = fl_rgb_color(224, 217, 242);
 
 void ServerDialog::buildLayout()
 {
@@ -316,6 +316,20 @@ void ServerDialog::buildHistoryPanel(Fl_Group *g)
 // 选项面板 · 6 个分类页
 // ============================================================
 
+/* 可选的首选编码（H.264 仅在编译开启时加入） */
+static const int kEncodingIds[] = {
+  rfb::encodingTight,
+  rfb::encodingJPEG,
+  rfb::encodingZRLE,
+  rfb::encodingHextile,
+#ifdef HAVE_H264
+  rfb::encodingH264,
+#endif
+  rfb::encodingRaw,
+};
+static const size_t kEncodingCount =
+    sizeof(kEncodingIds) / sizeof(kEncodingIds[0]);
+
 /* 分类页内的说明小标题 */
 static Fl_Box *optCaption(int x, int y, int w, const char *text)
 {
@@ -420,9 +434,8 @@ void ServerDialog::buildOptionCompress(Fl_Group *p, int y)
   yy += 20;
 
   optEncoding = optChoice(0, yy, half, 26);
-  const char *encs[6] = {"Tight", "JPEG", "ZRLE", "Hextile", "H.264", "Raw"};
-  for (int i = 0; i < 6; i++)
-    optEncoding->add(encs[i]);
+  for (size_t i = 0; i < kEncodingCount; i++)
+    optEncoding->add(rfb::encodingName(kEncodingIds[i]));
 
   optColorLevel = optChoice(half + 16, yy, half, 26);
   optColorLevel->add("全部");
@@ -544,7 +557,6 @@ void ServerDialog::showOptionPane(int idx)
 {
   if (idx < 0 || idx >= 6)
     return;
-  activeOpt = idx;
   for (int i = 0; i < 6; i++) {
     if (optPanes[i] == nullptr)
       continue;
@@ -567,11 +579,10 @@ void ServerDialog::loadOptions()
   optJpeg->value(rfb::CConnection::noJpeg ? 0 : 1);
 
   // 首选编码
-  const char *encs[6] = {"Tight", "JPEG", "ZRLE", "Hextile", "H.264", "Raw"};
   int ei = 0;
-  for (int i = 0; i < 6; i++) {
-    if (preferredEncoding == encs[i]) {
-      ei = i;
+  for (size_t i = 0; i < kEncodingCount; i++) {
+    if (preferredEncoding == rfb::encodingName(kEncodingIds[i])) {
+      ei = (int)i;
       break;
     }
   }
@@ -600,10 +611,13 @@ void ServerDialog::loadOptions()
 #if defined(HAVE_GNUTLS) || defined(HAVE_NETTLE)
   const std::string secTypes =
       rfb::SecurityClient::secTypes.getValueStr();
-  optEncryption->value(secTypes.find("RA2") != std::string::npos ? 1 : 0);
-  if (secTypes.find("Plain") != std::string::npos)
+  const bool rsa = secTypes.find("RA2") != std::string::npos;
+  optEncryption->value(rsa ? 1 : 0);
+  if (secTypes.find("Plain") != std::string::npos ||
+      secTypes.find("RA2_256") != std::string::npos)
     optAuth->value(2);
-  else if (secTypes.find("VncAuth") != std::string::npos)
+  else if (secTypes.find("VncAuth") != std::string::npos ||
+           (rsa && secTypes.find("RA2ne") == std::string::npos))
     optAuth->value(1);
   else
     optAuth->value(0);
@@ -656,11 +670,10 @@ void ServerDialog::storeOptions()
   autoSelect.setParam(optAutoSelect->value());
   rfb::CConnection::noJpeg.setParam(!optJpeg->value());
 
-  const char *encs[6] = {"Tight", "JPEG", "ZRLE", "Hextile", "H.264", "Raw"};
   int ei = optEncoding->value();
-  if (ei < 0 || ei > 5)
+  if (ei < 0 || (size_t)ei >= kEncodingCount)
     ei = 0;
-  preferredEncoding.setParam(encs[ei]);
+  preferredEncoding.setParam(rfb::encodingName(kEncodingIds[ei]));
 
   switch (optColorLevel->value()) {
   case 1: fullColour.setParam(false); lowColourLevel.setParam(2); break;
@@ -678,18 +691,18 @@ void ServerDialog::storeOptions()
   {
     std::string s;
     if (optEncryption->value() == 1) {
-      s = "RA2ne,RA2,RA256";
-      if (optAuth->value() == 1)
-        s += ",VncAuth";
-      else if (optAuth->value() == 2)
-        s += ",Plain";
+      // RSA-AES：按认证方式挑对应的安全类型（RA2ne=无认证，RA2=标准VNC，RA2_256=用户名密码）
+      switch (optAuth->value()) {
+      case 0:  s = "RA2ne,RA2ne_256"; break;
+      case 1:  s = "RA2";             break;
+      default: s = "RA2_256";         break;
+      }
     } else {
-      if (optAuth->value() == 0)
-        s = "None";
-      else if (optAuth->value() == 1)
-        s = "VncAuth";
-      else
-        s = "Plain";
+      switch (optAuth->value()) {
+      case 0:  s = "None";    break;
+      case 1:  s = "VncAuth"; break;
+      default: s = "Plain";   break;
+      }
     }
     rfb::SecurityClient::secTypes.setParam(s.c_str());
   }
@@ -738,6 +751,7 @@ namespace {
 /* 后台任务的返回结果（由工作线程 new，主线程 delete） */
 struct UpdateTask {
   ServerDialog *self;
+  uint64_t token;            // 创建时的实例 token
   bool install;              // 这次任务是「安装」而非「检查」
   bool ok;
   core::ReleaseInfo info;
@@ -749,7 +763,7 @@ struct UpdateTask {
 void ServerDialog::updateTaskDone(void *ptr)
 {
   UpdateTask *t = (UpdateTask*)ptr;
-  if (g_updOwner == t->self)
+  if (t->token != 0 && t->token == g_currentToken)
     t->self->handleUpdateTask(t->ok, t->info, t->error, t->install);
   delete t;
 }
@@ -865,7 +879,7 @@ void ServerDialog::handleUpdateTask(bool ok, const core::ReleaseInfo &info,
     updButton->label("立即更新");
   } else {
     updLatestVersion.clear();
-    updVersion->label(("v" PACKAGE_VERSION "  ·  已是最新版本").c_str());
+    updVersion->label("v" PACKAGE_VERSION "  ·  已是最新版本");
     setUpdateStats("当前阶段：无可用更新");
     updChangelog->label("当前已是最新版本。");
     updButton->label("已是最新");
@@ -887,56 +901,57 @@ void ServerDialog::onUpdateButton(Fl_Widget*, void *data)
 
 void ServerDialog::startUpdateCheck()
 {
-  if (updBusy.exchange(true))
-    return;
-  if (updThread.joinable())
-    updThread.join();
-
-  updStage->label("当前阶段：正在检查新版本...");
-  updButton->deactivate();
-  panels[2]->redraw();
-
-  updThread = std::thread([this]() {
-    UpdateTask *t = new UpdateTask;
-    t->self = this;
-    t->install = false;
-    t->ok = core::UpdateChecker::fetchLatestRelease(&t->info, &t->error);
-    Fl::awake(updateTaskDone, t);
-  });
+  runUpdateTask(false, updateTaskDone, "当前阶段：正在检查新版本...");
 }
 
 void ServerDialog::startUpdateInstall()
 {
   if (updDownloadUrl.empty())
     return;
+  runUpdateTask(true, updateTaskDone, "当前阶段：正在下载并安装...");
+}
+
+/* 启动后台更新任务：install=true 走「下载并静默安装」，
+ * 否则只查询最新版本。done 为任务完成后在主线程执行的回调。
+ * stage 非空时同时更新面板状态（静默检查传 nullptr）。 */
+bool ServerDialog::runUpdateTask(bool install, void (*done)(void*),
+                                 const char *stage)
+{
   if (updBusy.exchange(true))
-    return;
+    return false;
   if (updThread.joinable())
     updThread.join();
 
-  updStage->label("当前阶段：正在下载并安装...");
-  updButton->deactivate();
-  panels[2]->redraw();
+  if (stage != nullptr) {
+    updStage->label(stage);
+    updButton->deactivate();
+    panels[2]->redraw();
+  }
 
   const std::string url = updDownloadUrl;
   const std::string checksum = updChecksumUrl;
   const std::string version = updLatestVersion;
 
-  updThread = std::thread([this, url, checksum, version]() {
+  updThread = std::thread([this, install, done, url, checksum, version]() {
     UpdateTask *t = new UpdateTask;
     t->self = this;
-    t->install = true;
-    t->ok = core::UpdateChecker::downloadAndInstall(url, checksum, version,
-                                                    &t->error);
-    Fl::awake(updateTaskDone, t);
+    t->token = updToken;
+    t->install = install;
+    if (install)
+      t->ok = core::UpdateChecker::downloadAndInstall(url, checksum, version,
+                                                      &t->error);
+    else
+      t->ok = core::UpdateChecker::fetchLatestRelease(&t->info, &t->error);
+    Fl::awake(done, t);
   });
+  return true;
 }
 
 /* 主线程侧：启动静默检查完成，有新版则给「自动更新」入口加红点 */
 void ServerDialog::updateSilentDone(void *ptr)
 {
   UpdateTask *t = (UpdateTask*)ptr;
-  if (g_updOwner == t->self) {
+  if (t->token != 0 && t->token == g_currentToken) {
     t->self->updBusy = false;
     if (t->ok &&
         core::UpdateChecker::isNewer(t->info.version, PACKAGE_VERSION)) {
@@ -956,18 +971,7 @@ void ServerDialog::updateSilentDone(void *ptr)
 
 void ServerDialog::checkUpdateSilently()
 {
-  if (updBusy.exchange(true))
-    return;
-  if (updThread.joinable())
-    updThread.join();
-
-  updThread = std::thread([this]() {
-    UpdateTask *t = new UpdateTask;
-    t->self = this;
-    t->install = false;
-    t->ok = core::UpdateChecker::fetchLatestRelease(&t->info, &t->error);
-    Fl::awake(updateSilentDone, t);
-  });
+  runUpdateTask(false, updateSilentDone, nullptr);
 }
 
 void ServerDialog::buildUpdatePanel(Fl_Group *g)
@@ -978,7 +982,7 @@ void ServerDialog::buildUpdatePanel(Fl_Group *g)
 
   // ---- 版本对比 ----
   updVersion = new Fl_Box(0, 38, cw, 26,
-                          ("v" PACKAGE_VERSION "  ·  点击下方按钮检查更新").c_str());
+                          "v" PACKAGE_VERSION "  ·  点击下方按钮检查更新");
   updVersion->labelfont(FL_HELVETICA_BOLD);
   updVersion->labelsize(14);
   updVersion->labelcolor(M_TEXT);
@@ -1094,13 +1098,6 @@ void ServerDialog::showPanel(int idx)
   redraw();
 }
 
-void ServerDialog::repositionWidgets()
-{
-  for (int i = 0; i < 4; i++)
-    panels[i]->position(20, panelTopY);
-  scroll->redraw();
-}
-
 void ServerDialog::onEntryClicked(Fl_Widget *widget, void *data)
 {
   ServerDialog *dialog = (ServerDialog*)data;
@@ -1116,7 +1113,7 @@ void ServerDialog::onClosePanel(Fl_Widget* /*widget*/, void *data)
 
 ServerDialog::~ServerDialog()
 {
-  g_updOwner = nullptr;
+  g_currentToken = 0;
   Fl::remove_timeout(startupCheck, this);
   if (updThread.joinable())
     updThread.join();

@@ -1690,8 +1690,8 @@ void DesktopWindow::handleStatsTimeout(void *data)
   fl_color(FL_WHITE);
   fl_draw("网络状态", 10, 18);
 
-  // 下行带宽
-  const double mbps = self->stats[statsCount - 1].bps / 1000000.0;
+  // 下行带宽（stats[].bps 是字节/秒，乘 8 转成 bit/秒；先转 double 防溢出）
+  const double mbps = (double)self->stats[statsCount - 1].bps * 8 / 1000000.0;
   fl_font(FL_HELVETICA, 11);
   snprintf(buffer, sizeof(buffer), "下行  %.2f Mbps", mbps);
   fl_color(FL_GREEN);

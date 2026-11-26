@@ -78,7 +78,6 @@ private:
   void buildUpdatePanel(Fl_Group* g);   // 自动更新面板
   void buildAboutPanel(Fl_Group* g);    // 关于面板
   void showPanel(int idx);     // 展开/收起面板：-1 全部收起
-  void repositionWidgets();    // 面板显隐后重排
   void refreshHistory();       // 根据 serverHistory 刷新历史列表
   static void onEntryClicked(Fl_Widget*, void* data);
   static void onClosePanel(Fl_Widget*, void* data);
@@ -110,7 +109,6 @@ protected:
   // 选项面板：6 个分类页 + 子标签
   Fl_Group *optPanes[6];
   Fl_Toggle_Button *optTabs[6];
-  int activeOpt;
 
   // 压缩页
   Fl_Check_Button *optAutoSelect;
@@ -155,6 +153,8 @@ protected:
                       const char* eta = "剩余时间：—");   // 刷新统计三行
   void startUpdateCheck();               // 后台查询最新版本
   void startUpdateInstall();             // 后台下载并静默安装
+  bool runUpdateTask(bool install, void (*done)(void*),
+                     const char* stage);  // 后台任务统一入口
   void checkUpdateSilently();            // 启动时静默检查（有新版加红点）
   static void startupCheck(void* data);  // 启动检查定时器回调
 
@@ -168,6 +168,7 @@ protected:
   std::string updLatestVersion;
   std::string updDownloadUrl;
   std::string updChecksumUrl;
+  uint64_t updToken = 0;                 // 实例 token（后台回调存活判定）
   std::atomic<bool> updBusy{false};      // 后台任务进行中
   std::thread updThread;                 // 后台线程句柄
 };
