@@ -151,15 +151,32 @@ jobs:
           path: build/tests/unit/test-results.xml
 
       # ---------------- 打包（仅 main 发布构建） ----------------
+      # Chocolatey 上的 innosetup 包只到 6.3.x，没有 7.x。
+      # 而 SetupArchitecture=x64（生成 64 位 PE 安装器）是 Inno Setup 7 才有的
+      # 指令，所以直接从官方 GitHub Releases 下载 7.1.1 的 x64 安装器静默安装。
       - name: Install Inno Setup
         if: steps.version.outputs.release == 'true'
-        run: choco install innosetup --version=7.0.0-beta --no-progress -y
+        shell: pwsh
+        run: |
+          $url = "https://github.com/jrsoftware/issrc/releases/download/is-7_1_1/innosetup-7.1.1-x64.exe"
+          $out = Join-Path $env:RUNNER_TEMP "innosetup.exe"
+          Write-Host "下载 $url"
+          Invoke-WebRequest -Uri $url -OutFile $out -UseBasicParsing
+          Start-Process -FilePath $out -Wait -ArgumentList `
+            "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/SP-"
+          # 确认安装位置（x64 版装到 Program Files，x86 版装到 Program Files (x86)）
+          foreach ($dir in @("C:\Program Files\Inno Setup 7",
+                             "C:\Program Files (x86)\Inno Setup 7")) {
+            if (Test-Path (Join-Path $dir "ISCC.exe")) {
+              Write-Host "找到 ISCC: $dir\ISCC.exe"
+            }
+          }
 
       - name: Build installer
         if: steps.version.outputs.release == 'true'
         shell: pwsh
         run: |
-          $env:PATH = "C:\Program Files (x86)\Inno Setup 7;C:\Program Files (x86)\Inno Setup 6;$env:PATH"
+          $env:PATH = "C:\Program Files\Inno Setup 7;C:\Program Files (x86)\Inno Setup 7;$env:PATH"
           $vcpkg = $env:VCPKG_INSTALLATION_ROOT
           $env:PATH = "$vcpkg\installed\x64-windows-static\bin;$env:PATH"
           cmake --build build --config Release --target installer
