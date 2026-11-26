@@ -22,8 +22,17 @@
 #include <FL/Fl_Window.H>
 #include <string>
 #include <list>
+#include <cstdint>
 
 #include "fltk/Fl_Suggestion_Input.h"
+
+/* 一条连接历史记录（存 User/history.json） */
+struct ServerHistoryEntry {
+  std::string host;     // 服务器地址，如 "192.168.1.100:5900"
+  std::string name;     // 显示名，默认同 host
+  int64_t lastUsed;     // 最后使用时间（Unix 秒）
+  int useCount;         // 使用次数
+};
 
 class Fl_Widget;
 class Fl_Group;
@@ -50,6 +59,9 @@ private:
   void loadServerHistory();
   void saveServerHistory();
   void updateUsedDir(const char* filename);
+  void pruneHistory();                        // 超过 250 台时淘汰
+  void migrateOldHistory();                   // 从旧版（注册表/文件）迁移
+  void parseHistoryJson(const std::string& content);
 
   static void onServerHistoryRemove(Fl_Widget*, std::string s, void* data);
   static std::string serverHistoryNormalize(const std::string s);
@@ -67,7 +79,7 @@ private:
 
 protected:
   Fl_Suggestion_Input *serverName;
-  std::list<std::string> serverHistory;
+  std::list<ServerHistoryEntry> serverHistory;
   std::string usedDir;
 
   Fl_Scroll *scroll;           // 主滚动容器

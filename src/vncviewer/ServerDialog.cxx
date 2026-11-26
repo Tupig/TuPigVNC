@@ -22,8 +22,10 @@
 #endif
 
 #include <errno.h>
+#include <time.h>
 #include <algorithm>
 #include <cstdint>
+#include <cstdlib>
 #include <libgen.h>
 
 // FIXME: Workaround for FLTK including windows.h
@@ -61,7 +63,9 @@
 
 static core::LogWriter vlog("ServerDialog");
 
-const char* SERVER_HISTORY="tigervnc.history";
+const char* SERVER_HISTORY="tigervnc.history";        // 旧格式（仅用于迁移）
+const char* SERVER_HISTORY_JSON="history.json";       // 新格式：User/history.json
+static const size_t SERVER_HISTORY_MAX = 250;         // 历史上限
 
 ServerDialog::ServerDialog()
   : Fl_Window(540, 760, "TuPigVNC"),
@@ -350,7 +354,10 @@ std::string ServerDialog::run(const char* servername)
 
   try {
     dialog.loadServerHistory();
-    dialog.serverName->set_suggestions(dialog.serverHistory);
+    std::list<std::string> names;
+    for (const ServerHistoryEntry& e : dialog.serverHistory)
+      names.push_back(e.host);
+    dialog.serverName->set_suggestions(names);
   } catch (std::exception& e) {
     vlog.error(_("Unable to load the server history: %s"), e.what());
   }
@@ -501,9 +508,26 @@ void ServerDialog::handleConnect(Fl_Widget* /*widget*/, void *data)
                e.what());
   }
 
-  // avoid duplicates in the history
-  dialog->serverHistory.remove(servername);
-  dialog->serverHistory.insert(dialog->serverHistory.begin(), servername);
+  // 更新历史：已存在则累加次数并置顶，否则插入新记录
+  int64_t now = time(nullptr);
+  auto it = std::find_if(dialog->serverHistory.begin(),
+                         dialog->serverHistory.end(),
+                         [&](const ServerHistoryEntry& e) {
+                           return same_server(e.host, servername);
+                         });
+  ServerHistoryEntry entry;
+  if (it != dialog->serverHistory.end()) {
+    entry = *it;
+    dialog->serverHistory.erase(it);
+  } else {
+    entry.host = servername;
+    entry.name = servername;
+    entry.useCount = 0;
+  }
+  entry.useCount++;
+  entry.lastUsed = now;
+  dialog->serverHistory.push_front(entry);
+  dialog->pruneHistory();
 
   try {
     dialog->saveServerHistory();
@@ -541,120 +565,213 @@ static bool same_server(const std::string& a, const std::string& b)
 }
 
 
-void ServerDialog::loadServerHistory()
-{
-  std::list<std::string> rawHistory;
+/* ---- 极简 JSON 字符串转义/提取（固定 schema，无第三方库）---- */
 
-  serverHistory.clear();
+static std::string jsonEscape(const std::string& s)
+{
+  std::string out;
+  out.reserve(s.size() + 8);
+  for (char c : s) {
+    switch (c) {
+    case '"':  out += "\\\""; break;
+    case '\\': out += "\\\\"; break;
+    case '\n': out += "\\n";  break;
+    case '\r': out += "\\r";  break;
+    case '\t': out += "\\t";  break;
+    default:   out += c;      break;
+    }
+  }
+  return out;
+}
+
+static std::string jsonExtractString(const std::string& obj, const char* key)
+{
+  std::string needle = std::string("\"") + key + "\":\"";
+  size_t p = obj.find(needle);
+  if (p == std::string::npos)
+    return "";
+  p += needle.size();
+  std::string out;
+  while (p < obj.size() && obj[p] != '"') {
+    if (obj[p] == '\\' && p + 1 < obj.size()) {
+      ++p;
+      char c = obj[p];
+      if (c == 'n')      out += '\n';
+      else if (c == 'r') out += '\r';
+      else if (c == 't') out += '\t';
+      else               out += c;
+    } else {
+      out += obj[p];
+    }
+    ++p;
+  }
+  return out;
+}
+
+static int64_t jsonExtractInt(const std::string& obj, const char* key)
+{
+  std::string needle = std::string("\"") + key + "\":";
+  size_t p = obj.find(needle);
+  if (p == std::string::npos)
+    return 0;
+  p += needle.size();
+  return (int64_t)atoll(obj.c_str() + p);
+}
+
+void ServerDialog::parseHistoryJson(const std::string& content)
+{
+  size_t pos = 0;
+  while ((pos = content.find('{', pos)) != std::string::npos) {
+    size_t end = content.find('}', pos);
+    if (end == std::string::npos)
+      break;
+
+    std::string obj = content.substr(pos, end - pos + 1);
+    ServerHistoryEntry e;
+    e.host = jsonExtractString(obj, "host");
+    e.name = jsonExtractString(obj, "name");
+    e.lastUsed = jsonExtractInt(obj, "lastUsed");
+    e.useCount = (int)jsonExtractInt(obj, "useCount");
+    if (e.name.empty())
+      e.name = e.host;
+
+    // 去重（同一服务器只保留一条）
+    if (!e.host.empty() &&
+        std::find_if(serverHistory.begin(), serverHistory.end(),
+                     [&](const ServerHistoryEntry& x) {
+                       return same_server(x.host, e.host);
+                     }) == serverHistory.end())
+      serverHistory.push_back(e);
+
+    pos = end + 1;
+  }
+}
+
+void ServerDialog::pruneHistory()
+{
+  // 超出上限时淘汰「使用次数最少」的记录；次数相同则淘汰「最久未用」
+  while (serverHistory.size() > SERVER_HISTORY_MAX) {
+    auto worst = std::min_element(
+      serverHistory.begin(), serverHistory.end(),
+      [](const ServerHistoryEntry& a, const ServerHistoryEntry& b) {
+        if (a.useCount != b.useCount)
+          return a.useCount < b.useCount;
+        return a.lastUsed < b.lastUsed;
+      });
+    serverHistory.erase(worst);
+  }
+}
+
+void ServerDialog::migrateOldHistory()
+{
+  std::list<std::string> old;
 
 #ifdef _WIN32
-  rawHistory = loadHistoryFromRegKey();
+  try {
+    old = loadHistoryFromRegKey();
+  } catch (std::exception& e) {
+    vlog.error(_("Failed to read legacy history from registry: %s"), e.what());
+  }
 #else
+  const char* stateDir = core::getvncstatedir();
+  if (stateDir != nullptr) {
+    char filepath[PATH_MAX];
+    snprintf(filepath, sizeof(filepath), "%s/%s", stateDir, SERVER_HISTORY);
+    FILE* f = fopen(filepath, "r");
+    if (f) {
+      char line[256];
+      while (fgets(line, sizeof(line), f)) {
+        int len = strlen(line);
+        while (len > 0 && (line[len-1] == '\n' || line[len-1] == '\r'))
+          line[--len] = '\0';
+        if (len > 0)
+          old.push_back(line);
+      }
+      fclose(f);
+    }
+  }
+#endif
+
+  // 旧数据没有次数/时间信息，按出现顺序赋递减时间戳
+  int64_t ts = time(nullptr);
+  for (const std::string& host : old) {
+    if (std::find_if(serverHistory.begin(), serverHistory.end(),
+                     [&](const ServerHistoryEntry& x) {
+                       return same_server(x.host, host);
+                     }) != serverHistory.end())
+      continue;
+    ServerHistoryEntry e;
+    e.host = host;
+    e.name = host;
+    e.lastUsed = ts--;
+    e.useCount = 1;
+    serverHistory.push_back(e);
+  }
+
+  if (!serverHistory.empty()) {
+    try {
+      saveServerHistory();
+    } catch (std::exception& e) {
+      vlog.error(_("Failed to migrate history: %s"), e.what());
+    }
+  }
+}
+
+void ServerDialog::loadServerHistory()
+{
+  serverHistory.clear();
 
   const char* stateDir = core::getvncstatedir();
   if (stateDir == nullptr)
-    throw std::runtime_error(_("Could not determine VNC state directory path"));
+    return;
 
   char filepath[PATH_MAX];
-  snprintf(filepath, sizeof(filepath), "%s/%s", stateDir, SERVER_HISTORY);
+  snprintf(filepath, sizeof(filepath), "%s/%s", stateDir, SERVER_HISTORY_JSON);
 
-  /* Read server history from file */
   FILE* f = fopen(filepath, "r");
   if (!f) {
-    if (errno == ENOENT) {
-      // no history file
-      return;
-    }
-    throw core::posix_error(
-      core::format(_("Failed to open \"%s\""), filepath), errno);
+    // 首次运行：尝试从旧版（注册表 / tigervnc.history）迁移
+    migrateOldHistory();
+    return;
   }
 
-  int lineNr = 0;
-  while (!feof(f)) {
-    char line[256];
-
-    // Read the next line
-    lineNr++;
-    if (!fgets(line, sizeof(line), f)) {
-      if (feof(f))
-        break;
-
-      fclose(f);
-      throw core::posix_error(
-        core::format(_("Failed to read line %d in file \"%s\""),
-                     lineNr, filepath),
-        errno);
-    }
-
-    int len = strlen(line);
-
-    if (len == (sizeof(line) - 1)) {
-      fclose(f);
-      std::string msg = core::format(_("Failed to read line %d in "
-                                       "file \"%s\""),
-                                     lineNr, filepath);
-      throw std::runtime_error(
-        core::format("%s: %s", msg.c_str(), _("Line too long")));
-    }
-
-    if ((len > 0) && (line[len-1] == '\n')) {
-      line[len-1] = '\0';
-      len--;
-    }
-    if ((len > 0) && (line[len-1] == '\r')) {
-      line[len-1] = '\0';
-      len--;
-    }
-
-    if (len == 0)
-      continue;
-
-    rawHistory.push_back(line);
-  }
-
+  std::string content;
+  char buf[4096];
+  size_t n;
+  while ((n = fread(buf, 1, sizeof(buf), f)) > 0)
+    content.append(buf, n);
   fclose(f);
-#endif
 
-  // Filter out duplicates, even if they have different formats
-  for (const std::string& entry : rawHistory) {
-    if (std::find_if(serverHistory.begin(), serverHistory.end(),
-                     [&entry](const std::string& s) {
-                       return same_server(s, entry);
-                     }) != serverHistory.end())
-      continue;
-    serverHistory.push_back(entry);
-  }
+  parseHistoryJson(content);
+  pruneHistory();
 }
 
 void ServerDialog::saveServerHistory()
 {
-#ifdef _WIN32
-  saveHistoryToRegKey(serverHistory);
-  return;
-#endif
-
   const char* stateDir = core::getvncstatedir();
   if (stateDir == nullptr)
     throw std::runtime_error(_("Could not determine VNC state directory path"));
 
   char filepath[PATH_MAX];
-  snprintf(filepath, sizeof(filepath), "%s/%s", stateDir, SERVER_HISTORY);
+  snprintf(filepath, sizeof(filepath), "%s/%s", stateDir, SERVER_HISTORY_JSON);
 
-  /* Write server history to file */
-  FILE* f = fopen(filepath, "w+");
+  FILE* f = fopen(filepath, "w");
   if (!f) {
     std::string msg = core::format(_("Failed to open \"%s\""), filepath);
     throw core::posix_error(msg.c_str(), errno);
   }
 
-  // Save the last X elements to the config file.
-  size_t count = 0;
-  for (const std::string& entry : serverHistory) {
-    if (++count > SERVER_HISTORY_SIZE)
-      break;
-    fprintf(f, "%s\n", entry.c_str());
+  fprintf(f, "[\n");
+  bool first = true;
+  for (const ServerHistoryEntry& e : serverHistory) {
+    if (!first) fprintf(f, ",\n");
+    first = false;
+    fprintf(f, "  {\"host\":\"%s\",\"name\":\"%s\","
+               "\"lastUsed\":%lld,\"useCount\":%d}",
+            jsonEscape(e.host).c_str(), jsonEscape(e.name).c_str(),
+            (long long)e.lastUsed, e.useCount);
   }
-
+  fprintf(f, "\n]\n");
   fclose(f);
 }
 
@@ -668,7 +785,9 @@ void ServerDialog::updateUsedDir(const char* filename)
 void ServerDialog::onServerHistoryRemove(Fl_Widget*, std::string s, void* data)
 {
   ServerDialog *dialog = (ServerDialog*)data;
-  dialog->serverHistory.remove(s);
+  dialog->serverHistory.remove_if([&](const ServerHistoryEntry& e) {
+    return same_server(e.host, s);
+  });
   dialog->saveServerHistory();
 }
 
