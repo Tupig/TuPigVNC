@@ -157,6 +157,7 @@ private:
   struct statsEntry stats[100];
 
   struct timeval statsLastTime;
+  struct timeval startTime;      // 会话开始时间（算会话时长）
   unsigned statsLastUpdates;
   unsigned statsLastPixels;
   unsigned statsLastPosition;

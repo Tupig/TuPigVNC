@@ -45,6 +45,10 @@ public:
   unsigned getPixelCount();
   unsigned getPosition();
 
+  /* 网络状态面板用：带宽估计（bit/s）与最近一次使用的编码号 */
+  unsigned long long getBandwidthEstimate() const { return bpsEstimate; }
+  int getLastServerEncoding() const { return lastServerEncoding; }
+
 protected:
 
   // Callback when socket is ready (or broken)

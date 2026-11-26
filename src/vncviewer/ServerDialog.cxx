@@ -763,7 +763,8 @@ void ServerDialog::handleUpdateTask(bool ok, const core::ReleaseInfo &info,
 
   if (install) {
     if (!ok) {
-      setUpdateStats(("安装失败：" + error).c_str());
+      const std::string msg = std::string("安装失败：") + error;
+      setUpdateStats(msg.c_str());
       updButton->activate();
       updButton->redraw();
     }
@@ -774,7 +775,8 @@ void ServerDialog::handleUpdateTask(bool ok, const core::ReleaseInfo &info,
   updButton->activate();
 
   if (!ok) {
-    setUpdateStats(("检查失败：" + error).c_str());
+    const std::string msg = std::string("检查失败：") + error;
+    setUpdateStats(msg.c_str());
     updButton->label("重试");
     updButton->redraw();
     return;
