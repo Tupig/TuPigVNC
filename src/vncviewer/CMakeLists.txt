@@ -11,9 +11,11 @@ add_executable(vncviewer
   fltk/Fl_Password_Input.cxx
   fltk/event_dispatch_handler.cxx
   fltk/theme.cxx
+  fltk/material.cxx
   AuthDialog.cxx
   BaseTouchHandler.cxx
   CConn.cxx
+  Credentials.cxx
   DesktopWindow.cxx
   EmulateMB.cxx
   ServerDialog.cxx
@@ -81,7 +83,7 @@ if(GNUTLS_FOUND)
 endif()
 
 if(WIN32)
-  target_link_libraries(vncviewer PRIVATE msimg32 winmm)
+  target_link_libraries(vncviewer PRIVATE msimg32 winmm crypt32)
 elseif(APPLE)
   target_link_libraries(vncviewer PRIVATE "-framework Cocoa")
   target_link_libraries(vncviewer PRIVATE "-framework Carbon")

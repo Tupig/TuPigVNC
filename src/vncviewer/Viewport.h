@@ -43,23 +43,23 @@ public:
   Viewport(int w, int h, CConn* cc_);
   ~Viewport();
 
-  // Flush updates to screen
+  // 把更新刷新到屏幕
   void updateWindow();
 
-  // New image for the locally rendered cursor
+  // 本地渲染光标的新图像
   void setCursor();
 
-  // Change client LED state
+  // 修改客户端的 LED 状态
   void setLEDState(unsigned int state);
 
   void draw(Surface* dst);
 
-  // Clipboard events
+  // 剪贴板事件
   void handleClipboardRequest();
   void handleClipboardAnnounce(bool available);
   void handleClipboardData(const char* data);
 
-  // Fl_Widget callback methods
+  // Fl_Widget 的回调方法
 
   void draw() override;
 
@@ -74,7 +74,7 @@ protected:
 private:
   bool hasFocus();
 
-  // Show the currently set (or system) cursor
+  // 显示当前设置的光标（或系统光标）
   void showCursor();
 
   static void handleClipboardChange(int source, void *data);

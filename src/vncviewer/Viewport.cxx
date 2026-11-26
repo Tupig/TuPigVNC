@@ -473,26 +473,55 @@ void Viewport::draw()
   if (!base)
     return;
 
-  // 复用的行缓冲，避免每帧分配
-  static std::vector<uint8_t> rowBuf;
-  size_t need = (size_t)drawW * bpp;
-  if (rowBuf.size() < need)
-    rowBuf.resize(need);
+  if (drawW <= 0 || drawH <= 0)
+    return;
 
-  // 最近邻缩放：逐目标行做水平采样，再 fl_draw_image 画一整行
-  for (int ty = ty0; ty < ty1; ty++) {
-    int fy = (int)((ty - offY) / scale);
-    if (fy < 0) fy = 0;
-    if (fy >= fbH) fy = fbH - 1;
+  // 注意：getBuffer 返回的 stride 单位是「像素」，转字节要乘 bpp
+  const rfb::PixelFormat& pf = frameBuffer->getPF();
 
-    const uint8_t* srcRow = base + (size_t)fy * stride;
-    for (int tx = 0; tx < drawW; tx++) {
-      int fx = (int)(tx / scale);
-      if (fx < 0) fx = 0;
-      if (fx >= fbW) fx = fbW - 1;
-      memcpy(rowBuf.data() + (size_t)tx * bpp, srcRow + (size_t)fx * bpp, bpp);
+  // 预先算好水平采样表（整数运算），避免每像素做一次浮点除法
+  static std::vector<int> xmap;
+  if ((int)xmap.size() < drawW)
+    xmap.resize(drawW);
+  for (int tx = 0; tx < drawW; tx++) {
+    int fx = (int)((long long)tx * fbW / drawW);
+    if (fx < 0)
+      fx = 0;
+    if (fx >= fbW)
+      fx = fbW - 1;
+    xmap[tx] = fx;
+  }
+
+  // 批量行缓冲：转成明确的 RGB（D=3），一次 fl_draw_image 画 BATCH 行
+  // framebuffer 内存里是 BGRX（Windows RGBQUAD），直接当 D=4(RGBA) 会红蓝对调，
+  // 所以按 PixelFormat 的位移取出 R/G/B 通道，输出标准 RGB。
+  const int outBpp = 3;
+  const int BATCH = 32;
+  static std::vector<uint8_t> blockBuf;
+  const size_t rowBytes = (size_t)drawW * outBpp;
+  if (blockBuf.size() < rowBytes * BATCH)
+    blockBuf.resize(rowBytes * BATCH);
+
+  for (int ty = ty0; ty < ty1;) {
+    const int rows = std::min(BATCH, ty1 - ty);
+    for (int r = 0; r < rows; r++) {
+      int fy = (int)((long long)(ty + r - offY) * fbH / drawH);
+      if (fy < 0)
+        fy = 0;
+      if (fy >= fbH)
+        fy = fbH - 1;
+      const uint8_t* srcRow = base + (size_t)fy * stride * bpp;
+      uint8_t* dst = blockBuf.data() + (size_t)r * rowBytes;
+      for (int tx = 0; tx < drawW; tx++) {
+        const uint8_t* s = srcRow + (size_t)xmap[tx] * bpp;
+        // 走 PixelFormat 的公开接口，避免依赖 protected 的 *Shift 成员
+        const rfb::Pixel pix = pf.pixelFromBuffer(s);
+        uint8_t* d = dst + (size_t)tx * outBpp;
+        pf.rgbFromPixel(pix, d + 0, d + 1, d + 2);
+      }
     }
-    fl_draw_image(rowBuf.data(), offX, ty, drawW, 1, bpp);
+    fl_draw_image(blockBuf.data(), offX, ty, drawW, rows, outBpp);
+    ty += rows;
   }
 }
 

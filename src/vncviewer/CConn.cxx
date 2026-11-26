@@ -60,6 +60,7 @@
 #include "AudioOutput.h"
 #include "AuthDialog.h"
 #include "CConn.h"
+#include "Credentials.h"
 #include "OptionsDialog.h"
 #include "DesktopWindow.h"
 #include "PlatformPixelBuffer.h"
@@ -315,6 +316,7 @@ void CConn::processNextMsg(core::Timer*)
   } catch (rfb::auth_error& e) {
     savedUsername.clear();
     savedPassword.clear();
+    credentials::forget(credentialKey());
     vlog.error(_("Authentication failed: %s"), e.what());
     abort_connection(_("Failed to authenticate with the server. Reason "
                        "given by the server:\n\n%s"), e.what());
@@ -342,6 +344,11 @@ void CConn::processNextMsg(core::Timer*)
 }
 
 ////////////////////// CConnection 回调方法 //////////////////////
+
+std::string CConn::credentialKey() const
+{
+  return core::format("%s:%d", serverHost.c_str(), serverPort);
+}
 
 void CConn::getUserPasswd(std::string *user, std::string *password)
 {
@@ -372,6 +379,18 @@ void CConn::getUserPasswd(std::string *user, std::string *password)
   if (!user && !savedPassword.empty()) {
     *password = savedPassword;
     return;
+  }
+
+  {
+    std::string storedUser;
+    std::string storedPassword;
+    if (credentials::load(credentialKey(), user ? &storedUser : nullptr,
+                          &storedPassword)) {
+      if (user)
+        *user = storedUser;
+      *password = storedPassword;
+      return;
+    }
   }
 
   if (!user && passwordFileName[0]) {
@@ -412,8 +431,11 @@ void CConn::getUserPasswd(std::string *user, std::string *password)
         savedUsername = d.getUser();
     }
     *password = d.getPassword();
-    if (keepPasswd)
+    if (keepPasswd) {
       savedPassword = d.getPassword();
+      credentials::save(credentialKey(), user ? d.getUser() : std::string(),
+                        d.getPassword());
+    }
   }
 
   if (ret_val != 1)

@@ -39,7 +39,7 @@ static void fillWaveFormat(WAVEFORMATEX* wfx)
   wfx->wFormatTag = WAVE_FORMAT_PCM;
   wfx->nChannels = audioChannels;
   wfx->nSamplesPerSec = audioFrequency;
-  // Sample formats are ordered by width in pairs, unsigned then signed
+  // 样本格式按位宽两两成对排列，先无符号再有符号
   wfx->wBitsPerSample = 8 << (audioSampleFormat >> 1);
   wfx->nBlockAlign = audioChannels * (wfx->wBitsPerSample / 8);
   wfx->nAvgBytesPerSec = wfx->nSamplesPerSec * wfx->nBlockAlign;
@@ -73,8 +73,8 @@ AudioOutputWin32::~AudioOutputWin32()
   if (!opened)
     return;
 
-  // Cancels anything still playing, so that every buffer we handed
-  // over comes back before we free it
+  // 取消仍在播放的内容，这样我们交出去的每个缓冲区都会先还回来，
+  // 之后才能释放
   waveOutReset(device);
 
   done = (Buffer*)InterlockedExchangePointer(&doneBuffers, nullptr);
@@ -115,9 +115,8 @@ bool AudioOutputWin32::open()
     return false;
   }
 
-  // Round the sample count up to a power of two so that the wrapping
-  // arithmetic below can be a mask. The sample size is a power of two
-  // as well, so the byte size ends up being one too.
+  // 把样本数向上取整到 2 的幂，这样下面的回绕运算就能用掩码实现。
+  // 样本大小同样是 2 的幂，所以字节数最终也是 2 的幂。
   samples = 1;
   while (samples < (4 * audioMaxJitterMs * audioFrequency) / 1000)
     samples <<= 1;
@@ -169,8 +168,7 @@ void AudioOutputWin32::addSilence(size_t samples)
 
 void AudioOutputWin32::addSamples(const uint8_t* samples, size_t length)
 {
-  // A partial sample is of no use to anyone, and would put every
-  // channel after it in the wrong place
+  // 不完整的样本对谁都没用，还会让它后面每个声道都错位
   length -= length % getSampleSize();
 
   while (length > 0) {
@@ -181,8 +179,8 @@ void AudioOutputWin32::addSamples(const uint8_t* samples, size_t length)
     if (chunk > bufferSize - pendingHead)
       chunk = bufferSize - pendingHead;
     if (chunk == 0) {
-      // We are further behind than the buffer is long, so the samples
-      // we are dropping are ones we could never have played in time
+      // 我们落后的量已经超过整个缓冲区的长度，所以此刻丢弃的样本
+      // 本来就永远来不及播放了
       vlog.debug("Audio buffer full, discarding %d bytes", (int)length);
       break;
     }
@@ -210,9 +208,9 @@ unsigned long long AudioOutputWin32::getTimestamp()
   return value.QuadPart;
 }
 
-// Called by the system on a thread of its own once it is done with a
-// buffer. None of the waveOut functions may be called from here, so all
-// we do is put the buffer on a list for submit() to deal with.
+// 系统用完一个缓冲区后，会在它自己的线程上回调这里。这里不能调用
+// 任何 waveOut 函数，所以只把该缓冲区挂到一个链表上，交给 submit()
+// 处理。
 void CALLBACK AudioOutputWin32::waveOutCallback(HWAVEOUT hwo, UINT msg,
                                                 DWORD_PTR instance,
                                                 DWORD_PTR param1,
@@ -229,8 +227,8 @@ void CALLBACK AudioOutputWin32::waveOutCallback(HWAVEOUT hwo, UINT msg,
   if (!(buf->whdr.dwFlags & WHDR_DONE))
     return;
 
-  // Nothing left to play means the device ran dry waiting for us, and
-  // how long it stays dry is how much further ahead we need to buffer
+  // 没有东西可播，说明设备在等我们时断流了；它断流多久，就是
+  // 我们还需要多提前缓冲多少
   if (InterlockedDecrement(&self->buffersInFlight) == 0) {
     buf->starved = true;
     buf->starvedAt = getTimestamp();
@@ -265,7 +263,7 @@ void AudioOutputWin32::submit()
     if (buf->starved && (buf->streamId == streamId)) {
       unsigned long long now = getTimestamp();
       if (now > buf->starvedAt) {
-        // FILETIME counts 100 ns intervals
+        // FILETIME 以 100 纳秒为单位计数
         unsigned long long ms = (now - buf->starvedAt + 9999) / 10000;
         if (ms > audioMaxJitterMs)
           ms = audioMaxJitterMs;
@@ -304,8 +302,8 @@ void AudioOutputWin32::submit()
       break;
     }
 
-    // Has to be counted before the write, as the callback can run
-    // before waveOutWrite() has even returned
+    // 必须在写之前先计数，因为回调可能在 waveOutWrite() 还没返回
+    // 之前就运行了
     InterlockedIncrement(&buffersInFlight);
 
     if (waveOutWrite(device, &buf->whdr,
@@ -335,8 +333,8 @@ void AudioOutputWin32::start()
 
   streamId++;
 
-  // Play a little silence first, so that a sample arriving later than
-  // the one before it does not leave the device with nothing to play
+  // 先播一点静音，这样后到的样本比前一个晚时，设备也不会出现
+  // 无东西可播的空档
   addSilence((audioMinStreamDelayMs + extraDelayMs) *
              audioFrequency / 1000);
   submit();
@@ -344,8 +342,7 @@ void AudioOutputWin32::start()
 
 void AudioOutputWin32::stop()
 {
-  // Whatever is already buffered should still be played, so there is
-  // nothing to do but let it drain
+  // 已经缓冲的东西仍然应该播完，所以这里只需让它排空即可
 }
 
 void AudioOutputWin32::play(const uint8_t* samples, size_t length)

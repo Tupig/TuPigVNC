@@ -22,7 +22,7 @@
 #include <atomic>
 #include <thread>
 
-#include "fltk/Fl_Suggestion_Input.h"
+#include "fltk/material.h"
 
 /* 一条连接历史记录（存 User/history.json） */
 struct ServerHistoryEntry {
@@ -68,9 +68,6 @@ private:
   void migrateOldHistory();                   // 从旧版（注册表/文件）迁移
   void parseHistoryJson(const std::string& content);
 
-  static void onServerHistoryRemove(Fl_Widget*, std::string s, void* data);
-  static std::string serverHistoryNormalize(const std::string s);
-
   // ---- 极简单页布局（Material 3）----
   void buildLayout();          // 构建整个单页界面
   void buildHistoryPanel(Fl_Group* g);  // 连接历史面板
@@ -79,8 +76,12 @@ private:
   void buildAboutPanel(Fl_Group* g);    // 关于面板
   void showPanel(int idx);     // 展开/收起面板：-1 全部收起
   void refreshHistory();       // 根据 serverHistory 刷新历史列表
+  void refreshRecentChips();   // 根据 serverHistory 刷新「最近连接」chip
   static void onEntryClicked(Fl_Widget*, void* data);
   static void onClosePanel(Fl_Widget*, void* data);
+  static void onThemeClicked(Fl_Widget*, void* data);   // 主题切换
+  static void onRecentChipClicked(Fl_Widget*, void* data);  // 点 chip 填入地址
+  static void onHistoryDoubleClick(Fl_Widget*, void* data); // 双击历史即连接（右键删除）
 
   // ---- 选项面板：6 个分类页 ----
   void buildOptionCompress(Fl_Group* pane, int y);   // 压缩
@@ -95,16 +96,22 @@ private:
   static void onOptionTab(Fl_Widget*, void* data);
 
 protected:
-  Fl_Suggestion_Input *serverName;
+  MInput *serverName;
   std::list<ServerHistoryEntry> serverHistory;
   std::string usedDir;
 
   Fl_Scroll *scroll;           // 主滚动容器
   Fl_Browser *historyBrowser;  // 连接历史列表
   Fl_Group *panels[4];         // 0历史 1选项 2更新 3关于
-  Fl_Widget *entries_[4];      // 2×2 功能入口
+  MEntryCard *entries_[4];     // 2×2 功能入口
+  MButton *themeBtns[3];       // 顶栏主题切换按钮
+  Fl_Widget *recentLabel;      // 「最近」标签
+  MChip *recentChips[3];       // 最近连接 chip（最多 3 个）
   int activePanel;             // 当前展开的面板，-1 表示收起
   int panelTopY;               // 面板起始 y（entries 下方）
+  int topbarH;                 // 顶栏高度（窗口高度自适应时要用）
+  void applyWindowHeight();    // 按内容/面板高度调整窗口高度
+  void fitPanelHeight(int idx);// 按子控件底部收窄指定面板高度
 
   // 选项面板：6 个分类页 + 子标签
   Fl_Group *optPanes[6];
@@ -122,6 +129,8 @@ protected:
   // 安全页
   Fl_Choice *optEncryption;
   Fl_Choice *optAuth;
+  int loadedEncryption = 0;    // loadOptions 时载入的加密下拉值（判定是否改过）
+  int loadedAuth = 1;          // loadOptions 时载入的认证下拉值
 
   // 输入页
   Fl_Check_Button *optViewOnly;
@@ -163,7 +172,7 @@ protected:
   Fl_Box *updSpeed;                      // 下载速度
   Fl_Box *updEta;                        // 剩余时间
   Fl_Box *updChangelog;                  // 更新说明
-  Fl_Button *updButton;                  // 立即更新
+  MButton *updButton;                    // 立即更新
 
   std::string updLatestVersion;
   std::string updDownloadUrl;

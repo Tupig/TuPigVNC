@@ -42,8 +42,10 @@ public:
   std::string getPassword();
   bool getKeepPassword();
 
+  int handle(int event) override;
+
 private:
-  static void button_cb(Fl_Widget *w, long val);
+  static void button_cb(Fl_Widget *w, void *val);
 
 private:
   Fl_Check_Button* keepPasswdCheckbox;

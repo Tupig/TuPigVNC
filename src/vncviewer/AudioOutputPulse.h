@@ -61,13 +61,11 @@ private:
   pa_context* context;
   pa_stream* stream;
 
-  // Circular buffer of samples handed to us but not yet written to the
-  // sound server. Its size is always a power of two, which the wrapping
-  // arithmetic relies on.
+  // 交给本类、但还没写进声音服务的样本组成的环形缓冲区。它的容量
+  // 永远是 2 的幂，回绕取模的运算依赖这一点。
   //
-  // This and everything below it is touched from both the main thread
-  // and the mainloop's own thread, so only ever with the mainloop lock
-  // held.
+  // 本字段及其后所有字段会被主线程和 mainloop 自己的线程同时访问，
+  // 因此访问时必须持有 mainloop 锁。
   uint8_t* buffer;
   size_t bufferSize;
   size_t bufferFree;

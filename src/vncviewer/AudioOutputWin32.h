@@ -21,7 +21,7 @@
 #define __AUDIOOUTPUTWIN32_H__
 
 #include <windows.h>
-// Not pulled in by windows.h if WIN32_LEAN_AND_MEAN is defined
+// 定义了 WIN32_LEAN_AND_MEAN 时，windows.h 不会自动引入这个头文件
 #include <mmsystem.h>
 
 #include "AudioOutput.h"
@@ -39,8 +39,7 @@ public:
   void play(const uint8_t* samples, size_t length) override;
 
 private:
-  // One asynchronous write to the mixer, plus what we need to know
-  // about it once it comes back
+  // 一次送进混音器的异步写入，以及写完之后需要知道的附加信息
   struct Buffer {
     WAVEHDR whdr;
     unsigned long long streamId;
@@ -66,9 +65,8 @@ private:
   bool available, opened;
   HWAVEOUT device;
 
-  // Circular buffer of samples handed to us but not yet written to the
-  // device. Its size is always a power of two, which the wrapping
-  // arithmetic relies on.
+  // 交给本类、但还没写进设备的样本组成的环形缓冲区。它的容量永远
+  // 是 2 的幂，回绕取模的运算依赖这一点。
   uint8_t* buffer;
   size_t bufferSize;
   size_t bufferFree;
@@ -79,8 +77,7 @@ private:
   unsigned long long streamId;
   unsigned extraDelayMs;
 
-  // Written by the device callback, which runs on a thread of the
-  // system's choosing and may not call back in to it
+  // 由设备回调写入；该回调运行在系统选定的线程上，且不能再回调进来
   PVOID volatile doneBuffers;
   LONG volatile buffersInFlight;
 };

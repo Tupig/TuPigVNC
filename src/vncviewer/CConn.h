@@ -50,12 +50,12 @@ public:
 
 protected:
 
-  // Callback when socket is ready (or broken)
+  // socket 就绪（或断开）时的回调
   static void socketEvent(FL_SOCKET fd, void *data);
 
   void processNextMsg(core::Timer*);
 
-  // CConnection callback methods
+  // CConnection 的回调方法
 
   void getUserPasswd(std::string *user, std::string *password) override;
   bool verifyCertificate(unsigned int status,
@@ -126,6 +126,9 @@ private:
 
   static std::string savedUsername;
   static std::string savedPassword;
+
+  /* 当前服务器的凭据 key，格式 "host:port"，用于持久化存储。 */
+  std::string credentialKey() const;
 };
 
 #endif

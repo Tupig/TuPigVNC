@@ -22,6 +22,7 @@
 #endif
 
 #include <algorithm>
+#include <cstdint>
 
 #include <assert.h>
 #include <stdio.h>
@@ -465,7 +466,7 @@ void DesktopWindow::draw()
     int ox, oy, ow, oh;
 
     ox = X = w() - statsGraph->width() - 30;
-    oy = Y = h() - statsGraph->height() - 30;
+    oy = Y = 30;  // 右上角（设计稿：远程桌面右上角浮层）
     ow = statsGraph->width();
     oh = statsGraph->height();
 
@@ -1665,12 +1666,20 @@ void DesktopWindow::handleStatsTimeout(void *data)
 
   memmove(&self->stats[0], &self->stats[1],
           sizeof(self->stats[0]) * (statsCount - 1));
+
+  // 计算两次采样之间的增量。必须先用 64 位算差值：
+  //   1) 重连后底层计数器归零，now < prev，无符号相减会回绕成 40 多亿；
+  //   2) 千兆网 + 高分辨率下增量本身就接近 32 位上限，乘 1000 后再除会溢出。
+  // 遇到计数器回退直接当 0 处理，界面上显示 0 而不是天文数字。
+  auto delta = [](unsigned now, unsigned prev) -> uint64_t {
+    return now >= prev ? (uint64_t)(now - prev) : 0;
+  };
   self->stats[statsCount - 1].ups =
-      (updates - self->statsLastUpdates) * 1000 / elapsed;
+      (unsigned)((delta(updates, self->statsLastUpdates) * 1000ULL) / elapsed);
   self->stats[statsCount - 1].pps =
-      (pixels - self->statsLastPixels) * 1000 / elapsed;
+      (unsigned)((delta(pixels, self->statsLastPixels) * 1000ULL) / elapsed);
   self->stats[statsCount - 1].bps =
-      (pos - self->statsLastPosition) * 1000 / elapsed;
+      (unsigned)((delta(pos, self->statsLastPosition) * 1000ULL) / elapsed);
 
   gettimeofday(&self->statsLastTime, nullptr);
   self->statsLastUpdates = updates;
@@ -1680,8 +1689,8 @@ void DesktopWindow::handleStatsTimeout(void *data)
   Fl_Image_Surface *surface = new Fl_Image_Surface(panelWidth, panelHeight);
   surface->set_current();
 
-  // 深色背景
-  fl_rectf(0, 0, panelWidth, panelHeight, 32, 33, 36);
+  // 深色背景（Material 深色面 #1A1526）
+  fl_rectf(0, 0, panelWidth, panelHeight, 26, 21, 38);
 
   char buffer[128];
 
@@ -1694,17 +1703,17 @@ void DesktopWindow::handleStatsTimeout(void *data)
   const double mbps = (double)self->stats[statsCount - 1].bps * 8 / 1000000.0;
   fl_font(FL_HELVETICA, 11);
   snprintf(buffer, sizeof(buffer), "下行  %.2f Mbps", mbps);
-  fl_color(FL_GREEN);
+  fl_color(FL_WHITE);
   fl_draw(buffer, 10, 38);
 
   // 帧率
   snprintf(buffer, sizeof(buffer), "帧率  %u fps",
            self->stats[statsCount - 1].ups);
-  fl_color(FL_YELLOW);
+  fl_color(FL_WHITE);
   fl_draw(buffer, 10, 56);
 
   // 像素率
-  fl_color(FL_CYAN);
+  fl_color(fl_rgb_color(196, 188, 255));
   fl_draw(core::siPrefix(self->stats[statsCount - 1].pps, "pix/s").c_str(),
           10, 74);
 
@@ -1722,7 +1731,10 @@ void DesktopWindow::handleStatsTimeout(void *data)
   for (size_t i = 0; i < barCount; i++) {
     const unsigned v = self->stats[statsCount - barCount + i].bps;
     const int bh = (int)((long long)v * graphH / maxBps);
-    fl_color(FL_GREEN);
+    // 品牌紫，越新的柱子越亮（渐变到 #9B8CFF）
+    const int t = (int)(i * 100 / (barCount - 1));
+    fl_color(fl_color_average(fl_rgb_color(108, 92, 231),
+                              fl_rgb_color(155, 140, 255), t / 100.0));
     fl_rectf(graphX + (int)i * barW, graphY + graphH - bh,
              barW - 1, bh > 0 ? bh : 1);
   }
@@ -1733,7 +1745,7 @@ void DesktopWindow::handleStatsTimeout(void *data)
            rfb::encodingName(self->cc->getLastServerEncoding()),
            secs / 3600, (secs / 60) % 60, secs % 60);
   fl_font(FL_HELVETICA, 10);
-  fl_color(fl_rgb_color(180, 180, 185));
+  fl_color(fl_rgb_color(162, 155, 184));  // --text-3
   fl_draw(buffer, 10, graphY + graphH + 16);
 
   Fl_RGB_Image *image = surface->image();
@@ -1747,7 +1759,7 @@ void DesktopWindow::handleStatsTimeout(void *data)
 
   self->damage(FL_DAMAGE_CHILD,
                self->w() - panelWidth - 30,
-               self->h() - panelHeight - 30,
+               30,
                panelWidth, panelHeight);
 
   Fl::repeat_timeout(0.5, handleStatsTimeout, data);

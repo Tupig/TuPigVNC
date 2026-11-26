@@ -90,6 +90,10 @@ bool httpGet(const std::string& url, std::string* response, std::string* error)
     return false;
   }
 
+  // 默认超时长达 30 秒，被墙时会让调用方（尤其是关窗时的析构）卡死。
+  // 连接/发送/接收各 3 秒，整体 5 秒，超时即失败。
+  WinHttpSetTimeouts(session, 3000, 3000, 3000, 5000);
+
   HINTERNET connection =
       WinHttpConnect(session, parts.host.c_str(), parts.port, 0);
   if (!connection)

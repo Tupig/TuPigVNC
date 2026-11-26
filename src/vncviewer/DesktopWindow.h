@@ -44,33 +44,33 @@ public:
   DesktopWindow(int w, int h, CConn* cc_);
   ~DesktopWindow();
 
-  // Flush updates to screen
+  // 把更新刷新到屏幕
   void updateWindow();
 
-  // Updated session title
+  // 更新会话标题
   void updateCaption();
 
-  // Resize the current framebuffer, but retain the contents
+  // 调整当前帧缓冲的大小，但保留原有内容
   void resizeFramebuffer(int new_w, int new_h);
 
-  // A previous call to writeSetDesktopSize() has completed
+  // 之前调用的 writeSetDesktopSize() 已完成
   void setDesktopSizeDone(unsigned result);
 
-  // New image for the locally rendered cursor
+  // 本地渲染光标的新图像
   void setCursor();
 
-  // Server-provided cursor position
+  // 服务端提供的光标位置
   void setCursorPos(const core::Point& pos);
 
-  // Change client LED state
+  // 修改客户端的 LED 状态
   void setLEDState(unsigned int state);
 
-  // Clipboard events
+  // 剪贴板事件
   void handleClipboardRequest();
   void handleClipboardAnnounce(bool available);
   void handleClipboardData(const char* data);
 
-  // Fl_Window callback methods
+  // Fl_Window 的回调方法
   void show() override;
   void draw() override;
   void resize(int x, int y, int w, int h) override;
@@ -79,7 +79,7 @@ public:
 
   void fullscreen_on();
 
-  // Grab keyboard events from desktop environment
+  // 从桌面环境夺取键盘事件
   void grabKeyboard();
   void ungrabKeyboard();
 

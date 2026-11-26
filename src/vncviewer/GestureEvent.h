@@ -36,9 +36,9 @@ enum GestureEventType {
   GestureEnd,
 };
 
-// magnitude is used by two gestures:
-//  GestureTwoDrag: distance moved since GestureBegin
-//  GesturePinch: distance between fingers
+// magnitude 被两种手势用到：
+//  GestureTwoDrag：自 GestureBegin 以来移动的距离
+//  GesturePinch：两指之间的距离
 struct GestureEvent {
   double eventX;
   double eventY;

@@ -32,17 +32,14 @@
 
 static core::LogWriter vlog("AudioOutputPulse");
 
-// create() has to say whether audio is available before the viewer has
-// connected to anything, so this wait is on the path to the first
-// window. A sound server on the other end of a local socket answers in
-// well under a millisecond; one that does not answer at all must not
-// hold up the viewer.
+// create() 必须在 viewer 连接任何东西之前就说明音频是否可用，所以
+// 这段等待位于第一个窗口出现的路径上。本地 socket 另一端的声音服务
+// 响应远低于 1 毫秒；完全不响应的服务不能把 viewer 卡住。
 static const unsigned connectTimeoutMs = 500;
 
-// The wider RFB formats are in host endianness, which is exactly what
-// PulseAudio's "NE" formats are, so this mapping holds on a big endian
-// machine as well. There is no counterpart for signed 8 bit or unsigned
-// 16 bit, but we never ask for either.
+// 较宽的 RFB 格式采用主机字节序，而 PulseAudio 的 "NE" 格式正是
+// 主机字节序，所以这套映射在大端机器上同样成立。有符号 8 位和
+// 无符号 16 位没有对应格式，不过我们从不请求这两种。
 static bool fillSampleSpec(pa_sample_spec* spec)
 {
   switch (audioSampleFormat) {
@@ -84,8 +81,8 @@ AudioOutputPulse::AudioOutputPulse()
 
 AudioOutputPulse::~AudioOutputPulse()
 {
-  // Nothing may be running on the mainloop's thread while we take apart
-  // the stream, and the buffer it has been reading from
+  // 拆解 stream 以及它正在读取的缓冲区时，mainloop 线程上不能有
+  // 任何东西在跑
   if (mainloop != nullptr)
     pa_threaded_mainloop_stop(mainloop);
 
@@ -105,8 +102,7 @@ AudioOutputPulse::~AudioOutputPulse()
   free(buffer);
 }
 
-// Connecting is the only thing here that waits, because create() has no
-// way to say "ask me again later"
+// 这里唯一会阻塞的就是连接，因为 create() 没法表达“稍后再问我”
 bool AudioOutputPulse::connect()
 {
   pa_mainloop_api* api;
@@ -128,8 +124,8 @@ bool AudioOutputPulse::connect()
 
   api = pa_threaded_mainloop_get_api(mainloop);
 
-  // The application id is how PulseAudio finds our .desktop file, and
-  // the icon name is what it falls back on when it cannot
+  // 应用 id 是 PulseAudio 用来查我们 .desktop 文件的依据，图标名则是
+  // 它查不到时的兜底
   proplist = pa_proplist_new();
   pa_proplist_sets(proplist, PA_PROP_APPLICATION_NAME, "TuPigVNC");
   pa_proplist_sets(proplist, PA_PROP_APPLICATION_ID, "vncviewer");
@@ -146,7 +142,7 @@ bool AudioOutputPulse::connect()
 
   pa_context_set_state_callback(context, contextStateCallback, this);
 
-  // Starting a sound server that isn't running is not our place
+  // 启动一个没在运行的声音服务不是我们该干的事
   if (pa_context_connect(context, nullptr,
                          PA_CONTEXT_NOAUTOSPAWN, nullptr) < 0) {
     vlog.error(_("Could not connect to sound server: %s"),
@@ -155,8 +151,8 @@ bool AudioOutputPulse::connect()
     return false;
   }
 
-  // pa_threaded_mainloop_wait() has no timeout of its own, so something
-  // on the loop has to wake us if the server never answers
+  // pa_threaded_mainloop_wait() 自身没有超时，所以如果服务端一直
+  // 不回应，就得靠 loop 上的东西把我们唤醒
   timeout = pa_context_rttime_new(context,
                                   pa_rtclock_now() +
                                     connectTimeoutMs * PA_USEC_PER_MSEC,
@@ -211,9 +207,8 @@ bool AudioOutputPulse::open()
 
   fillSampleSpec(&spec);
 
-  // Round the sample count up to a power of two so that the wrapping
-  // arithmetic below can be a mask. The sample size is a power of two
-  // as well, so the byte size ends up being one too.
+  // 把样本数向上取整到 2 的幂，这样下面的回绕运算就能用掩码实现。
+  // 样本大小同样是 2 的幂，所以字节数最终也是 2 的幂。
   samples = 1;
   while (samples < (4 * audioMaxJitterMs * audioFrequency) / 1000)
     samples <<= 1;
@@ -246,12 +241,10 @@ bool AudioOutputPulse::open()
   pa_stream_set_write_callback(stream, streamWriteCallback, this);
   pa_stream_set_underflow_callback(stream, streamUnderflowCallback, this);
 
-  // How much the server should keep buffered, and how little it needs
-  // before it starts playing. The first is what bounds how far ahead we
-  // are allowed to write, so that a backlog stays in our buffer where it
-  // is measured and dropped rather than growing inside the library. The
-  // second is what lets a stream start promptly, and recover from an
-  // underrun without a further gap of its own.
+  // 服务端该缓冲多少，以及它低于多少就开始播放。前者决定了我们最多
+  // 能提前写多少，这样积压会留在我们自己的缓冲区里被度量、被丢弃，
+  // 而不是在库内部越堆越大。后者让流能迅速开始，并能从欠载中恢复，
+  // 不再额外产生一段空档。
   memset(&attr, 0, sizeof(attr));
   attr.maxlength = (uint32_t)-1;
   attr.tlength = (uint32_t)(audioMaxJitterMs * audioFrequency /
@@ -274,9 +267,8 @@ bool AudioOutputPulse::open()
     return false;
   }
 
-  // Deliberately not waiting for the stream to be ready. Samples given
-  // to us in the meantime go in the buffer, and the state callback
-  // writes them out once there is somewhere to write them to.
+  // 这里故意不等流就绪。在此期间交给我们的样本会放进缓冲区，等有
+  // 地方可写时由状态回调把它们写出。
   opened = true;
 
   pa_threaded_mainloop_unlock(mainloop);
@@ -313,8 +305,7 @@ void AudioOutputPulse::addSilence(size_t samples)
 
 void AudioOutputPulse::addSamples(const uint8_t* samples, size_t length)
 {
-  // A partial sample is of no use to anyone, and would put every
-  // channel after it in the wrong place
+  // 不完整的样本对谁都没用，还会让它后面每个声道都错位
   length -= length % getSampleSize();
 
   while (length > 0) {
@@ -325,8 +316,8 @@ void AudioOutputPulse::addSamples(const uint8_t* samples, size_t length)
     if (chunk > bufferSize - pendingHead)
       chunk = bufferSize - pendingHead;
     if (chunk == 0) {
-      // We are further behind than the buffer is long, so the samples
-      // we are dropping are ones we could never have played in time
+      // 我们落后的量已经超过整个缓冲区的长度，所以此刻丢弃的样本
+      // 本来就永远来不及播放了
       vlog.debug("Audio buffer full, discarding %d bytes", (int)length);
       break;
     }
@@ -341,9 +332,9 @@ void AudioOutputPulse::addSamples(const uint8_t* samples, size_t length)
   }
 }
 
-// Hands as much of the buffer to the server as it currently wants. Must
-// be called with the mainloop lock held, which is also what makes it
-// safe to call from the mainloop's own callbacks.
+// 把缓冲区里服务端当前想要的部分尽量多交给它。调用时必须持有
+// mainloop 锁，这也正是它能安全地从 mainloop 自己的回调里调用的
+// 原因。
 void AudioOutputPulse::submit()
 {
   if (!opened)
@@ -353,9 +344,8 @@ void AudioOutputPulse::submit()
   if (pendingSize == 0)
     return;
 
-  // Having something to hand over after the server ran dry is what tells
-  // us how long it stayed dry, and that is how much further ahead we
-  // need to buffer
+  // 服务端断流之后又有东西可交，正是它告诉我们断流持续了多久，
+  // 也就是我们还需要多提前缓冲多少
   if (starved) {
     starved = false;
     if (starvedStreamId == streamId) {
@@ -374,8 +364,8 @@ void AudioOutputPulse::submit()
   while (pendingSize > 0) {
     size_t writable, length;
 
-    // Writing more than the server has asked for would only move the
-    // backlog into the library, where nothing bounds it
+    // 写入超过服务端想要的数量，只会把积压挪进库内部，那里没有任何
+    // 东西给它设上限
     writable = pa_stream_writable_size(stream);
     if (writable == (size_t)-1)
       break;
@@ -386,7 +376,7 @@ void AudioOutputPulse::submit()
     if (length > writable)
       length = writable;
 
-    // Never split a sample across two writes
+    // 绝不把一个样本拆到两次写入里
     length -= length % getSampleSize();
     if (length == 0)
       break;
@@ -397,17 +387,15 @@ void AudioOutputPulse::submit()
       break;
     }
 
-    // The samples have been copied out, so the space is ours again
-    // straight away
+    // 样本已经拷走，这块空间立刻又归我们了
     writtenHead = (writtenHead + length) & (bufferSize - 1);
     pendingSize -= length;
     bufferFree += length;
   }
 }
 
-// Records a failure noticed on the mainloop's thread. Nothing outside
-// PulseAudio may be touched from there, logging included, so the main
-// thread reports it later from reportError().
+// 记录在 mainloop 线程上发现的错误。该线程上除了 PulseAudio 之外的
+// 东西都不能碰，包括打日志，所以由主线程稍后在 reportError() 里上报。
 void AudioOutputPulse::setError(const char* message)
 {
   if (pendingError != nullptr)
@@ -417,7 +405,7 @@ void AudioOutputPulse::setError(const char* message)
   pendingErrorCode = pa_context_errno(context);
 }
 
-// Must be called from the main thread, without the mainloop lock held
+// 必须从主线程调用，且不能持有 mainloop 锁
 void AudioOutputPulse::reportError()
 {
   const char* message;
@@ -438,17 +426,16 @@ void AudioOutputPulse::reportError()
   vlog.error("%s: %s", _(message), pa_strerror(code));
 }
 
-// Called on the mainloop's own thread, with its lock held, so the
-// buffer and everything guarded by that lock may be touched directly
+// 在 mainloop 自己的线程上调用，且持有它的锁，所以缓冲区和所有受
+// 该锁保护的东西都可以直接访问
 void AudioOutputPulse::contextStateCallback(pa_context* context,
                                             void* userdata)
 {
   AudioOutputPulse* self = (AudioOutputPulse*)userdata;
 
-  // Only FAILED is worth saying anything about: before we are available
-  // this is just the connect above making progress, whose failures
-  // connect() reports itself, and TERMINATED is our own disconnect,
-  // which pa_context_disconnect() reports back to us from right here
+  // 只有 FAILED 值得专门说：在我们变为可用之前，这只是上面那个
+  // connect 在推进，失败由 connect() 自己上报；而 TERMINATED 是我们
+  // 自己断开，pa_context_disconnect() 会在这里直接回调告诉我们
   if (self->available &&
       (pa_context_get_state(context) == PA_CONTEXT_FAILED))
     self->setError(N_("Lost connection to sound server"));
@@ -462,8 +449,7 @@ void AudioOutputPulse::streamStateCallback(pa_stream* stream, void* userdata)
 
   switch (pa_stream_get_state(stream)) {
   case PA_STREAM_READY:
-    // Anything buffered while the stream was still connecting can go
-    // out now
+    // 流还在连接期间缓冲下来的东西，现在都可以发出去了
     self->submit();
     break;
   case PA_STREAM_FAILED:
@@ -487,9 +473,8 @@ void AudioOutputPulse::streamUnderflowCallback(pa_stream* /*stream*/,
 {
   AudioOutputPulse* self = (AudioOutputPulse*)userdata;
 
-  // Nothing left to play means the server ran dry waiting for us. How
-  // long it stays dry is worked out in submit(), when we finally have
-  // something to give it.
+  // 没有东西可播，说明服务端在等我们时断流了。它断流多久会在
+  // submit() 里算出来，也就是我们终于有东西可给它的那一刻。
   if (!self->starved) {
     self->starved = true;
     self->starvedAt = pa_rtclock_now();
@@ -517,8 +502,8 @@ void AudioOutputPulse::start()
 
   streamId++;
 
-  // Play a little silence first, so that a sample arriving later than
-  // the one before it does not leave the device with nothing to play
+  // 先播一点静音，这样后到的样本比前一个晚时，设备也不会出现
+  // 无东西可播的空档
   addSilence((audioMinStreamDelayMs + extraDelayMs) *
              audioFrequency / 1000);
   submit();
@@ -530,8 +515,7 @@ void AudioOutputPulse::start()
 
 void AudioOutputPulse::stop()
 {
-  // Whatever is already buffered should still be played, so there is
-  // nothing to do but let it drain
+  // 已经缓冲的东西仍然应该播完，所以这里只需让它排空即可
   reportError();
 }
 

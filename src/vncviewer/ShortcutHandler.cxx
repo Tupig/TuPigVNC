@@ -60,27 +60,27 @@ ShortcutHandler::KeyAction ShortcutHandler::handleKeyPress(int keyCode,
   case Arming:
   case Rearming:
     if (pressedMask == modifierMask) {
-      // All triggering modifier keys are pressed
+      // 所有触发用的修饰键都已按下
       state = Armed;
     } if (modifier && ((modifier & modifierMask) == modifier)) {
-      // The new key is part of the triggering set
+      // 新按键属于触发组合的一部分
       if (state == Idle)
         state = Arming;
     } else {
-      // The new key was something else
+      // 新按键是别的东西
       state = Wedged;
     }
     return KeyNormal;
   case Armed:
     if (modifier && ((modifier & modifierMask) == modifier)) {
-      // The new key is part of the triggering set
+      // 新按键属于触发组合的一部分
       return KeyNormal;
     } else if (modifier) {
-      // The new key is some other modifier
+      // 新按键是另一种修饰键
       state = Wedged;
       return KeyNormal;
     } else {
-      // The new key was something else
+      // 新按键是别的东西
       state = Firing;
       firedKeys.insert(keyCode);
       return KeyShortcut;
@@ -88,11 +88,10 @@ ShortcutHandler::KeyAction ShortcutHandler::handleKeyPress(int keyCode,
     break;
   case Firing:
     if (modifier) {
-      // The new key is a modifier (may or may not be part of the
-      // triggering set)
+      // 新按键是修饰键（可能属于、也可能不属于触发组合）
       return KeyIgnore;
     } else {
-      // The new key was something else
+      // 新按键是别的东西
       firedKeys.insert(keyCode);
       return KeyShortcut;
     }
@@ -162,7 +161,7 @@ void ShortcutHandler::reset()
   pressedKeys.clear();
 }
 
-// Keep list of valid values in sync with shortcutModifiers
+// 保持这里的有效值列表与 shortcutModifiers 一致
 unsigned ShortcutHandler::parseModifier(const char* key)
 {
   if (strcasecmp(key, "Ctrl") == 0)
@@ -247,7 +246,7 @@ const char* ShortcutHandler::modifierPrefix(unsigned mask,
   }
 
 #ifdef __APPLE__
-  strcat(prefix, "\xc2\xa0"); // U+00A0 NO-BREAK SPACE
+  strcat(prefix, "\xc2\xa0"); // U+00A0 不换行空格（NO-BREAK SPACE）
 #endif
 
   return prefix;

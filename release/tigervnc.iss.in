@@ -81,22 +81,23 @@ begin
   RegDeleteKeyIncludingSubkeys(RootKey, SubKey);
 end;
 
-{ 安装前清理旧版本（前两个版本）残留的配置 / 日志 / 注册表。
-  之后版本完全靠自身自动更新升级，不再依赖安装包迁移。 }
+{ 安装前清理旧版本（0.0.1 / 0.0.2）残留的配置 / 日志 / 注册表。
+  之后版本完全靠自身自动更新升级，不再依赖安装包迁移。
+
+  注意：升级时（检测到已安装过）必须原样保留用户数据，只做全新安装的清理，
+  否则用户连过的历史、选项会被安装包抹掉。 }
 procedure DeleteOldVersionData();
 var
   Dir: String;
 begin
+  // 安装目录已有主程序 = 升级，保留用户数据
+  if FileExists(ExpandConstant('{app}\vncviewer.exe')) then
+    exit;
+
   Dir := ExpandConstant('{userappdata}\TuPigVNC');
   if DirExists(Dir) then DelTree(Dir, True, True, True);
 
   Dir := ExpandConstant('{localappdata}\TuPigVNC');
-  if DirExists(Dir) then DelTree(Dir, True, True, True);
-
-  Dir := ExpandConstant('{app}\logs');
-  if DirExists(Dir) then DelTree(Dir, True, True, True);
-
-  Dir := ExpandConstant('{app}\User');
   if DirExists(Dir) then DelTree(Dir, True, True, True);
 
   RegDeleteTree(HKEY_CURRENT_USER, 'Software\TuPigVNC');

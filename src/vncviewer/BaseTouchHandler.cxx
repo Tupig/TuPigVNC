@@ -32,7 +32,7 @@
 #include "GestureHandler.h"
 #include "BaseTouchHandler.h"
 
-// Sensitivity threshold for gestures
+// 手势的灵敏度阈值
 static const int ZOOMSENS = 30;
 static const int SCRLSENS = 50;
 
@@ -95,9 +95,8 @@ void BaseTouchHandler::handleGestureEvent(const GestureEvent& ev)
       fakeMotionEvent(ev);
       break;
     case GestureTwoDrag:
-      // Always scroll in the same position.
-      // We don't know if the mouse was moved so we need to move it
-      // every update.
+      // 始终在同一个位置滚动。
+      // 我们不知道鼠标有没有移动过，所以每次更新都得重新移动它。
       fakeMotionEvent(ev);
       while ((ev.magnitudeY - lastMagnitudeY) > SCRLSENS) {
         fakeButtonEvent(true, 4, ev);
@@ -121,9 +120,8 @@ void BaseTouchHandler::handleGestureEvent(const GestureEvent& ev)
       }
       break;
     case GesturePinch:
-      // Always scroll in the same position.
-      // We don't know if the mouse was moved so we need to move it
-      // every update.
+      // 始终在同一个位置滚动。
+      // 我们不知道鼠标有没有移动过，所以每次更新都得重新移动它。
       fakeMotionEvent(ev);
       magnitude = hypot(ev.magnitudeX, ev.magnitudeY);
       if (abs(magnitude - lastMagnitudeX) > ZOOMSENS) {
@@ -171,8 +169,8 @@ void BaseTouchHandler::handleTapEvent(const GestureEvent& ev,
 {
   GestureEvent newEv = ev;
 
-  // If the user quickly taps multiple times we assume they meant to
-  // hit the same spot, so slightly adjust coordinates
+  // 如果用户快速连点多次，我们假定他想点同一个位置，因此对坐标
+  // 稍作校正
   if ((core::msSince(&lastTapTime) < DOUBLE_TAP_TIMEOUT) &&
       (firstDoubleTapEvent.type == ev.type)) {
 

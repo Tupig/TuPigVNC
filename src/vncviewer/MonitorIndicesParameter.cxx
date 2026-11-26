@@ -53,7 +53,7 @@ std::set<int> MonitorIndicesParameter::getMonitors() const
         return indices;
     }
 
-    // Go through the monitors and see what indices are present in the config.
+    // 遍历所有显示器，看看配置里出现了哪些序号。
     for (int i = 0; i < ((int) monitors.size()); i++) {
         if (std::find(begin(), end(), i+1) != end())
             indices.insert(monitors[i].fltkIndex);
@@ -82,7 +82,7 @@ void MonitorIndicesParameter::setMonitors(const std::set<int>& indices)
 
     if (monitors.size() <=  0) {
         vlog.error(_("Failed to get system monitor configuration"));
-        // Don't return, store the configuration anyways.
+        // 不要直接返回，无论如何都把配置存下来。
     }
 
     for (int i = 0; i < ((int) monitors.size()); i++) {
@@ -97,12 +97,12 @@ std::vector<MonitorIndicesParameter::Monitor> MonitorIndicesParameter::fetchMoni
 {
     std::vector<Monitor> monitors;
 
-    // Start by creating a struct for every monitor.
+    // 先为每块显示器创建一个结构体。
     for (int i = 0; i < Fl::screen_count(); i++) {
         Monitor monitor;
         bool match;
 
-        // Get the properties of the monitor at the current index;
+        // 获取当前序号对应显示器的各项属性；
         Fl::screen_xywh(
             monitor.x,
             monitor.y,
@@ -111,7 +111,7 @@ std::vector<MonitorIndicesParameter::Monitor> MonitorIndicesParameter::fetchMoni
             i
         );
 
-        // Only keep a single entry for mirrored screens
+        // 镜像的屏幕只保留一条记录
         match = false;
         for (int j = 0; j < ((int) monitors.size()); j++) {
             if (monitors[j].x != monitor.x)
@@ -133,7 +133,7 @@ std::vector<MonitorIndicesParameter::Monitor> MonitorIndicesParameter::fetchMoni
         monitors.push_back(monitor);
     }
 
-    // Sort the monitors according to the specification in the vncviewer manual.
+    // 按 vncviewer 手册里的规定对显示器排序。
     qsort(&monitors[0], monitors.size(), sizeof(*(&monitors[0])), compare);
     return monitors;
 }

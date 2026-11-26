@@ -25,15 +25,13 @@
 
 #include <rfb/qemuTypes.h>
 
-// The format the server is asked for in CConnection, and which every
-// backend therefore has to play
+// 在 CConnection 里向服务端请求的音频格式，所有后端都必须按这个格式播放
 const uint8_t audioSampleFormat = rfb::qemuAudioFormatS16;
 const uint8_t audioChannels = 2;
 const uint32_t audioFrequency = 48000;
 
-// How much audio to buffer ahead, and how much silence to play before
-// a new stream, to hide variations in when samples arrive over the
-// network. Neither depends on which sound system plays them.
+// 预缓冲多少音频，以及新流开始前先播多少静音，用来掩盖样本到达
+// 网络时间的抖动。这两个值都不取决于具体用哪套声音系统播放。
 const unsigned audioMaxJitterMs = 1000;
 const unsigned audioMinStreamDelayMs = 20;
 

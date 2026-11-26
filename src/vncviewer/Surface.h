@@ -22,7 +22,7 @@
 #if defined(WIN32)
 #include <windows.h>
 #elif defined(__APPLE__)
-// Apple headers conflict with FLTK, so redefine types here
+// Apple 的头文件与 FLTK 冲突，所以这里重新定义类型
 typedef struct CGImage* CGImageRef;
 #else
 #include <X11/extensions/Xrender.h>
