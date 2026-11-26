@@ -27,6 +27,7 @@
 #include <winhttp.h>
 
 #include <cstdio>
+#include <cstring>
 #include <string>
 #include <vector>
 
@@ -295,43 +296,104 @@ std::string UpdateChecker::sha256OfFile(const std::string& path)
   return result;
 }
 
+namespace
+{
+
+/* 版本号只允许字母、数字、点、下划线和短横线，防止路径穿越与命令注入 */
+bool isSafeVersionString(const std::string& version)
+{
+  if (version.empty())
+    return false;
+  for (char c : version)
+  {
+    bool safe = (c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') ||
+                (c >= 'a' && c <= 'z') || c == '.' || c == '_' || c == '-';
+    if (!safe)
+      return false;
+  }
+  return true;
+}
+
+/* 下载地址只允许 GitHub 官方的 HTTPS 域名，防止被引导到恶意站点 */
+bool isTrustedDownloadUrl(const std::string& url)
+{
+  static const wchar_t* const kTrustedHosts[] = {
+      L"github.com", L"objects.githubusercontent.com", L"api.github.com",
+      L"github-releases.githubusercontent.com"};
+  detail::UrlParts parts;
+  if (!detail::parseUrl(url, &parts) || !parts.https)
+    return false;
+  for (const wchar_t* host : kTrustedHosts)
+  {
+    if (_wcsicmp(parts.host.c_str(), host) == 0)
+      return true;
+  }
+  return false;
+}
+
+} // anonymous namespace
+
 bool UpdateChecker::downloadAndInstall(const std::string& url,
                                        const std::string& checksumUrl,
                                        const std::string& version,
                                        std::string* error)
 {
+  /* 1. 下载与执行前先做安全校验，任何一项不通过都直接拒绝 */
+  if (!isTrustedDownloadUrl(url))
+  {
+    if (error)
+      *error = "下载地址不是可信的 GitHub 官方域名，已取消更新";
+    return false;
+  }
+  if (!isSafeVersionString(version))
+  {
+    if (error)
+      *error = "版本号包含非法字符，已取消更新";
+    return false;
+  }
+  if (checksumUrl.empty())
+  {
+    if (error)
+      *error = "该版本未提供 SHA-256 校验文件，为安全起见已取消自动安装，"
+               "请前往发布页手动下载";
+    return false;
+  }
+  if (!isTrustedDownloadUrl(checksumUrl))
+  {
+    if (error)
+      *error = "校验文件地址不是可信的 GitHub 官方域名，已取消更新";
+    return false;
+  }
+
   std::string tempDir = tempDirectory();
   std::string installer = tempDir + "\\TuPigVNC-" + version + "-setup.exe";
 
-  /* 1. 下载安装包 */
+  /* 2. 下载安装包 */
   if (!downloadFile(url, installer, error))
     return false;
 
-  /* 2. 校验 SHA-256（若发布提供了校验文件） */
-  if (!checksumUrl.empty())
+  /* 3. 下载校验文件并比对 SHA-256 */
+  std::string checksumText;
+  if (!detail::httpGet(checksumUrl, &checksumText, error))
   {
-    std::string checksumText;
-    if (!detail::httpGet(checksumUrl, &checksumText, error))
-    {
-      DeleteFileW(widen(installer).c_str());
-      return false;
-    }
+    DeleteFileW(widen(installer).c_str());
+    return false;
+  }
 
-    /* 校验文件格式：<hash>  <filename> */
-    std::string expected;
-    size_t pos = checksumText.find_first_of(" \t\r\n");
-    expected = checksumText.substr(0, pos);
-    while (!expected.empty() && expected.back() == ' ')
-      expected.pop_back();
+  /* 校验文件格式：<hash>  <filename> */
+  std::string expected;
+  size_t pos = checksumText.find_first_of(" \t\r\n");
+  expected = checksumText.substr(0, pos);
+  while (!expected.empty() && expected.back() == ' ')
+    expected.pop_back();
 
-    std::string actual = sha256OfFile(installer);
-    if (expected.empty() || actual != expected)
-    {
-      DeleteFileW(widen(installer).c_str());
-      if (error)
-        *error = "安装包校验失败（SHA-256 不匹配）";
-      return false;
-    }
+  std::string actual = sha256OfFile(installer);
+  if (expected.empty() || actual != expected)
+  {
+    DeleteFileW(widen(installer).c_str());
+    if (error)
+      *error = "安装包校验失败（SHA-256 不匹配）";
+    return false;
   }
 
   std::string exePath = executablePath();
@@ -342,7 +404,7 @@ bool UpdateChecker::downloadAndInstall(const std::string& url,
     return false;
   }
 
-  /* 2. 生成更新脚本：等待本进程退出 → 静默安装 → 启动新版本 → 自删除 */
+  /* 4. 生成更新脚本：等待本进程退出 → 静默安装 → 启动新版本 → 自删除 */
   std::string batchPath = tempDir + "\\TuPigVNC-update.cmd";
   std::string script;
   script += "@echo off\r\n";
@@ -366,7 +428,7 @@ bool UpdateChecker::downloadAndInstall(const std::string& url,
   fwrite(script.data(), 1, script.size(), file);
   fclose(file);
 
-  /* 3. 以隐藏窗口启动更新脚本 */
+  /* 5. 以隐藏窗口启动更新脚本 */
   std::wstring wbatch = widen(batchPath);
   SHELLEXECUTEINFOW sei = {};
   sei.cbSize = sizeof(sei);

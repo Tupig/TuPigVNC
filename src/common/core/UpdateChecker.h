@@ -75,8 +75,9 @@ public:
 
   /* 下载并静默安装更新，随后自动启动新版本。
    *
-   * 全自动流程：下载安装包 → 校验 SHA-256 → 静默安装 → 启动新版本。
-   * checksumUrl 为空时跳过校验。
+   * 全自动流程：校验下载来源与版本号 → 下载安装包 → 校验 SHA-256 →
+   * 静默安装 → 启动新版本。
+   * checksumUrl 为空时拒绝自动安装（必须提供 SHA-256 校验文件）。
    * 成功返回 true；失败返回 false 并填充 error。
    */
   static bool downloadAndInstall(const std::string& url,

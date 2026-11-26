@@ -20,8 +20,10 @@
 
 #include <core/UpdateChecker.h>
 
+#include <cctype>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <string>
 
 #if defined(__linux__)
@@ -82,6 +84,64 @@ bool httpGet(const std::string& url, std::string* response, std::string* error)
 }
 
 } // namespace detail
+
+namespace
+{
+
+/* 版本号只允许字母、数字、点、下划线和短横线，防止路径穿越 */
+bool isSafeVersionString(const std::string& version)
+{
+  if (version.empty())
+    return false;
+  for (char c : version)
+  {
+    bool safe = (c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') ||
+                (c >= 'a' && c <= 'z') || c == '.' || c == '_' || c == '-';
+    if (!safe)
+      return false;
+  }
+  return true;
+}
+
+/* 域名比较：忽略大小写 */
+bool hostEquals(const std::string& host, const char* expected)
+{
+  size_t len = std::strlen(expected);
+  if (host.size() != len)
+    return false;
+  for (size_t i = 0; i < len; ++i)
+  {
+    unsigned char c = static_cast<unsigned char>(host[i]);
+    if (std::tolower(c) != expected[i])
+      return false;
+  }
+  return true;
+}
+
+/* 下载地址只允许 GitHub 官方的 HTTPS 域名，防止被引导到恶意站点 */
+bool isTrustedDownloadUrl(const std::string& url)
+{
+  static const char* const kTrustedHosts[] = {
+      "github.com", "objects.githubusercontent.com", "api.github.com",
+      "github-releases.githubusercontent.com"};
+  static const std::string kScheme = "https://";
+  if (url.size() < kScheme.size() ||
+      !hostEquals(url.substr(0, kScheme.size()), kScheme.c_str()))
+    return false;
+  std::string::size_type start = kScheme.size();
+  std::string::size_type end = url.find_first_of("/:?#", start);
+  std::string host =
+      url.substr(start, end == std::string::npos ? std::string::npos
+                                                 : end - start);
+  for (const char* trusted : kTrustedHosts)
+  {
+    if (hostEquals(host, trusted))
+      return true;
+  }
+  return false;
+}
+
+} // anonymous namespace
 
 bool UpdateChecker::downloadFile(const std::string& url,
                                  const std::string& destPath,
@@ -161,26 +221,51 @@ bool UpdateChecker::downloadAndInstall(const std::string& url,
 {
   /* Unix 平台安装通常需要 root 权限，无法完全静默。
    * 这里下载安装包到临时目录，并打开文件管理器供用户手动安装。 */
+
+  /* 下载前先做安全校验，任何一项不通过都直接拒绝 */
+  if (!isTrustedDownloadUrl(url))
+  {
+    if (error)
+      *error = "下载地址不是可信的 GitHub 官方域名，已取消更新";
+    return false;
+  }
+  if (!isSafeVersionString(version))
+  {
+    if (error)
+      *error = "版本号包含非法字符，已取消更新";
+    return false;
+  }
+  if (checksumUrl.empty())
+  {
+    if (error)
+      *error = "该版本未提供 SHA-256 校验文件，为安全起见已取消自动安装，"
+               "请前往发布页手动下载";
+    return false;
+  }
+  if (!isTrustedDownloadUrl(checksumUrl))
+  {
+    if (error)
+      *error = "校验文件地址不是可信的 GitHub 官方域名，已取消更新";
+    return false;
+  }
+
   std::string dest = tempDirectory() + "/TuPigVNC-" + version + ".tar.gz";
   if (!downloadFile(url, dest, error))
     return false;
 
-  if (!checksumUrl.empty())
-  {
-    std::string checksumText;
-    if (!detail::httpGet(checksumUrl, &checksumText, error))
-      return false;
+  std::string checksumText;
+  if (!detail::httpGet(checksumUrl, &checksumText, error))
+    return false;
 
-    std::string expected =
-        checksumText.substr(0, checksumText.find_first_of(" \t\r\n"));
-    std::string actual = sha256OfFile(dest);
-    if (expected.empty() || actual != expected)
-    {
-      std::remove(dest.c_str());
-      if (error)
-        *error = "安装包校验失败（SHA-256 不匹配）";
-      return false;
-    }
+  std::string expected =
+      checksumText.substr(0, checksumText.find_first_of(" \t\r\n"));
+  std::string actual = sha256OfFile(dest);
+  if (expected.empty() || actual != expected)
+  {
+    std::remove(dest.c_str());
+    if (error)
+      *error = "安装包校验失败（SHA-256 不匹配）";
+    return false;
   }
 
   openInBrowser("file://" + dest);
