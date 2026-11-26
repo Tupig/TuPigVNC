@@ -47,8 +47,8 @@ Name: "{app}\logs"; Permissions: users-modify; Flags: uninsneveruninstall
 
 [Files]
 Source: "@CMAKE_BINARY_DIR@\src\vncviewer\Release\vncviewer.exe"; DestDir: "{app}"; Flags: ignoreversion restartreplace;
-Source: "@CMAKE_SOURCE_DIR@\README.rst"; DestDir: "{app}"; Flags: ignoreversion
-Source: "@CMAKE_SOURCE_DIR@\LICENCE.TXT"; DestDir: "{app}"; Flags: ignoreversion
+Source: "@CMAKE_SOURCE_DIR@\README.rst"; DestDir: "{app}\doc"; Flags: ignoreversion
+Source: "@CMAKE_SOURCE_DIR@\LICENCE.TXT"; DestDir: "{app}\doc"; Flags: ignoreversion
 
 #define LINGUAS
 #define Lang
@@ -62,8 +62,8 @@ Source: "@CMAKE_SOURCE_DIR@\LICENCE.TXT"; DestDir: "{app}"; Flags: ignoreversion
 ; 开始菜单
 Name: "{group}\TuPigVNC"; FileName: "{app}\vncviewer.exe"; IconFilename: "{app}\vncviewer.exe"
 Name: "{group}\监听模式 TuPigVNC"; FileName: "{app}\vncviewer.exe"; Parameters: "-listen"; IconFilename: "{app}\vncviewer.exe"
-Name: "{group}\许可证"; FileName: "write.exe"; Parameters: "LICENCE.TXT"; WorkingDir: "{app}"; Flags: "useapppaths"
-Name: "{group}\发行说明"; FileName: "write.exe"; Parameters: "README.rst"; WorkingDir: "{app}"; Flags: "useapppaths"
+Name: "{group}\许可证"; FileName: "write.exe"; Parameters: "LICENCE.TXT"; WorkingDir: "{app}\doc"; Flags: "useapppaths"
+Name: "{group}\发行说明"; FileName: "write.exe"; Parameters: "README.rst"; WorkingDir: "{app}\doc"; Flags: "useapppaths"
 Name: "{group}\卸载 TuPigVNC"; FileName: "{uninstallexe}"; WorkingDir: "{app}";
 ; 桌面快捷方式
 Name: "{autodesktop}\TuPigVNC"; FileName: "{app}\vncviewer.exe"; IconFilename: "{app}\vncviewer.exe"; Tasks: desktopicon
