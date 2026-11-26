@@ -75,16 +75,10 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\TuPigVNC"; FileNam
 Filename: "{app}\vncviewer.exe"; Description: "{cm:LaunchProgram,TuPigVNC}"; Flags: nowait postinstall skipifsilent
 
 [Code]
-{ 递归删除注册表键及其所有子键 }
+{ 删除注册表键及其所有子键 }
 procedure RegDeleteTree(RootKey: Integer; const SubKey: String);
-var
-  Names: TArrayOfString;
-  I: Integer;
 begin
-  if RegGetSubkeyNames(RootKey, SubKey, Names) then
-    for I := 0 to GetArrayLength(Names) - 1 do
-      RegDeleteTree(RootKey, SubKey + '\' + Names[I]);
-  RegDeleteKey(RootKey, SubKey);
+  RegDeleteKeyIncludingSubkeys(RootKey, SubKey);
 end;
 
 { 安装前清理旧版本（前两个版本）残留的配置 / 日志 / 注册表。
