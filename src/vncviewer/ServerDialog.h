@@ -26,6 +26,8 @@
 #include "fltk/Fl_Suggestion_Input.h"
 
 class Fl_Widget;
+class Fl_Group;
+class Fl_Scroll;
 class Fl_Input_Choice;
 
 class ServerDialog : public Fl_Window {
@@ -52,10 +54,27 @@ private:
   static void onServerHistoryRemove(Fl_Widget*, std::string s, void* data);
   static std::string serverHistoryNormalize(const std::string s);
 
+  // ---- 极简单页布局（Material 3）----
+  void buildLayout();          // 构建整个单页界面
+  void buildHistoryPanel(Fl_Group* g);  // 连接历史面板
+  void buildOptionsPanel(Fl_Group* g);  // 选项设置面板
+  void buildUpdatePanel(Fl_Group* g);   // 自动更新面板
+  void buildAboutPanel(Fl_Group* g);    // 关于面板
+  void showPanel(int idx);     // 展开/收起面板：-1 全部收起
+  void repositionWidgets();    // 面板显隐后重排
+  static void onEntryClicked(Fl_Widget*, void* data);
+  static void onClosePanel(Fl_Widget*, void* data);
+
 protected:
   Fl_Suggestion_Input *serverName;
   std::list<std::string> serverHistory;
   std::string usedDir;
+
+  Fl_Scroll *scroll;           // 主滚动容器
+  Fl_Group *panels[4];         // 0历史 1选项 2更新 3关于
+  Fl_Widget *entries_[4];      // 2×2 功能入口
+  int activePanel;             // 当前展开的面板，-1 表示收起
+  int panelTopY;               // 面板起始 y（entries 下方）
 };
 
 #endif
