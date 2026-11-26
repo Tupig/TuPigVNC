@@ -113,6 +113,14 @@ ServerDialog::ServerDialog()
   loadOptions();
 
   g_updOwner = this;
+
+  // 启动 2 秒后静默检查更新（不阻塞界面，有新版给入口加红点）
+  Fl::add_timeout(2.0, startupCheck, this);
+}
+
+void ServerDialog::startupCheck(void *data)
+{
+  ((ServerDialog*)data)->checkUpdateSilently();
 }
 
 
@@ -924,6 +932,44 @@ void ServerDialog::startUpdateInstall()
   });
 }
 
+/* 主线程侧：启动静默检查完成，有新版则给「自动更新」入口加红点 */
+void ServerDialog::updateSilentDone(void *ptr)
+{
+  UpdateTask *t = (UpdateTask*)ptr;
+  if (g_updOwner == t->self) {
+    t->self->updBusy = false;
+    if (t->ok &&
+        core::UpdateChecker::isNewer(t->info.version, PACKAGE_VERSION)) {
+      t->self->updLatestVersion = t->info.version;
+      t->self->updDownloadUrl = t->info.downloadUrl;
+      t->self->updChecksumUrl = t->info.checksumUrl;
+      if (t->self->entries_[2] != nullptr) {
+        t->self->entries_[2]->label("自动更新 ●");
+        t->self->entries_[2]->redraw();
+      }
+    }
+    if (t->self->updThread.joinable())
+      t->self->updThread.join();
+  }
+  delete t;
+}
+
+void ServerDialog::checkUpdateSilently()
+{
+  if (updBusy.exchange(true))
+    return;
+  if (updThread.joinable())
+    updThread.join();
+
+  updThread = std::thread([this]() {
+    UpdateTask *t = new UpdateTask;
+    t->self = this;
+    t->install = false;
+    t->ok = core::UpdateChecker::fetchLatestRelease(&t->info, &t->error);
+    Fl::awake(updateSilentDone, t);
+  });
+}
+
 void ServerDialog::buildUpdatePanel(Fl_Group *g)
 {
   buildPanelHeader(g, "自动更新", onClosePanel, this);
@@ -1071,6 +1117,7 @@ void ServerDialog::onClosePanel(Fl_Widget* /*widget*/, void *data)
 ServerDialog::~ServerDialog()
 {
   g_updOwner = nullptr;
+  Fl::remove_timeout(startupCheck, this);
   if (updThread.joinable())
     updThread.join();
 }

@@ -147,6 +147,7 @@ protected:
   // 自动更新页
   static void onUpdateButton(Fl_Widget*, void* data);
   static void updateTaskDone(void* ptr); // 后台任务完成（主线程回调）
+  static void updateSilentDone(void* ptr); // 启动静默检查完成
   void handleUpdateTask(bool ok, const core::ReleaseInfo& info,
                         const std::string& error, bool install);
   void setUpdateStats(const char* stage,
@@ -154,6 +155,8 @@ protected:
                       const char* eta = "剩余时间：—");   // 刷新统计三行
   void startUpdateCheck();               // 后台查询最新版本
   void startUpdateInstall();             // 后台下载并静默安装
+  void checkUpdateSilently();            // 启动时静默检查（有新版加红点）
+  static void startupCheck(void* data);  // 启动检查定时器回调
 
   Fl_Box *updVersion;                    // 版本对比行
   Fl_Box *updStage;                      // 当前阶段
