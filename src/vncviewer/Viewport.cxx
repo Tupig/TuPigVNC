@@ -514,7 +514,7 @@ void Viewport::setFramebufferSize(int w, int h)
     return;
 
   vlog.debug("Framebuffer resized to %dx%d (window kept at %dx%d)",
-             w, h, w_, h_);
+             w, h, w(), h());
 
   frameBuffer = new PlatformPixelBuffer(w, h);
   assert(frameBuffer);

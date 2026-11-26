@@ -42,7 +42,7 @@
 
 #include "theme.h"
 
-const int RADIUS = 4;
+const int RADIUS = 8;
 
 /*
  * fl_arc() and fl_pie() are broken on Windows, so we need to fudge the
@@ -235,9 +235,9 @@ void init_theme()
   // FIXME: Should also handle dark mode
 
 #if defined(WIN32)
-  // Windows 11
-  Fl::foreground(26, 26, 26);
-  Fl::background(243, 243, 243);
+  // Material 3（TuPigVNC 品牌紫）
+  Fl::foreground(26, 21, 38);
+  Fl::background(243, 237, 247);
 #elif defined(__APPLE__)
   // FIXME: Text is rendered slightly lighter than what we specify here
   //        for some odd reason. The target is (38, 38, 38).
@@ -250,8 +250,8 @@ void init_theme()
 #endif
 
 #if defined(WIN32)
-  // Windows 11 default accent color
-  Fl::set_color(FL_SELECTION_COLOR, 0, 103, 192);
+  // Material 3 品牌紫
+  Fl::set_color(FL_SELECTION_COLOR, 108, 92, 231);
 #elif defined(__APPLE__)
   Fl::set_color(FL_SELECTION_COLOR, 0, 122, 255);
 #else
@@ -303,13 +303,9 @@ void init_theme()
   Fl::set_boxtype(_FL_ROUND_DOWN_BOX, THEME_ROUND_DOWN_BOX);
 
 #if defined(WIN32)
-  NONCLIENTMETRICS metrics;
-  metrics.cbSize = sizeof(metrics);
-  if (SystemParametersInfo(SPI_GETNONCLIENTMETRICS,
-                           sizeof(metrics), &metrics, 0)) {
-    strcpy(font_name, metrics.lfMessageFont.lfFaceName);
-    Fl::set_font(FL_HELVETICA, font_name);
-  }
+  // 微软雅黑（接近苹果系统字体风格，中文圆润）
+  strcpy(font_name, "Microsoft YaHei");
+  Fl::set_font(FL_HELVETICA, font_name);
 #elif defined(__APPLE__)
   CTFontRef font;
   CFStringRef name;
