@@ -271,7 +271,7 @@ void ModifiablePixelBuffer::copyRect(const core::Rect& rect,
     // Possible overlap. Be careful and use memmove().
     int h = drect.height();
     while (h--) {
-      memmove(dstData, srcData, drect.width() * bytesPerPixel);
+      memmove(dstData, srcData, (size_t)drect.width() * bytesPerPixel);
       dstData += dstStride * bytesPerPixel;
       srcData += srcStride * bytesPerPixel;
     }
@@ -279,7 +279,7 @@ void ModifiablePixelBuffer::copyRect(const core::Rect& rect,
     // The data shifted upwards. Copy from top to bottom.
     int h = drect.height();
     while (h--) {
-      memcpy(dstData, srcData, drect.width() * bytesPerPixel);
+      memcpy(dstData, srcData, (size_t)drect.width() * bytesPerPixel);
       dstData += dstStride * bytesPerPixel;
       srcData += srcStride * bytesPerPixel;
     }
@@ -289,7 +289,7 @@ void ModifiablePixelBuffer::copyRect(const core::Rect& rect,
     dstData += (h-1) * dstStride * bytesPerPixel;
     srcData += (h-1) * srcStride * bytesPerPixel;
     while (h--) {
-      memcpy(dstData, srcData, drect.width() * bytesPerPixel);
+      memcpy(dstData, srcData, (size_t)drect.width() * bytesPerPixel);
       dstData -= dstStride * bytesPerPixel;
       srcData -= srcStride * bytesPerPixel;
     }

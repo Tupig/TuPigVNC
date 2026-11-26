@@ -23,6 +23,7 @@
 #define __RFB_WIN32_REGISTRY_H__
 
 #include <string>
+#include <vector>
 
 #include <windows.h>
 #include <rfb_win32/Security.h>
@@ -102,8 +103,9 @@ namespace rfb {
     protected:
       HKEY key;
       bool freeKey;
-      char* valueName;
-      DWORD valueNameBufLen;
+      // 枚举值/键名时复用的缓冲区，由 std::vector 自动管理
+      // （替代裸 char* + 长度，避免手工 new[]/delete[] 的生命周期问题）
+      std::vector<char> valueName;
     };
 
   };

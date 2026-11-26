@@ -138,7 +138,11 @@ void CSecurityMSLogonII::writeCredentials()
     throw std::length_error("Password is too long");
   memcpy(pass, password.c_str(), password.size() + 1);
 
-  // DES-CBC with the original key as IV, and the reversed one as the DES key
+  // DES-CBC with the original key as IV, and the reversed one as the DES key.
+  // MSLogonII 是 UltraVNC 的 Windows 域登录扩展，协议强制使用 DES-CBC
+  // （服务端兼容性要求，客户端无法更换算法），因此这里的 DES 属于协议
+  // 实现，而非本客户端可选的弱加密。
+  // codeql[cpp/weak-cryptographic-algorithm]
   struct CBC_CTX(struct des_ctx, DES_BLOCK_SIZE) ctx;
   des_fix_parity(8, reversedKey, reversedKey);
   des_set_key(&ctx.ctx, reversedKey);

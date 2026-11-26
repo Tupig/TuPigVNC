@@ -53,9 +53,9 @@ using namespace rfb::win32;
 static LogWriter vlog("Registry");
 
 
-RegKey::RegKey() : key(nullptr), freeKey(false), valueName(nullptr), valueNameBufLen(0) {}
+RegKey::RegKey() : key(nullptr), freeKey(false) {}
 
-RegKey::RegKey(const HKEY k) : key(nullptr), freeKey(false), valueName(nullptr), valueNameBufLen(0) {
+RegKey::RegKey(const HKEY k) : key(nullptr), freeKey(false) {
   LONG result = RegOpenKeyEx(k, nullptr, 0, KEY_ALL_ACCESS, &key);
   if (result != ERROR_SUCCESS)
     throw core::win32_error("RegOpenKeyEx(HKEY)", result);
@@ -63,7 +63,7 @@ RegKey::RegKey(const HKEY k) : key(nullptr), freeKey(false), valueName(nullptr),
   freeKey = true;
 }
 
-RegKey::RegKey(const RegKey& k) : key(nullptr), freeKey(false), valueName(nullptr), valueNameBufLen(0) {
+RegKey::RegKey(const RegKey& k) : key(nullptr), freeKey(false) {
   LONG result = RegOpenKeyEx(k.key, nullptr, 0, KEY_ALL_ACCESS, &key);
   if (result != ERROR_SUCCESS)
     throw core::win32_error("RegOpenKeyEx(RegKey&)", result);
@@ -73,7 +73,6 @@ RegKey::RegKey(const RegKey& k) : key(nullptr), freeKey(false), valueName(nullpt
 
 RegKey::~RegKey() {
   close();
-  delete [] valueName;
 }
 
 
@@ -276,19 +275,15 @@ const char* RegKey::getValueName(int i) {
   LONG result = RegQueryInfoKey(key, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, &maxValueNameLen, nullptr, nullptr, nullptr);
   if (result != ERROR_SUCCESS)
     throw core::win32_error("RegQueryInfoKey", result);
-  if (valueNameBufLen < maxValueNameLen + 1) {
-    DWORD newLen = maxValueNameLen + 1;
-    char* newBuf = new char[newLen];
-    delete [] valueName;
-    valueName = newBuf;
-    valueNameBufLen = newLen;
-  }
-  DWORD length = valueNameBufLen;
-  result = RegEnumValue(key, i, valueName, &length, nullptr, nullptr, nullptr, nullptr);
+  if (valueName.size() < (size_t)(maxValueNameLen + 1))
+    valueName.resize(maxValueNameLen + 1);
+  DWORD length = (DWORD)valueName.size();
+  result = RegEnumValue(key, i, valueName.data(), &length,
+                        nullptr, nullptr, nullptr, nullptr);
   if (result == ERROR_NO_MORE_ITEMS) return nullptr;
   if (result != ERROR_SUCCESS)
     throw core::win32_error("RegEnumValue", result);
-  return valueName;
+  return valueName.data();
 }
 
 const char* RegKey::getKeyName(int i) {
@@ -296,17 +291,13 @@ const char* RegKey::getKeyName(int i) {
   LONG result = RegQueryInfoKey(key, nullptr, nullptr, nullptr, nullptr, &maxValueNameLen, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
   if (result != ERROR_SUCCESS)
     throw core::win32_error("RegQueryInfoKey", result);
-  if (valueNameBufLen < maxValueNameLen + 1) {
-    DWORD newLen = maxValueNameLen + 1;
-    char* newBuf = new char[newLen];
-    delete [] valueName;
-    valueName = newBuf;
-    valueNameBufLen = newLen;
-  }
-  DWORD length = valueNameBufLen;
-  result = RegEnumKeyEx(key, i, valueName, &length, nullptr, nullptr, nullptr, nullptr);
+  if (valueName.size() < (size_t)(maxValueNameLen + 1))
+    valueName.resize(maxValueNameLen + 1);
+  DWORD length = (DWORD)valueName.size();
+  result = RegEnumKeyEx(key, i, valueName.data(), &length,
+                        nullptr, nullptr, nullptr, nullptr);
   if (result == ERROR_NO_MORE_ITEMS) return nullptr;
   if (result != ERROR_SUCCESS)
     throw core::win32_error("RegEnumKey", result);
-  return valueName;
+  return valueName.data();
 }
