@@ -505,18 +505,18 @@ void Viewport::updateScale()
 }
 
 
-void Viewport::setFramebufferSize(int w, int h)
+void Viewport::setFramebufferSize(int newW, int newH)
 {
-  if (w <= 0 || h <= 0)
+  if (newW <= 0 || newH <= 0)
     return;
 
-  if (frameBuffer && (w == frameBuffer->width()) && (h == frameBuffer->height()))
+  if (frameBuffer && (newW == frameBuffer->width()) && (newH == frameBuffer->height()))
     return;
 
   vlog.debug("Framebuffer resized to %dx%d (window kept at %dx%d)",
-             w, h, w(), h());
+             newW, newH, w(), h());
 
-  frameBuffer = new PlatformPixelBuffer(w, h);
+  frameBuffer = new PlatformPixelBuffer(newW, newH);
   assert(frameBuffer);
   cc->setFramebuffer(frameBuffer);
 

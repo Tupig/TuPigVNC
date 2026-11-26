@@ -142,7 +142,7 @@ private:
 
 public:
   // 服务器分辨率变化时只重建 framebuffer（窗口大小保持不变，靠缩放适配）
-  void setFramebufferSize(int w, int h);
+  void setFramebufferSize(int newW, int newH);
 };
 
 #endif
