@@ -102,6 +102,7 @@ Viewport::Viewport(int w, int h, CConn* cc_)
     lastPointerPos(0, 0), lastButtonMask(0),
     keyboard(nullptr), shortcutBypass(false), shortcutActive(false),
     firstLEDState(true), pendingClientClipboard(false),
+    remoteClipboardWrite(false),
     menuCtrlKey(false), menuAltKey(false), cursor(nullptr),
     cursorIsBlank(false), scale(1.0), offsetX(0), offsetY(0)
 {
@@ -161,6 +162,7 @@ Viewport::~Viewport()
   Fl::remove_system_handler(handleSystemEvent);
 
   Fl::remove_clipboard_notify(handleClipboardChange);
+  Fl::remove_timeout(clearRemoteClipboardFlag, this);
 
   OptionsDialog::removeCallback(handleOptions);
 
@@ -309,11 +311,22 @@ void Viewport::handleClipboardData(const char* data)
 
   // RFB doesn't have separate selection and clipboard concepts, so we
   // dump the data into both variants.
+  // 标记：这次本地剪贴板变化来自服务端，不应再回传（防回环）。
+  remoteClipboardWrite = true;
 #if !defined(WIN32) && !defined(__APPLE__)
   if (setPrimary)
     Fl::copy(data, len, 0);
 #endif
   Fl::copy(data, len, 1);
+  /* FLTK 的剪贴板通知是异步的，延迟一段时间再清除标志 */
+  Fl::add_timeout(0.5, clearRemoteClipboardFlag, this);
+}
+
+void Viewport::clearRemoteClipboardFlag(void *data)
+{
+  Viewport *self = (Viewport *)data;
+  if (self)
+    self->remoteClipboardWrite = false;
 }
 
 void Viewport::setLEDState(unsigned int ledState)
@@ -690,6 +703,12 @@ void Viewport::handleClipboardChange(int source, void *data)
 
   if (!sendClipboard)
     return;
+
+  /* 这次本地变化是服务端写入触发的，跳过回传避免无限循环 */
+  if (self->remoteClipboardWrite) {
+    vlog.debug("忽略服务端写入剪贴板触发的本地变化（防回环）");
+    return;
+  }
 
 #if !defined(WIN32) && !defined(__APPLE__)
   if (!sendPrimary && (source == 0))

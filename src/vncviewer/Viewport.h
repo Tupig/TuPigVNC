@@ -78,6 +78,7 @@ private:
   void showCursor();
 
   static void handleClipboardChange(int source, void *data);
+  static void clearRemoteClipboardFlag(void *data);   // 清除防回环标志
 
   void flushPendingClipboard();
 
@@ -122,6 +123,8 @@ private:
   bool firstLEDState;
 
   bool pendingClientClipboard;
+  /* 正在把服务端剪贴板写入本地，接下来的本地变化不应回传（防回环） */
+  bool remoteClipboardWrite;
 
   int clipboardSource;
 
