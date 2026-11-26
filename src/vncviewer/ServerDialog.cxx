@@ -44,7 +44,6 @@
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Int_Input.H>
 #include <FL/Fl_Toggle_Button.H>
-#include <FL/Fl_Progress.H>
 
 #include <core/Exception.h>
 #include <core/LogWriter.h>
@@ -612,11 +611,12 @@ void ServerDialog::loadOptions()
   optAcceptClip->value(acceptClipboard ? 1 : 0);
   optSendClip->value(sendClipboard ? 1 : 0);
 
-  // 键盘修饰键（默认 Ctrl+Alt）
-  optMod[0]->value(1);
-  optMod[1]->value(0);
-  optMod[2]->value(1);
-  optMod[3]->value(0);
+  // 键盘修饰键
+  const std::string mods = shortcutModifiers.getValueStr();
+  optMod[0]->value(mods.find("Ctrl") != std::string::npos ? 1 : 0);
+  optMod[1]->value(mods.find("Shift") != std::string::npos ? 1 : 0);
+  optMod[2]->value(mods.find("Alt") != std::string::npos ? 1 : 0);
+  optMod[3]->value(mods.find("Super") != std::string::npos ? 1 : 0);
 
   // 显示模式
   if (!fullScreen)
@@ -693,6 +693,20 @@ void ServerDialog::storeOptions()
   fullscreenSystemKeys.setParam(optSystemKeys->value());
   cursorType.setParam(optCursorType->value() == 1 ? "System" : "Dot");
 
+  // 键盘修饰键
+  {
+    std::list<std::string> mods;
+    if (optMod[0]->value())
+      mods.push_back("Ctrl");
+    if (optMod[1]->value())
+      mods.push_back("Shift");
+    if (optMod[2]->value())
+      mods.push_back("Alt");
+    if (optMod[3]->value())
+      mods.push_back("Super");
+    shortcutModifiers.setParam(mods);
+  }
+
   switch (optDisplayMode->value()) {
   case 1: fullScreen.setParam(true); fullScreenMode.setParam("Current"); break;
   case 2: fullScreen.setParam(true); fullScreenMode.setParam("All"); break;
@@ -731,6 +745,15 @@ void ServerDialog::updateTaskDone(void *ptr)
   delete t;
 }
 
+/* 刷新更新面板的统计三行 */
+void ServerDialog::setUpdateStats(const char *stage, const char *speed,
+                                 const char *eta)
+{
+  updStage->label(stage);
+  updSpeed->label(speed);
+  updEta->label(eta);
+}
+
 void ServerDialog::handleUpdateTask(bool ok, const core::ReleaseInfo &info,
                                     const std::string &error, bool install)
 {
@@ -740,7 +763,7 @@ void ServerDialog::handleUpdateTask(bool ok, const core::ReleaseInfo &info,
 
   if (install) {
     if (!ok) {
-      updStage->label(("安装失败：" + error).c_str());
+      setUpdateStats(("安装失败：" + error).c_str());
       updButton->activate();
       updButton->redraw();
     }
@@ -751,7 +774,7 @@ void ServerDialog::handleUpdateTask(bool ok, const core::ReleaseInfo &info,
   updButton->activate();
 
   if (!ok) {
-    updStage->label(("检查失败：" + error).c_str());
+    setUpdateStats(("检查失败：" + error).c_str());
     updButton->label("重试");
     updButton->redraw();
     return;
@@ -761,13 +784,9 @@ void ServerDialog::handleUpdateTask(bool ok, const core::ReleaseInfo &info,
     updLatestVersion = info.version;
     updDownloadUrl = info.downloadUrl;
     updChecksumUrl = info.checksumUrl;
-    updNotes = info.notes;
-    updTotalSize = info.size;
 
     updVersion->label(("v" PACKAGE_VERSION "  →  v" + info.version).c_str());
-    updStage->label("当前阶段：发现新版本");
-    updSpeed->label("下载速度：—");
-    updEta->label("剩余时间：—");
+    setUpdateStats("当前阶段：发现新版本");
     updChangelog->label(info.notes.empty()
                         ? "（该版本未提供更新说明）"
                         : info.notes.c_str());
@@ -775,9 +794,7 @@ void ServerDialog::handleUpdateTask(bool ok, const core::ReleaseInfo &info,
   } else {
     updLatestVersion.clear();
     updVersion->label(("v" PACKAGE_VERSION "  ·  已是最新版本").c_str());
-    updStage->label("当前阶段：无可用更新");
-    updSpeed->label("下载速度：—");
-    updEta->label("剩余时间：—");
+    setUpdateStats("当前阶段：无可用更新");
     updChangelog->label("当前已是最新版本。");
     updButton->label("已是最新");
     updButton->deactivate();
@@ -875,31 +892,9 @@ void ServerDialog::buildUpdatePanel(Fl_Group *g)
   updEta->labelcolor(M_TEXT2);
   updEta->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
 
-  // ---- 进度条 ----
-  y += statH * 3 + 10;
-  updProgress = new Fl_Progress(0, y, cw, 16);
-  updProgress->box(THEME_UP_BOX);
-  updProgress->color(M_CARD);
-  updProgress->selection_color(M_ACCENT);
-  updProgress->minimum(0);
-  updProgress->maximum(100);
-  updProgress->value(0);
-
-  // ---- 百分比 / 大小 ----
-  y += 22;
-  updPct = new Fl_Box(0, y, 80, 18, "0%");
-  updPct->labelsize(11);
-  updPct->labelcolor(M_TEXT2);
-  updPct->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
-
-  updSize = new Fl_Box(cw - 200, y, 200, 18, "");
-  updSize->labelsize(11);
-  updSize->labelcolor(M_TEXT3);
-  updSize->align(FL_ALIGN_RIGHT | FL_ALIGN_INSIDE);
-
   // ---- 更新说明 ----
-  y += 26;
-  updChangelog = new Fl_Box(0, y, cw, 120, "尚未检查更新。");
+  y += statH * 3 + 10;
+  updChangelog = new Fl_Box(0, y, cw, 150, "尚未检查更新。");
   updChangelog->box(FL_BORDER_BOX);
   updChangelog->color(M_CARD);
   updChangelog->labelsize(11);
@@ -908,7 +903,7 @@ void ServerDialog::buildUpdatePanel(Fl_Group *g)
                       FL_ALIGN_WRAP);
 
   // ---- 立即更新 ----
-  y += 132;
+  y += 162;
   updButton = new Fl_Button(cw / 2 - 70, y, 140, 32, "检查更新");
   updButton->box(THEME_UP_BOX);
   updButton->color(M_ACCENT);

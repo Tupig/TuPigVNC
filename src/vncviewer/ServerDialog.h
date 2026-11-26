@@ -42,7 +42,6 @@ class Fl_Int_Input;
 class Fl_Choice;
 class Fl_Toggle_Button;
 class Fl_Box;
-class Fl_Progress;
 class Fl_Button;
 
 namespace core { struct ReleaseInfo; }
@@ -150,6 +149,9 @@ protected:
   static void updateTaskDone(void* ptr); // 后台任务完成（主线程回调）
   void handleUpdateTask(bool ok, const core::ReleaseInfo& info,
                         const std::string& error, bool install);
+  void setUpdateStats(const char* stage,
+                      const char* speed = "下载速度：—",
+                      const char* eta = "剩余时间：—");   // 刷新统计三行
   void startUpdateCheck();               // 后台查询最新版本
   void startUpdateInstall();             // 后台下载并静默安装
 
@@ -157,17 +159,12 @@ protected:
   Fl_Box *updStage;                      // 当前阶段
   Fl_Box *updSpeed;                      // 下载速度
   Fl_Box *updEta;                        // 剩余时间
-  Fl_Box *updPct;                        // 百分比
-  Fl_Box *updSize;                       // 已下载 / 总大小
   Fl_Box *updChangelog;                  // 更新说明
-  Fl_Progress *updProgress;              // 进度条
   Fl_Button *updButton;                  // 立即更新
 
   std::string updLatestVersion;
   std::string updDownloadUrl;
   std::string updChecksumUrl;
-  std::string updNotes;
-  long long updTotalSize = 0;
   std::atomic<bool> updBusy{false};      // 后台任务进行中
   std::thread updThread;                 // 后台线程句柄
 };
