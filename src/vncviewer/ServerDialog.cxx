@@ -67,6 +67,9 @@ const char* SERVER_HISTORY="tigervnc.history";        // 旧格式（仅用于�
 const char* SERVER_HISTORY_JSON="history.json";       // 新格式：User/history.json
 static const size_t SERVER_HISTORY_MAX = 250;         // 历史上限
 
+// 前向声明（定义在文件下方，handleConnect 等处会用到）
+static bool same_server(const std::string& a, const std::string& b);
+
 ServerDialog::ServerDialog()
   : Fl_Window(540, 760, "TuPigVNC"),
     scroll(nullptr), activePanel(-1), panelTopY(0)
