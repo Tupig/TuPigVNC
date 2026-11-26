@@ -29,6 +29,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 
 #ifdef WIN32
 #include <core/winerrno.h>
@@ -40,6 +41,7 @@
 #include <core/Logger_stdio.h>
 #include <core/LogWriter.h>
 #include <core/Timer.h>
+#include <core/time.h>
 #include <core/string.h>
 
 #ifdef HAVE_GNUTLS
@@ -213,10 +215,14 @@ static void mainloop(const char* vncserver, network::Socket* sock)
         vlog.info(_("连接中断，%.1f 秒后自动重连（第 %d/%d 次）"),
                   waitSeconds, reconnectAttempts, maxReconnectAttempts);
 
-        /* 等待期间保持界面响应 */
-        const double deadline = Fl::now() + waitSeconds;
-        while (Fl::now() < deadline) {
-          if (Fl::wait(deadline - Fl::now()) < 0.0)
+        /* 等待期间保持界面响应（FLTK 1.3 没有 Fl::now，用 msSince 计时） */
+        struct timeval start;
+        gettimeofday(&start, nullptr);
+        while (true) {
+          const double elapsed = core::msSince(&start) / 1000.0;
+          if (elapsed >= waitSeconds)
+            break;
+          if (Fl::wait(waitSeconds - elapsed) < 0.0)
             break;
         }
         continue;

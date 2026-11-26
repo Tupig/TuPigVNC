@@ -62,12 +62,12 @@ namespace network {
     const char* getPeerAddress() override;
     const char* getPeerEndpoint() override;
 
-  protected:
-    bool enableNagles(bool enable);
-
     /* 开启 TCP 保活，用于检测半开连接（网络闪断、NAT 超时）。
      * 默认 30 秒空闲后开始探测，探测间隔 5 秒。 */
     bool enableKeepAlive(bool enable);
+
+  protected:
+    bool enableNagles(bool enable);
   };
 
   class TcpListener : public SocketListener {
