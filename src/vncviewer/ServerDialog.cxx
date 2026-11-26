@@ -1162,17 +1162,17 @@ void ServerDialog::handleLoad(Fl_Widget* /*widget*/, void* data)
   file_chooser->preview(0);
   file_chooser->previewButton->hide();
   file_chooser->show();
-  
+
   // 阻塞等待，直到用户做出选择。
   while(file_chooser->shown())
     Fl::wait();
-  
+
   // 用户是否点了取消？
   if (file_chooser->value() == nullptr) {
     delete(file_chooser);
     return;
   }
-  
+
   const char* filename = file_chooser->value();
   dialog->updateUsedDir(filename);
 
@@ -1189,43 +1189,43 @@ void ServerDialog::handleLoad(Fl_Widget* /*widget*/, void* data)
 
 
 void ServerDialog::handleSaveAs(Fl_Widget* /*widget*/, void* data)
-{ 
+{
   ServerDialog *dialog = (ServerDialog*)data;
   const char* servername = dialog->serverName->value();
   const char* filename;
   if (dialog->usedDir.empty())
     dialog->usedDir = core::getuserhomedir();
-  
+
   Fl_File_Chooser* file_chooser = new Fl_File_Chooser(dialog->usedDir.c_str(),
                                                       _("TuPigVNC configuration (*.tigervnc)"),
                                                       Fl_File_Chooser::CREATE,
                                                       _("Save the TuPigVNC configuration to file"));
-  
+
   file_chooser->preview(0);
   file_chooser->previewButton->hide();
   file_chooser->show();
-  
+
   while(1) {
-    
+
     // 阻塞等待，直到用户做出选择。
     while(file_chooser->shown())
       Fl::wait();
-    
+
     // 用户是否点了取消？
     if (file_chooser->value() == nullptr) {
       delete(file_chooser);
       return;
     }
-    
+
     filename = file_chooser->value();
     dialog->updateUsedDir(filename);
-    
+
     FILE* f = fopen(filename, "r");
     if (f) {
 
       // 文件已存在。
       fclose(f);
-      int overwrite_choice = fl_choice(_("%s already exists. Do you want to overwrite?"), 
+      int overwrite_choice = fl_choice(_("%s already exists. Do you want to overwrite?"),
                                        nullptr, _("No"), _("Overwrite"), filename);
       if (overwrite_choice != 2) {
 
@@ -1237,7 +1237,7 @@ void ServerDialog::handleSaveAs(Fl_Widget* /*widget*/, void* data)
 
     break;
   }
-  
+
   try {
     saveViewerParameters(filename, servername);
   } catch (std::exception& e) {
@@ -1245,7 +1245,7 @@ void ServerDialog::handleSaveAs(Fl_Widget* /*widget*/, void* data)
     fl_alert(_("Unable to save the specified configuration "
                "file:\n\n%s"), e.what());
   }
-  
+
   delete(file_chooser);
 }
 
