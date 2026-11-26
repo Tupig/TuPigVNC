@@ -47,7 +47,8 @@
 
 | 特性 | 说明 |
 | :--- | :--- |
-| **Material 3 极简单页** | 单窗口、无侧栏、无标签页；点功能入口在下方**原地展开面板**，不弹窗、不跳页 |
+| **Material 3 极简单页** | 单窗口、无侧栏、无标签页；顶部连接区 + 2×2 功能入口（连接历史 / 选项设置 / 自动更新 / 关于），点入口在下方**原地展开面板**，不弹窗、不跳页 |
+| **选项设置** | 6 个分类（压缩 / 安全 / 输入 / 键盘 / 显示 / 杂项），直接读写全局参数，改完即生效 |
 | **Apple 风格字体** | 优先 `SF Pro` / `PingFang SC`，回退 `Microsoft YaHei`，中文排版清爽 |
 | **远程桌面自适应缩放** | Fit-to-window：服务器分辨率不变，画面按窗口缩放并居中，拖动窗口即时重算 |
 | **Lucide 图标集** | 菜单与按钮统一使用 Lucide 线性图标（ISC 许可），风格一致 |
@@ -58,6 +59,7 @@
 | 特性 | 说明 |
 | :--- | :--- |
 | **连接历史** | 存于 `User/history.json`，最多 250 台，超出后按**使用次数最少**自动淘汰，支持旧数据迁移 |
+| **网络状态浮层** | 远程桌面右下角常驻，显示下行带宽 / 帧率 / 像素率 / 26 根迷你柱状图 / 当前编码 / 会话时长，每 500ms 刷新一次 |
 | **剪贴板互通** | 双向同步文本剪贴板，可分别开关收发 |
 | **多显示器全屏** | 支持当前屏、全部屏、指定屏等多种全屏模式 |
 | **键盘与输入** | 修饰键释放、全屏时发送系统键、鼠标中键模拟、触摸手势缩放 |
@@ -71,7 +73,7 @@
 | :--- | :--- |
 | **滚动日志** | 写入 `安装目录/logs/年月日时分秒.log`，跨日或单文件超过 **20 MB** 自动切分 |
 | **配置统一落盘** | 默认存 `安装目录/User`；该目录不可写时回退 `%LOCALAPPDATA%\TuPigVNC` |
-| **自动更新** | 检查 GitHub Releases → 下载 → SHA-256 校验 → `/VERYSILENT` 静默安装 → 自动重启，一键全自动 |
+| **自动更新** | 后台查询 GitHub Releases，展示版本对比与更新说明；下载后 SHA-256 校验 → `/VERYSILENT` 静默安装 → 自动重启，一键全自动 |
 | **静态单文件** | Windows x64 单文件安装包，无 DLL 依赖，免装运行库 |
 | **编译优化** | Release 启用 LTO（`/GL` + `/LTCG`），可选 AVX2 指令集 |
 | **现代构建** | CMake ≥ 3.21 + C++20，遵循 Modern CMake 目录布局 |
@@ -93,7 +95,7 @@
 
 前往 [**GitHub Releases**](https://github.com/TuPig/TuPigVNC/releases) 下载最新的 `TuPigVNC_x64.exe`。
 
-> 安装包为 64 位，**不支持 32 位系统**。
+> 主程序与安装器均为 **64 位 PE**，**不支持 32 位系统**。
 
 ### 2. 运行安装
 
@@ -124,7 +126,7 @@
 | Visual Studio | 2022（含 C++ 桌面开发工作负载） |
 | CMake | ≥ 3.21 |
 | vcpkg | 最新 |
-| Inno Setup | 6（仅构建安装包时需要） |
+| Inno Setup | 7（x64 版；仅构建安装包时需要） |
 
 ### 1. 安装 vcpkg 依赖
 
@@ -167,7 +169,7 @@ ctest --test-dir build/tests/unit -C Release --output-on-failure
 
 ### 4. 构建安装包（可选）
 
-先安装 [Inno Setup 6](https://jrsoftware.org/isinfo.php)，然后：
+先安装 [Inno Setup 7](https://jrsoftware.org/isinfo.php)（x64 版），然后：
 
 ```bat
 cmake --build build --config Release --target installer
