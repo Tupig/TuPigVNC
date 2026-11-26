@@ -24,6 +24,7 @@
 #include <sys/stat.h>
 
 #include <core/Logger_file.h>
+#include <core/xdgdirs.h>
 
 using namespace core;
 
@@ -138,6 +139,10 @@ void Logger_File::rotateIfNeeded()
   closeFile();
   snprintf(m_filename, sizeof(m_filename), "%s", newPath);
   m_fileDay = now;
+
+  /* 确保日志目录存在（首次运行时安装目录下可能还没有 logs） */
+  core::mkdir_p(m_logDir, 0755);
+
   m_file = fopen(m_filename, "w+");
 }
 

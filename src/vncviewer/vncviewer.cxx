@@ -636,7 +636,7 @@ int main(int argc, char** argv)
 #endif
 
     if (!logDir.empty()) {
-      core::mkdir_p(logDir.c_str(), 0755);
+      /* 目录由 initRollingFileLogger 内部按需创建 */
       if (core::initRollingFileLogger(logDir.c_str(), 20L * 1024 * 1024) != nullptr)
         core::LogWriter::setLogParams("*:file:30");
       else

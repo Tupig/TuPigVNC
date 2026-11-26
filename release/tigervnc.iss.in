@@ -38,6 +38,13 @@ Name: "chinesesimplified"; MessagesFile: "@CMAKE_SOURCE_DIR@\release\Languages\C
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
+[Dirs]
+; 配置 / 日志目录：安装时创建，并放行普通用户写入
+; （装在 Program Files 下时，非管理员用户默认无法写入）。
+; uninsneveruninstall：卸载时保留用户数据（连接历史、选项、日志）。
+Name: "{app}\User"; Permissions: users-modify; Flags: uninsneveruninstall
+Name: "{app}\logs"; Permissions: users-modify; Flags: uninsneveruninstall
+
 [Files]
 Source: "@CMAKE_BINARY_DIR@\src\vncviewer\Release\vncviewer.exe"; DestDir: "{app}"; Flags: ignoreversion restartreplace;
 Source: "@CMAKE_SOURCE_DIR@\README.rst"; DestDir: "{app}"; Flags: ignoreversion
