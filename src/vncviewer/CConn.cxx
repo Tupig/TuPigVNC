@@ -23,9 +23,9 @@
 #endif
 
 #include <assert.h>
-#ifndef _WIN32
+/* usleep 在 Windows 上由 src/contrib/msvc/include/unistd.h 提供包装
+ * （内部转成 Sleep），Linux 用系统头，两边都无需平台分支。 */
 #include <unistd.h>
-#endif
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/x509.h>
@@ -158,8 +158,8 @@ CConn::~CConn()
       if (done)
         break;
 
-      /* Windows 上由 msvc_compat.h 引入的 unistd.h 提供了 usleep 包装，
-       * 无需再按平台分支。 */
+      /* usleep 来自文件顶部统一 include 的 unistd.h（Windows 上是
+       * contrib 的 Sleep 包装），无需再按平台分支。 */
       usleep(10000);
     }
 
