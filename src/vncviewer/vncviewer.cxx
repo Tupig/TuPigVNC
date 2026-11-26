@@ -40,6 +40,7 @@
 #endif
 
 #include <core/Exception.h>
+#include <core/Logger_file.h>
 #include <core/Logger_stdio.h>
 #include <core/LogWriter.h>
 #include <core/Timer.h>
@@ -587,22 +588,31 @@ int main(int argc, char** argv)
 
   core::initStdIOLoggers();
 
-  /* 日志统一写入用户状态目录下的 logs 子目录，
-   * 避免在磁盘根目录（如 C:\temp）中散落文件。 */
+  /* 日志统一写入「安装目录/logs」，文件名带时间戳，
+   * 跨日或超过 20MB 自动切新文件，避免单个日志无限膨胀。 */
   {
-    const char* statedir = core::getvncstatedir();
-    std::string logfn;
+    std::string logDir;
 
-    if (statedir != nullptr) {
-      std::string logdir = std::string(statedir) + "/logs";
-      core::mkdir_p(logdir.c_str(), 0700);
-      logfn = logdir + "/vncviewer.log";
+#ifdef WIN32
+    const char* root = core::getvncinstallroot();
+    if (root != nullptr)
+      logDir = std::string(root) + "/logs";
+#else
+    const char* statedir = core::getvncstatedir();
+    if (statedir != nullptr)
+      logDir = std::string(statedir) + "/logs";
+#endif
+
+    if (!logDir.empty()) {
+      core::mkdir_p(logDir.c_str(), 0755);
+      if (core::initRollingFileLogger(logDir.c_str(), 20L * 1024 * 1024) != nullptr)
+        core::LogWriter::setLogParams("*:file:30");
+      else
+        core::LogWriter::setLogParams("*:stderr:30");
     } else {
-      logfn = "vncviewer.log";
+      core::LogWriter::setLogParams("*:stderr:30");
     }
-    core::initFileLogger(logfn.c_str());
   }
-  core::LogWriter::setLogParams("*:stderr:30");
 
 #ifdef SIGHUP
   signal(SIGHUP, CleanupSignalHandler);

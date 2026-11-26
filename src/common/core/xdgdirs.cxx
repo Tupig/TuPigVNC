@@ -160,6 +160,28 @@ const char* core::getvncstatedir()
   return getvncdir(false, "XDG_STATE_HOME", ".local/state");
 }
 
+const char* core::getvncinstallroot()
+{
+#ifdef WIN32
+  static char dir[PATH_MAX];
+  wchar_t exePathW[PATH_MAX];
+  DWORD n = GetModuleFileNameW(nullptr, exePathW, PATH_MAX);
+  if (n == 0 || n >= PATH_MAX)
+    return nullptr;
+  wchar_t* slash = wcsrchr(exePathW, L'\\');
+  if (slash == nullptr)
+    slash = wcsrchr(exePathW, L'/');
+  if (slash == nullptr)
+    return nullptr;
+  *slash = L'\0';
+  std::string utf8 = core::narrow(std::wstring(exePathW));
+  snprintf(dir, sizeof(dir), "%s", utf8.c_str());
+  return dir;
+#else
+  return nullptr;
+#endif
+}
+
 int core::mkdir_p(const char *path_, mode_t mode)
 {
 #ifdef WIN32

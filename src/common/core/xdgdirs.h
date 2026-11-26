@@ -71,6 +71,15 @@ namespace core {
   const char* getvncstatedir();
 
   /*
+   * Get the VNC installation root directory (the folder containing the
+   * executable). Used for the rolling log directory. On Windows this is
+   * the exe's folder; on other platforms returns NULL.
+   *
+   * Returns NULL on failure.
+   */
+  const char* getvncinstallroot();
+
+  /*
    * Create directory recursively. Useful to create the nested directory
    * structures needed for the above directories.
    */

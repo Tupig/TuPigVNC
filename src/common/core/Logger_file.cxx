@@ -25,16 +25,19 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #include <core/Logger_file.h>
 
 using namespace core;
 
 Logger_File::Logger_File(const char* loggerName)
-  : Logger(loggerName), indent(13), width(79), m_file(nullptr),
+  : Logger(loggerName), indent(13), width(79),
+    m_maxBytes(20 * 1024 * 1024), m_fileDay(0), m_file(nullptr),
     m_lastLogTime(0)
 {
   m_filename[0] = '\0';
+  m_logDir[0] = '\0';
 }
 
 Logger_File::~Logger_File()
@@ -44,7 +47,13 @@ Logger_File::~Logger_File()
 
 void Logger_File::write(int /*level*/, const char *logname, const char *message)
 {
-  if (!m_file) {
+  if (m_logDir[0] != '\0') {
+    // 滚动日志模式：跨日 / 超上限自动切新文件
+    rotateIfNeeded();
+    if (!m_file)
+      return;
+  } else if (!m_file) {
+    // 固定文件名模式：首次写入时备份旧文件并新建
     if (m_filename[0] == '\0')
       return;
     char bakFilename[PATH_MAX];
@@ -90,6 +99,69 @@ void Logger_File::write(int /*level*/, const char *logname, const char *message)
   fflush(m_file);
 }
 
+void Logger_File::rotateIfNeeded()
+{
+  time_t now = time(nullptr);
+
+  struct tm tmNow;
+  struct tm tmStart;
+#ifdef WIN32
+  localtime_s(&tmNow, &now);
+  localtime_s(&tmStart, &m_fileDay);
+#else
+  localtime_r(&now, &tmNow);
+  localtime_r(&m_fileDay, &tmStart);
+#endif
+
+  bool needRotate = (m_file == nullptr);
+
+  if (!needRotate) {
+    // 跨日：年份或一年中的第几天变化
+    if (tmNow.tm_year != tmStart.tm_year || tmNow.tm_yday != tmStart.tm_yday)
+      needRotate = true;
+    // 超过单文件上限
+    if (!needRotate) {
+      struct stat st;
+      if (stat(m_filename, &st) == 0 && st.st_size > m_maxBytes)
+        needRotate = true;
+    }
+  }
+
+  if (!needRotate)
+    return;
+
+  // 生成新文件名：目录/年月日时分秒.log
+  char base[64];
+  strftime(base, sizeof(base), "%Y%m%d%H%M%S.log", &tmNow);
+
+  char newPath[PATH_MAX];
+  if (snprintf(newPath, sizeof(newPath), "%s/%s", m_logDir, base)
+      >= (int)sizeof(newPath))
+    return;
+
+  closeFile();
+  snprintf(m_filename, sizeof(m_filename), "%s", newPath);
+  m_fileDay = now;
+  m_file = fopen(m_filename, "w+");
+}
+
+void Logger_File::setLogDir(const char* dir, long maxBytes)
+{
+  closeFile();
+  m_logDir[0] = '\0';
+  if (dir && strlen(dir) < sizeof(m_logDir))
+    strcpy(m_logDir, dir);
+  m_maxBytes = (maxBytes > 0) ? maxBytes : (20L * 1024 * 1024);
+}
+
+const char* Logger_File::ensureRotated()
+{
+  if (m_logDir[0] == '\0')
+    return nullptr;
+  rotateIfNeeded();
+  return m_filename;
+}
+
 void Logger_File::setFilename(const char* filename)
 {
   closeFile();
@@ -120,4 +192,11 @@ bool core::initFileLogger(const char* filename)
   logger.setFilename(filename);
   logger.registerLogger();
   return true;
+}
+
+const char* core::initRollingFileLogger(const char* dir, long maxBytes)
+{
+  logger.setLogDir(dir, maxBytes);
+  logger.registerLogger();
+  return logger.ensureRotated();
 }
