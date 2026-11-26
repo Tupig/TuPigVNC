@@ -151,20 +151,22 @@ jobs:
           path: build/tests/unit/test-results.xml
 
       # ---------------- 打包（仅 main 发布构建） ----------------
-      # Chocolatey 上的 innosetup 包只到 6.3.x，没有 7.x。
-      # 而 SetupArchitecture=x64（生成 64 位 PE 安装器）是 Inno Setup 7 才有的
-      # 指令，所以直接从官方 GitHub Releases 下载 7.1.1 的 x64 安装器静默安装。
+      # Inno Setup 7.1.1 x64 安装包已入库（tools/innosetup），
+      # 避免 CI 每次联网下载；SHA-256 校验防止文件被篡改。
+      # 注意：Chocolatey 上的 innosetup 包只到 6.3.x，而
+      # SetupArchitecture=x64（生成 64 位 PE 安装器）是 Inno Setup 7 才有的指令。
       - name: Install Inno Setup
         if: steps.version.outputs.release == 'true'
         shell: pwsh
         run: |
-          $url = "https://github.com/jrsoftware/issrc/releases/download/is-7_1_1/innosetup-7.1.1-x64.exe"
-          $out = Join-Path $env:RUNNER_TEMP "innosetup.exe"
-          Write-Host "下载 $url"
-          Invoke-WebRequest -Uri $url -OutFile $out -UseBasicParsing
-          Start-Process -FilePath $out -Wait -ArgumentList `
+          $installer = Join-Path $env:GITHUB_WORKSPACE "tools\innosetup\innosetup-7.1.1-x64.exe"
+          $expected = "8a5a6711c3766a6e5fb74f280ba0e3551e719ce94538d901fdbd1f8f9920b3f0"
+          $actual = (Get-FileHash $installer -Algorithm SHA256).Hash.ToLower()
+          if ($actual -ne $expected) {
+            throw "Inno Setup 安装包校验失败（期望 $expected，实际 $actual）"
+          }
+          Start-Process -FilePath $installer -Wait -ArgumentList `
             "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/SP-"
-          # 确认安装位置（x64 版装到 Program Files，x86 版装到 Program Files (x86)）
           foreach ($dir in @("C:\Program Files\Inno Setup 7",
                              "C:\Program Files (x86)\Inno Setup 7")) {
             if (Test-Path (Join-Path $dir "ISCC.exe")) {

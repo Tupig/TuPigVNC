@@ -169,7 +169,6 @@ protected:
   std::string updNotes;
   long long updTotalSize = 0;
   std::atomic<bool> updBusy{false};      // 后台任务进行中
-  std::atomic<bool> updQuit{false};      // 退出时通知后台线程
   std::thread updThread;                 // 后台线程句柄
 };
 

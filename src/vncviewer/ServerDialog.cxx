@@ -590,7 +590,8 @@ void ServerDialog::loadOptions()
 
   // 安全：从 secTypes 字符串反推
 #if defined(HAVE_GNUTLS) || defined(HAVE_NETTLE)
-  const std::string secTypes = rfb::SecurityClient::secTypes;
+  const std::string secTypes =
+      rfb::SecurityClient::secTypes.getValueStr();
   optEncryption->value(secTypes.find("RA2") != std::string::npos ? 1 : 0);
   if (secTypes.find("Plain") != std::string::npos)
     optAuth->value(2);
@@ -681,7 +682,7 @@ void ServerDialog::storeOptions()
       else
         s = "Plain";
     }
-    rfb::SecurityClient::secTypes.setParam(s);
+    rfb::SecurityClient::secTypes.setParam(s.c_str());
   }
 #endif
 
@@ -1011,7 +1012,6 @@ void ServerDialog::onClosePanel(Fl_Widget* /*widget*/, void *data)
 ServerDialog::~ServerDialog()
 {
   g_updOwner = nullptr;
-  updQuit = true;
   if (updThread.joinable())
     updThread.join();
 }

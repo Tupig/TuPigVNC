@@ -1,0 +1,6 @@
+# 二进制文件不做行尾转换
+*.exe binary
+*.dll binary
+*.ico binary
+*.png binary
+*.jpg binary
