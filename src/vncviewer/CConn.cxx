@@ -986,11 +986,11 @@ void CConn::updateQualityLevel()
     // 高于 16Mbps（即局域网）时，选择次高的 JPEG 质量，这在
     // 感知上应是无损的。如果带宽低于该值，则选择有损程度更高的
     // JPEG 质量。
-
-    if (bpsEstimate > 16000000)
-      newQualityLevel = 8;
+    // 12~16Mbps 是滞回带：带宽在阈值附近抖动时不会每帧反复切换。
+    if (getQualityLevel() == 8)
+      newQualityLevel = (bpsEstimate < 12000000) ? 6 : 8;
     else
-      newQualityLevel = 6;
+      newQualityLevel = (bpsEstimate > 16000000) ? 8 : 6;
 
     if (newQualityLevel != getQualityLevel()) {
       vlog.info(_("Throughput %d kbit/s - changing to quality %d"),
@@ -1011,9 +1011,12 @@ void CConn::updatePixelFormat()
   fullColourPF = getFramebuffer()->getPF();
 
   // 如果带宽降到 256 Kbps 以下，则切换到调色板模式。
+  // 200~320Kbps 是滞回带：带宽在阈值附近抖动时不会反复切换。
   if (autoSelect) {
-    useFullColour = (bpsEstimate > 256000);
-    if (useFullColour != (server.pf() == fullColourPF)) {
+    const bool currentlyFull = (server.pf() == fullColourPF);
+    useFullColour = currentlyFull ? (bpsEstimate > 200000)
+                                  : (bpsEstimate > 320000);
+    if (useFullColour != currentlyFull) {
       if (useFullColour)
         vlog.info(_("Throughput %d kbit/s - full color is now enabled"),
                   (int)(bpsEstimate/1000));

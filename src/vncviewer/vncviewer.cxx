@@ -156,9 +156,11 @@ void about_vncviewer()
 
 static void mainloop(const char* vncserver, network::Socket* sock)
 {
-  /* 自动重连：断线后最多尝试 3 次，间隔 1/2/4 秒（指数退避）。
-   * 全部失败后才弹窗让用户决定是否继续。 */
+  /* 自动重连：断线后最多尝试 3 次，间隔 2/4/8 秒（指数退避 + 抖动），
+   * 封顶 30 秒。连接稳定后计数归零，长时间会话里多次断线仍能自动重连。 */
   const int maxReconnectAttempts = 3;
+  const int baseDelaySeconds = 2;
+  const int maxDelaySeconds = 30;
   int reconnectAttempts = 0;
 
   while (true) {
@@ -168,6 +170,10 @@ static void mainloop(const char* vncserver, network::Socket* sock)
 
     cc = new CConn();
     cc->connect(vncserver, sock);
+
+    /* 连接成功（connect 返回时没有错误）则重置重连计数 */
+    if (exitError.empty())
+      reconnectAttempts = 0;
 
     while (!exitMainloop) {
       int next_timer;
@@ -195,15 +201,20 @@ static void mainloop(const char* vncserver, network::Socket* sock)
       break;
 
     if (reconnectOnError && (sock == nullptr)) {
-      /* 先自动重连（指数退避） */
+      /* 先自动重连（指数退避 + ±20% 抖动，避免服务器重启时同步冲击） */
       if (reconnectAttempts < maxReconnectAttempts) {
         reconnectAttempts++;
-        const int delay = 1 << (reconnectAttempts - 1);
-        vlog.info(_("连接中断，%d 秒后自动重连（第 %d/%d 次）"),
-                  delay, reconnectAttempts, maxReconnectAttempts);
+        int delay = baseDelaySeconds << (reconnectAttempts - 1);
+        if (delay > maxDelaySeconds)
+          delay = maxDelaySeconds;
+        const double jitter = 0.8 + (rand() % 401) / 1000.0;  // 0.8~1.2
+        const double waitSeconds = delay * jitter;
+
+        vlog.info(_("连接中断，%.1f 秒后自动重连（第 %d/%d 次）"),
+                  waitSeconds, reconnectAttempts, maxReconnectAttempts);
 
         /* 等待期间保持界面响应 */
-        const double deadline = Fl::now() + delay;
+        const double deadline = Fl::now() + waitSeconds;
         while (Fl::now() < deadline) {
           if (Fl::wait(deadline - Fl::now()) < 0.0)
             break;
