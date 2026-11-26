@@ -156,6 +156,11 @@ void about_vncviewer()
 
 static void mainloop(const char* vncserver, network::Socket* sock)
 {
+  /* 自动重连：断线后最多尝试 3 次，间隔 1/2/4 秒（指数退避）。
+   * 全部失败后才弹窗让用户决定是否继续。 */
+  const int maxReconnectAttempts = 3;
+  int reconnectAttempts = 0;
+
   while (true) {
     CConn *cc;
 
@@ -189,17 +194,35 @@ static void mainloop(const char* vncserver, network::Socket* sock)
     if (exitError.empty())
       break;
 
-    if(reconnectOnError && (sock == nullptr)) {
+    if (reconnectOnError && (sock == nullptr)) {
+      /* 先自动重连（指数退避） */
+      if (reconnectAttempts < maxReconnectAttempts) {
+        reconnectAttempts++;
+        const int delay = 1 << (reconnectAttempts - 1);
+        vlog.info(_("连接中断，%d 秒后自动重连（第 %d/%d 次）"),
+                  delay, reconnectAttempts, maxReconnectAttempts);
+
+        /* 等待期间保持界面响应 */
+        const double deadline = Fl::now() + delay;
+        while (Fl::now() < deadline) {
+          if (Fl::wait(deadline - Fl::now()) < 0.0)
+            break;
+        }
+        continue;
+      }
+
+      /* 自动重连失败，询问用户 */
       int ret;
       ret = fl_choice(_("%s\n\n"
-                        "Attempt to reconnect?"),
+                        "自动重连失败，是否重试？"),
                       nullptr, _("Reconnect"), fl_close,
                       exitError.c_str());
       exitError.clear();
-      if (ret == 1)
+      if (ret == 1) {
+        reconnectAttempts = 0;
         continue;
-      else
-        break;
+      }
+      break;
     }
 
     if (alertOnFatalError)
