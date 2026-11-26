@@ -524,39 +524,6 @@ static void removeValue(const char* _name, HKEY* hKey) {
   }
 }
 
-void saveHistoryToRegKey(const std::list<std::string>& serverHistory)
-{
-  HKEY hKey;
-  LONG res = RegCreateKeyExW(HKEY_CURRENT_USER,
-                             REGISTRY_HISTORY_PATH, 0, nullptr,
-                             REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, nullptr,
-                             &hKey, nullptr);
-
-  if (res != ERROR_SUCCESS)
-    throw core::win32_error(_("Failed to create registry key"), res);
-
-  unsigned index = 0;
-  assert(SERVER_HISTORY_SIZE < 100);
-  char indexString[3];
-
-  try {
-    for (const std::string& entry : serverHistory) {
-      if (index > SERVER_HISTORY_SIZE)
-        break;
-      snprintf(indexString, 3, "%d", index);
-      setKeyString(indexString, entry.c_str(), &hKey);
-      index++;
-    }
-  } catch (std::exception& e) {
-    RegCloseKey(hKey);
-    throw;
-  }
-
-  res = RegCloseKey(hKey);
-  if (res != ERROR_SUCCESS)
-    throw core::win32_error(_("Failed to close registry key"), res);
-}
-
 static void saveToReg(const char* servername) {
   
   HKEY hKey;

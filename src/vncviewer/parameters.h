@@ -34,9 +34,6 @@ namespace core {
 
 class MonitorIndicesParameter;
 
-#define SERVER_HISTORY_SIZE 20
-
-
 extern core::IntParameter pointerEventInterval;
 extern core::BoolParameter emulateMiddleButton;
 extern core::BoolParameter dotWhenNoCursor; // deprecated
@@ -96,7 +93,6 @@ std::string loadViewerParameters(const char *filename);
 
 #ifdef _WIN32
 std::list<std::string> loadHistoryFromRegKey();
-void saveHistoryToRegKey(const std::list<std::string>& serverHistory);
 #endif
 
 void migrateDeprecatedOptions();

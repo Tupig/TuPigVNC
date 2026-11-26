@@ -371,12 +371,6 @@ std::string ServerDialog::run(const char* servername)
   return dialog.serverName->value();
 }
 
-void ServerDialog::handleOptions(Fl_Widget* /*widget*/, void* /*data*/)
-{
-  OptionsDialog::showDialog();
-}
-
-
 void ServerDialog::handleLoad(Fl_Widget* /*widget*/, void* data)
 {
   ServerDialog *dialog = (ServerDialog*)data;
@@ -476,12 +470,6 @@ void ServerDialog::handleSaveAs(Fl_Widget* /*widget*/, void* data)
   }
   
   delete(file_chooser);
-}
-
-
-void ServerDialog::handleAbout(Fl_Widget* /*widget*/, void* /*data*/)
-{
-  about_vncviewer();
 }
 
 
