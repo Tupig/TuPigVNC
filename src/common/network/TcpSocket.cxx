@@ -24,6 +24,7 @@
 //#include <io.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <mstcpip.h>
 #define errorNumber WSAGetLastError()
 #else
 #define errorNumber errno
@@ -388,6 +389,34 @@ bool TcpSocket::enableNagles(bool enable) {
     vlog.error(_("Failed to set TCP_NODELAY: %d"), e);
     return false;
   }
+  return true;
+}
+
+bool TcpSocket::enableKeepAlive(bool enable) {
+  int on = enable ? 1 : 0;
+  if (setsockopt(getFd(), SOL_SOCKET, SO_KEEPALIVE,
+                 (char *)&on, sizeof(on)) < 0) {
+    int e = errorNumber;
+    vlog.error(_("Failed to set SO_KEEPALIVE: %d"), e);
+    return false;
+  }
+
+#ifdef WIN32
+  /* Windows 需要额外设置探测间隔（其他平台用系统默认值） */
+  if (enable) {
+    tcp_keepalive ka;
+    ka.onoff = 1;
+    ka.keepalivetime = 30000;     /* 30 秒空闲后开始探测 */
+    ka.keepaliveinterval = 5000;  /* 探测间隔 5 秒 */
+    DWORD bytes = 0;
+    if (WSAIoctl(getFd(), SIO_KEEPALIVE_VALS, &ka, sizeof(ka),
+                 nullptr, 0, &bytes, nullptr, nullptr) != 0) {
+      vlog.error(_("Failed to set keepalive interval: %d"), errorNumber);
+      return false;
+    }
+  }
+#endif
+
   return true;
 }
 

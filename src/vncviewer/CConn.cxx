@@ -181,7 +181,12 @@ void CConn::connect(const char* vncServerName, network::Socket* socket)
       {
         network::getHostAndPort(vncServerName, &serverHost, &serverPort);
 
-        sock = new network::TcpSocket(serverHost.c_str(), serverPort);
+        network::TcpSocket *tcpSock =
+            new network::TcpSocket(serverHost.c_str(), serverPort);
+        /* TCP 保活：检测半开连接（网络闪断、NAT 超时），
+         * 30 秒空闲后开始探测，探测间隔 5 秒。 */
+        tcpSock->enableKeepAlive(true);
+        sock = tcpSock;
         vlog.info(_("Connected to host %s port %d"),
                   serverHost.c_str(), serverPort);
       }
