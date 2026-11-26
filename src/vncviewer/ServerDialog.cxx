@@ -313,7 +313,7 @@ void ServerDialog::showPanel(int idx)
   activePanel = idx;
 
   if (idx >= 0)
-    scroll->scroll_to(panels[idx]);
+    scroll->scroll_to(0, panelTopY);
 
   scroll->redraw();
   redraw();
