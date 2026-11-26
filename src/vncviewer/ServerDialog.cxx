@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <cstdlib>
+#include <cstring>
 #include <libgen.h>
 
 // FIXME: 规避 FLTK 引入 windows.h 的问题
@@ -745,6 +746,66 @@ void ServerDialog::updateTaskDone(void *ptr)
   delete t;
 }
 
+/* 把 GitHub Release 的 Markdown 更新说明转成「[类型] 内容」列表。
+ * 支持 Conventional Commits 前缀（feat/fix/perf/docs/refactor），
+ * 其余行原样保留。 */
+static std::string normalizeChangelog(const std::string &notes)
+{
+  static const struct {
+    const char *prefix;
+    const char *tag;
+  } tags[] = {
+    {"feat:",     "新功能"},
+    {"fix:",      "修复"},
+    {"perf:",     "优化"},
+    {"docs:",     "文档"},
+    {"refactor:", "重构"},
+  };
+
+  std::string out;
+  size_t pos = 0;
+  while (pos < notes.size()) {
+    size_t end = notes.find('\n', pos);
+    if (end == std::string::npos)
+      end = notes.size();
+
+    std::string line = notes.substr(pos, end - pos);
+    pos = end + 1;
+
+    // 去掉 Markdown 列表前缀（"- " / "* "）
+    size_t start = line.find_first_not_of(" \t");
+    if (start != std::string::npos && (line[start] == '-' || line[start] == '*'))
+      start = line.find_first_not_of(" \t", start + 1);
+    if (start == std::string::npos)
+      continue;
+    line = line.substr(start);
+    if (line.empty())
+      continue;
+
+    // 按 Conventional Commits 前缀加中文标签
+    const char *tag = nullptr;
+    for (size_t i = 0; i < sizeof(tags) / sizeof(tags[0]); i++) {
+      const size_t plen = strlen(tags[i].prefix);
+      if (line.compare(0, plen, tags[i].prefix) == 0) {
+        tag = tags[i].tag;
+        line = line.substr(plen);
+        break;
+      }
+    }
+
+    // 去掉标签后的前导空格
+    size_t s2 = line.find_first_not_of(' ');
+    if (s2 != std::string::npos)
+      line = line.substr(s2);
+
+    if (tag != nullptr)
+      out += std::string("[") + tag + "] " + line + "\n";
+    else
+      out += line + "\n";
+  }
+  return out;
+}
+
 /* 刷新更新面板的统计三行 */
 void ServerDialog::setUpdateStats(const char *stage, const char *speed,
                                  const char *eta)
@@ -789,9 +850,10 @@ void ServerDialog::handleUpdateTask(bool ok, const core::ReleaseInfo &info,
 
     updVersion->label(("v" PACKAGE_VERSION "  →  v" + info.version).c_str());
     setUpdateStats("当前阶段：发现新版本");
-    updChangelog->label(info.notes.empty()
-                        ? "（该版本未提供更新说明）"
-                        : info.notes.c_str());
+    const std::string changelog = info.notes.empty()
+                                  ? "（该版本未提供更新说明）"
+                                  : normalizeChangelog(info.notes);
+    updChangelog->label(changelog.c_str());
     updButton->label("立即更新");
   } else {
     updLatestVersion.clear();
