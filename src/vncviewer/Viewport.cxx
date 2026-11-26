@@ -101,8 +101,9 @@ Viewport::Viewport(int w, int h, CConn* cc_)
   : Fl_Widget(0, 0, w, h), cc(cc_), frameBuffer(nullptr),
     lastPointerPos(0, 0), lastButtonMask(0),
     keyboard(nullptr), shortcutBypass(false), shortcutActive(false),
-    firstLEDState(true), pendingClientClipboard(false),
-    remoteClipboardWrite(false),
+    firstLEDState(true),
+    remoteClipboardWrite(false), receivedRemoteClipboard(false),
+    clipboardSource(1),
     menuCtrlKey(false), menuAltKey(false), cursor(nullptr),
     cursorIsBlank(false), scale(1.0), offsetX(0), offsetY(0)
 {
@@ -161,8 +162,18 @@ Viewport::~Viewport()
 
   Fl::remove_system_handler(handleSystemEvent);
 
-  Fl::remove_clipboard_notify(handleClipboardChange);
   Fl::remove_timeout(clearRemoteClipboardFlag, this);
+
+  /* 断开连接时清空本机剪贴板，避免远端会话复制过的敏感内容（如密码）残留。
+   * 只有本次会话确实收到过远端数据才清，否则会无故清掉用户自己的剪贴板；
+   * 清空前置位 remoteClipboardWrite，防止这次清空被当成用户复制再回传远端。 */
+  if (receivedRemoteClipboard) {
+    remoteClipboardWrite = true;
+    Fl::copy("", 0, 1);
+    vlog.info(_("断开连接，已清空本机剪贴板"));
+  }
+
+  Fl::remove_clipboard_notify(handleClipboardChange);
 
   OptionsDialog::removeCallback(handleOptions);
 
@@ -292,8 +303,6 @@ void Viewport::handleClipboardAnnounce(bool available)
     return;
   }
 
-  pendingClientClipboard = false;
-
   vlog.debug("Got notification of new clipboard on server, requesting data");
   cc->requestClipboard();
 }
@@ -308,6 +317,9 @@ void Viewport::handleClipboardData(const char* data)
   len = strlen(data);
 
   vlog.debug("Got clipboard data (%d bytes)", (int)len);
+
+  /* 记录本次会话收到过远端剪贴板，断线时据此决定要不要清空本机剪贴板 */
+  receivedRemoteClipboard = true;
 
   // RFB doesn't have separate selection and clipboard concepts, so we
   // dump the data into both variants.
@@ -548,7 +560,6 @@ int Viewport::handle(int event)
     if (!core::isValidUTF8(Fl::event_text(), Fl::event_length())) {
       vlog.error(_("Invalid UTF-8 sequence in clipboard"));
       // Reset the state as if we don't have any clipboard data at all
-      this->pendingClientClipboard = false;
       try {
         this->cc->announceClipboard(false);
       } catch (std::exception& e) {
@@ -630,8 +641,8 @@ int Viewport::handle(int event)
     return 1;
 
   case FL_FOCUS:
-    flushPendingClipboard();
-
+    /* 失焦期间的本地剪贴板变化不同步到远端，防止在别的程序里复制的
+     * 密码等敏感内容被自动推送；只有窗口内主动复制才会同步。 */
     // We may have gotten our lock keys out of sync with the server
     // whilst we didn't have focus. Try to sort this out.
     pushLEDState();
@@ -716,9 +727,9 @@ void Viewport::handleClipboardChange(int source, void *data)
 #endif
 
   if (!self->hasFocus()) {
-    vlog.debug("Local clipboard changed whilst not focused, will notify server later");
+    /* 失焦期间的变化只做标记，不同步到远端，防止后台复制的敏感内容被泄露 */
+    vlog.debug("本地剪贴板在失焦时发生变化，本次变化不会同步到远端");
     self->clipboardSource = source;
-    self->pendingClientClipboard = true;
     // Clear any older client clipboard from the server
     try {
       self->cc->announceClipboard(false);
@@ -733,7 +744,6 @@ void Viewport::handleClipboardChange(int source, void *data)
       !Fl::clipboard_contains(Fl::clipboard_plain_text)) {
     vlog.debug("Got non-plain text in local clipboard, ignoring.");
     // Reset the state as if we don't have any clipboard data at all
-    self->pendingClientClipboard = false;
     try {
       self->cc->announceClipboard(false);
     } catch (std::exception& e) {
@@ -752,29 +762,6 @@ void Viewport::handleClipboardChange(int source, void *data)
     vlog.error("%s", e.what());
     abort_connection_unexpected(e);
   }
-}
-
-
-void Viewport::flushPendingClipboard()
-{
-  if (pendingClientClipboard) {
-    if (clipboardSource != 0 &&
-        !Fl::clipboard_contains(Fl::clipboard_plain_text)) {
-      vlog.debug("Pending local clipboard has no plain text, ignoring.");
-      pendingClientClipboard = false;
-      return;
-    }
-
-    vlog.debug("Focus regained after local clipboard change, notifying server");
-    try {
-      cc->announceClipboard(true);
-    } catch (std::exception& e) {
-      vlog.error("%s", e.what());
-      abort_connection_unexpected(e);
-    }
-  }
-
-  pendingClientClipboard = false;
 }
 
 

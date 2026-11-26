@@ -80,8 +80,6 @@ private:
   static void handleClipboardChange(int source, void *data);
   static void clearRemoteClipboardFlag(void *data);   // 清除防回环标志
 
-  void flushPendingClipboard();
-
   void handlePointerEvent(const core::Point& pos, uint16_t buttonMask);
   static void handlePointerTimeout(void *data);
 
@@ -122,9 +120,10 @@ private:
 
   bool firstLEDState;
 
-  bool pendingClientClipboard;
   /* 正在把服务端剪贴板写入本地，接下来的本地变化不应回传（防回环） */
   bool remoteClipboardWrite;
+  /* 本次会话是否收到过远端剪贴板数据，断线时据此决定要不要清空本机剪贴板 */
+  bool receivedRemoteClipboard;
 
   int clipboardSource;
 

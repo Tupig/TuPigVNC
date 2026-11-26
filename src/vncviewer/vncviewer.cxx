@@ -32,6 +32,8 @@
 #include <sys/time.h>
 
 #ifdef WIN32
+#include <winsock2.h>
+#include <windows.h>
 #include <core/winerrno.h>
 #include <direct.h>
 #endif
@@ -82,6 +84,22 @@ static bool inMainloop = false;
 static bool exitMainloop = false;
 static std::string exitError;
 static bool fatalError = false;
+
+#ifdef WIN32
+/* 当前 SSH 隧道进程句柄；退出时统一清理，避免留下孤儿 ssh.exe */
+static HANDLE g_tunnelProcess = nullptr;
+
+/* 终止并释放 SSH 隧道进程，可安全重复调用 */
+static void cleanupTunnel()
+{
+  if (g_tunnelProcess == nullptr)
+    return;
+
+  TerminateProcess(g_tunnelProcess, 0);
+  CloseHandle(g_tunnelProcess);
+  g_tunnelProcess = nullptr;
+}
+#endif
 
 static const char *about_text()
 {
@@ -284,6 +302,9 @@ static void CleanupSignalHandler(int sig)
   // CleanupSignalHandler 允许执行 C++ 对象清理，因为它调用 exit()，
   // 而不是默认的 abort。
   vlog.info(_("Termination signal %d has been received. TuPigVNC will now exit."), sig);
+#ifdef WIN32
+  cleanupTunnel();
+#endif
   exit(1);
 }
 
@@ -553,11 +574,113 @@ create_base_dirs()
   }
 }
 
-#ifndef WIN32
+#ifdef WIN32
+namespace {
+
+/* 尝试连接本地回环端口，用于判断 SSH 隧道是否已就绪 */
+bool isLocalPortOpen(int port)
+{
+  SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+  if (sock == INVALID_SOCKET)
+    return false;
+
+  struct sockaddr_in addr;
+  memset(&addr, 0, sizeof(addr));
+  addr.sin_family = AF_INET;
+  addr.sin_port = htons((u_short)port);
+  addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+
+  bool connected = connect(sock, (struct sockaddr*)&addr, sizeof(addr)) == 0;
+  closesocket(sock);
+
+  return connected;
+}
+
+/* 轮询等待隧道端口就绪；ssh 进程提前退出时立即返回失败 */
+bool waitForTunnel(HANDLE process, int port, DWORD timeoutMs)
+{
+  for (DWORD waited = 0; waited <= timeoutMs; waited += 100) {
+    if (isLocalPortOpen(port))
+      return true;
+
+    if (WaitForSingleObject(process, 0) == WAIT_OBJECT_0)
+      return false;
+
+    Sleep(100);
+  }
+
+  return false;
+}
+
+/* 查找 ssh.exe：优先 Windows 10+ 自带的 OpenSSH，找不到再退回 PATH */
+std::string findSshClient()
+{
+  char systemDir[MAX_PATH];
+
+  UINT len = GetSystemDirectoryA(systemDir, MAX_PATH);
+  if (len > 0 && len < MAX_PATH) {
+    std::string path = std::string(systemDir) + "\\OpenSSH\\ssh.exe";
+    if (GetFileAttributesA(path.c_str()) != INVALID_FILE_ATTRIBUTES)
+      return path;
+  }
+
+  return "ssh.exe";
+}
+
+} /* 匿名命名空间 */
+#endif
+
 static void
 createTunnel(const char *gatewayHost, const char *remoteHost,
              int remotePort, int localPort)
 {
+#ifdef WIN32
+  /* 同一时间只允许一个隧道进程，先清理旧的 */
+  cleanupTunnel();
+
+  const std::string sshClient = findSshClient();
+
+  vlog.info(_("正在通过 SSH 网关 \"%s\" 建立隧道：本地端口 %d -> %s:%d"),
+            gatewayHost, localPort, remoteHost, remotePort);
+
+  /* -N 不执行远程命令；ExitOnForwardFailure 端口绑定失败立即退出；
+   * BatchMode 禁止交互式密码提示，认证必须依赖 ssh key / ssh-agent。 */
+  std::string cmdLine = core::format(
+      "\"%s\" -N -o ExitOnForwardFailure=yes -o BatchMode=yes "
+      "-L \"%d:%s:%d\" \"%s\"",
+      sshClient.c_str(), localPort, remoteHost, remotePort, gatewayHost);
+
+  STARTUPINFOA startupInfo;
+  PROCESS_INFORMATION processInfo;
+  memset(&startupInfo, 0, sizeof(startupInfo));
+  memset(&processInfo, 0, sizeof(processInfo));
+  startupInfo.cb = sizeof(startupInfo);
+  startupInfo.dwFlags = STARTF_USESHOWWINDOW;
+  startupInfo.wShowWindow = SW_HIDE;
+
+  if (!CreateProcessA(sshClient.c_str(), &cmdLine[0], nullptr, nullptr,
+                      FALSE, CREATE_NO_WINDOW, nullptr, nullptr,
+                      &startupInfo, &processInfo)) {
+    DWORD error = GetLastError();
+    throw std::runtime_error(core::format(
+        _("无法启动 SSH 客户端 \"%s\"（错误码 %lu）；请确认已安装 OpenSSH 客户端，"
+          "并先手动执行一次 ssh 登录网关以接受主机密钥。"),
+        sshClient.c_str(), error));
+  }
+
+  CloseHandle(processInfo.hThread);
+  g_tunnelProcess = processInfo.hProcess;
+
+  if (!waitForTunnel(g_tunnelProcess, localPort, 10000)) {
+    cleanupTunnel();
+    throw std::runtime_error(core::format(
+        _("SSH 隧道在 10 秒内未能建立（本地端口 %d）；请确认网关 \"%s\" 可访问，"
+          "并先手动执行一次 ssh 登录网关以接受主机密钥。"),
+        localPort, gatewayHost));
+  }
+
+  vlog.info(_("SSH 隧道已就绪，本地端口 %d"), localPort);
+#else
   const char *cmd = getenv("VNC_VIA_CMD");
   char *cmd2, *percent;
   char lport[10], rport[10];
@@ -578,21 +701,24 @@ createTunnel(const char *gatewayHost, const char *remoteHost,
     vlog.error(_("Failed to create tunnel: '%s' returned %d"),
                cmd2, res);
   free(cmd2);
+#endif
 }
 
 static void mktunnel()
 {
   const char *gatewayHost;
   std::string remoteHost;
-  int localPort = network::findFreeTcpPort();
+  int localPort;
   int remotePort;
+
+  network::initSockets();
+  localPort = network::findFreeTcpPort();
 
   network::getHostAndPort(vncServerName.c_str(), &remoteHost, &remotePort);
   vncServerName = core::format("localhost::%d", localPort);
   gatewayHost = (const char*)via;
   createTunnel(gatewayHost, remoteHost.c_str(), remotePort, localPort);
 }
-#endif /* !WIN32 */
 
 int main(int argc, char** argv)
 {
@@ -789,7 +915,6 @@ int main(int argc, char** argv)
         return 1;
     }
 
-#ifndef WIN32
     if (strlen(via) > 0) {
       try {
         mktunnel();
@@ -798,12 +923,15 @@ int main(int argc, char** argv)
         abort_vncviewer(_("Failure setting up encrypted tunnel:\n\n%s"), e.what());
       }
     }
-#endif
   }
 
   inMainloop = true;
   mainloop(vncServerName.c_str(), sock);
   inMainloop = false;
+
+#ifdef WIN32
+  cleanupTunnel();
+#endif
 
   return 0;
 }
