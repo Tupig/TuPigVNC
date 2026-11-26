@@ -351,35 +351,10 @@ void DesktopWindow::updateWindow()
 
 void DesktopWindow::resizeFramebuffer(int new_w, int new_h)
 {
-  bool maximized;
-
-  if ((new_w == viewport->w()) && (new_h == viewport->h()))
-    return;
-
-  maximized = false;
-
-#ifdef WIN32
-  if (win32_win_is_maximized(this))
-    maximized = true;
-#elif defined(__APPLE__)
-  if (cocoa_win_is_zoomed(this))
-    maximized = true;
-#else
-  if (x11_win_is_maximized(this))
-    maximized = true;
-#endif
-
-  // If we're letting the viewport match the window perfectly, then
-  // keep things that way for the new size, otherwise just keep things
-  // like they are.
-  if (!fullscreen_active() && !maximized && !pendingRemoteResize &&
-      !Fl::has_timeout(handleResizeTimeout, this)) {
-    if ((w() == viewport->w()) && (h() == viewport->h()))
-      size(new_w, new_h);
-  }
-
-  viewport->size(new_w, new_h);
-
+  // Fit-to-window（RealVNC/Remmina 风格）：
+  // 服务器改分辨率时只更新 framebuffer，窗口保持用户当前大小，
+  // 画面由 Viewport::draw() 自动等比缩放适配（多余留黑边）。
+  viewport->setFramebufferSize(new_w, new_h);
   repositionWidgets();
 }
 
@@ -436,9 +411,10 @@ void DesktopWindow::draw()
 
   int X, Y, W, H;
 
-  // X11 needs an off screen buffer for compositing to avoid flicker,
-  // and alpha blending doesn't work for windows on Win32
-#if !defined(__APPLE__)
+  // X11 needs an off screen buffer for compositing to avoid flicker.
+  // Win32/Cocoa 直接绘制（draw_child → Viewport::draw() 支持 Fit-to-window 缩放），
+  // 代价是 overlay tip 在 Win32 上不显示（次要功能）。
+#if !defined(WIN32) && !defined(__APPLE__)
 
   // Adjust offscreen surface dimensions
   if ((offscreen == nullptr) ||

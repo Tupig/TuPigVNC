@@ -133,6 +133,16 @@ private:
   Fl_RGB_Image *cursor;
   core::Point cursorHotspot;
   bool cursorIsBlank;
+
+  // Fit-to-window 缩放（RealVNC/Remmina 方式）：
+  // framebuffer 保持服务器分辨率，绘制时等比缩放到窗口，多余留黑边。
+  double scale;          // 当前缩放比（<=1 缩小，>1 放大）
+  int offsetX, offsetY;  // 画面在窗口内的居中偏移
+  void updateScale();    // 根据当前窗口尺寸与 framebuffer 尺寸重算 scale/offset
+
+public:
+  // 服务器分辨率变化时只重建 framebuffer（窗口大小保持不变，靠缩放适配）
+  void setFramebufferSize(int w, int h);
 };
 
 #endif

@@ -27,6 +27,8 @@
 #include <string.h>
 
 #include <stdexcept>
+#include <algorithm>
+#include <vector>
 
 #include <core/LogWriter.h>
 #include <core/UpdateChecker.h>
@@ -101,7 +103,7 @@ Viewport::Viewport(int w, int h, CConn* cc_)
     keyboard(nullptr), shortcutBypass(false), shortcutActive(false),
     firstLEDState(true), pendingClientClipboard(false),
     menuCtrlKey(false), menuAltKey(false), cursor(nullptr),
-    cursorIsBlank(false)
+    cursorIsBlank(false), scale(1.0), offsetX(0), offsetY(0)
 {
 #if defined(WIN32)
   keyboard = new KeyboardWin32(this);
@@ -401,22 +403,125 @@ void Viewport::draw()
   if ((W == 0) || (H == 0))
     return;
 
-  frameBuffer->draw(X - x(), Y - y(), X, Y, W, H);
+  // 还没有 framebuffer（未收到 ServerInit）时只填黑
+  if (!frameBuffer) {
+    fl_color(FL_BLACK);
+    fl_rectf(x(), y(), w(), h());
+    return;
+  }
+
+  int fbW = frameBuffer->width();
+  int fbH = frameBuffer->height();
+  if (fbW <= 0 || fbH <= 0)
+    return;
+
+  updateScale();
+
+  // 1:1 快速路径（无需缩放，走原来的高效 blit）
+  if (scale > 0.999 && scale < 1.001) {
+    frameBuffer->draw(X - x(), Y - y(), X, Y, W, H);
+    return;
+  }
+
+  // 先铺黑边，再把 framebuffer 等比缩放居中绘制
+  fl_color(FL_BLACK);
+  fl_rectf(x(), y(), w(), h());
+
+  int drawW = (int)(fbW * scale);
+  int drawH = (int)(fbH * scale);
+  int offX = x() + offsetX;
+  int offY = y() + offsetY;
+
+  // 只绘制与 clip 区域相交的目标行
+  int ty0 = std::max(Y, offY);
+  int ty1 = std::min(Y + H, offY + drawH);
+  if (ty0 >= ty1)
+    return;
+
+  int bpp = frameBuffer->getPF().bpp / 8;
+  if (bpp <= 0)
+    return;
+
+  int stride = 0;
+  core::Rect full(0, 0, fbW, fbH);
+  const uint8_t* base = frameBuffer->getBuffer(full, &stride);
+  if (!base)
+    return;
+
+  // 复用的行缓冲，避免每帧分配
+  static std::vector<uint8_t> rowBuf;
+  size_t need = (size_t)drawW * bpp;
+  if (rowBuf.size() < need)
+    rowBuf.resize(need);
+
+  // 最近邻缩放：逐目标行做水平采样，再 fl_draw_image 画一整行
+  for (int ty = ty0; ty < ty1; ty++) {
+    int fy = (int)((ty - offY) / scale);
+    if (fy < 0) fy = 0;
+    if (fy >= fbH) fy = fbH - 1;
+
+    const uint8_t* srcRow = base + (size_t)fy * stride;
+    for (int tx = 0; tx < drawW; tx++) {
+      int fx = (int)(tx / scale);
+      if (fx < 0) fx = 0;
+      if (fx >= fbW) fx = fbW - 1;
+      memcpy(rowBuf.data() + (size_t)tx * bpp, srcRow + (size_t)fx * bpp, bpp);
+    }
+    fl_draw_image(rowBuf.data(), offX, ty, drawW, 1, bpp);
+  }
 }
 
 
 void Viewport::resize(int x, int y, int w, int h)
 {
-  if ((w != frameBuffer->width()) || (h != frameBuffer->height())) {
-    vlog.debug("Resizing framebuffer from %dx%d to %dx%d",
-               frameBuffer->width(), frameBuffer->height(), w, h);
+  // Fit-to-window：framebuffer 尺寸固定为服务器分辨率，不随窗口重建。
+  // 仅调整控件尺寸并重算缩放比，绘制时再等比缩放到窗口（多余留黑边）。
+  Fl_Widget::resize(x, y, w, h);
+  updateScale();
+  redraw();
+}
 
-    frameBuffer = new PlatformPixelBuffer(w, h);
-    assert(frameBuffer);
-    cc->setFramebuffer(frameBuffer);
+
+void Viewport::updateScale()
+{
+  if (!frameBuffer) {
+    scale = 1.0;
+    offsetX = offsetY = 0;
+    return;
   }
 
-  Fl_Widget::resize(x, y, w, h);
+  int fbW = frameBuffer->width();
+  int fbH = frameBuffer->height();
+  if (fbW <= 0 || fbH <= 0) {
+    scale = 1.0;
+    offsetX = offsetY = 0;
+    return;
+  }
+
+  // 等比缩放，保持宽高比；取较小的比例以完整显示
+  scale = std::min((double)w() / fbW, (double)h() / fbH);
+  offsetX = (int)((w() - fbW * scale) / 2.0);
+  offsetY = (int)((h() - fbH * scale) / 2.0);
+}
+
+
+void Viewport::setFramebufferSize(int w, int h)
+{
+  if (w <= 0 || h <= 0)
+    return;
+
+  if (frameBuffer && (w == frameBuffer->width()) && (h == frameBuffer->height()))
+    return;
+
+  vlog.debug("Framebuffer resized to %dx%d (window kept at %dx%d)",
+             w, h, w_, h_);
+
+  frameBuffer = new PlatformPixelBuffer(w, h);
+  assert(frameBuffer);
+  cc->setFramebuffer(frameBuffer);
+
+  updateScale();
+  redraw();
 }
 
 
@@ -657,7 +762,29 @@ void Viewport::flushPendingClipboard()
 void Viewport::handlePointerEvent(const core::Point& pos,
                                   uint16_t buttonMask)
 {
-  filterPointerEvent(pos, buttonMask);
+  // 每次事件都重算缩放，避免 resize 与事件之间的状态不同步
+  updateScale();
+
+  // 无 framebuffer 或 1:1 时坐标不变
+  if (!frameBuffer || (scale > 0.999 && scale < 1.001)) {
+    filterPointerEvent(pos, buttonMask);
+    return;
+  }
+
+  int fbW = frameBuffer->width();
+  int fbH = frameBuffer->height();
+  if (fbW <= 0 || fbH <= 0) {
+    filterPointerEvent(pos, buttonMask);
+    return;
+  }
+
+  // 窗口坐标 → framebuffer 坐标（反向缩放 + 去掉居中偏移）
+  core::Point fbPos((int)((pos.x - offsetX) / scale),
+                    (int)((pos.y - offsetY) / scale));
+  fbPos.x = std::max(0, std::min(fbW - 1, fbPos.x));
+  fbPos.y = std::max(0, std::min(fbH - 1, fbPos.y));
+
+  filterPointerEvent(fbPos, buttonMask);
 }
 
 
