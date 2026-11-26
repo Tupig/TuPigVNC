@@ -30,7 +30,7 @@ project(TuPigVNC)
 #   MINOR   —— 新增向后兼容的功能（如 0.1.0）
 #   MAJOR   —— 不兼容的变更（如 1.0.0）
 # 版本号仅在此处维护，其余位置统一引用 ${VERSION}。
-set(VERSION 0.0.1)
+set(VERSION 0.0.2)
 
 # The RC version must always be four comma-separated numbers
 string(REPLACE . , RCVERSION "${VERSION}.0")
