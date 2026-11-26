@@ -1,13 +1,22 @@
+# Dependabot 依赖自动更新
+#
+# 说明：Dependabot 是 GitHub 的独立机器人，不是构建步骤，无法合并进
+# msvc.yml。它按本文件配置，定期提 PR 升级依赖。
+#
+# 支持的生态：
+#   - github-actions：自动升级 Actions 版本（actions/checkout 等）
+#   - vcpkg：Dependabot 不支持 C++ 生态，vcpkg 依赖需手动升级
+#     （.github/workflows/msvc.yml 里的 vcpkg install 列表）
 version: 2
-
 updates:
-  # GitHub Actions 依赖自动更新
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
     commit-message:
       prefix: "ci"
     labels:
       - "dependencies"
-      - "github-actions"
+    # 同一时间最多 5 个 PR，避免刷屏
+    open-pull-requests-limit: 5
