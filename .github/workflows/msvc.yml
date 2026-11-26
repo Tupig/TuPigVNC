@@ -153,13 +153,13 @@ jobs:
       # ---------------- 打包（仅 main 发布构建） ----------------
       - name: Install Inno Setup
         if: steps.version.outputs.release == 'true'
-        run: choco install innosetup --pre --no-progress -y
+        run: choco install innosetup --version=7.0.0-beta --no-progress -y
 
       - name: Build installer
         if: steps.version.outputs.release == 'true'
         shell: pwsh
         run: |
-          $env:PATH = "C:\Program Files (x86)\Inno Setup 6;$env:PATH"
+          $env:PATH = "C:\Program Files (x86)\Inno Setup 7;C:\Program Files (x86)\Inno Setup 6;$env:PATH"
           $vcpkg = $env:VCPKG_INSTALLATION_ROOT
           $env:PATH = "$vcpkg\installed\x64-windows-static\bin;$env:PATH"
           cmake --build build --config Release --target installer
