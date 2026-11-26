@@ -111,7 +111,7 @@ jobs:
 
       # 编译缓存：跨 run 复用 .obj，全量编译从三十分钟降到几分钟。
       - name: Setup sccache
-        uses: mozilla-actions/sccache-action@v0.0.9
+        uses: mozilla-actions/sccache-action@v0.0.11
         with:
           version: "v0.8.1"
 
