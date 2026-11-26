@@ -37,6 +37,10 @@
 #include <windows.h>
 #include <wininet.h> /* MinGW needs it */
 #include <shlobj.h>
+#include <stdio.h>
+#include <string.h>
+#include <wchar.h>
+#include <string>
 #include <filesystem>
 #include <system_error>
 #define stat _stat
@@ -49,17 +53,13 @@
 static const char* getvncdir(bool userDir, const char *xdg_env, const char *xdg_def)
 {
   static char dir[PATH_MAX], legacy[PATH_MAX];
-  struct stat st;
 
 #ifndef WIN32
+  struct stat st;
   char *homedir, *xdgdir;
   uid_t uid;
   struct passwd *passwd;
-#else
-  BOOL ret;
-#endif
 
-#ifndef WIN32
   homedir = getenv("HOME");
   if (homedir == nullptr) {
     uid = getuid();
@@ -81,35 +81,63 @@ static const char* getvncdir(bool userDir, const char *xdg_env, const char *xdg_
     snprintf(dir, sizeof(dir), "%s/%s/tigervnc", homedir, xdg_def);
 
   snprintf(legacy, sizeof(legacy), "%s/.vnc", homedir);
+
+  return (stat(dir, &st) != 0 && stat(legacy, &st) == 0) ? legacy : dir;
 #else
   (void) xdg_def;
   (void) xdg_env;
 
-  if (userDir)
-    ret = SHGetSpecialFolderPath(nullptr, dir, CSIDL_PROFILE, FALSE);
-  else
-    ret = SHGetSpecialFolderPath(nullptr, dir, CSIDL_APPDATA, FALSE);
-
-  if (ret == FALSE)
-    return nullptr;
-
-  if (userDir)
+  /* 用户主目录（~）：保持不变 */
+  if (userDir) {
+    if (SHGetSpecialFolderPath(nullptr, dir, CSIDL_PROFILE, FALSE) == FALSE)
+      return nullptr;
     return dir;
+  }
 
-  ret = SHGetSpecialFolderPath(nullptr, legacy, CSIDL_APPDATA, FALSE);
+  /*
+   * TuPigVNC：所有配置（选项、连接历史、日志、证书等）统一存到
+   * 「安装目录\User」下，方便绿色迁移和备份。
+   *
+   * 如果安装目录不可写（例如装在 Program Files 但当前用户没有
+   * 管理员权限），则回退到 %LOCALAPPDATA%\TuPigVNC，保证程序仍
+   * 能正常保存配置。
+   */
+  {
+    wchar_t exePathW[PATH_MAX];
+    DWORD n = GetModuleFileNameW(nullptr, exePathW, PATH_MAX);
+    if (n > 0 && n < PATH_MAX) {
+      /* 去掉文件名，保留 exe 所在目录（含末尾分隔符） */
+      wchar_t* slash = wcsrchr(exePathW, L'\\');
+      if (slash == nullptr)
+        slash = wcsrchr(exePathW, L'/');
+      if (slash != nullptr) {
+        *(slash + 1) = L'\0';
+        std::string userDirUtf8 =
+          core::narrow(std::wstring(exePathW) + L"User");
+        snprintf(dir, sizeof(dir), "%s", userDirUtf8.c_str());
+        core::mkdir_p(dir, 0755);
 
-  if (ret == FALSE)
+        /* 试写探测文件，确认目录真的可写 */
+        char probe[PATH_MAX + 32];
+        snprintf(probe, sizeof(probe), "%s\\.write_probe", dir);
+        FILE* fp = fopen(probe, "w");
+        if (fp != nullptr) {
+          fclose(fp);
+          remove(probe);
+          return dir;
+        }
+      }
+    }
+  }
+
+  /* 回退：%LOCALAPPDATA%\TuPigVNC（当前用户必然可写） */
+  if (SHGetSpecialFolderPath(nullptr, dir, CSIDL_LOCAL_APPDATA, FALSE) == FALSE)
     return nullptr;
-
   if (strlen(dir) + strlen("\\TuPigVNC") >= sizeof(dir))
     return nullptr;
-  if (strlen(legacy) + strlen("\\vnc") >= sizeof(legacy))
-    return nullptr;
-
   strcat(dir, "\\TuPigVNC");
-  strcat(legacy, "\\vnc");
+  return dir;
 #endif
-  return (stat(dir, &st) != 0 && stat(legacy, &st) == 0) ? legacy : dir;
 }
 
 const char* core::getuserhomedir()
