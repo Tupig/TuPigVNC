@@ -93,6 +93,11 @@ desktop.ini
 # 依赖里的头文件
 !/tool/deps/**/*.h
 !/tool/deps/**/*.hpp
+# 注意：tool/deps/**/lib/pkgconfig 和 lib/cmake 里面写的是本机绝对路径
+# （安装时生成的），换台机器就失效，绝对不能入库。
+# 依赖的查找一律走 CMake 的 FindGTest / CMAKE_PREFIX_PATH。
+/tool/deps/**/pkgconfig/
+/tool/deps/**/cmake/
 # SDK 里的可执行文件和程序集
 !/tool/sdk/**/*.exe
 !/tool/sdk/**/*.dll

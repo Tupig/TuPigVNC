@@ -11,6 +11,11 @@
 #include <exception>
 #include <string>
 
+/* 版本号由 CMake 注入；单独编译本文件时给个兜底，避免宏未定义 */
+#ifndef TUPIGVNC_VERSION_STRING
+#  define TUPIGVNC_VERSION_STRING "0.0.0"
+#endif
+
 #include <core/UpdateChecker.h>
 
 #include "VncSession.h"
@@ -413,8 +418,9 @@ VNC_API int vnc_test_add(int a, int b)
 
 VNC_API const char* vnc_version(void)
 {
-  /* 静态字符串，调用方只读，不涉及所有权 */
-  return "TuPigVNC.Core 0.0.5 (stage 1)";
+  /* 静态字符串，调用方只读，不涉及所有权。
+     版本号来自 CMake 注入的 TUPIGVNC_VERSION_STRING，不在源码里硬编码。 */
+  return "TuPigVNC.Core " TUPIGVNC_VERSION_STRING " (stage 1)";
 }
 
 //////////////////////////// 自动更新 ////////////////////////////

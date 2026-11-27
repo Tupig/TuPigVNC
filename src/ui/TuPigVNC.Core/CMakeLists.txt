@@ -37,6 +37,9 @@ target_include_directories(TuPigVNC.Core PRIVATE
 target_compile_definitions(TuPigVNC.Core PRIVATE
   TUPIGVNC_CORE_EXPORTS
   _CRT_SECURE_NO_WARNINGS
+  # 版本号唯一来源是根 CMakeLists.txt 的 set(VERSION ...)，
+  # 这里注入成宏，避免 VncAbi.cxx 里再抄一份导致版本漂移。
+  TUPIGVNC_VERSION_STRING="${VERSION}"
 )
 
 # 静态 CRT 与主工程保持一致（/MT），避免 C# 侧 self-contained 时 CRT 冲突
