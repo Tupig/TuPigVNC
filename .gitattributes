@@ -9,8 +9,16 @@
 *.pdb binary
 *.lib binary
 *.winmd binary
+# MinGW/Unix 静态库归档也是二进制，转成 CRLF 会直接损坏
+*.a binary
+*.o binary
+*.obj binary
 
 # 离线依赖按原始字节保存，避免换行转换导致完整性校验失败
+# tool/deps 里的静态库和第三方头文件同理：任何一个字节被改写
+# 都可能让链接失败，且报错信息完全看不出是换行转换干的。
 /tool/sdk/** -text
 /tool/packages/** -text
 /tool/packaging/** -text
+/tool/deps/** -text
+/tool/build/** -text
