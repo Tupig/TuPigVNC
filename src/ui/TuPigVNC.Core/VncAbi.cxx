@@ -91,7 +91,15 @@ VNC_API void vnc_start_loop(VncSession* s)
 
 VNC_API void vnc_request_stop(VncSession* s)
 {
-  if (s) s->signalStop();
+  /* signalStop() 会碰条件变量 / 互斥量，理论上可能抛异常；
+     异常一旦越过 C ABI 边界就是直接终止进程，必须在这里兜住。 */
+  if (s == nullptr)
+    return;
+  try {
+    s->signalStop();
+  } catch (...) {
+    /* 停止请求是「尽力而为」：失败也不该让宿主进程崩掉 */
+  }
 }
 
 VNC_API int vnc_copy_frame(VncSession* s, uint8_t* data, size_t capacity,
