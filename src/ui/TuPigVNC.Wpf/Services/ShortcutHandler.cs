@@ -200,15 +200,19 @@ internal sealed class ShortcutHandler
     };
 
     /// <summary>
-    /// 解析配置里的修饰键名字（大小写不敏感）。对应原版 parseModifier。
+    /// 解析配置里的修饰键名字（大小写不敏感）。逐条对照原版 parseModifier。
     /// 认不出的名字返回 None，调用方应视为「未配置」而不是报错。
+    ///
+    /// 注意：原版只认 <c>"Ctrl"</c>，**不认 <c>"Control"</c> 全称**
+    /// （<c>strcasecmp</c> 是整串比较，长度不同就不相等）。这里必须保持一致——
+    /// 否则同一份配置在 FLTK 版和 WPF 版行为不同：WPF 触发、FLTK 不触发。
     /// </summary>
     public static Modifier ParseModifier(string? key)
     {
         if (string.IsNullOrWhiteSpace(key)) return Modifier.None;
         return key.Trim().ToUpperInvariant() switch
         {
-            "CTRL" or "CONTROL" => Modifier.Control,
+            "CTRL" => Modifier.Control,
             "SHIFT" => Modifier.Shift,
             "ALT" or "OPTION" => Modifier.Alt,
             "WIN" or "SUPER" or "CMD" => Modifier.Super,
