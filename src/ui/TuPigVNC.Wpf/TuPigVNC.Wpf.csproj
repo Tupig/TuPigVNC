@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    TuPigVNC · WPF 前端
+
+    使用 WPF 构建 Windows 桌面前端，保留软件渲染回退能力。
+    支持范围以实际发布产物及目标系统测试为准。
+
+    - UseWPF=true
+    - 统一配置见顶层 Directory.Build.props
+    - 原生核心 TuPigVNC.Core.dll 放 exe 同目录（P/Invoke 加载）
+  -->
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>TuPigVNC</AssemblyName>
+    <RootNamespace>TuPigVNC.Wpf</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>..\..\assets\icons\tupigvnc.ico</ApplicationIcon>
+
+    <!-- 自包含：目标机无需预装 .NET 运行时 -->
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>false</PublishSingleFile>
+
+    <!-- WPF 不需要 MSIX 工具链 -->
+    <EnableDefaultApplicationDefinition>true</EnableDefaultApplicationDefinition>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 原生核心构建产物默认留在项目内；CI 可显式覆盖。 -->
+    <TupigVncBuildDir Condition="'$(TupigVncBuildDir)' == ''">$(MSBuildThisFileDirectory)..\..\..\tmp\build\native</TupigVncBuildDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\assets\brand\tupigvnc_256_preview.png" Link="Assets\Brand.png" />
+    <Resource Include="..\..\assets\icons\tupigvnc.ico" Link="Assets\TuPigVNC.ico" />
+    <!-- 原生核心 DLL 必须与 exe 同目录，P/Invoke 才能找到 -->
+    <None Include="$(TupigVncBuildDir)\ui\TuPigVNC.Core\Release\TuPigVNC.Core.dll"
+          Condition="Exists('$(TupigVncBuildDir)\ui\TuPigVNC.Core\Release\TuPigVNC.Core.dll')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>TuPigVNC.Core.dll</Link>
+    </None>
+  </ItemGroup>
+
+  <!-- 仅界面检查可显式跳过；正式发布缺原生核心必须失败。 -->
+  <Target Name="ValidateNativeCoreForPublish" BeforeTargets="PrepareForPublish"
+          Condition="'$(TupigVncUiOnly)' != 'true'">
+    <Error Condition="!Exists('$(TupigVncBuildDir)\ui\TuPigVNC.Core\Release\TuPigVNC.Core.dll')"
+           Text="缺少原生核心 TuPigVNC.Core.dll。请先构建核心；仅界面检查可显式设置 TupigVncUiOnly=true，不能将其作为完整客户端发布。" />
+  </Target>
+
+</Project>
