@@ -9,8 +9,14 @@
   <Color x:Key="BgColor">#FF242424</Color>
   <!-- input, select 背景 -->
   <Color x:Key="InputColor">#FF202020</Color>
+  <!-- .nav / .inspector 背景 #272727（比 panel 深一档） -->
+  <Color x:Key="NavColor">#FF272727</Color>
   <!-- .nav 悬停 / #353535 -->
   <Color x:Key="CardHoverColor">#FF353535</Color>
+  <!-- .nav button.selected 背景 #383838 -->
+  <Color x:Key="NavSelectedColor">#FF383838</Color>
+  <!-- .nav button.selected 左侧强调条 #9dbdd7 -->
+  <Color x:Key="NavSelectedAccentColor">#FF9DBDD7</Color>
   <!-- —text -->
   <Color x:Key="TextColor">#FFEDEDED</Color>
   <!-- —muted -->
@@ -51,6 +57,9 @@
   <SolidColorBrush x:Key="CardBrush" Color="{StaticResource CardColor}"/>
   <SolidColorBrush x:Key="BgBrush" Color="{StaticResource BgColor}"/>
   <SolidColorBrush x:Key="InputBrush" Color="{StaticResource InputColor}"/>
+  <SolidColorBrush x:Key="NavBrush" Color="{StaticResource NavColor}"/>
+  <SolidColorBrush x:Key="NavSelectedBrush" Color="{StaticResource NavSelectedColor}"/>
+  <SolidColorBrush x:Key="NavSelectedAccentBrush" Color="{StaticResource NavSelectedAccentColor}"/>
   <SolidColorBrush x:Key="CardHoverBrush" Color="{StaticResource CardHoverColor}"/>
   <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}"/>
   <SolidColorBrush x:Key="Text2Brush" Color="{StaticResource Text2Color}"/>
@@ -96,7 +105,7 @@
   <Style x:Key="AccentButton" TargetType="Button">
     <Setter Property="Foreground" Value="{StaticResource OnAccentBrush}"/>
     <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
-    <Setter Property="FontSize" Value="14"/>
+    <Setter Property="FontSize" Value="13"/>
     <Setter Property="FontWeight" Value="SemiBold"/>
     <Setter Property="Height" Value="34"/>
     <Setter Property="Padding" Value="16,0"/>
@@ -279,7 +288,7 @@
     <Setter Property="Background" Value="{StaticResource InputBrush}"/>
     <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}"/>
     <Setter Property="SelectionBrush" Value="{StaticResource AccentSoftBrush}"/>
-    <Setter Property="FontSize" Value="14"/>
+    <Setter Property="FontSize" Value="13"/>
     <Setter Property="Height" Value="34"/>
     <Setter Property="Padding" Value="12,0"/>
     <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -646,7 +655,7 @@
     <Setter Property="Background" Value="{StaticResource InputBrush}"/>
     <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}"/>
     <Setter Property="SelectionBrush" Value="{StaticResource AccentSoftBrush}"/>
-    <Setter Property="FontSize" Value="14"/>
+    <Setter Property="FontSize" Value="13"/>
     <Setter Property="Height" Value="34"/>
     <Setter Property="Padding" Value="12,0"/>
     <Setter Property="VerticalContentAlignment" Value="Center"/>
