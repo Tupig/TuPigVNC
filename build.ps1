@@ -27,11 +27,16 @@
 
 .PARAMETER Target
     只构建指定目标（默认构建全部）。可用值：Core / Wpf。
+
+.PARAMETER Test
+    构建完成后跑全部自动化测试：原生单元测试（ctest）+ WPF 功能测试。
+    任何一项失败，脚本以非 0 退出码结束。
 #>
 [CmdletBinding()]
 param(
     [switch]$Installer,
     [switch]$Clean,
+    [switch]$Test,
     [ValidateSet('', 'Core', 'Wpf')]
     [string]$Target = ''
 )
@@ -185,7 +190,14 @@ function Invoke-NativeConfigure {
 function Invoke-NativeBuild {
     Write-Host '=== 编译原生核心 DLL ===' -ForegroundColor Cyan
 
-    & $cmakeExe --build $nativeBuildDir --target TuPigVNC.Core --parallel
+    # -Test 时连单元测试一起编；否则只编产品目标，省时间。
+    # 注意不能只编 TuPigVNC.Core 就断言「测试能跑」——clean 之后
+    # tests/unit 下的可执行文件根本不存在，ctest 只会报 NOT_BUILT。
+    if ($Test) {
+        & $cmakeExe --build $nativeBuildDir --parallel
+    } else {
+        & $cmakeExe --build $nativeBuildDir --target TuPigVNC.Core --parallel
+    }
     if ($LASTEXITCODE -ne 0) {
         throw "原生核心编译失败（退出码 $LASTEXITCODE）"
     }
@@ -242,7 +254,37 @@ function Test-PublishOutput {
 }
 
 # ============================================================
-# 6. Inno 安装包
+# 6. 自动化测试
+# ============================================================
+
+function Invoke-Tests {
+    Write-Host '=== 原生单元测试 (ctest) ===' -ForegroundColor Cyan
+
+    $ctestExe = Join-Path $toolDir 'build/cmake/bin/ctest.exe'
+    $unitDir  = Join-Path $nativeBuildDir 'tests/unit'
+
+    # ctest 必须从 tests/unit 目录跑：gtest_discover_tests 生成的
+    # 用例清单用相对路径，换目录会报 "No tests were found"。
+    Push-Location $unitDir
+    try {
+        & $ctestExe --output-on-failure
+        if ($LASTEXITCODE -ne 0) {
+            throw "原生单元测试失败（退出码 $LASTEXITCODE）"
+        }
+    } finally {
+        Pop-Location
+    }
+
+    Write-Host '=== WPF 功能测试 ===' -ForegroundColor Cyan
+    $testProj = Join-Path $root 'src/tests/wpf/WpfFunctionalTests.csproj'
+    & $dotnetExe run --project $testProj -c Release
+    if ($LASTEXITCODE -ne 0) {
+        throw "WPF 功能测试失败（退出码 $LASTEXITCODE）"
+    }
+}
+
+# ============================================================
+# 7. Inno 安装包
 # ============================================================
 
 function Invoke-Installer {
@@ -294,6 +336,9 @@ try {
         if ($Target -eq '' -or $Target -eq 'Wpf') {
             Invoke-WpfPublish
             Test-PublishOutput
+        }
+        if ($Test) {
+            Invoke-Tests
         }
         if ($Installer) {
             Invoke-Installer
