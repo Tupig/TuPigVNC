@@ -52,6 +52,7 @@
 #endif
 
 #include "fltk/layout.h"
+#include "fltk/material.h"
 #include "fltk/util.h"
 #include "Viewport.h"
 #include "CConn.h"
@@ -1215,8 +1216,8 @@ void Viewport::popupContextMenu()
     OptionsDialog::showDialog();
     break;
   case ID_INFO:
-    fl_message_title(_("VNC connection info"));
-    fl_message("%s", fltk_escape(cc->connectionInfo().c_str()).c_str());
+    matMessage(_("连接信息"),
+               fltk_escape(cc->connectionInfo().c_str()).c_str());
     break;
   case ID_ABOUT:
     about_vncviewer();
@@ -1232,40 +1233,35 @@ void Viewport::checkForUpdates()
   core::ReleaseInfo info;
   std::string error;
 
-  fl_message_title(_("Check for Updates"));
-  fl_message(_("Checking for updates, please wait..."));
-
   if (!core::UpdateChecker::fetchLatestRelease(&info, &error)) {
-    fl_alert(_("Failed to check for updates: %s"), error.c_str());
+    matAlert(_("检查更新失败"),
+             core::format(_("无法检查更新：%s"), error.c_str()).c_str());
     return;
   }
 
   if (!core::UpdateChecker::isNewer(info.version, PACKAGE_VERSION)) {
-    fl_message(_("You are running the latest version (%s)."),
-               PACKAGE_VERSION);
+    matMessage(_("检查更新"),
+               core::format(_("已是最新版本（%s）。"), PACKAGE_VERSION).c_str());
     return;
   }
 
-  int choice = fl_choice(
-      _("A new version %s is available (current version %s).\n\n"
-        "The update will be downloaded and installed automatically.\n"
-        "The program will restart after installation. Continue?"),
-      _("Cancel"), _("Update Now"), nullptr,
+  std::string ask = core::format(
+      _("发现新版本 %s（当前 %s）。\n\n"
+        "将自动下载并安装，安装完成后程序会重启。是否继续？"),
       info.version.c_str(), PACKAGE_VERSION);
-  if (choice != 1)
+  if (matChoice(_("发现新版本"), ask.c_str(), "立即更新", "取消") != 0)
     return;
 
   if (info.downloadUrl.empty()) {
-    fl_alert(_("No installer was found for the current platform. "
-               "The download page will be opened."));
+    matAlert(_("无法更新"), _("当前平台没有可用的安装包，将打开下载页面。"));
     core::UpdateChecker::openInBrowser(info.htmlUrl);
     return;
   }
 
-  fl_message_title(_("Updating"));
-  fl_message(_("Downloading and installing version %s, please wait...\n"
-               "The program will restart automatically after installation."),
-             info.version.c_str());
+  matMessage(_("正在更新"),
+             core::format(_("正在下载并安装版本 %s，请稍候……\n"
+                            "安装完成后程序会自动重启。"),
+                          info.version.c_str()).c_str());
 
   if (!core::UpdateChecker::downloadAndInstall(info.downloadUrl,
                                                 info.checksumUrl,

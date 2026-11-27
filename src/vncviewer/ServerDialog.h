@@ -52,7 +52,11 @@ protected:
   ~ServerDialog();
 
 public:
-  static std::string run(const char* servername);
+  static std::string run(const char* servername,
+                         const char* initialError = nullptr);
+
+  // 显示时套用 Windows 11 系统圆角（对应设计稿的 20px 圆角卡片）
+  void show() override;
 
 protected:
   static void handleLoad(Fl_Widget *widget, void *data);
@@ -79,7 +83,6 @@ private:
   void refreshRecentChips();   // 根据 serverHistory 刷新「最近连接」chip
   static void onEntryClicked(Fl_Widget*, void* data);
   static void onClosePanel(Fl_Widget*, void* data);
-  static void onThemeClicked(Fl_Widget*, void* data);   // 主题切换
   static void onRecentChipClicked(Fl_Widget*, void* data);  // 点 chip 填入地址
   static void onHistoryDoubleClick(Fl_Widget*, void* data); // 双击历史即连接（右键删除）
 
@@ -97,14 +100,16 @@ private:
 
 protected:
   MInput *serverName;
+  Fl_Box *errorLabel;          // 输入框下方的行内错误提示（不弹窗）
+  void showError(const char *msg);   // 显示行内错误
+  void clearError();                 // 清除行内错误
   std::list<ServerHistoryEntry> serverHistory;
   std::string usedDir;
 
-  Fl_Scroll *scroll;           // 主滚动容器
   Fl_Browser *historyBrowser;  // 连接历史列表
+  Fl_Box *historyFoot;         // 历史面板底部提示（跟随列表高度）
   Fl_Group *panels[4];         // 0历史 1选项 2更新 3关于
   MEntryCard *entries_[4];     // 2×2 功能入口
-  MButton *themeBtns[3];       // 顶栏主题切换按钮
   Fl_Widget *recentLabel;      // 「最近」标签
   MChip *recentChips[3];       // 最近连接 chip（最多 3 个）
   int activePanel;             // 当前展开的面板，-1 表示收起

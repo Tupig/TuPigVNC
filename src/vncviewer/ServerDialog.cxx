@@ -32,12 +32,15 @@
 #ifdef WIN32
 #include <winsock2.h>
 #include <windows.h>
+#include <dwmapi.h>
 #include <io.h>
+#pragma comment(lib, "dwmapi.lib")
 #else
 #include <unistd.h>
 #endif
 
 #include <FL/Fl.H>
+#include <FL/x.H>
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Input_Choice.H>
 #include <FL/Fl_Button.H>
@@ -94,7 +97,8 @@ static bool same_server(const std::string& a, const std::string& b);
 
 ServerDialog::ServerDialog()
   : Fl_Window(540, 760, "TuPigVNC"),
-    scroll(nullptr), historyBrowser(nullptr), activePanel(-1), panelTopY(0),
+    historyBrowser(nullptr), historyFoot(nullptr),
+    activePanel(-1), panelTopY(0),
     topbarH(48),
     optAutoSelect(nullptr), optJpeg(nullptr), optEncoding(nullptr),
     optColorLevel(nullptr), optCustomCompress(nullptr),
@@ -115,8 +119,6 @@ ServerDialog::ServerDialog()
   }
   for (int i = 0; i < 4; i++)
     optMod[i] = nullptr;
-  for (int i = 0; i < 3; i++)
-    themeBtns[i] = nullptr;
   for (int i = 0; i < 3; i++)
     recentChips[i] = nullptr;
 
@@ -171,35 +173,18 @@ void ServerDialog::buildLayout()
   title->labelcolor(mat::Text);
   title->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
 
-  // 主题切换（Material / Linear / Arc）
-  {
-    const char *themeNames[3] = {"Material", "Linear", "Arc"};
-    const int tw = 64;
-    const int tx = w() - PAD - tw * 3 - 4 * 2;
-    for (int i = 0; i < 3; i++) {
-      MButton *b = new MButton(tx + i * (tw + 4), (TOPBAR_H - 26) / 2, tw, 26,
-                               themeNames[i], MButton::Theme);
-      b->radius(13);
-      b->fontSize(11);
-      b->user_data((void*)(intptr_t)i);
-      b->callback(onThemeClicked, this);
-      b->setActive(i == 0);
-      themeBtns[i] = b;
-    }
-  }
+  // 主题切换已移除：Linear / Arc 两套主题尚未实现，
+  // 留着假按钮只会误导用户，等真正做完再放回来。
 
   // 顶栏底部分隔线
   Fl_Box *divider = new Fl_Box(0, TOPBAR_H - 1, w(), 1);
   divider->box(FL_FLAT_BOX);
   divider->color(mat::Stroke);
 
-  // ===== 主滚动区 =====
-  scroll = new Fl_Scroll(0, TOPBAR_H, w(), h() - TOPBAR_H);
-  scroll->box(FL_FLAT_BOX);
-  scroll->color(mat::Card);
-  scroll->begin();
-
-  int y = 18;
+  // ===== 主内容区（无滚动条）=====
+  // FLTK 1.3 的 Fl_Group 不会给子控件做坐标偏移（子控件坐标是窗口绝对坐标），
+  // 所以这里所有 y 都要从顶栏下方算起。
+  int y = TOPBAR_H + 18;
 
   // ---- 连接区标题 ----
   Fl_Box *h1 = new Fl_Box(PAD, y, cw, 24, "连接 VNC 服务器");
@@ -227,7 +212,14 @@ void ServerDialog::buildLayout()
       new MButton(PAD + cw - btnW, y, btnW, 34, "连接", MButton::Filled);
   connectBtn->radius(12);
   connectBtn->callback(handleConnect, this);
-  y += 34 + 12;
+  y += 34 + 4;
+
+  // ---- 行内错误提示（不弹窗，直接显示在输入框下方）----
+  errorLabel = new Fl_Box(PAD, y, cw, 18, "");
+  errorLabel->labelsize(11);
+  errorLabel->labelcolor(mat::Err);
+  errorLabel->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
+  y += 20;
 
   // ---- 最近连接（内联 chip）----
   recentLabel = new Fl_Box(PAD, y + 2, 34, 20, "最近");
@@ -295,7 +287,6 @@ void ServerDialog::buildLayout()
     fitPanelHeight(i);
   }
 
-  scroll->end();
 
   /* 为保证缩放行为正常所必需 */
   resizable(nullptr);
@@ -307,6 +298,21 @@ void ServerDialog::buildLayout()
   callback(this->handleCancel, this);
 }
 
+void ServerDialog::show()
+{
+  Fl_Window::show();
+#ifdef WIN32
+  // Windows 11 22000+ 才有 DWMWA_WINDOW_CORNER_PREFERENCE（33）；
+  // 更老的系统上调用会失败但不影响功能，直接忽略返回值。
+  HWND hwnd = fl_xid(this);
+  if (hwnd != nullptr) {
+    const int pref = 2;  // DWMWCP_ROUND
+    DwmSetWindowAttribute(hwnd, 33 /* DWMWA_WINDOW_CORNER_PREFERENCE */,
+                          &pref, sizeof(pref));
+  }
+#endif
+}
+
 void ServerDialog::applyWindowHeight()
 {
   const int maxH = (int)(Fl::h() * 0.92);
@@ -315,15 +321,14 @@ void ServerDialog::applyWindowHeight()
   if (activePanel >= 0 && panels[activePanel] != nullptr)
     contentBottom = panelTopY + panels[activePanel]->h() + 22;
 
-  int targetH = topbarH + contentBottom;
+  // panelTopY 已经是窗口绝对坐标（含顶栏高度），不要再加 topbarH
+  int targetH = contentBottom;
   if (targetH > maxH)
     targetH = maxH;
   if (targetH < topbarH + 160)
     targetH = topbarH + 160;
 
   size(w(), targetH);
-  if (scroll != nullptr)
-    scroll->resize(0, topbarH, w(), targetH - topbarH);
   redraw();
 }
 
@@ -344,9 +349,10 @@ void ServerDialog::fitPanelHeight(int idx)
 }
 
 
-/* 面板通用标题栏：标题 + 右侧「收起」 */
+/* 面板通用标题栏：标题 + 可选紫色小标签 + 右侧「收起」 */
 static void buildPanelHeader(Fl_Group *g, const char *text,
-                             Fl_Callback *closeCb, void *closeData)
+                             Fl_Callback *closeCb, void *closeData,
+                             const char *tag = nullptr)
 {
   int cw = g->w();
   Fl_Box *t = new Fl_Box(16, 0, cw - 88, 34, text);
@@ -354,6 +360,14 @@ static void buildPanelHeader(Fl_Group *g, const char *text,
   t->labelsize(13);
   t->labelcolor(mat::Text);
   t->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
+
+  // 标题右侧的紫色胶囊标签（如「上限 250 台」）
+  if (tag != nullptr) {
+    int tw = (int)strlen(tag) * 7 + 14;
+    if (tw < 24)
+      tw = 24;
+    new MTag(16 + 82, 9, tw, 18, tag);
+  }
 
   MButton *close = new MButton(cw - 62, 5, 46, 24, "收起", MButton::Ghost);
   close->radius(7);
@@ -363,20 +377,25 @@ static void buildPanelHeader(Fl_Group *g, const char *text,
 
 void ServerDialog::buildHistoryPanel(Fl_Group *g)
 {
-  buildPanelHeader(g, "连接历史", onClosePanel, this);
+  buildPanelHeader(g, "连接历史", onClosePanel, this, "上限 250 台");
 
   const int cw = g->w();
+  const int innerW = cw - 32;  // 左右各 16 的内边距
 
-  // 列宽：主机 / 名称 / 次数 / 最后连接（最后一列占剩余宽度）
-  const int colHost = 200, colName = 100, colCount = 60;
-  const int colAgo = cw - 32 - colHost - colName - colCount;
+  // 列宽：主机 / 名称 / 次数 / 最后连接 / 操作
+  // 按设计稿比例分配，最后一列「操作」放删除按钮
+  const int colHost = innerW * 34 / 100;
+  const int colName = innerW * 18 / 100;
+  const int colCount = innerW * 12 / 100;
+  const int colAgo = innerW * 24 / 100;
+  const int colOp = innerW - colHost - colName - colCount - colAgo;
 
   // 表头：每条占一个 Fl_Box，宽度与数据列严格对齐
   const int hx = 16;
-  const char *hdrText[4] = {"主机", "名称", "次数", "最后连接"};
-  const int hdrW[4] = {colHost, colName, colCount, colAgo};
+  const char *hdrText[5] = {"主机", "名称", "次数", "最后连接", "操作"};
+  const int hdrW[5] = {colHost, colName, colCount, colAgo, colOp};
   int cx = hx;
-  for (int c = 0; c < 4; c++) {
+  for (int c = 0; c < 5; c++) {
     Fl_Box *b = new Fl_Box(cx, 40, hdrW[c], 20, hdrText[c]);
     b->labelsize(11);
     b->labelcolor(mat::Text2);
@@ -384,10 +403,10 @@ void ServerDialog::buildHistoryPanel(Fl_Group *g)
     cx += hdrW[c];
   }
 
-  // 历史列表（高度按记录数，最多 12 行；双击即连接）
+  // 历史列表（高度按记录数，最多 12 行；双击连接，点「删除」列删除）
   const int rows = std::max<int>(1, (int)serverHistory.size());
   const int listH = std::min(12, rows) * 22 + 8;
-  historyBrowser = new Fl_Browser(16, 62, cw - 32, listH);
+  historyBrowser = new Fl_Browser(16, 62, innerW, listH);
   historyBrowser->box(FL_FLAT_BOX);
   historyBrowser->color(mat::Card);
   historyBrowser->textsize(12);
@@ -395,9 +414,22 @@ void ServerDialog::buildHistoryPanel(Fl_Group *g)
   historyBrowser->callback(onHistoryDoubleClick, this);
 
   // 用 \t 做列分隔，列宽与表头一致（Fl_Browser 原生多列对齐）
-  static const int kColWidths[5] = {200, 100, 60, 148, 0};
+  static int kColWidths[6];
+  kColWidths[0] = colHost;
+  kColWidths[1] = colName;
+  kColWidths[2] = colCount;
+  kColWidths[3] = colAgo;
+  kColWidths[4] = colOp;
+  kColWidths[5] = 0;
   historyBrowser->column_widths(kColWidths);
   historyBrowser->column_char('\t');
+
+  // 底部提示（位置随列表高度在 refreshHistory 里更新）
+  historyFoot = new Fl_Box(16, 62 + listH + 6, innerW, 16,
+                           "双击连接 · 右键删除 · 超出 250 台自动淘汰");
+  historyFoot->labelsize(10);
+  historyFoot->labelcolor(mat::Text3);
+  historyFoot->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
 }
 
 // ============================================================
@@ -1211,7 +1243,7 @@ void ServerDialog::refreshHistory()
   historyBrowser->clear();
   for (const ServerHistoryEntry& e : serverHistory) {
     char line[512];
-    snprintf(line, sizeof(line), "%s\t%s\t%d\t%s", e.host.c_str(),
+    snprintf(line, sizeof(line), "%s\t%s\t%d\t%s\t删除", e.host.c_str(),
              e.name.c_str(), e.useCount, humanAgo(e.lastUsed).c_str());
     historyBrowser->add(line);
   }
@@ -1222,8 +1254,10 @@ void ServerDialog::refreshHistory()
   const int rows = std::max<int>(1, (int)serverHistory.size());
   const int listH = std::min(12, rows) * 22 + 8;
   historyBrowser->resize(16, 62, historyBrowser->w(), listH);
+  if (historyFoot != nullptr)
+    historyFoot->position(16, 62 + listH + 6);
   if (panels[0] != nullptr) {
-    panels[0]->size(panels[0]->w(), 62 + listH + 16);
+    panels[0]->size(panels[0]->w(), 62 + listH + 6 + 16 + 12);
     if (activePanel == 0)
       applyWindowHeight();
   }
@@ -1295,10 +1329,6 @@ void ServerDialog::showPanel(int idx)
   // 收起/展开时窗口高度跟着变，避免底部大片空白
   applyWindowHeight();
 
-  if (idx >= 0)
-    scroll->scroll_to(0, panelTopY);
-
-  scroll->redraw();
   redraw();
 }
 
@@ -1312,24 +1342,6 @@ void ServerDialog::onEntryClicked(Fl_Widget *widget, void *data)
 void ServerDialog::onClosePanel(Fl_Widget* /*widget*/, void *data)
 {
   ((ServerDialog*)data)->showPanel(-1);
-}
-
-void ServerDialog::onThemeClicked(Fl_Widget *widget, void *data)
-{
-  ServerDialog *dialog = (ServerDialog*)data;
-  const int idx = (int)(intptr_t)widget->user_data();
-  // 目前仅实现 Material 主题，Linear / Arc 为占位。
-  // 未实现的主题不能真的点亮选中态，否则提示框关掉后界面状态是假的。
-  if (idx == 0) {
-    for (int i = 0; i < 3; i++)
-      dialog->themeBtns[i]->setActive(i == 0);
-    return;
-  }
-  fl_message("「%s」主题正在开发中，当前为 Material 主题。",
-             idx == 1 ? "Linear" : "Arc");
-  // 提示完把选中态还原成 Material
-  for (int i = 0; i < 3; i++)
-    dialog->themeBtns[i]->setActive(i == 0);
 }
 
 void ServerDialog::onRecentChipClicked(Fl_Widget *widget, void *data)
@@ -1387,13 +1399,17 @@ ServerDialog::~ServerDialog()
 }
 
 
-std::string ServerDialog::run(const char* servername)
+std::string ServerDialog::run(const char* servername, const char* initialError)
 {
   ServerDialog dialog;
 
   dialog.serverName->value(servername);
 
   dialog.show();
+
+  // 上一次连接失败的原因直接显示在输入框下方，不弹窗
+  if (initialError != nullptr && initialError[0] != '\0')
+    dialog.showError(initialError);
 
   try {
     dialog.loadServerHistory();
@@ -1445,8 +1461,8 @@ void ServerDialog::handleLoad(Fl_Widget* /*widget*/, void* data)
     dialog->loadOptions();
   } catch (std::exception& e) {
     vlog.error("%s", e.what());
-    fl_alert(_("Unable to load the specified configuration file:\n\n%s"),
-             e.what());
+    matAlert(_("载入配置失败"),
+             core::format(_("无法载入指定的配置文件：\n\n%s"), e.what()).c_str());
   }
 
   delete(file_chooser);
@@ -1490,10 +1506,9 @@ void ServerDialog::handleSaveAs(Fl_Widget* /*widget*/, void* data)
 
       // 文件已存在。
       fclose(f);
-      int overwrite_choice = fl_choice(_("%s already exists. Do you want to overwrite?"),
-                                       nullptr, _("No"), _("Overwrite"), filename);
-      if (overwrite_choice != 2) {
-
+      std::string ask = core::format(
+          _("「%s」已存在，要覆盖吗？"), filename);
+      if (matChoice(_("文件已存在"), ask.c_str(), "覆盖", "取消") != 0) {
         // 如果用户不想覆盖：
         file_chooser->show();
         continue;
@@ -1510,13 +1525,40 @@ void ServerDialog::handleSaveAs(Fl_Widget* /*widget*/, void* data)
     saveViewerParameters(filename, servername);
   } catch (std::exception& e) {
     vlog.error("%s", e.what());
-    fl_alert(_("Unable to save the specified configuration "
-               "file:\n\n%s"), e.what());
+    matAlert(_("保存配置失败"),
+             core::format(_("无法保存指定的配置文件：\n\n%s"), e.what()).c_str());
   }
 
   delete(file_chooser);
 }
 
+
+void ServerDialog::showError(const char *msg)
+{
+  if (errorLabel == nullptr)
+    return;
+  errorLabel->copy_label(msg != nullptr ? msg : "");
+  if (serverName != nullptr) {
+    serverName->color(mat::Card);
+    serverName->textcolor(mat::Err);
+    serverName->redraw();
+  }
+  redraw();
+}
+
+void ServerDialog::clearError()
+{
+  if (errorLabel == nullptr)
+    return;
+  if (errorLabel->label() != nullptr && errorLabel->label()[0] != '\0') {
+    errorLabel->copy_label("");
+    if (serverName != nullptr) {
+      serverName->textcolor(mat::Text);
+      serverName->redraw();
+    }
+    redraw();
+  }
+}
 
 void ServerDialog::handleCancel(Fl_Widget* /*widget*/, void* data)
 {
@@ -1534,10 +1576,13 @@ void ServerDialog::handleConnect(Fl_Widget* /*widget*/, void *data)
 
   // 空地址直接返回，否则会把 host="" 写进历史、run() 返回空串让程序退出
   if (servername == nullptr || servername[0] == '\0') {
-    fl_message("请输入服务器地址，例如 192.168.1.100:5900");
+    dialog->showError("请输入服务器地址，例如 192.168.1.100:5900");
     dialog->serverName->take_focus();
     return;
   }
+
+  // 地址合法，清掉之前的错误提示
+  dialog->clearError();
 
   // 先把选项面板里改过的设置写回全局参数，否则直接连接会丢设置
   dialog->storeOptions();

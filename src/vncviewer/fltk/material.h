@@ -149,6 +149,16 @@ class MChip : public Fl_Widget {
 };
 
 // ============================================================
+// 小标签（紫底紫字的胶囊，用于「上限 250 台」这类附注）
+// ============================================================
+class MTag : public Fl_Widget {
+ public:
+  MTag(int x, int y, int w, int h, const char *label);
+
+  void draw() override;
+};
+
+// ============================================================
 // 圆角输入框（12px 圆角 + 焦点紫色光晕 + 占位符）
 // ============================================================
 class MInput : public Fl_Input {
@@ -193,5 +203,29 @@ class MLogo : public Fl_Widget {
 
   void draw() override;
 };
+
+// ============================================================
+// Material 3 风格消息框（替代 fl_alert / fl_message / fl_choice，
+// 杜绝英文 + 90 年代灰底弹窗）
+// ============================================================
+
+// 单按钮「确定」，返回 0
+int matAlert(const char *title, const char *message,
+             bool withCancel = false);
+
+// 只有确定按钮的消息框（对应 fl_message）
+void matMessage(const char *title, const char *message);
+
+// 确定/取消（对应 fl_choice 的二选一）。
+// 返回 true = 点了确定。
+bool matConfirm(const char *title, const char *message,
+                const char *okText = "确定",
+                const char *cancelText = "取消");
+
+// 最多三个按钮（对应 fl_choice 的完整形式）。
+// 返回被点按钮的下标；nullptr 表示该位置没有按钮。
+int matChoice(const char *title, const char *message,
+              const char *b0, const char *b1 = nullptr,
+              const char *b2 = nullptr, const char *b3 = nullptr);
 
 #endif  // __MATERIAL_H__

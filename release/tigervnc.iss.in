@@ -62,8 +62,9 @@ Source: "@CMAKE_SOURCE_DIR@\LICENCE.TXT"; DestDir: "{app}\doc"; Flags: ignorever
 ; 开始菜单
 Name: "{group}\TuPigVNC"; FileName: "{app}\vncviewer.exe"; IconFilename: "{app}\vncviewer.exe"
 Name: "{group}\监听模式 TuPigVNC"; FileName: "{app}\vncviewer.exe"; Parameters: "-listen"; IconFilename: "{app}\vncviewer.exe"
-Name: "{group}\许可证"; FileName: "write.exe"; Parameters: "LICENCE.TXT"; WorkingDir: "{app}\doc"; Flags: "useapppaths"
-Name: "{group}\发行说明"; FileName: "write.exe"; Parameters: "README.rst"; WorkingDir: "{app}\doc"; Flags: "useapppaths"
+; write.exe 只在旧版 Windows 存在，新版没有；改用记事本打开文档
+Name: "{group}\许可证"; FileName: "{sys}\notepad.exe"; Parameters: """{app}\doc\LICENCE.TXT"""
+Name: "{group}\发行说明"; FileName: "{sys}\notepad.exe"; Parameters: """{app}\doc\README.rst"""
 Name: "{group}\卸载 TuPigVNC"; FileName: "{uninstallexe}"; WorkingDir: "{app}";
 ; 桌面快捷方式
 Name: "{autodesktop}\TuPigVNC"; FileName: "{app}\vncviewer.exe"; IconFilename: "{app}\vncviewer.exe"; Tasks: desktopicon

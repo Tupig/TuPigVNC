@@ -4,6 +4,9 @@
 
 #include "material.h"
 
+#include <FL/Fl.H>
+#include <FL/Fl_Box.H>
+#include <FL/Fl_Window.H>
 #include <FL/fl_draw.H>
 
 #include <math.h>
@@ -489,6 +492,22 @@ int MChip::handle(int event) {
 }
 
 // ============================================================
+// MTag
+// ============================================================
+
+MTag::MTag(int x, int y, int w, int h, const char *label)
+    : Fl_Widget(x, y, w, h, label) {
+  box(FL_NO_BOX);
+}
+
+void MTag::draw() {
+  mat::roundRectFill(x(), y(), w(), h(), 6, mat::AccentSoft);
+  fl_font(FL_HELVETICA, 10);
+  fl_color(mat::Accent);
+  fl_draw(label(), x(), y(), w(), h(), FL_ALIGN_CENTER);
+}
+
+// ============================================================
 // MInput
 // ============================================================
 
@@ -574,3 +593,123 @@ void MLogo::draw() {
   fl_line(cx, t + s - 6, cx, t + s - 1);                  // 支架
 }
 
+
+// ============================================================
+// Material 3 风格消息框
+//
+// FLTK 自带的 fl_alert / fl_message 是 90 年代灰底立体样式，
+// 而且按钮固定英文 "OK"，和整个界面格格不入。这里用自绘控件重做。
+// ============================================================
+
+static bool sAlertDone = false;
+static int sAlertResult = 0;
+
+static void alertBtnCb(Fl_Widget *w, void *data)
+{
+  sAlertResult = (int)(intptr_t)data;
+  sAlertDone = true;
+  if (w->window() != nullptr)
+    w->window()->hide();
+}
+
+int matChoice(const char *title, const char *message,
+              const char *b0, const char *b1, const char *b2,
+              const char *b3)
+{
+  mat::initColors();
+
+  const char *buttons[4] = {b0, b1, b2, b3};
+  int count = 0;
+  while (count < 4 && buttons[count] != nullptr)
+    count++;
+  if (count == 0) {
+    buttons[0] = "确定";
+    count = 1;
+  }
+
+  const int btnH = 34, btnGap = 10, btnPadH = 22;
+  int widths[4] = {0, 0, 0, 0};
+  int totalW = 0;
+  for (int i = 0; i < count; i++) {
+    int tw = (int)strlen(buttons[i]) * 13 + btnPadH * 2;
+    if (tw < 72)
+      tw = 72;
+    if (tw > 150)
+      tw = 150;
+    widths[i] = tw;
+    totalW += tw + (i > 0 ? btnGap : 0);
+  }
+
+  const int W = 440;
+  const int H = 200;
+
+  Fl_Window *win = new Fl_Window(W, H);
+  win->color(mat::Card);
+  win->set_modal();
+  win->begin();
+
+  // 标题
+  Fl_Box *t = new Fl_Box(24, 22, W - 48, 26, title != nullptr ? title : "");
+  t->labelfont(FL_HELVETICA_BOLD);
+  t->labelsize(15);
+  t->labelcolor(mat::Text);
+  t->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
+
+  // 正文
+  Fl_Box *m = new Fl_Box(24, 56, W - 48, 72,
+                         message != nullptr ? message : "");
+  m->labelsize(12);
+  m->labelcolor(mat::Text2);
+  m->align(FL_ALIGN_LEFT | FL_ALIGN_TOP | FL_ALIGN_WRAP | FL_ALIGN_INSIDE);
+
+  // 按钮：从右往左排，第 0 个（主操作）在最右边
+  int bx = W - 24;
+  for (int i = count - 1; i >= 0; i--) {
+    bx -= widths[i];
+    MButton *b = new MButton(bx, H - 24 - btnH, widths[i], btnH, buttons[i],
+                            i == 0 ? MButton::Filled : MButton::Ghost);
+    b->radius(12);
+    b->fontSize(13);
+    b->callback(alertBtnCb, (void*)(intptr_t)i);
+    bx -= btnGap;
+  }
+
+  win->end();
+
+  sAlertDone = false;
+  sAlertResult = 0;
+
+  win->show();
+  Fl::flush();
+  fprintf(stderr, "[matChoice] shown=%d x=%d y=%d w=%d h=%d children=%d\n",
+          (int)win->shown(), win->x(), win->y(), win->w(), win->h(),
+          win->children());
+  while (!sAlertDone) {
+    Fl::wait(0.1);
+    Fl::flush();
+  }
+  fprintf(stderr, "[matChoice] done result=%d\n", sAlertResult);
+  Fl::delete_widget(win);
+
+  return sAlertResult;
+}
+
+int matAlert(const char *title, const char *message, bool withCancel)
+{
+  if (withCancel)
+    return matChoice(title, message, "确定", "取消");
+  return matChoice(title, message, "确定");
+}
+
+void matMessage(const char *title, const char *message)
+{
+  matChoice(title, message, "确定");
+}
+
+bool matConfirm(const char *title, const char *message,
+                const char *okText, const char *cancelText)
+{
+  return matChoice(title, message,
+                   okText != nullptr ? okText : "确定",
+                   cancelText != nullptr ? cancelText : "取消") == 0;
+}

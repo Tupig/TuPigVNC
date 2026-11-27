@@ -56,6 +56,7 @@
 #include <FL/fl_ask.H>
 
 #include "fltk/layout.h"
+#include "fltk/material.h"
 #include "fltk/util.h"
 #include "AudioOutput.h"
 #include "AuthDialog.h"
@@ -586,9 +587,7 @@ bool CConn::verifyCertificate(unsigned int status,
           "should not continue."),
         _("Do you want to make an exception for this server?"));
 
-      fl_message_title(_("Unknown certificate issuer"));
-      if (fl_choice("%s", nullptr, fl_cancel, _("Add exception"),
-                    fltk_escape(text).c_str()) != 2)
+      if (matChoice(_("未知的证书颁发者"), text.c_str(), "添加例外", "取消") != 0)
         return false;
 
       status &= ~(GNUTLS_CERT_INVALID |
@@ -605,9 +604,7 @@ bool CConn::verifyCertificate(unsigned int status,
           "should not continue."),
         _("Do you want to make an exception for this server?"));
 
-      fl_message_title(_("Certificate is not yet valid"));
-      if (fl_choice("%s", nullptr, fl_cancel, _("Add exception"),
-                    fltk_escape(text).c_str()) != 2)
+      if (matChoice(_("证书尚未生效"), text.c_str(), "添加例外", "取消") != 0)
         return false;
 
       status &= ~GNUTLS_CERT_NOT_ACTIVATED;
@@ -622,9 +619,7 @@ bool CConn::verifyCertificate(unsigned int status,
           "should not continue."),
         _("Do you want to make an exception for this server?"));
 
-      fl_message_title(_("Expired certificate"));
-      if (fl_choice("%s", nullptr, fl_cancel, _("Add exception"),
-                    fltk_escape(text).c_str()) != 2)
+      if (matChoice(_("证书已过期"), text.c_str(), "添加例外", "取消") != 0)
         return false;
 
       status &= ~GNUTLS_CERT_EXPIRED;
@@ -639,9 +634,7 @@ bool CConn::verifyCertificate(unsigned int status,
           "should not continue."),
         _("Do you want to make an exception for this server?"));
 
-      fl_message_title(_("Insecure certificate algorithm"));
-      if (fl_choice("%s", nullptr, fl_cancel, _("Add exception"),
-                    fltk_escape(text).c_str()) != 2)
+      if (matChoice(_("证书算法不安全"), text.c_str(), "添加例外", "取消") != 0)
         return false;
 
       status &= ~GNUTLS_CERT_INSECURE_ALGORITHM;
@@ -659,9 +652,7 @@ bool CConn::verifyCertificate(unsigned int status,
           "should not continue."),
         _("Do you want to make an exception for this server?"));
 
-      fl_message_title(_("Certificate hostname mismatch"));
-      if (fl_choice("%s", nullptr, fl_cancel, _("Add exception"),
-                    fltk_escape(text).c_str()) != 2)
+      if (matChoice(_("证书主机名不匹配"), text.c_str(), "添加例外", "取消") != 0)
         return false;
 
       status &= ~GNUTLS_CERT_UNEXPECTED_OWNER;
@@ -691,9 +682,7 @@ bool CConn::verifyCertificate(unsigned int status,
           "should not continue."),
         _("Do you want to make an exception for this server?"));
 
-      fl_message_title(_("Unexpected server certificate"));
-      if (fl_choice("%s", nullptr, fl_cancel, _("Add exception"),
-                    fltk_escape(text).c_str()) != 2)
+      if (matChoice(_("意外的服务器证书"), text.c_str(), "添加例外", "取消") != 0)
         return false;
 
       status &= ~(GNUTLS_CERT_INVALID |
@@ -711,9 +700,7 @@ bool CConn::verifyCertificate(unsigned int status,
           "should not continue."),
         _("Do you want to make an exception for this server?"));
 
-      fl_message_title(_("Unexpected server certificate"));
-      if (fl_choice("%s", nullptr, fl_cancel, _("Add exception"),
-                    fltk_escape(text).c_str()) != 2)
+      if (matChoice(_("意外的服务器证书"), text.c_str(), "添加例外", "取消") != 0)
         return false;
 
       status &= ~GNUTLS_CERT_NOT_ACTIVATED;
@@ -729,9 +716,7 @@ bool CConn::verifyCertificate(unsigned int status,
           "should not continue."),
         _("Do you want to make an exception for this server?"));
 
-      fl_message_title(_("Unexpected server certificate"));
-      if (fl_choice("%s", nullptr, fl_cancel, _("Add exception"),
-                    fltk_escape(text).c_str()) != 2)
+      if (matChoice(_("意外的服务器证书"), text.c_str(), "添加例外", "取消") != 0)
         return false;
 
       status &= ~GNUTLS_CERT_EXPIRED;
@@ -747,9 +732,7 @@ bool CConn::verifyCertificate(unsigned int status,
           "should not continue."),
         _("Do you want to make an exception for this server?"));
 
-      fl_message_title(_("Unexpected server certificate"));
-      if (fl_choice("%s", nullptr, fl_cancel, _("Add exception"),
-                    fltk_escape(text).c_str()) != 2)
+      if (matChoice(_("意外的服务器证书"), text.c_str(), "添加例外", "取消") != 0)
         return false;
 
       status &= ~GNUTLS_CERT_INSECURE_ALGORITHM;
@@ -768,9 +751,7 @@ bool CConn::verifyCertificate(unsigned int status,
           "should not continue."),
         _("Do you want to make an exception for this server?"));
 
-      fl_message_title(_("Unexpected server certificate"));
-      if (fl_choice("%s", nullptr, fl_cancel, _("Add exception"),
-                    fltk_escape(text).c_str()) != 2)
+      if (matChoice(_("意外的服务器证书"), text.c_str(), "添加例外", "取消") != 0)
         return false;
 
       status &= ~GNUTLS_CERT_UNEXPECTED_OWNER;
@@ -805,9 +786,7 @@ bool CConn::verifyHostKey(const uint8_t* key, size_t length,
       "\n"
       "Do you want to continue connecting to this server?"),
     fingerprint);
-  fl_message_title(_("Verify server key"));
-  if (fl_choice("%s", nullptr, fl_cancel, _("Continue"),
-                fltk_escape(text).c_str()) != 2)
+  if (matChoice(_("验证服务器密钥"), text.c_str(), "继续", "取消") != 0)
     return false;
 
   // FIXME: 应将其保存下来用于 TOFU

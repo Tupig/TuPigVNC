@@ -61,6 +61,7 @@
 #include <FL/fl_ask.H>
 
 #include "fltk/Fl_Password_Input.h"
+#include "fltk/material.h"
 #include "fltk/theme.h"
 #include "fltk/util.h"
 #include "parameters.h"
@@ -136,7 +137,7 @@ void abort_vncviewer(const char *error, ...)
   else {
     // 此时仍处于启动早期，假定直接 exit() 即可。
     if (alertOnFatalError && !exitError.empty())
-      fl_alert("%s", exitError.c_str());
+      matAlert(_("连接失败"), exitError.c_str());
     exit(EXIT_FAILURE);
   }
 }
@@ -212,8 +213,7 @@ static void mainloop(const char* vncserver, network::Socket* sock)
 
     if (fatalError) {
       assert(!exitError.empty());
-      if (alertOnFatalError)
-        fl_alert("%s", exitError.c_str());
+      // 不在这里弹窗：main() 会把错误带回 ServerDialog 显示在输入框下方
       break;
     }
 
@@ -261,7 +261,7 @@ static void mainloop(const char* vncserver, network::Socket* sock)
     }
 
     if (alertOnFatalError)
-      fl_alert("%s", exitError.c_str());
+      matAlert(_("连接失败"), exitError.c_str());
 
     break;
   }
@@ -928,6 +928,24 @@ int main(int argc, char** argv)
   inMainloop = true;
   mainloop(vncServerName.c_str(), sock);
   inMainloop = false;
+
+  // 连接失败：不弹窗，重新打开主界面，把错误显示在地址输入框下方
+  while (fatalError && !exitError.empty()) {
+    std::string lastError = exitError;
+    fatalError = false;
+    exitError.clear();
+
+    std::string retry =
+        ServerDialog::run(vncServerName.c_str(), lastError.c_str());
+    if (retry.empty())
+      return 1;
+
+    vncServerName = retry;
+
+    inMainloop = true;
+    mainloop(vncServerName.c_str(), nullptr);
+    inMainloop = false;
+  }
 
 #ifdef WIN32
   cleanupTunnel();
