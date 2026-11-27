@@ -749,11 +749,12 @@ void VncSession::setQualityLevel(int level)
   });
 }
 
-void VncSession::setSharedFlag(bool shared)
+void VncSession::setSharedFlag(bool sharedRequested)
 {
   /* 必须同步设置：ClientInit 在 connect 里就已经发出去了，
-     排进队列会晚于协议初始化，对本次会话无效。 */
-  setShared(shared);
+     排进队列会晚于协议初始化，对本次会话无效。
+     参数名不能叫 shared——那会遮蔽 CConnection 的同名成员。 */
+  setShared(sharedRequested);
 }
 
 int VncSession::setSecurityTypes(const char* types)

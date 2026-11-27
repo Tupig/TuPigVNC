@@ -1,0 +1,335 @@
+*******************************************************************************
+**     构建 TuPigVNC
+*******************************************************************************
+
+
+================================
+构建要求（所有系统）
+================================
+
+-- CMake（http://www.cmake.org）v3.10 或更高版本
+
+-- gcc
+
+以下软件包的开发套件：
+
+-- zlib
+
+-- pixman
+
+-- FLTK 1.3.3 或更高版本
+
+-- 如需构建 TLS 支持：
+   * GnuTLS 3.x
+   * 详见下文“构建 TLS 支持”。
+
+-- 如需构建 RSA-AES 支持：
+   * Nettle 3.0 或更高版本
+
+-- 如需构建本地语言支持（NLS）：
+   * GNU gettext 0.14.4 或更高版本
+   * 详见下文“构建本地语言支持”。
+
+-- libjpeg-turbo
+   * 也支持“普通”的 libjpegv6，但由于其速度较慢，不推荐使用。
+
+
+=========================
+构建要求（Unix）
+=========================
+
+-- 非 Mac 平台：
+   * 所有标准 X11 库的开发套件
+
+-- 如需构建 Xvnc/libvnc.so：
+   * Xorg 服务器源代码，1.20 或更高版本
+   * Xorg 的全部构建要求（参见其文档）
+   * patch
+
+-- 如需构建带套接字激活支持的 x0vncserver：
+   * libsystemd
+
+-- 如需构建 w0vncserver：
+   * GLib（Gio + GObject）
+   * libpipewire
+   * libuuid
+   * libwayland-client
+   * libxkbcommon
+
+-- 如需构建 vncserver 或服务器 Plain 认证：
+   * PAM
+
+-- 可选的 ffmpeg 开发套件支持（libav）
+   * 你可能需要为此启用额外的软件仓库。例如，在 RHEL 上需要启用
+     EPEL 与 RPMFusion（free + nonfree）。
+
+-- 如需构建带密码质量检查支持的 vncpasswd：
+   * libpwquality
+
+-- 如需构建音频支持：
+   * PulseAudio
+
+============================
+构建要求（Windows）
+============================
+
+-- MinGW 或 MinGW-w64
+
+-- Inno Setup（用于构建 TuPigVNC 安装程序）
+   Inno Setup 可从 http://www.jrsoftware.org/isinfo.php 下载。
+   你还需要 Inno Setup 预处理器，它包含在
+   Inno Setup QuickStart Pack 中。
+
+   构建 TuPigVNC 之前，请将包含 iscc.exe 的目录（例如
+   C:\Program Files\Inno Setup 5）添加到系统或用户的 PATH 环境
+   变量中。
+
+
+=========================
+构建要求（Java）
+=========================
+
+-- Sun/Oracle JDK 1.7 或更高版本，或 OpenJDK 7 或更高版本
+
+-- 详见下文“构建 Java 支持”。
+
+
+==================
+树外构建
+==================
+
+二进制对象、库和可执行文件将生成在运行 cmake 的同一目录（即“二进制目录”）中，
+该目录不必与 TuPigVNC 源代码目录相同。你可以创建多个独立的二进制目录，
+使用不同的编译器或设置从同一源代码树构建不同版本的 TuPigVNC。
+下文中的 {build_directory} 指二进制目录，{source_directory} 指 TuPigVNC
+源代码目录。建议从仓库根目录使用 tmp/build/native 作为原生构建目录；
+CI 使用 tmp/build/ci-native。构建目录内的 tests/unit、release 等原生子布局不变，
+不要把它们改成源码目录中的 src/tests 或 build-support/release。
+例如，在仓库根目录配置和运行单元测试：
+
+  cmake -S . -B tmp/build/native [additional CMake flags]
+  cmake --build tmp/build/native --config Release
+  ctest --test-dir tmp/build/native/tests/unit -C Release --output-on-failure
+
+源码位于 src/（包含 ui、assets、i18n、tests），构建模块与打包脚本分别位于
+build-support/cmake、build-support/release。根目录另外保留 doc/、tool/、tmp/；
+完整文档分类见 doc/README.md（从本文跳转为 ../README.md）。
+进行树内构建时，source_directory 与 build_directory 相同，但不推荐。
+
+
+=================
+构建 TuPigVNC
+=================
+
+
+在 Unix/Mac 系统上构建 TuPigVNC 查看器
+------------------------------------------------
+
+以下步骤将在 Linux 和 Unix 系统上构建 TuPigVNC 查看器。
+
+  cd {build_directory}
+  cmake -G "Unix Makefiles" [additional CMake flags] {source_directory}
+  make
+
+
+在 Unix/Linux 系统上构建 TuPigVNC 服务器
+--------------------------------------------------
+
+构建 TuPigVNC 服务器（Xvnc）稍显复杂。Xvnc 通常基于系统提供的 X11 共享库构建。
+具体步骤因系统而异，因为需要指定字体目录等内容，但总体流程如下
+（本步骤假定查看器已按上述方式构建完成）。
+
+  > cd {build_directory}
+
+    如进行树外构建：
+  > cp -R {source_directory}/src/platform/unix/xserver src/platform/unix/
+
+  > cp -R {xorg_source}/* src/platform/unix/xserver/
+    （注意：{xorg_source} 是包含构建 TuPigVNC 所在机器的 Xorg 源代码的目录。
+    例如，最新版本的 Red Hat/CentOS/Fedora 提供了名为
+    “xorg-x11-server-source”的 RPM 包，它会将 Xorg 源代码安装到
+    /usr/share/xorg-x11-server-source。）
+
+  > cd src/platform/unix/xserver/
+  > patch -p1 < {source_directory}/src/platform/unix/xserver{version}.patch
+    （其中 {version} 与所构建的 X 服务器版本对应，例如
+    “120”对应 1.20.x 版本。）
+  > autoreconf -fiv
+
+  > ./configure --with-pic --without-dtrace --disable-static --disable-dri \
+      --disable-xinerama --disable-xvfb --disable-xnest --disable-xorg \
+      --disable-dmx --disable-xwin --disable-xephyr --disable-kdrive \
+      --disable-config-hal --disable-config-udev --disable-dri2 --enable-glx \
+      --with-default-font-path="catalogue:/etc/X11/fontpath.d,built-ins" \
+      --with-xkb-path=/usr/share/X11/xkb \
+      --with-xkb-output=/var/lib/xkb \
+      --with-xkb-bin-directory=/usr/bin \
+      --with-serverconfig-path=/usr/lib64/xorg \
+      {additional configure options}
+    （注意：以上仅为示例，适用于 Red Hat Enterprise/CentOS 9 及
+    近期 Fedora 发行版。你应根据自身系统进行定制，
+    尤其是 XKB 目录需要定制。）
+
+    常规的树内构建：
+  > make TIGERVNC_SRCDIR={source_directory}
+    如进行树外构建：
+  > make TIGERVNC_SRCDIR={source_directory} TIGERVNC_BUILDDIR={build_directory}
+    （注意：source_directory 与 build_directory 请使用绝对路径）
+
+
+使用 MinGW 构建 Windows 版 TuPigVNC 查看器
+-----------------------------------------------
+
+如需在 Windows 构建系统上构建 Windows 版 TuPigVNC，请按以下步骤操作。
+
+  cd {build_directory}
+  cmake -G "MSYS Makefiles" [additional CMake flags] {source_directory}
+  make
+
+如在 Unix/Linux 系统上进行交叉编译，请参阅下文“构建配方”部分。
+
+
+调试构建
+-----------
+
+在 CMake 命令行中添加 "-DCMAKE_BUILD_TYPE=Debug"。
+
+
+便携（半静态）构建
+----------------------------
+
+在条件允许的情况下，TuPigVNC 可以按如下方式构建：使生成的二进制文件
+无需安装其所依赖的全部动态库即可在任何系统上运行。添加以下参数以启用此模式：
+
+  -DBUILD_STATIC=1
+
+至 CMake 命令行。
+
+请注意，实现此功能的方法非常脆弱，可能需要调整
+build-support/cmake/StaticBuild.cmake 才能在特定系统上正常工作。
+
+
+======================================
+构建 TLS 支持
+======================================
+
+TLS 需要 GnuTLS，大多数 Linux 发行版和 Windows 的 MinGW 均提供该库，
+也可在 OS X 及其他 Unix 变体上从源代码构建。但应避免使用
+GnuTLS 版本 > 2.12.x 且 < 3.3.x，因为初始握手过程中可能存在
+不兼容问题。
+
+
+======================================
+构建本地语言支持（NLS）
+======================================
+
+NLS 需要 gettext，大多数 Linux 发行版和 Windows 的 MinGW 均提供该库，
+也可在 OS X 及其他 Unix 变体上轻松地从源代码构建。
+
+
+===================
+安装 TuPigVNC
+===================
+
+你可以使用构建系统将 TuPigVNC 安装到任意指定目录。为此，请在
+CMake 命令行中添加：
+
+  -DCMAKE_INSTALL_PREFIX={install_directory}
+
+然后运行“make install”进行构建和安装。
+
+如未指定 CMAKE_INSTALL_PREFIX，则默认为 Windows 上的
+c:\Program Files\TuPigVNC 和 Unix 上的 /usr/local。
+
+
+=========================
+创建发行包
+=========================
+
+可使用以下命令创建各种类型的发行包：
+
+
+Unix
+----
+
+make tarball
+
+  创建包含 TuPigVNC 查看器的二进制压缩包
+
+
+macOS
+-----
+
+make dmg
+
+  创建包含 TuPigVNC 查看器应用程序包的 Macintosh 磁盘映像文件
+
+
+Windows
+-------
+
+make installer
+
+  使用 Inno Setup 创建 Windows 安装程序。安装程序包
+  （TuPigVNC[64].exe）将位于 {build_directory}/release 下；使用建议布局时，
+  即 tmp/build/native/release。打包脚本源码位于 build-support/release。
+
+
+=============
+构建配方
+=============
+
+
+在 Cygwin 上使用 MinGW 构建
+---------------------
+
+  cd {build_directory}
+  CC=/usr/bin/x86_64-w64-mingw32-gcc CXX=/usr/bin/x86_64-w64-mingw32-g++ \
+    RC=/usr/bin/x86_64-w64-mingw32-windres \
+    cmake -G "Unix Makefiles" -DCMAKE_SYSTEM_NAME=Windows \
+    -DCMAKE_AR=/usr/bin/x86_64-w64-mingw32-ar \
+    -DCMAKE_RANLIB=/usr/bin/x86_64-w64-mingw32-ranlib {source_directory}
+  make
+
+这样构建出的 TuPigVNC 不依赖 cygwin1.dll 或其他 Cygwin DLL。
+必须安装 mingw64-x86_64-gcc-core 与 mingw64-x86_64-gcc-g++
+软件包（及其依赖项）。
+
+
+在 Windows 上使用 MinGW-w64 构建
+--------------------------
+
+这样会使用“原生” MinGW-w64 工具链构建 TuPigVNC
+（比 Cygwin 版本更快）：
+
+  cd {build_directory}
+  CC={mingw-w64_binary_path}/x86_64-w64-mingw32-gcc \
+    CXX={mingw-w64_binary_path}/x86_64-w64-mingw32-g++ \
+    RC={mingw-w64_binary_path}/x86_64-w64-mingw32-windres \
+    cmake -G "MSYS Makefiles" \
+    -DCMAKE_AR={mingw-w64_binary_path}/x86_64-w64-mingw32-ar \
+    -DCMAKE_RANLIB={mingw-w64_binary_path}/x86_64-w64-mingw32-ranlib \
+    {source_directory}
+  make
+
+
+在 Linux 上使用 MinGW 构建
+--------------------
+
+  cd {build_directory}
+  CC={mingw_binary_path}/x86_64-w64-mingw32-gcc \
+    CXX={mingw_binary_path}/x86_64-w64-mingw32-g++ \
+    RC={mingw_binary_path}/x86_64-w64-mingw32-windres \
+    cmake -G "Unix Makefiles" -DCMAKE_SYSTEM_NAME=Windows \
+    -DCMAKE_AR={mingw_binary_path}/x86_64-w64-mingw32-ar \
+    -DCMAKE_RANLIB={mingw_binary_path}/x86_64-w64-mingw32-ranlib \
+    {source_directory}
+  make
+
+
+===============================
+各发行版打包
+===============================
+
+针对当前版本 RHEL/CentOS 与 Ubuntu LTS 的打包配置
+可在 src/contrib/packages 下找到。

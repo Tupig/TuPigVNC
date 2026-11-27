@@ -75,6 +75,7 @@
 #include "fltk/layout.h"
 #include "fltk/util.h"
 #include "fltk/theme.h"
+#include "fltk/nativedialog.h"
 #include "ServerDialog.h"
 #include "OptionsDialog.h"
 #include "vncviewer.h"
@@ -159,32 +160,10 @@ void ServerDialog::buildLayout()
   mat::initColors();
   color(mat::Card);
 
-  // ===== 顶栏 =====
-  Fl_Box *topbar = new Fl_Box(0, 0, w(), TOPBAR_H);
-  topbar->box(FL_FLAT_BOX);
-  topbar->color(mat::Card);
-
-  // 品牌 logo（22×22 显示器图标）+ 名称
-  new MLogo(PAD, 0, 22, TOPBAR_H);
-
-  Fl_Box *title = new Fl_Box(PAD + 30, 0, 160, TOPBAR_H, "TuPigVNC");
-  title->labelfont(FL_HELVETICA_BOLD);
-  title->labelsize(14);
-  title->labelcolor(mat::Text);
-  title->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
-
-  // 主题切换已移除：Linear / Arc 两套主题尚未实现，
-  // 留着假按钮只会误导用户，等真正做完再放回来。
-
-  // 顶栏底部分隔线
-  Fl_Box *divider = new Fl_Box(0, TOPBAR_H - 1, w(), 1);
-  divider->box(FL_FLAT_BOX);
-  divider->color(mat::Stroke);
-
   // ===== 主内容区（无滚动条）=====
-  // FLTK 1.3 的 Fl_Group 不会给子控件做坐标偏移（子控件坐标是窗口绝对坐标），
-  // 所以这里所有 y 都要从顶栏下方算起。
-  int y = TOPBAR_H + 18;
+  // 顶栏（品牌栏）已移除：系统标题栏已经显示「TuPigVNC」，
+  // 再画一条 logo + 名称属于重复，用户要求去掉。
+  int y = 18;
 
   // ---- 连接区标题 ----
   Fl_Box *h1 = new Fl_Box(PAD, y, cw, 24, "连接 VNC 服务器");
@@ -311,6 +290,17 @@ void ServerDialog::show()
                           &pref, sizeof(pref));
   }
 #endif
+}
+
+void ServerDialog::draw()
+{
+  fprintf(stderr, "[SD::draw] enter damage=%d\n", damage());
+  Fl_Window::draw();
+  fprintf(stderr, "[SD::draw] children done\n");
+  // DEBUG: GDI 纯色块，确认 draw() 被调用且 DC 有效
+  fl_color(FL_RED);
+  fl_rectf(0, 0, 60, 60);
+  fprintf(stderr, "[SD::draw] red rect done\n");
 }
 
 void ServerDialog::applyWindowHeight()
@@ -1271,16 +1261,9 @@ void ServerDialog::refreshRecentChips()
   const int chipGap = 8;
   int i = 0;
 
-  // 按可用宽度平均分配，避免每个 chip 各自撑到 200px 后横向溢出
-  const int count = std::min<int>(3, (int)serverHistory.size());
-  const int availW = w() - chipX0 - 20;
-  int chipW = 60;
-  if (count > 0)
-    chipW = (availW - (count - 1) * chipGap) / count;
-  if (chipW > 200)
-    chipW = 200;
-  if (chipW < 60)
-    chipW = 60;
+  // 按文字宽度自适应：每个 chip 只占自己文字需要的宽度，不撑满整行。
+  // （之前按可用宽度均分，只有一条历史时会撑成一整条，很难看）
+  fl_font(FL_HELVETICA, 11);  // 与 MChip::draw 的字体一致
 
   int chipX = chipX0;
   for (const ServerHistoryEntry& e : serverHistory) {
@@ -1293,10 +1276,16 @@ void ServerDialog::refreshRecentChips()
     else
       snprintf(label, sizeof(label), "%s", e.host.c_str());
 
+    int cw = (int)fl_width(label) + 26;  // 左侧绿点 20 + 右内边距 6
+    if (cw < 60)
+      cw = 60;
+    if (cw > 200)
+      cw = 200;
+
     recentChips[i]->setLabel(label);
-    recentChips[i]->resize(chipX, recentChips[i]->y(), chipW, 24);
+    recentChips[i]->resize(chipX, recentChips[i]->y(), cw, 24);
     recentChips[i]->show();
-    chipX += chipW + chipGap;
+    chipX += cw + chipGap;
     i++;
   }
   for (; i < 3; i++)
@@ -1434,29 +1423,20 @@ void ServerDialog::handleLoad(Fl_Widget* /*widget*/, void* data)
   if (dialog->usedDir.empty())
     dialog->usedDir = core::getuserhomedir();
 
-  Fl_File_Chooser* file_chooser = new Fl_File_Chooser(dialog->usedDir.c_str(),
-                                                      _("TuPigVNC configuration (*.tigervnc)"),
-                                                      Fl_File_Chooser::SINGLE,
-                                                      _("Select a TuPigVNC configuration file"));
-  file_chooser->preview(0);
-  file_chooser->previewButton->hide();
-  file_chooser->show();
+  // Windows 原生「打开」对话框（资源管理器同款），不再用 FLTK 自绘弹窗
+  std::string filename = nativeui::openFile(
+      (void*)fl_xid(dialog), _("载入 TuPigVNC 配置"),
+      _("TuPigVNC 配置文件 (*.tigervnc)"), "*.tigervnc",
+      dialog->usedDir.c_str());
 
-  // 阻塞等待，直到用户做出选择。
-  while(file_chooser->shown())
-    Fl::wait();
-
-  // 用户是否点了取消？
-  if (file_chooser->value() == nullptr) {
-    delete(file_chooser);
+  // 用户取消
+  if (filename.empty())
     return;
-  }
 
-  const char* filename = file_chooser->value();
-  dialog->updateUsedDir(filename);
+  dialog->updateUsedDir(filename.c_str());
 
   try {
-    dialog->serverName->value(loadViewerParameters(filename).c_str());
+    dialog->serverName->value(loadViewerParameters(filename.c_str()).c_str());
     // 载入配置后立即刷新选项面板，避免之后开合面板把旧值覆盖回去
     dialog->loadOptions();
   } catch (std::exception& e) {
@@ -1464,72 +1444,39 @@ void ServerDialog::handleLoad(Fl_Widget* /*widget*/, void* data)
     matAlert(_("载入配置失败"),
              core::format(_("无法载入指定的配置文件：\n\n%s"), e.what()).c_str());
   }
-
-  delete(file_chooser);
 }
 
 
 void ServerDialog::handleSaveAs(Fl_Widget* /*widget*/, void* data)
 {
   ServerDialog *dialog = (ServerDialog*)data;
-  const char* servername = dialog->serverName->value();
-  const char* filename;
+  const char* typed = dialog->serverName->value();
+  std::string servername = typed != nullptr ? typed : "";
   if (dialog->usedDir.empty())
     dialog->usedDir = core::getuserhomedir();
 
-  Fl_File_Chooser* file_chooser = new Fl_File_Chooser(dialog->usedDir.c_str(),
-                                                      _("TuPigVNC configuration (*.tigervnc)"),
-                                                      Fl_File_Chooser::CREATE,
-                                                      _("Save the TuPigVNC configuration to file"));
+  // Windows 原生「另存为」对话框；FOS_OVERWRITEPROMPT 让系统自己弹
+  // 「文件已存在，是否替换」，不用我们再画一个确认框
+  std::string filename = nativeui::saveFile(
+      (void*)fl_xid(dialog), _("保存 TuPigVNC 配置"),
+      _("TuPigVNC 配置文件 (*.tigervnc)"), "*.tigervnc",
+      dialog->usedDir.c_str(), "vnc.tigervnc");
 
-  file_chooser->preview(0);
-  file_chooser->previewButton->hide();
-  file_chooser->show();
+  if (filename.empty())
+    return;
 
-  while(1) {
-
-    // 阻塞等待，直到用户做出选择。
-    while(file_chooser->shown())
-      Fl::wait();
-
-    // 用户是否点了取消？
-    if (file_chooser->value() == nullptr) {
-      delete(file_chooser);
-      return;
-    }
-
-    filename = file_chooser->value();
-    dialog->updateUsedDir(filename);
-
-    FILE* f = fopen(filename, "r");
-    if (f) {
-
-      // 文件已存在。
-      fclose(f);
-      std::string ask = core::format(
-          _("「%s」已存在，要覆盖吗？"), filename);
-      if (matChoice(_("文件已存在"), ask.c_str(), "覆盖", "取消") != 0) {
-        // 如果用户不想覆盖：
-        file_chooser->show();
-        continue;
-      }
-    }
-
-    break;
-  }
+  dialog->updateUsedDir(filename.c_str());
 
   try {
     // 先把选项面板里改动写回全局参数，否则另存的是旧值
     // （saveViewerParameters 只读全局参数，不会去看界面）
     dialog->storeOptions();
-    saveViewerParameters(filename, servername);
+    saveViewerParameters(filename.c_str(), servername.c_str());
   } catch (std::exception& e) {
     vlog.error("%s", e.what());
     matAlert(_("保存配置失败"),
              core::format(_("无法保存指定的配置文件：\n\n%s"), e.what()).c_str());
   }
-
-  delete(file_chooser);
 }
 
 

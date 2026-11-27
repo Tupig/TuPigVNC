@@ -78,9 +78,9 @@ VNC_API void vnc_start_loop(VncSession* s)
   } catch (const std::exception& e) {
     /* 线程起不来时事件循环完全不动，必须让调用方知道，
        否则界面会一直停在「连接中」。 */
-    s->reportError(std::string("failed to start event loop: ") + e.what(), 1);
+    s->reportFatalError(std::string("failed to start event loop: ") + e.what());
   } catch (...) {
-    s->reportError("failed to start event loop: unknown exception", 1);
+    s->reportFatalError("failed to start event loop: unknown exception");
   }
 }
 

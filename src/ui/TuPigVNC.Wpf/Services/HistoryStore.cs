@@ -61,13 +61,23 @@ internal sealed class HistoryStore
     public static string HistoryFilePath { get; } =
         Path.Combine(ResolveStateDir(), "history.json");
 
+    /// <summary>
+    /// 实际使用的路径。默认等于 <see cref="HistoryFilePath"/>；
+    /// 测试用内部构造注入临时目录，避免读写用户真实历史。
+    /// </summary>
+    private readonly string _filePath;
+
+    public HistoryStore() : this(HistoryFilePath) { }
+
+    internal HistoryStore(string filePath) => _filePath = filePath;
+
     /// <summary>从磁盘读取历史；文件不存在时尝试从旧版迁移。</summary>
     public void Load()
     {
         _entries.Clear();
         _loadFailed = false;
 
-        string path = HistoryFilePath;
+        string path = _filePath;
         using var _ = new HistoryLock();
 
         if (!File.Exists(path))
@@ -112,7 +122,7 @@ internal sealed class HistoryStore
             return;
         }
 
-        string path = HistoryFilePath;
+        string path = _filePath;
         string? dir = Path.GetDirectoryName(path);
         if (!string.IsNullOrEmpty(dir))
             Directory.CreateDirectory(dir);
@@ -154,7 +164,7 @@ internal sealed class HistoryStore
 
     private void SaveLocked()
     {
-        string path = HistoryFilePath;
+        string path = _filePath;
         // 用唯一临时名：多实例并发时不会互相踩，也不会误删别人正在写的文件。
         string tmp = path + "." + Guid.NewGuid().ToString("N") + ".tmp";
         string content = JsonSerializer.Serialize(_entries, JsonOptions);

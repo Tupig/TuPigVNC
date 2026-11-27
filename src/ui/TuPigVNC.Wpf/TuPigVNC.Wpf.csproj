@@ -28,17 +28,37 @@
     <EnableDefaultApplicationDefinition>true</EnableDefaultApplicationDefinition>
   </PropertyGroup>
 
+  <ItemGroup>
+    <!--
+      功能测试工程需要访问 internal 类型（HistoryStore / UiSettings 等）。
+      只给测试程序集开放，不改变对外可见性。
+    -->
+    <InternalsVisibleTo Include="WpfFunctionalTests" />
+  </ItemGroup>
+
   <PropertyGroup>
     <!-- 原生核心构建产物默认留在项目内；CI 可显式覆盖。 -->
     <TupigVncBuildDir Condition="'$(TupigVncBuildDir)' == ''">$(MSBuildThisFileDirectory)..\..\..\tmp\build\native</TupigVncBuildDir>
+  </PropertyGroup>
+
+  <!--
+    原生核心 DLL 的路径随生成器不同：
+      - Visual Studio / MSBuild 多配置生成器：<dir>\ui\TuPigVNC.Core\Release\TuPigVNC.Core.dll
+      - Ninja / Makefile 单配置生成器：       <dir>\ui\TuPigVNC.Core\TuPigVNC.Core.dll
+    两种都要支持，否则 build.ps1 用 Ninja 构建后就找不到 DLL。
+  -->
+  <PropertyGroup>
+    <_CoreDllMultiConfig>$(TupigVncBuildDir)\ui\TuPigVNC.Core\Release\TuPigVNC.Core.dll</_CoreDllMultiConfig>
+    <_CoreDllSingleConfig>$(TupigVncBuildDir)\ui\TuPigVNC.Core\TuPigVNC.Core.dll</_CoreDllSingleConfig>
+    <_CoreDllPath Condition="Exists('$(_CoreDllMultiConfig)')">$(_CoreDllMultiConfig)</_CoreDllPath>
+    <_CoreDllPath Condition="'$(_CoreDllPath)' == '' and Exists('$(_CoreDllSingleConfig)')">$(_CoreDllSingleConfig)</_CoreDllPath>
   </PropertyGroup>
 
   <ItemGroup>
     <Resource Include="..\..\assets\brand\tupigvnc_256_preview.png" Link="Assets\Brand.png" />
     <Resource Include="..\..\assets\icons\tupigvnc.ico" Link="Assets\TuPigVNC.ico" />
     <!-- 原生核心 DLL 必须与 exe 同目录，P/Invoke 才能找到 -->
-    <None Include="$(TupigVncBuildDir)\ui\TuPigVNC.Core\Release\TuPigVNC.Core.dll"
-          Condition="Exists('$(TupigVncBuildDir)\ui\TuPigVNC.Core\Release\TuPigVNC.Core.dll')">
+    <None Include="$(_CoreDllPath)" Condition="'$(_CoreDllPath)' != ''">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>TuPigVNC.Core.dll</Link>
     </None>
@@ -47,8 +67,8 @@
   <!-- 仅界面检查可显式跳过；正式发布缺原生核心必须失败。 -->
   <Target Name="ValidateNativeCoreForPublish" BeforeTargets="PrepareForPublish"
           Condition="'$(TupigVncUiOnly)' != 'true'">
-    <Error Condition="!Exists('$(TupigVncBuildDir)\ui\TuPigVNC.Core\Release\TuPigVNC.Core.dll')"
-           Text="缺少原生核心 TuPigVNC.Core.dll。请先构建核心；仅界面检查可显式设置 TupigVncUiOnly=true，不能将其作为完整客户端发布。" />
+    <Error Condition="'$(_CoreDllPath)' == ''"
+           Text="缺少原生核心 TuPigVNC.Core.dll。请先运行 build.ps1 构建核心；仅界面检查可显式设置 TupigVncUiOnly=true，不能将其作为完整客户端发布。查找路径：$(_CoreDllMultiConfig) 或 $(_CoreDllSingleConfig)" />
   </Target>
 
 </Project>

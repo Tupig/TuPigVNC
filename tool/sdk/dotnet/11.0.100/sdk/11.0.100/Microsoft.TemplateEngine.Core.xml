@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.TemplateEngine.Core</name>
+    </assembly>
+    <members>
+        <member name="M:Microsoft.TemplateEngine.Core.Expressions.ScopeBuilder`2.Build(System.Int32@,System.Int32@,System.Action{System.Collections.Generic.IReadOnlyList{System.Byte}},System.Collections.Generic.HashSet{System.String})">
+            <summary>
+            Traverses the given buffer position and creates an evaluable expression.
+            If non-null bag for variable references is passed, it will be populated with references of variables used within the evaluable expression.
+            </summary>
+            <param name="bufferLength"></param>
+            <param name="bufferPosition"></param>
+            <param name="onFault"></param>
+            <param name="referencedVariablesKeys">If passed (if not null) it will be populated with references to variables used within the inspected expression.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Expressions.Shared.SharedEvaluatorDefinition`2.EvaluateFromString(Microsoft.Extensions.Logging.ILogger,System.String,Microsoft.TemplateEngine.Abstractions.IVariableCollection)">
+            <summary>
+            Inspect the passed string, creates the expression, substitutes parameters within expression, evaluates substituted expression and returns result.
+            If non-null bag for variable references is passed, it will be populated with references of variables used within the evaluable expression.
+            </summary>
+            <param name="logger">The logger to be used to log the messages during evaluation.</param>
+            <param name="text">The string to be inspected and turned into expression.</param>
+            <param name="variables">Variables to be substituted within the expression.</param>
+            <returns>A boolean value indicating the result of the evaluation.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Expressions.Shared.SharedEvaluatorDefinition`2.EvaluateFromString(Microsoft.Extensions.Logging.ILogger,System.String,Microsoft.TemplateEngine.Abstractions.IVariableCollection,System.String@,System.Collections.Generic.HashSet{System.String})">
+            <summary>
+            Inspect the passed string, creates the expression, substitutes parameters within expression, evaluates substituted expression and returns result.
+            If non-null bag for variable references is passed, it will be populated with references of variables used within the evaluable expression.
+            </summary>
+            <param name="logger">The logger to be used to log the messages during evaluation.</param>
+            <param name="text">The string to be inspected and turned into expression.</param>
+            <param name="variables">Variables to be substituted within the expression.</param>
+            <param name="faultedMessage">Error message detailing failing evaluation, should it fail.</param>
+            <param name="referencedVariablesKeys">If passed (if not null) it will be populated with references to variables used within the inspected expression.</param>
+            <returns>A boolean value indicating the result of the evaluation.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Expressions.Shared.SharedEvaluatorDefinition`2.GetEvaluableExpression(Microsoft.Extensions.Logging.ILogger,System.String,Microsoft.TemplateEngine.Abstractions.IVariableCollection,System.String@,System.Collections.Generic.HashSet{System.String})">
+            <summary>
+            Creates the evaluable expression based on passed string,
+            collects used symbols in the expression and reports if any errors occurs on expression creation.
+            </summary>
+            <param name="logger">The logger to be used to log the messages during building the evaluable expression.</param>
+            <param name="text">The string to be inspected and turned into expression.</param>
+            <param name="variables">Variables to be substituted within the expression.</param>
+            <param name="evaluableExpressionError">Error message detailing failing building evaluable expression.</param>
+            <param name="referencedVariablesKeys">If passed (if not null) it will be populated with references to variables used within the inspected expression.</param>
+            <returns>Evaluable expression that represents decomposed <paramref name="text"></paramref>.</returns>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Matching.OperationTerminal.Operation">
+            <summary>
+            Operation to perform. The tokens that operation matches are part of <see cref="T:Microsoft.TemplateEngine.Core.Contracts.IOperation"/> itself.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Matching.OperationTerminal.Token">
+            <summary>
+            This is not an actual token to match, but index of token defined in <see cref="T:Microsoft.TemplateEngine.Core.Contracts.IOperation"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Matching.TerminalBase.Start">
+            <summary>
+            Start position of the token.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Matching.TerminalBase.End">
+            <summary>
+            End position of the token.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Matching.TerminalBase.Length">
+            <summary>
+            Length of the token.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Matching.TerminalLocation`1.Location">
+            <summary>
+            Start position of the terminal. Relative location of matching token is defined in <see cref="T:Microsoft.TemplateEngine.Core.Matching.TerminalBase"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Operations.Conditional.LongestTokenVariantListSize">
+            <summary>
+            Returns the number of elements in the longest of the token variant lists.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Operations.Conditional.IsTokenIndexOfType(System.Int32,System.Int32)">
+            <summary>
+            Returns true if the tokenIndex indicates the token is a variant of its base type,
+            false otherwise.
+            </summary>
+            <param name="tokenIndex"></param>
+            <param name="baseTypeIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Operations.Conditional.AddTokensOfTypeToTokenListAndTrie(Microsoft.TemplateEngine.Core.Contracts.ITokenTrie,System.Collections.Generic.List{Microsoft.TemplateEngine.Core.Contracts.IToken},System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Core.Contracts.ITokenConfig},System.Int32,System.Text.Encoding)">
+            <summary>
+            Puts the tokensOfType into the tokenMasterList at indexes which are congruent to typeRemainder mod TokenTypeModulus.
+            </summary>
+            <param name="trie"></param>
+            <param name="tokenMasterList"></param>
+            <param name="tokensOfType"></param>
+            <param name="typeRemainder"></param>
+            <param name="encoding"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Util.EncodingUtil.Detect(System.Byte[],System.Int32,System.Byte[]@)">
+            <summary>
+            Detects encoding of the stream.
+            </summary>
+            <remarks>http://www.unicode.org/faq/utf_bom.html.</remarks>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Core.Util.StreamProxy">
+            <summary>
+            Simple implementation of stream proxy to be used in case where destination stream is being re-read and adjusted in place multiple times.
+            Direct I/O usage is unnecessarily costly in those situations (even with BCL buffered streams).
+            This implementation flips to destination stream as soon as the cumulative size of the stream exceeds fixed threshold.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Core.Util.StreamProxy.MaxRecommendedBufferedFileSize">
+            <summary>
+            Upper limit of a  sane size of a source file of good factored new codebase.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.LocalizableStrings.Error_Evaluation_Expression">
+            <summary>Encountered following error when parsing and evaluating expression:</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.LocalizableStrings.Error_Evaluation_Expression_Substring">
+            <summary>Unexpected substring after parsed expression:</summary>
+        </member>
+    </members>
+</doc>

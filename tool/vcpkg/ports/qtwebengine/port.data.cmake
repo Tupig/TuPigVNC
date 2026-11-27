@@ -1,0 +1,5 @@
+set(qtwebengine_REF "v6.140.0")
+set(qtwebengine_HASH "0a97fb513f41881bd611461b3a9b93c802dfcd8c916934e277b595ce3d718e32cefd2a92b07f5b98a6d5a07b9f658b82fef9bc08028781002590914d40626dd6")
+set(qtwebengine_chromium_REF "e2b413ea3e2dc3c533335e12297abfda95b26cfa")
+set(qtwebengine_chromium_HASH "5609de6b71b576b5887489d64ace900ebf60b4ad4bc7c4fc7d367f9cc6a011ee58732cd81b0986d92fe6b800d33bd7412f1aedbe5aa5450b778a90357a2cc09c")
+set(qtwebengine_chromium_HEAD_REF "140-based")

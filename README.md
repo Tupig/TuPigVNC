@@ -83,9 +83,7 @@
 
 ## 界面预览
 
-> **TODO**：截图待补充。请将实际运行截图放到 `docs/screenshot.png` 后即可正常显示。
-
-![TuPigVNC 主界面截图](docs/screenshot.png)
+> 截图待补充；后续截图放在 `doc/` 下，并在补齐文件后添加图片链接。
 
 ---
 
@@ -117,7 +115,7 @@
 
 ## 从源码构建
 
-以下命令与 [`.github/workflows/msvc.yml`](.github/workflows/msvc.yml) 的 CI 配置保持一致。
+以下命令在仓库根目录执行，原生构建产物建议放在 `tmp/build/native`；[CI 配置](.github/workflows/msvc.yml) 使用 `tmp/build/ci-native`。构建目录内的 `tests/unit`、`release` 等原生子布局不变。
 
 ### 环境要求
 
@@ -154,9 +152,9 @@ cmake ^
   -DENABLE_GNUTLS=OFF ^
   -DENABLE_NETTLE=ON ^
   -DBUILD_VIEWER=ON ^
-  -S . -B build
+  -S . -B tmp/build/native
 
-cmake --build build --config Release
+cmake --build tmp/build/native --config Release
 ```
 
 > `-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded` 表示静态 CRT。务必搭配 CMake ≥ 3.21，否则 `CMP0091` 仍为 `OLD`，该变量会被忽略并导致 `LNK2038` 链接错误。
@@ -164,7 +162,7 @@ cmake --build build --config Release
 ### 3. 运行单元测试
 
 ```bat
-ctest --test-dir build/tests/unit -C Release --output-on-failure
+ctest --test-dir tmp/build/native/tests/unit -C Release --output-on-failure
 ```
 
 ### 4. 构建安装包（可选）
@@ -172,12 +170,12 @@ ctest --test-dir build/tests/unit -C Release --output-on-failure
 先安装 [Inno Setup 7](https://jrsoftware.org/isinfo.php)（x64 版），然后：
 
 ```bat
-cmake --build build --config Release --target installer
+cmake --build tmp/build/native --config Release --target installer
 ```
 
-生成的安装包位于 `build\release\` 目录，文件名为 `TuPigVNC_x64.exe`。
+生成的安装包位于 `tmp\build\native\release\` 目录，文件名为 `TuPigVNC_x64.exe`。
 
-> 更详细的各平台构建说明见 [`doc/BUILDING.txt`](doc/BUILDING.txt)。
+> 更详细的各平台构建说明见 [`doc/build/BUILDING.txt`](doc/build/BUILDING.txt)。
 
 ---
 
@@ -189,18 +187,22 @@ TuPigVNC/
 │   ├── common/        # 公共静态库：core / network / rfb / rdr
 │   ├── platform/      # 平台相关代码：windows / unix
 │   ├── vncviewer/     # FLTK 查看器主程序（vncviewer.exe）
-│   └── contrib/       # 第三方兼容层（MSVC 兼容头等）
-├── assets/            # 品牌图标、UI 图标与安全状态图
-├── i18n/              # gettext 翻译（zh_CN.po 等）
-├── release/           # 打包脚本：Inno Setup / DMG / tarball
-├── tests/             # 单元测试与性能测试
-├── cmake/             # 自定义 CMake 模块
-├── doc/               # 构建指南、性能与审查报告
-└── User/              # 运行时生成：配置与连接历史（安装目录）
-└── logs/              # 运行时生成：滚动日志（安装目录）
+│   ├── contrib/       # 第三方兼容层（MSVC 兼容头等）
+│   ├── ui/            # WPF 前端与原生核心桥接
+│   ├── assets/        # 品牌图标、UI 图标与安全状态图
+│   ├── i18n/          # gettext 翻译（zh_CN.po 等）
+│   └── tests/         # 单元测试与性能测试源码
+├── build-support/
+│   ├── cmake/         # 自定义 CMake 模块
+│   └── release/       # 打包脚本：Inno Setup / DMG / tarball
+├── doc/               # 文档索引、构建指南、历史记录与分类报告
+├── tool/              # 纳入版本控制的离线依赖与工具
+└── tmp/               # 不入库的分类缓存与构建产物
 ```
 
-> 📌 `User/` 与 `logs/` 是程序**运行时在安装目录下自动创建**的，源码仓库里没有它们。
+> 根目录的五个可见目录是 `src/`、`build-support/`、`doc/`、`tool/`、`tmp/`；文档分类见 [文档索引](doc/README.md)。贡献与安全说明放在 `.github/`，过程材料放在不入库的 `.claude/`。旧 `log/`、`TODO.md` 已本地归档，不再作为仓库入口。
+>
+> `User/` 与 `logs/` 是程序**运行时在安装目录下自动创建**的，源码仓库里没有它们。
 
 ---
 
@@ -253,7 +255,7 @@ TuPigVNC 依据 **GNU 通用公共许可证第 2 版（GPL-2.0）** 发布，完
 
 ## 贡献指南
 
-欢迎参与！动手前请先看 [CONTRIBUTING.md](CONTRIBUTING.md)：
+欢迎参与！动手前请先看 [CONTRIBUTING.md](.github/CONTRIBUTING.md)：
 
 1. 先在 [Issues](https://github.com/TuPig/TuPigVNC/issues) 搜索是否已有相同问题；
 2. Fork 仓库，从 `main` 拉特性分支：`git checkout -b feat/your-feature`；
@@ -268,7 +270,7 @@ type: 简短说明
 
 `type` 取值：`feat`、`fix`、`docs`、`style`、`refactor`、`perf`、`test`、`build`、`ci`、`chore`。
 
-> 发现安全漏洞请**不要**公开提 issue，按 [SECURITY.md](SECURITY.md) 的说明私下报告。
+> 发现安全漏洞请**不要**公开提 issue，按 [SECURITY.md](.github/SECURITY.md) 的说明私下报告。
 
 ---
 
@@ -276,6 +278,6 @@ type: 简短说明
 
 **TuPigVNC** · 用 C++ 写的远程桌面，干净、直接、够用。
 
-[项目主页](https://github.com/TuPig/TuPigVNC) · [问题反馈](https://github.com/TuPig/TuPigVNC/issues) · [版本发布](https://github.com/TuPig/TuPigVNC/releases) · [更新日志](CHANGELOG.md)
+[项目主页](https://github.com/TuPig/TuPigVNC) · [问题反馈](https://github.com/TuPig/TuPigVNC/issues) · [版本发布](https://github.com/TuPig/TuPigVNC/releases) · [更新日志](doc/CHANGELOG.md)
 
 </div>

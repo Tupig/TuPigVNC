@@ -1,0 +1,40 @@
+{
+  "name": "libcamera",
+  "version": "0.8.0",
+  "description": "A complex camera support library for Linux, Android, and ChromeOS",
+  "homepage": "https://gitlab.freedesktop.org/camera/libcamera/",
+  "license": "LGPL-2.1-or-later AND GPL-2.0-or-later AND BSD-2-Clause AND CC0-1.0",
+  "supports": "linux",
+  "dependencies": [
+    "elfutils",
+    "glib",
+    "gstreamer",
+    "libgnutls",
+    "libunwind",
+    "libyaml",
+    "libyuv",
+    {
+      "name": "openssl",
+      "host": true,
+      "features": [
+        "tools"
+      ]
+    },
+    {
+      "name": "vcpkg-get-python-packages",
+      "host": true
+    },
+    {
+      "name": "vcpkg-tool-meson",
+      "host": true
+    }
+  ],
+  "features": {
+    "tracing": {
+      "description": "Enable tracing",
+      "dependencies": [
+        "liblttng-ust"
+      ]
+    }
+  }
+}

@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.TemplateEngine.Core.Contracts</name>
+    </assembly>
+    <members>
+        <member name="P:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.CurrentBuffer">
+            <summary>
+            Gets the buffer containing the chunk of source stream that is being processed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.CurrentBufferLength">
+            <summary>
+            Gets the length of useful data in <see cref="P:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.CurrentBuffer"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.CurrentBufferPosition">
+            <summary>
+            Gets the current position in <see cref="P:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.CurrentBuffer"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.CurrentSequenceNumber">
+            <summary>
+            Gets the current position in source stream.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.AdvanceBuffer(System.Int32)">
+            <summary>
+            Advances source stream to position <paramref name="bufferPosition"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.SeekSourceForwardUntil(Microsoft.TemplateEngine.Core.Contracts.ITokenTrie,System.Int32@,System.Int32@,System.Boolean)">
+            <summary>
+            Seeks source stream until <paramref name="match"/> is found.
+            </summary>
+            <param name="match">The token to find.</param>
+            <param name="bufferLength">The length of the buffer after the token is found.</param>
+            <param name="currentBufferPosition">The position in the buffer after the token is found.</param>
+            <param name="consumeToken">True if token should be sought through.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.SeekSourceForwardWhile(Microsoft.TemplateEngine.Core.Contracts.ITokenTrie,System.Int32@,System.Int32@)">
+            <summary>
+            Seeks source stream while <paramref name="match"/> is found.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.SeekTargetBackUntil(Microsoft.TemplateEngine.Core.Contracts.ITokenTrie,System.Boolean)">
+            <summary>
+            Seeks target stream backwards until <paramref name="match"/> is found.
+            </summary>
+            <param name="match">The token to find.</param>
+            <param name="consumeToken">True if token should be sought through.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.SeekTargetBackWhile(Microsoft.TemplateEngine.Core.Contracts.ITokenTrie)">
+            <summary>
+            Seeks target stream backwards while <paramref name="match"/> is found.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Core.Contracts.IProcessorState.WriteToTarget(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes <paramref name="buffer"/> to target stream.
+            </summary>
+            <param name="buffer">The buffer to write.</param>
+            <param name="offset">The start position in the buffer to write.</param>
+            <param name="count">The count of bytes to write.</param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Contracts.IToken.Value">
+            <summary>
+            The value to match.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Contracts.IToken.Start">
+            <summary>
+            Start of actual token. May be not 0, when look arounds are used.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Contracts.IToken.End">
+            <summary>
+            Start of actual token. May be not Value.Length, when look arounds are used.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Core.Contracts.IToken.Length">
+            <summary>
+            The length of the actual token.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Core.Contracts.IMonitoredVariableCollection">
+            <summary>
+            Extends <see cref="T:Microsoft.TemplateEngine.Abstractions.IVariableCollection"/> with the events raised when collection is being read or changed.
+            </summary>
+        </member>
+    </members>
+</doc>

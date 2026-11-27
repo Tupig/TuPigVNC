@@ -1,0 +1,670 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.TemplateEngine.Utils</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.TemplateEngine.Utils.AsyncLazy`1">
+            <summary>
+            Provides support for asynchronous lazy initialization.
+            </summary>
+            <typeparam name="T">The type to be lazily initialized.</typeparam>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.AsyncLazy`1.#ctor(System.Func{`0})">
+            <summary>
+            Creates a lazy type that performs the value construction asynchronously on a first access.
+            </summary>
+            <param name="valueFactory">Synchronous value factory that will be executed asynchronously on first access in separate task.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.AsyncLazy`1.#ctor(System.Func{System.Threading.Tasks.Task{`0}})">
+            <summary>
+            Creates a lazy type that performs the value construction asynchronously on a first access.
+            </summary>
+            <param name="taskFactory">Asynchronous value factory that will be executed on a first access.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.AsyncLazy`1.GetAwaiter">
+            <summary>
+            The awaiter to be awaited in order to trigger asynchronous value creation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.DefaultTemplatePackageProvider">
+            <summary>
+            Generic provider that can be used by different factories that have a fixed list of ".nupkgs" or folders.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.DefaultTemplatePackageProvider.UpdatePackages(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Updates list of packages and triggers <see cref="E:Microsoft.TemplateEngine.Utils.DefaultTemplatePackageProvider.TemplatePackagesChanged"/> event.
+            </summary>
+            <param name="nupkgs">List of "*.nupkg" files.</param>
+            <param name="folders">List of folders.</param>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.DictionaryExtensions.ConflictingKeysResolution">
+            <summary>
+            Way of resolving keys conflicts.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Utils.DictionaryExtensions.ConflictingKeysResolution.Overwrite">
+            <summary>
+            Force overwrite values in original dictionary in case of conflict.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Utils.DictionaryExtensions.ConflictingKeysResolution.PreserveOriginal">
+            <summary>
+            Preserve original values in case of conflict.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Utils.DictionaryExtensions.ConflictingKeysResolution.Throw">
+            <summary>
+            Throw in case of conflict.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.DictionaryExtensions.Merge``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IReadOnlyDictionary{``0,``1},Microsoft.TemplateEngine.Utils.DictionaryExtensions.ConflictingKeysResolution)">
+            <summary>
+            Adds a content of given dictionary to current dictionary.
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="dict">Dictionary to receive another values.</param>
+            <param name="another">Dictionary to be merged into current.</param>
+            <param name="conflictingKeysResolution">Way of resolving keys conflicts.</param>
+            <exception cref="T:System.Exception">Thrown if key is already present in current dictionary and <see cref="F:Microsoft.TemplateEngine.Utils.DictionaryExtensions.ConflictingKeysResolution.Throw"/> strategy was requested.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.DictionaryExtensions.TryAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1,System.Predicate{``1})">
+            <summary>
+            Adds a <paramref name="value"/> to given dictionary <paramref name="dict"/> if <paramref name="value"/> satisfies <paramref name="condition"/>.
+            </summary>
+            <typeparam name="TKey"> Type of keys of <paramref name="dict"/>. </typeparam>
+            <typeparam name="TValue"> Type of values of <paramref name="dict"/>.</typeparam>
+            <param name="dict">A dictionary to add <paramref name="key"/> and <paramref name="value"/> to.</param>
+            <param name="key">A key for new <paramref name="value"/>.</param>
+            <param name="value">A value with <paramref name="key"/>.</param>
+            <param name="condition">If condition is <see langword="true"/>, then <paramref name="value"/> will be added to <paramref name="dict"/>.</param>
+            <exception cref="T:System.Exception">Thrown if key is already present in current dictionary and <see cref="F:Microsoft.TemplateEngine.Utils.DictionaryExtensions.ConflictingKeysResolution.Throw"/> strategy was requested.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.DirectedGraph`1.#ctor(System.Collections.Generic.Dictionary{`0,System.Collections.Generic.HashSet{`0}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.TemplateEngine.Utils.DirectedGraph`1"/> class.
+            </summary>
+            <param name="dependenciesMap">Lookup of child nodes for all nodes (or at lest nodes that have children).</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.DirectedGraph`1.TryGetTopologicalSort(System.Collections.Generic.IReadOnlyList{`0}@)">
+            <summary>
+            Attempts to perform a topological sort of a given acyclic graph.
+            </summary>
+            <returns>True if topological sort can be performed, false otherwise (means graph contains cycle(s)).</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.DirectedGraph`1.GetSubGraphDependentOnVertices(System.Collections.Generic.IReadOnlyList{`0},System.Boolean)">
+            <summary>
+            Gets the subset of the graph that contains all the dependencies mapping depending on given vertices.
+            This is useful when we want to determine a subset of the graph that needs to be reevaluated if given nodes change value.
+            </summary>
+            <param name="vertices"></param>
+            <param name="includeSeedVertices">
+            Indication whether the given vertices should be included in the output graph.
+            If set to false, (some of) the given nodes may still be part of output graph, in case they transitively depend on any node from input set.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.DirectedGraph`1.HasCycle(System.Collections.Generic.IReadOnlyList{`0}@)">
+            <summary>
+            Detects a cycle in directed (possibly disconnected) graph and returns first found cycle in cycle variable.
+            </summary>
+            <param name="cycle">First cycle if any found.</param>
+            <returns>True if cycle found, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.EngineEnvironmentSettingsExtensions.TryGetMountPoint(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,System.String,Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint@)">
+            <summary>
+            Tries to mount a <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint"/> from specified <see cref="T:System.Uri"/>.
+            Using all <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IMountPointFactory"/> in <see cref="P:Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings.Components"/>.
+            </summary>
+            <param name="engineEnvironment"></param>
+            <param name="mountPointUri"></param>
+            <param name="mountPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.EnumerableExtensions.HasDuplicates``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
+            <summary>
+            Detects whether given sequence has any duplicate elements.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="sequence">Sequence to be tested for duplicates.</param>
+            <param name="comparer">Comparer to be used to evaluate equality. Default comparer is being used if null is passed.</param>
+            <returns>true if sequence contains duplicates, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.EnumerableExtensions.GetDuplicates``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
+            <summary>
+            Detects whether given sequence has any duplicate elements and return those.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="sequence">Sequence to be tested for duplicates.</param>
+            <param name="comparer">Comparer to be used to evaluate equality. Default comparer is being used if null is passed.</param>
+            <returns>Sequence of elements being duplicated in input. Each item is returned just once, even if located multiple times in original sequence. Empty sequence returned if input has no duplicates.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.EnumerableExtensions.ToCsvString``1(System.Collections.Generic.IEnumerable{``0},System.Boolean)">
+            <summary>
+            Concatenates items of input sequence into csv string.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source">Sequence to be turned into csv string.</param>
+            <param name="useSpace">Indicates whether space should be inserted between comas and following items.</param>
+            <returns>Csv string.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.EnumerableExtensions.AddRange``1(System.Collections.Generic.Queue{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Enqueue elements of given sequence to a queue.
+            </summary>
+            <param name="queue"></param>
+            <param name="elements"></param>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.EnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Performs an action for each element in given sequence.
+            </summary>
+            <param name="sequence"></param>
+            <param name="action"></param>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Utils.Glob.MatchAll">
+            <summary>
+            Instance of Matcher satisfying all patterns tests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.Glob.MatchAllGlob.IsMatch(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.IFileSystemInfoExtensions.GetDisplayPath(Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo)">
+            <summary>
+            Returns full path to <paramref name="fileSystemInfo"/> including mount point URI in a format
+            that is suitable for displaying in the CLI or printing to logs.
+            This method wraps the path with quotes if it contains spaces.
+            </summary>
+            <param name="fileSystemInfo">the file system info to get full path for.</param>
+            <returns>
+            Full path to <paramref name="fileSystemInfo"/> including mount point URI.
+            If mount point is not a directory, the path is returned as 'mount point URI(path inside mount point)'.
+            </returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.InMemoryFileSystem">
+            <summary>
+            In-memory file system implementation of <see cref="T:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem"/>.
+            </summary>
+            <seealso cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost"/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.InMemoryFileSystem.PathRelativeTo(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.InMemoryFileSystem.WatchFileChanges(System.String,System.IO.FileSystemEventHandler)">
+            <summary>
+            Currently not implemented in <see cref="T:Microsoft.TemplateEngine.Utils.InMemoryFileSystem"/>.
+            Just returns <see cref="T:System.IDisposable"/> object, but never calls callback.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.InstallRequestPathResolution">
+            <summary>
+            Helper class which expands request like "*.nupkg" into multiple ".nupkg" files in folder.
+            And returns absolute path to files or folders.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.InstallRequestPathResolution.ExpandMaskedPath(System.String,Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings)">
+            <summary>
+            Returns absolute path to files or folders resolved from <paramref name="maskedPath"/> or unchanged <paramref name="maskedPath"/> when path cannot be resolved.
+            </summary>
+            <remarks>
+            Example of <paramref name="maskedPath"/> would be "C:\Users\username\packages\*.nupkg".<br/>
+            Wildcards are supported only in file name.
+            Supported wildcards and rules are identical as for searchPattern for <see cref="M:System.IO.Directory.EnumerateDirectories(System.String,System.String)"/>.
+            </remarks>
+            <param name="maskedPath">This parameter can contain a wildcard (*) character in the filename.</param>
+            <param name="environmentSettings"></param>
+            <returns>List of absolute paths to files or folders that match <paramref name="maskedPath"/> or unchanged <paramref name="maskedPath"/> when path cannot be resolved.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.IPatternMatcher">
+            <summary>
+            Interface for pattern matchers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.IPatternMatcher.IsMatch(System.String)">
+            <summary>
+            Evaluates the test path against the pattern and returns whether the path is a match.
+            </summary>
+            <param name="test"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.IScanTemplateInfoExtensions.ToITemplateInfo(Microsoft.TemplateEngine.Abstractions.IScanTemplateInfo,System.String,System.String)">
+            <summary>
+            Converts <see cref="T:Microsoft.TemplateEngine.Abstractions.IScanTemplateInfo"/> to <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            </summary>
+            <param name="templateInfo"><see cref="T:Microsoft.TemplateEngine.Abstractions.IScanTemplateInfo"/> to convert.</param>
+            <param name="locFilePath">the path to localization file to use in <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.</param>
+            <param name="hostFilePath">the path to host config file to use in <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.</param>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.IVersionSpecification">
+            <summary>
+            Defines a version specification used in a template definition.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.IVersionSpecification.CheckIfVersionIsValid(System.String)">
+            <summary>
+            Checks if the specified version is valid.
+            </summary>
+            <param name="versionToCheck">the version to check.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.MultiValueParameter">
+            <summary>
+            Container type holding the values for parameters with multiple values.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Utils.MultiValueParameter.MultiValueSeparator">
+            <summary>
+            Separator of multi valued parameters (currently applicable only to choices).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.MultiValueParameter.#ctor(System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.TemplateEngine.Utils.MultiValueParameter"/> class.
+            </summary>
+            <param name="values"></param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Utils.MultiValueParameter.MultiValueSeparators">
+            <summary>
+            Set of characters that can be used for separating multi valued parameters (currently applicable only to choices).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Utils.MultiValueParameter.Values">
+            <summary>
+            The actual atomic values specified for the parameter.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.ParameterSetDataExtensions.ToParameterSetData(Microsoft.TemplateEngine.Abstractions.IParameterSet)">
+            <summary>
+            Creates instance of <see cref="T:Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData"/> from the legacy <see cref="T:Microsoft.TemplateEngine.Abstractions.IParameterSet"/>.
+            </summary>
+            <param name="parameterSet">Legacy parameter set to be converted.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.ParserExtensions.DoubleTryParseCurrentOrInvariant(System.String,System.Double@)">
+            <summary>
+            <see cref="M:System.Double.TryParse(System.String,System.Double@)"/> extension that try to parse <paramref name="stringValue"/> first in current culture, then in invariant culture.
+            </summary>
+            <param name="stringValue">The value to parse.</param>
+            <param name="doubleValue">Parsed double value if <paramref name="stringValue"/> can be parsed.</param>
+            <returns>
+            true when <paramref name="stringValue"/> can be parsed in current or invariant culture.
+            false when <paramref name="stringValue"/> cannot be parsed in current or invariant culture.
+            </returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.ParserExtensions.ConvertToDoubleCurrentOrInvariant(System.Object)">
+            <summary>
+            <see cref="M:System.Convert.ToDouble(System.Object)"/> extension that try to parse <paramref name="value"/> first in current culture, then in invariant culture.
+            </summary>
+            <param name="value">The value to parse.</param>
+            <returns>Parsed double value if <paramref name="value"/> can be parsed.</returns>
+            <exception cref="T:System.FormatException"><paramref name="value"/> is not in an appropriate format for a <see cref="T:System.Double"/> type.</exception>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.PhysicalFileSystem">
+            <summary>
+            Local file system implementation of <see cref="T:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem"/>.
+            </summary>
+            <seealso cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost"/>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.TemplateInfoExtensions">
+            <summary>
+            The class provides ITemplateInfo extension methods.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateInfoExtensions.GetLanguage(Microsoft.TemplateEngine.Abstractions.ITemplateInfo)">
+            <summary>
+            Gets the language defined in <paramref name="template"/>.
+            </summary>
+            <param name="template">template definition.</param>
+            <returns>The language defined in the template or null if no language is defined.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateInfoExtensions.GetTemplateType(Microsoft.TemplateEngine.Abstractions.ITemplateInfo)">
+            <summary>
+            Gets the type defined in <paramref name="template"/>.
+            </summary>
+            <param name="template">template definition.</param>
+            <returns>The type defined in the template or null if no type is defined.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateInfoExtensions.GetTagValue(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.String)">
+            <summary>
+            Gets the possible values for the tag <paramref name="tagName"/> in <paramref name="template"/>.
+            </summary>
+            <param name="template">template definition.</param>
+            <param name="tagName">tag name.</param>
+            <returns>The value of tag defined in the template or null if the tag is not defined in the template.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateInfoExtensions.GetParameter(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.String)">
+            <summary>
+            Gets the template parameter by <paramref name="parameterName"/>.
+            </summary>
+            <param name="template">template.</param>
+            <param name="parameterName">parameter name.</param>
+            <returns> first <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateParameter"/> with <paramref name="parameterName"/> or null if the parameter with such name does not exist.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateInfoExtensions.GetChoiceParameter(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.String)">
+            <summary>
+            Gets the choice template parameter by <paramref name="parameterName"/>.
+            </summary>
+            <param name="template">template.</param>
+            <param name="parameterName">parameter name.</param>
+            <returns> first choice <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateParameter"/> with <paramref name="parameterName"/> or null if the parameter with such name does not exist.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions">
+            <summary>
+            Set of useful extensions when working with <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasNameMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact" /> or <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Name"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasNameExactMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Name"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasNamePartialMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Name"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasNameMismatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch" /> on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Name"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasShortNameMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact" /> or <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.ShortName"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasShortNameExactMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.ShortName"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasShortNamePartialMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.ShortName"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasShortNameMismatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch" /> on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.ShortName"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasTypeMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Type"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasTypeMismatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch" /> on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Type"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasClassificationMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Classification"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasClassificationMismatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch" /> on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Classification"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasLanguageMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Language"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasLanguageMismatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch" /> on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Language"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasBaselineMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Baseline"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasBaselineMismatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch" /> on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Baseline"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasAuthorMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact" /> or <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Author"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasAuthorExactMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Author"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasAuthorPartialMatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial" /> match on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Author"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateMatchInfoExtensions.HasAuthorMismatch(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo)">
+            <summary>
+            Returns true when <paramref name="templateMatchInfo"/> has <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch" /> on <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Author"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.TemplateParameterExtensions">
+            <summary>
+            Extensions helper methods for work with <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateParameter"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateParameterExtensions.IsChoice(Microsoft.TemplateEngine.Abstractions.ITemplateParameter)">
+            <summary>
+            Indicates whether the input parameter is of a choice type.
+            </summary>
+            <param name="parameter">Parameter to be inspected.</param>
+            <returns>True if given parameter is of a choice type, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateParameterExtensions.TokenizeMultiValueParameter(System.String)">
+            <summary>
+            Splits a string value representing a multi valued parameter (currently applicable only to choices) into atomic tokens.
+            </summary>
+            <param name="literal">A string representing multi valued parameter.</param>
+            <returns>List of atomic string tokens.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.TemplateParameterExtensions.IsValidMultiValueParameterValue(System.String)">
+            <summary>
+            Check a multi valued parameter value (currently applicable only to choices), whether it doesn't contain any disallowed (separator) characters.
+            </summary>
+            <param name="value">Parameter value to be checked.</param>
+            <returns>True if given value doesn't contain any disallowed characters, false otherwise.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Utils.WellKnownSearchFilters">
+            <summary>
+            Collection of the predicates to be used for filtering templates by the most used <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/> properties.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Utils.WellKnownSearchFilters.MatchesAllCriteria">
+            <summary>
+            The template should match all filters: <see cref="P:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo.MatchDisposition"/> should have all dispositions of <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact"/> or <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Utils.WellKnownSearchFilters.MatchesAtLeastOneCriteria">
+            <summary>
+            The template should match at least one filter: <see cref="P:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo.MatchDisposition"/> should have at least one disposition of <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact"/> or <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.WellKnownSearchFilters.NameFilter(System.String)">
+            <summary>
+            The template filter that matches <paramref name="name"/> on the following criteria: <br/>
+            - if <paramref name="name"/> is null or empty, adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Name"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial"/>;<br/>
+            - if <paramref name="name"/> is equal to <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Name"/> (case insensitive), adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Name"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact"/>;<br/>
+            - if <paramref name="name"/> is equal to one of the short names in <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.ShortNameList"/> (case insensitive), adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.ShortName"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact"/>;<br/>
+            - if <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Name"/> contains <paramref name="name"/> (case insensitive), adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Name"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial"/>;<br/>
+            - if one of the short names in <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.ShortNameList"/> contains <paramref name="name"/> (case insensitive), adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.ShortName"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial"/>;<br/>
+            - adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Name"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch"/> otherwise.<br/>
+            </summary>
+            <returns> the predicate to be used when filtering the templates.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.WellKnownSearchFilters.TypeFilter(System.String)">
+            <summary>
+            The template filter that matches <paramref name="inputType"/> on the following criteria: <br/>
+            - if <paramref name="inputType"/> is null or empty, does not add match disposition;<br/>
+            - if <paramref name="inputType"/> is equal to tag named 'type' from <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateInfo.Tags"/> (case insensitive), adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Type"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact"/>;<br/>
+            - adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Type"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch"/> otherwise.<br/>
+            </summary>
+            <returns> the predicate to be used when filtering the templates.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.WellKnownSearchFilters.ClassificationFilter(System.String)">
+            <summary>
+            The template filter that matches <paramref name="classification"/> on the following criteria: <br/>
+            - if <paramref name="classification"/> is null or empty, does not add match disposition;<br/>
+            - if <paramref name="classification"/> is equal to any entry from <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Classifications"/> (case insensitive), adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Classification"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact"/>;<br/>
+            - adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Classification"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch"/> otherwise.<br/>
+            </summary>
+            <returns> the predicate to be used when filtering the templates..</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.WellKnownSearchFilters.LanguageFilter(System.String)">
+            <summary>
+            The template filter that matches <paramref name="language"/> on the following criteria: <br/>
+            - if <paramref name="language"/> is null or empty, does not add match disposition;<br/>
+            - if <paramref name="language"/> is equal to tag named 'language' from <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateInfo.Tags"/> (case insensitive), adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Language"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact"/>;<br/>
+            - adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Language"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch"/> otherwise.<br/>
+            </summary>
+            <returns> the predicate to be used when filtering the templates.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.WellKnownSearchFilters.BaselineFilter(System.String)">
+            <summary>
+            The template filter that matches <paramref name="baselineName"/> on the following criteria: <br/>
+            - if <paramref name="baselineName"/> is null or empty, does not add match disposition;<br/>
+            - if <paramref name="baselineName"/> is equal to key from <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.BaselineInfo"/> (case insensitive), adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Baseline"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact"/>;<br/>
+            - adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Baseline"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch"/> otherwise.<br/>
+            </summary>
+            <returns> the predicate to be used when filtering the templates.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.WellKnownSearchFilters.AuthorFilter(System.String)">
+            <summary>
+            The template filter that matches <paramref name="author"/> on the following criteria: <br/>
+            - if <paramref name="author"/> is null or empty, does not add match disposition;<br/>
+            - if <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Author"/> is null or empty, adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Author"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch"/>;<br/>
+            - if <paramref name="author"/> is equal to <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Author"/> (case insensitive), adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Author"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact"/>;<br/>
+            - if <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Author"/> contains <paramref name="author"/> (case insensitive), adds match disposition <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Author"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial"/>;<br/>
+            - <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Author"/> with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch"/> otherwise.<br/>
+            </summary>
+            <returns> the predicate to be used when filtering the templates.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.WellKnownSearchFilters.ConstraintFilters(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint})">
+            <summary>
+            Gets the list of template filters for template constraints definition <paramref name="constraintDefinitions"/> <br/>
+            For each constraint the template filter will be created: <br/>
+            - if the constraint is not used in the template, does not add match disposition;<br/>
+            - if the template meets the constraint, adds match disposition with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact"/>;<br/>
+            - if the template does not meet the constraint or constraint cannot be evaluated, adds match disposition with <see cref="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch"/>.<br/>
+            The match info name used is 'Constraint.&lt;constraint type&gt;'.
+            </summary>
+            <returns> the list of predicates to be used when filtering the templates.</returns>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Utils.LocalizableStrings.DictionaryExtensions_Error_KeyExists">
+            <summary>Key [{0}] is already present.</summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToStringReadOnlyList(System.Text.Json.Nodes.JsonObject,System.String,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Reads <paramref name="propertyName"/> as read only string list/>.
+            Property value may be string or array.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetObjectProperties(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Enumerates the properties of a <see cref="T:System.Text.Json.Nodes.JsonObject"/>, handling duplicate keys gracefully.
+            </summary>
+            <remarks>
+            <see cref="T:System.Text.Json.Nodes.JsonObject"/> lazily initializes its internal dictionary when first accessed.
+            If the underlying JSON contains duplicate property keys, initialization throws
+            <see cref="T:System.ArgumentException"/>. In that case this method falls back to re-parsing via
+            <see cref="T:System.Text.Json.JsonDocument"/>, which supports duplicate keys (last-wins semantics, like Newtonsoft.Json).
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetObjectPropertiesViaDocument(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Enumerates the properties of a <see cref="T:System.Text.Json.Nodes.JsonObject"/> by re-parsing its JSON text via
+            <see cref="T:System.Text.Json.JsonDocument"/>, which tolerates duplicate keys.
+            </summary>
+            <remarks>
+            <see cref="M:System.Text.Json.Nodes.JsonObject.WriteTo(System.Text.Json.Utf8JsonWriter,System.Text.Json.JsonSerializerOptions)"/> falls back to the underlying <see cref="T:System.Text.Json.JsonElement"/>
+            when the internal dictionary has not yet been initialized, so <see cref="M:System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions)"/> is
+            safe to call even after a failed <see cref="T:System.Text.Json.Nodes.JsonObject"/> initialization.
+            Duplicate keys are de-duplicated with last-wins semantics to match normal JsonObject enumeration behavior.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonNodeDictionary(System.Text.Json.Nodes.JsonNode,System.StringComparer,System.String)">
+            <summary>
+            Converts properties of <paramref name="token"/> to dictionary.
+            Leaves the values as JsonNode.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonNodeStringDictionary(System.Text.Json.Nodes.JsonNode,System.StringComparer,System.String)">
+            <summary>
+            Converts properties of <paramref name="token"/> to dictionary.
+            Values are serialized to string (as JsonNode). Strings are serialized as JSON, i.e. needs to be parsed prior to be used.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonString(System.Object)">
+            <summary>
+            Converts <paramref name="obj"/> to valid JSON string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.TryGetValueCaseInsensitive(System.Text.Json.Nodes.JsonObject,System.String,System.Text.Json.Nodes.JsonNode@)">
+            <summary>
+            Tries to get a property value from a <see cref="T:System.Text.Json.Nodes.JsonObject"/> using case-insensitive key matching.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetPropertyCaseInsensitive(System.Text.Json.Nodes.JsonObject,System.String)">
+            <summary>
+            Gets a property from a JsonObject with case-insensitive key matching.
+            Handles duplicate keys gracefully by falling back to JsonDocument-based lookup.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetPropertyCaseInsensitiveViaDocument(System.Text.Json.Nodes.JsonObject,System.String)">
+            <summary>
+            Gets a property from a JsonObject by re-parsing via JsonDocument (tolerates duplicate keys).
+            Uses last-wins semantics for duplicate keys, consistent with Newtonsoft.Json behavior.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ParseJsonObject(System.String)">
+            <summary>
+            Parses a JSON string into a JsonObject (with comment/trailing comma support).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ParseJsonNode(System.String)">
+            <summary>
+            Parses a JSON string into a JsonNode (with comment/trailing comma support).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.FromObject(System.Object)">
+            <summary>
+            Serializes an object to a JsonObject via JSON round-trip.
+            Equivalent to Newtonsoft's JObject.FromObject().
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.DeepCloneObject(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Creates a deep clone of a <see cref="T:System.Text.Json.Nodes.JsonObject"/> by round-tripping through JSON text.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.Merge(System.Text.Json.Nodes.JsonObject,System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Merges properties from <paramref name="source"/> into <paramref name="target"/>.
+            Equivalent to Newtonsoft's JObject.Merge() with default settings:
+            - Objects are recursively merged
+            - Arrays are concatenated
+            - Other values (including null) from source overwrite target.
+            </summary>
+        </member>
+    </members>
+</doc>

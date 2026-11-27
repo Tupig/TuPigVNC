@@ -1,0 +1,2718 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.TemplateEngine.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ChangeKind">
+            <summary>
+            Defines the kind of file change done during template creation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.ChangeKind.Create">
+            <summary>
+            The file is created.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.ChangeKind.Delete">
+            <summary>
+            The file is removed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.ChangeKind.Overwrite">
+            <summary>
+            The file is overwritten.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.ChangeKind.Change">
+            <summary>
+            The file is modified.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Components.IBindSymbolSource">
+            <summary>
+            The component provides values which may be bound to "bind" symbol.
+            The priority order is determined by <see cref="P:Microsoft.TemplateEngine.Abstractions.IPrioritizedComponent.Priority"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Components.IBindSymbolSource.DisplayName">
+            <summary>
+            The user friendly name of the component.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Components.IBindSymbolSource.SourcePrefix">
+            <summary>
+            Prefix that is used in binding to reference the component.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Components.IBindSymbolSource.RequiresPrefixMatch">
+            <summary>
+            If set to true, the component required exact prefix match to be used.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Components.IBindSymbolSource.GetBoundValueAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets the value corresponding to <paramref name="bindName"/>.
+            </summary>
+            <param name="settings">template engine environment settings.</param>
+            <param name="bindName">the value to retrieve (without prefix).</param>
+            <param name="cancellationToken">cancellation token.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Components.ISdkInfoProvider">
+            <summary>
+            Provider of SDK installation info.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Components.ISdkInfoProvider.GetCurrentVersionAsync(System.Threading.CancellationToken)">
+            <summary>
+            Current SDK installation semver version string.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns>SDK version.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Components.ISdkInfoProvider.GetInstalledVersionsAsync(System.Threading.CancellationToken)">
+            <summary>
+            All installed SDK installations semver version strings.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns>SDK version strings.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Components.ISdkInfoProvider.ProvideConstraintRemedySuggestion(System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Provides localized suggestion on action to be taken so that constraints requiring specified workloads can be met.
+            This should be specific for current host (e.g. action to be taken for VS will differ from CLI host action.)
+            This method should not perform any heavy processing (external services or file system queries) - as it's being
+              synchronously executed as part of constraint evaluation.
+            </summary>
+            <param name="supportedVersions">SDK versions required by a constraint (in an 'OR' relationship).</param>
+            <param name="viableInstalledVersions">SDK versions installed, that can meet the constraint - instructions should be provided to switch to any of those.</param>
+            <returns>Localized string with remedy suggestion specific to current host.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Components.IWorkloadsInfoProvider">
+            <summary>
+            Provider of descriptors of SDK workloads available to particular host (that is usually providing this component).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Components.IWorkloadsInfoProvider.GetInstalledWorkloadsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Fetches set of installed workloads.
+            </summary>
+            <param name="token"></param>
+            <returns>Set of installed workloads.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Components.IWorkloadsInfoProvider.ProvideConstraintRemedySuggestion(System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Provides localized suggestion on action to be taken so that constraints requiring specified workloads can be met.
+            This should be specific for current host (e.g. action to be taken for VS will differ from CLI host action.)
+            This method should not perform any heavy processing (external services or file system queries) - as it's being
+              synchronously executed as part of constraint evaluation.
+            </summary>
+            <param name="supportedWorkloads">Workloads required by a constraint (in an 'OR' relationship).</param>
+            <returns>Localized string with remedy suggestion specific to current host.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Components.WorkloadInfo">
+            <summary>
+            SDK workload descriptor.
+            Analogous to SDK type Microsoft.NET.Sdk.WorkloadManifestReader.WorkloadResolver.WorkloadInfo
+             (https://github.com/dotnet/sdk/blob/main/src/Resolvers/Microsoft.NET.Sdk.WorkloadManifestReader/WorkloadResolver.cs#L645).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Components.WorkloadInfo.#ctor(System.String,System.String)">
+            <summary>
+            Creates new instance of <see cref="T:Microsoft.TemplateEngine.Abstractions.Components.WorkloadInfo"/>.
+            </summary>
+            <param name="id">Workload identifier.</param>
+            <param name="description">Workload description string - expected to be localized.</param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Components.WorkloadInfo.Id">
+            <summary>
+            Workload identifier (from manifest).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Components.WorkloadInfo.Description">
+            <summary>
+            Workload description string - expected to be localized.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint">
+            <summary>
+            Constraint that can be used to filter out <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/> from further processing.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint.Type">
+            <summary>
+            Gets the constraint type. Should be unique and match the definition in `template.json`  and type given in <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraintFactory"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint.DisplayName">
+            <summary>
+            Gets the user friendly constraint name, that can be used in UI.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint.Evaluate(System.String)">
+            <summary>
+            Evaluates if the constraint is met based on <paramref name="args"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraintFactory">
+            <summary>
+            Template constraint factory used to create and initialize the instance of <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint"/>.
+            The template constraint should be initialized after creation to be able to evaluate in constraint is met performant enough.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraintFactory.Type">
+            <summary>
+            Gets the constraint type. Should be unique and match the definition in `template.json`.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraintFactory.CreateTemplateConstraintAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,System.Threading.CancellationToken)">
+            <summary>
+            Creates and initializes new <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint"/> based on current <paramref name="environmentSettings"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintInfo">
+            <summary>
+            Represents information about template constraint definition in template cache <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintInfo.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintInfo"/>.
+            </summary>
+            <param name="type">Constraint type, matches the type defined in <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint"/> implementation and template.json.</param>
+            <param name="args">Arguments for constraint evaluation.</param>
+            <exception cref="T:System.ArgumentException">when <paramref name="type"/> is null or whitespace.</exception>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintInfo.Type">
+            <summary>
+            Gets the constraint type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintInfo.Args">
+            <summary>
+            Gets the constraint arguments.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult">
+            <summary>
+            Result of constraint evaluation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.Constraint">
+            <summary>
+            Gets the executed <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.ConstraintType">
+            <summary>
+            Gets the executed constraint type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.EvaluationStatus">
+            <summary>
+            Determines if the conditions are met.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.LocalizedErrorMessage">
+            <summary>
+            Localized message explaining why the constraint is not met.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.CallToAction">
+            <summary>
+            Localized message explaining what should be done by user in order the constraint is met. Optional.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.CreateAllowed(Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint)">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult"/> for allowed evaluation result.
+            </summary>
+            <param name="constraint">The executed constraint.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.CreateRestricted(Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint,System.String,System.String)">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult"/> for restricted evaluation result.
+            </summary>
+            <param name="constraint">The executed constraint.</param>
+            <param name="localizedErrorMessage">The reason of the restriction.</param>
+            <param name="cta">Call to action to fulfill the restriction (optional).</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.CreateEvaluationFailure(Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint,System.String,System.String)">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult"/> for the case when the evaluation has failed.
+            </summary>
+            <param name="constraint">The executed constraint.</param>
+            <param name="localizedErrorMessage">The reason of the failure.</param>
+            <param name="cta">Call to action to resolve the problem (optional).</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.CreateInitializationFailure(System.String,System.String,System.String)">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult"/> for the case when the constraint initialization has failed.
+            If constraint was intiialized, use <see cref="M:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.CreateEvaluationFailure(Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint,System.String,System.String)"/> instead.
+            </summary>
+            <param name="type">The executed constraint type.</param>
+            <param name="localizedErrorMessage">The reason of the failure.</param>
+            <param name="cta">Call to action to resolve the problem (optional).</param>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.EvaluatedPrecedence">
+            <summary>
+            Indicates resulting precedence of a parameter (after considering <see cref="T:Microsoft.TemplateEngine.Abstractions.PrecedenceDefinition"/> and conditions results).
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.EvaluatedPrecedence.Required">
+            <summary>
+            Parameter value is required to be supplied by the host.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.EvaluatedPrecedence.Optional">
+            <summary>
+            Parameter is optional.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.EvaluatedPrecedence.Implicit">
+            <summary>
+            Parameter value is implicitly populated.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.EvaluatedPrecedence.Disabled">
+            <summary>
+            Parameter is disabled - it's value is not required and will not be used.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IBaselineInfo">
+            <summary>
+            Defines baseline configuration information.
+            Baseline configuration is a set of predefined template parameters and their values.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IBaselineInfo.Description">
+            <summary>
+            Gets baseline description.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IBaselineInfo.DefaultOverrides">
+            <summary>
+            Gets collection of parameters to be set with given baseline.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ICacheParameter">
+            <summary>
+            Defines the representation of a parameter in template cache.
+            This doesn't include parameters with choices which are represented by <see cref="T:Microsoft.TemplateEngine.Abstractions.ICacheTag"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICacheParameter.DataType">
+            <summary>
+            Gets the type of the parameter.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICacheParameter.DefaultValue">
+            <summary>
+            Gets the default value to be used if the user did not provide a value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICacheParameter.DisplayName">
+            <summary>
+            Gets the friendly name of the parameter to be displayed to the user.
+            This property is localized if localizations are provided.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICacheParameter.Description">
+            <summary>
+            Gets the detailed description of the parameter to be displayed to the user.
+            This property is localized if localizations are provided.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ICacheTag">
+            <summary>
+            Represents a tag or a parameter symbol with choices in template cache file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICacheTag.DisplayName">
+            <summary>
+            Gets the friendly name of the choice parameter symbol to be displayed to the user.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICacheTag.Description">
+            <summary>
+            Gets the description of the choice parameter symbol to be displayed to the user.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICacheTag.Choices">
+            <summary>
+            Gets the dictionary containing the possible choices for this tag or parameter symbol.
+            Keys represents the identifiers of the choices.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICacheTag.DefaultValue">
+            <summary>
+            Gets the identifier of the default choice to be used when no choice was explicitly selected.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IComponentManager">
+            <summary>
+            Custom composition manager that allows mapping between <see cref="T:System.Guid"/> and components that implement <see cref="T:Microsoft.TemplateEngine.Abstractions.IIdentifiedComponent"/>.
+            Used for generators, post actions, different implementations of installers, providers...
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.TryGetComponent``1(System.Guid,``0@)">
+            <summary>
+            Gets specific component via <see cref="T:System.Guid"/>.
+            E.g: to lookup implementation of "Restore NuGet packages" post action, pass in {210D431B-A78B-4D2F-B762-4ED3E3EA9025} <see cref="T:System.Guid"/>.
+            </summary>
+            <remarks>
+            If <typeparamref name="T"/> and <see cref="T:System.Guid"/> mismatch, <c>false</c> is returned.
+            </remarks>
+            <typeparam name="T">type to lookup.</typeparam>
+            <param name="id"><see cref="T:System.Guid"/> that is defined in <see cref="P:Microsoft.TemplateEngine.Abstractions.IIdentifiedComponent.Id"/>.</param>
+            <param name="component">singleton instance of requested component.</param>
+            <returns><c>true</c> if component was found.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.OfType``1">
+            <summary>
+            Returns all components of specified type.
+            </summary>
+            <typeparam name="T">type of component.</typeparam>
+            <returns>singleton component instances of requested type.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.Register(System.Type)">
+            <summary>
+            Adds component to manager, which can be looked up later via <see cref="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.TryGetComponent``1(System.Guid,``0@)"/> or <see cref="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.OfType``1"/>.
+            </summary>
+            <param name="type">type that implements <see cref="T:Microsoft.TemplateEngine.Abstractions.IIdentifiedComponent"/>.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.RegisterMany(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Adds list of components to manager, which can be looked up later via <see cref="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.TryGetComponent``1(System.Guid,``0@)"/> or <see cref="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.OfType``1"/>.
+            </summary>
+            <param name="typeList"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.AddComponent(System.Type,Microsoft.TemplateEngine.Abstractions.IIdentifiedComponent)">
+            <summary>
+            Adds component to manager, which can be looked up later via <see cref="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.TryGetComponent``1(System.Guid,``0@)"/> or <see cref="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.OfType``1"/>.
+            </summary>
+            <param name="interfaceType">Interface type that added component implements.</param>
+            <param name="instance">Instance of type that implements <paramref name="interfaceType"/>.</param>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ICreationEffects">
+            <summary>
+            The interface represents the effects of template instantiation: the file changes applied and template creation result. Creation effects are evaluated during template dry-run (see <see cref="M:Microsoft.TemplateEngine.Abstractions.IGenerator.GetCreationEffectsAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData,System.String,System.Threading.CancellationToken)"/>.
+            The interface is outdated, new version is <see cref="T:Microsoft.TemplateEngine.Abstractions.ICreationEffects2"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICreationEffects.FileChanges">
+            <summary>
+            Gets file changes done on template instantiation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICreationEffects.CreationResult">
+            <summary>
+            Gets template creation result: primary outputs and post actions.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ICreationEffects2">
+            <summary>
+            The interface represents the effects of template instantiation: the file changes applied and template creation result. Creation effects are evaluated during template dry-run (see <see cref="M:Microsoft.TemplateEngine.Abstractions.IGenerator.GetCreationEffectsAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData,System.String,System.Threading.CancellationToken)"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICreationEffects2.FileChanges">
+            <summary>
+            Gets the file changes done on template instantiation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICreationEffects2.CreationResult">
+            <summary>
+            Gets the template creation result: primary outputs and post actions.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ICreationPath">
+            <summary>
+            Contains information about primary output on template instantiation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICreationPath.Path">
+            <summary>
+            The relative path to primary output. The path is relative to output directory.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ICreationResult">
+            <summary>
+            Stores info about template creation, to be returned to the host as the result of template instantiation or dry run.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICreationResult.PostActions">
+            <summary>
+            Gets post actions to be done by the host.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ICreationResult.PrimaryOutputs">
+            <summary>
+            Gets the primary outputs of template instantiation.
+            These are the files that post actions should be applied on.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings">
+            <summary>
+            Represents template engine environment settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings.SettingsLoader">
+            <summary>
+            Manages template cache and template engine settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings.Host">
+            <summary>
+            Gets host-specific properties, loggers and provides access to file system.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings.Environment">
+            <summary>
+            Provides access to environment settings, such as environment variables.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings.Paths">
+            <summary>
+            Gets main file paths used by template engine.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings.Components">
+            <summary>
+            Component manager for this instance of settings.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IEnvironment">
+            <summary>
+            Provides access to environment settings, such as environment variables and constants.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IEnvironment.NewLine">
+            <summary>
+            The newline character(s).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IEnvironment.ConsoleBufferWidth">
+            <summary>
+            The width of the console buffer. This is typically the value of <see cref="P:System.Console.BufferWidth" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IEnvironment.ExpandEnvironmentVariables(System.String)">
+            <summary>
+            Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string. Equivalent to <see cref="M:System.Environment.ExpandEnvironmentVariables(System.String)"/>.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IEnvironment.GetEnvironmentVariable(System.String)">
+            <summary>
+            Gets the value of environment variable with the <paramref name="name"/>.
+            </summary>
+            <param name="name">Name of the environment variable to get.</param>
+            <returns>The value of environment variable or null if environment variable doesn't exist.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IEnvironment.GetEnvironmentVariables">
+            <summary>
+            Gets all environment variables and their values.
+            </summary>
+            <returns>The dictionary with environment variable names and their values.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IFileChange">
+            <summary>
+            Represents file change occurred during template instantiation.
+            The new version of the interface <see cref="T:Microsoft.TemplateEngine.Abstractions.IFileChange2"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IFileChange.TargetRelativePath">
+            <summary>
+            Gets the file target path. The path is relative to output directory.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IFileChange.ChangeKind">
+            <summary>
+            Gets the change kind.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IFileChange.Contents">
+            <summary>
+            Gets the file content.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IFileChange2">
+            <summary>
+            Represents file change occurred during template instantiation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IFileChange2.SourceRelativePath">
+            <summary>
+            Gets the file source path in template definition. The path is relative to template root directory.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IGenerator">
+            <summary>
+            Defines template generator supported by template engine.
+            This interface should be implemented to create generator loadable by template engine infrastructure.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.CreateAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Generates the <paramref name="template"/> with given parameters.
+            </summary>
+            <param name="environmentSettings">template engine environment settings.</param>
+            <param name="template">template to generate.</param>
+            <param name="parameters">template parameters.</param>
+            <param name="targetDirectory">target output directory to generate template to.</param>
+            <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.ICreationResult"/> containing post actions and primary outputs after template generation.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.GetCreationEffectsAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Dry runs the <paramref name="template"/> with given parameters.
+            </summary>
+            <param name="environmentSettings">template engine environment settings.</param>
+            <param name="template">template to dry run.</param>
+            <param name="parameters">template parameters.</param>
+            <param name="targetDirectory">target output directory to generate template to.</param>
+            <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.ICreationEffects"/> containing file changes, post actions and primary outputs that would have been done after template generation.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.ConvertParameterValueToType(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplateParameter,System.String,System.Boolean@)">
+            <summary>
+            Converts the given <paramref name="untypedValue"/> to the type of <paramref name="parameter"/>.
+            </summary>
+            <param name="environmentSettings">template engine environment settings.</param>
+            <param name="parameter">template parameter defining the type.</param>
+            <param name="untypedValue">the value to be converted to parameter type.</param>
+            <param name="valueResolutionError">true if value could not be converted, false otherwise.</param>
+            <returns>the converted <paramref name="untypedValue"/> value to the type of <paramref name="parameter"/> or null if the value cannot be converted.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.TryEvaluateFromString(Microsoft.Extensions.Logging.ILogger,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Boolean@,System.String@,System.Collections.Generic.HashSet{System.String})">
+            <summary>
+            Attempts to evaluate expression string with the provided variables and returns the result.
+            </summary>
+            <param name="logger"></param>
+            <param name="text"></param>
+            <param name="variables">Dictionary of variables to be substituted within the expression.</param>
+            <param name="result">The evaluation result (false in case evaluation failed).</param>
+            <param name="evaluationError">Evaluation error message in case evaluation failed.</param>
+            <param name="referencedVariablesKeys">
+            Keys of variables that have been substituted within the expression.
+            If passed as null, the referenced variable keys are not obtained and stored anywhere.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.GetTemplatesFromMountPointAsync(Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint,System.Threading.CancellationToken)">
+            <summary>
+            Scans the given mount point <paramref name="source"/> for templates and returns the list of <see cref="T:Microsoft.TemplateEngine.Abstractions.IScanTemplateInfo"/>s that are found.
+            </summary>
+            <param name="source">the mount point to load templates from.</param>
+            <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+            <returns>the list of templates found in <paramref name="source"/> mount point.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.LoadTemplateAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplateLocator,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Attempts to load <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplate"/> from the given location <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateLocator" />.
+            </summary>
+            <param name="settings">template engine environment settings.</param>
+            <param name="config">the locator defining the location of the template.</param>
+            <param name="baselineName">the baseline to load.</param>
+            <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplate"/>, if the template can be loaded from <paramref name="config"/>, <see langword="null"/> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.GetTemplatesAndLangpacksFromDir(Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint,System.Collections.Generic.IList{Microsoft.TemplateEngine.Abstractions.ILocalizationLocator}@)">
+            <summary>
+            Scans the given mount point <paramref name="source"/> for templates and returns the list of <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplate"/>s that are found.
+            </summary>
+            <param name="source">the mount point to load templates from.</param>
+            <param name="localizations">localization information for templates.</param>
+            <returns>the list of templates found in <paramref name="source"/> mount point.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.TryGetTemplateFromConfigInfo(Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo,Microsoft.TemplateEngine.Abstractions.ITemplate@,Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo,Microsoft.TemplateEngine.Abstractions.Mount.IFile,System.String)">
+            <summary>
+            Gets an <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplate"/> from the given <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo" /> configuration entry.
+            </summary>
+            <param name="config">configuration file.</param>
+            <param name="template">loaded template.</param>
+            <param name="localeConfig">localization configuration file.</param>
+            <param name="hostTemplateConfigFile">host template configuration file.</param>
+            <param name="baselineName">baseline to load.</param>
+            <returns>true if <paramref name="template"/> can be read, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.CreateAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.IParameterSet,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Generates the <paramref name="template"/> with given parameters.
+            </summary>
+            <param name="environmentSettings">template engine environment settings.</param>
+            <param name="template">template to generate.</param>
+            <param name="parameters">template parameters.</param>
+            <param name="targetDirectory">target output directory to generate template to.</param>
+            <param name="cancellationToken">cancellation token.</param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.ICreationResult"/> containing post actions and primary outputs after template generation.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.GetCreationEffectsAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.IParameterSet,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Dry runs the <paramref name="template"/> with given parameters.
+            </summary>
+            <param name="environmentSettings">template engine environment settings.</param>
+            <param name="template">template to dry run.</param>
+            <param name="parameters">template parameters.</param>
+            <param name="targetDirectory">target output directory to generate template to.</param>
+            <param name="cancellationToken">cancellation token.</param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.ICreationEffects"/> containing file changes, post actions and primary outputs that would have been done after template generation.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IGenerator.GetParametersForTemplate(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate)">
+            <summary>
+            Returns a <see cref="T:Microsoft.TemplateEngine.Abstractions.IParameterSet"/> for the given <paramref name="template"/>.
+            This method returns the list of input parameters that can be set by the host / Edge before running the template.
+            After setting the values the host should pass <see cref="T:Microsoft.TemplateEngine.Abstractions.IParameterSet"/> to <see cref="M:Microsoft.TemplateEngine.Abstractions.IGenerator.GetCreationEffectsAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.IParameterSet,System.String,System.Threading.CancellationToken)"/> or <see cref="M:Microsoft.TemplateEngine.Abstractions.IGenerator.CreateAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.IParameterSet,System.String,System.Threading.CancellationToken)"/> methods.
+            Host may use <see cref="M:Microsoft.TemplateEngine.Abstractions.IGenerator.ConvertParameterValueToType(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplateParameter,System.String,System.Boolean@)"/> to convert input value to required parameter type.
+            </summary>
+            <param name="environmentSettings">template engine environment settings.</param>
+            <param name="template">template to get parameters from.</param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.IParameterSet"/> with parameters available in <paramref name="template"/>.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IIdentifiedComponent">
+            <summary>
+            Defines a component loadable by <see cref="T:Microsoft.TemplateEngine.Abstractions.IComponentManager"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IIdentifiedComponent.Id">
+            <summary>
+            Gets the identifier of the component. Should be unique.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ILocalizationLocator">
+            <summary>
+            Represents a localization file for a template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ILocalizationLocator.Locale">
+            <summary>
+            Gets the locale of the localizations.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ILocalizationLocator.ConfigPlace">
+            <summary>
+            Gets the location on disk where the localization file resides.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ILocalizationLocator.Identity">
+            <summary>
+            Gets the identity of the template that the localizations in this object belong to.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ILocalizationLocator.Author">
+            <summary>
+            Gets the localized author name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ILocalizationLocator.Name">
+            <summary>
+            Gets the localized template name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ILocalizationLocator.Description">
+            <summary>
+            Gets the localized template description.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ILocalizationLocator.ParameterSymbols">
+            <summary>
+            Gets the localization models for the parameter symbols defined in this template.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.CheckUpdateResult">
+            <summary>
+            Represents the result of checking the latest version of template package using <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.GetLatestVersionAsync(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage},Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.CheckUpdateResult.LatestVersion">
+            <summary>
+            The latest version for the template package identified as the result of update check.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.CheckUpdateResult.IsLatestVersion">
+            <summary>
+            True when the template package is already at the latest version.
+            </summary>
+            <remarks>In some cases the version installed can be higher than identified during update check. Since only installer can correctly compare the versions, the installer returns the result if the version is latest rather than letting the caller determine it using string comparison.</remarks>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.CheckUpdateResult.Vulnerabilities">
+            <summary>
+            Gets vulnerabilities from checked package.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.CheckUpdateResult.TemplatePackage">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.CheckUpdateResult.CreateSuccess(Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage,System.String,System.Boolean)">
+            <summary>
+            Creates successful result for the operation.
+            </summary>
+            <param name="templatePackage">the package that was checked for update.</param>
+            <param name="version">the latest version of the package.</param>
+            <param name="isLatest">indication if installed version is latest or higher.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.CheckUpdateResult.CreateFailure(Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage,Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode,System.String,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.Installer.VulnerabilityInfo})">
+            <summary>
+            Creates failure result for the operation.
+            </summary>
+            <param name="templatePackage">the package that was checked for update.</param>
+            <param name="error">error code, see <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode"/> for details.</param>
+            <param name="localizedFailureMessage">detailed error message.</param>
+            <param name="vulnerabilities">detected package vulnerabilities.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller">
+            <summary>
+            Template package installer interface.
+            To implement installer compatible with built-in template package providers, implement this interface.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.Factory">
+            <summary>
+            Gets the <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstallerFactory"/> that created this installer.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.CanInstallAsync(Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest,System.Threading.CancellationToken)">
+            <summary>
+            Determines if the installer can install specific <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest"/>.
+            </summary>
+            <remarks>
+            Ideally it should go as far as calling backend server to determine if such identifier exists.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.GetLatestVersionAsync(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage},Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)">
+            <summary>
+            Gets latest versions for <paramref name="templatePackages"/>.
+            </summary>
+            <param name="templatePackages">the template packages to get latest versions for.</param>
+            <param name="provider"><see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> requesting latest version.</param>
+            <param name="cancellationToken"></param>
+            <returns>list of <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.CheckUpdateResult"/> containing latest versions for the sources.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.InstallAsync(Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)">
+            <summary>
+            Installs the template package defined by <paramref name="installRequest"/>.
+            </summary>
+            <param name="installRequest">the template package to be installed.</param>
+            <param name="provider"><see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> installing the package.</param>
+            <param name="cancellationToken"></param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallResult"/> containing installation results and installed <see cref="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallerOperationResult.TemplatePackage"/> if installation was successful.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.UninstallAsync(Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)">
+            <summary>
+            Uninstalls the <paramref name="templatePackage"/>.
+            </summary>
+            <param name="templatePackage">the template package to uninstall.</param>
+            <param name="provider"><see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> uninstalling the template package.</param>
+            <param name="cancellationToken"></param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.UninstallResult"/> containing the result for operation.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.UpdateAsync(Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)">
+            <summary>
+            Updates the template package defined by <paramref name="updateRequest"/>.
+            </summary>
+            <param name="updateRequest"><see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest"/> defining the template package to update and target version.</param>
+            <param name="provider"><see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> updating the package.</param>
+            <param name="cancellationToken"></param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult"/> containing the result for operation and installed <see cref="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallerOperationResult.TemplatePackage"/> if update was successful.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstallerFactory">
+            <summary>
+            Template package installer factory interface.
+            Implement this interface to register installer supported by built-in providers.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.IInstallerFactory.Name">
+            <summary>
+            The factory name.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstallerFactory.CreateInstaller(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,System.String)">
+            <summary>
+            Creates the <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/> managed by this factory.
+            </summary>
+            <param name="settings">environment settings of the template engine host.</param>
+            <param name="installPath">path to install the template packages to.</param>
+            <returns>created <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/>.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallerConstants">
+            <summary>
+            Defines constants used for installer implementation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerConstants.NuGetSourcesKey">
+            <summary>
+            Defines the key for <see cref="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest.Details"/> to specify additional NuGet sources to be used on installation. Supported by NuGet installer.
+            </summary>
+            <remarks><see cref="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerConstants.NuGetSourcesSeparator"/> defines the separator to use when multiple sources are required.</remarks>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerConstants.NuGetSourcesSeparator">
+            <summary>
+            Defines the separator to be used when specifying multiple additional NuGet sources to be used on installation. Supported by NuGet installer.
+            </summary>
+            <remarks>Used together with <see cref="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerConstants.NuGetSourcesKey"/>.</remarks>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerConstants.InteractiveModeKey">
+            <summary>
+            Defines the key for <see cref="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest.Details"/> to specify that interactive mode should be used on installation. Supported by NuGet installer.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerConstants.PrereleaseModeKey">
+            <summary>
+            Defines the key for <see cref="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest.Details"/> to allow prerelease packages to be installed when no version is specified. Supported by NuGet installer.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode">
+            <summary>
+            Defines possible error codes for <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/> operations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.Success">
+            <summary>
+            The operation completed successfully.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.PackageNotFound">
+            <summary>
+            The template package is not found.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.InvalidSource">
+            <summary>
+            The installation source (e.g. NuGet feed) is invalid.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.DownloadFailed">
+            <summary>
+            The download from remote source (e.g. NuGet feed) has failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.UnsupportedRequest">
+            <summary>
+            The  request is not supported by the installer.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.GenericError">
+            <summary>
+            Generic error.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.AlreadyInstalled">
+            <summary>
+            The template package is already installed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.UpdateUninstallFailed">
+            <summary>
+            The update has failed due to uninstallation of previous template package version has failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.InvalidPackage">
+            <summary>
+            The requested package is invalid and cannot be processed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.VulnerablePackage">
+            <summary>
+            The requested package has vulnerabilities and can only be processed with --force.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallerOperationResult">
+            <summary>
+            Represents <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/> operation result.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallerOperationResult.Error">
+            <summary>
+            Gets result error code.
+            <see cref="F:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode.Success"/> if the operation completed successfully.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallerOperationResult.ErrorMessage">
+            <summary>
+            Error message for failed operation. Not set if the operation completed successfully.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallerOperationResult.TemplatePackage">
+            <summary>
+            <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> processed by the operation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallerOperationResult.Success">
+            <summary>
+            Indicates if the operation completed successfully.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest">
+            <summary>
+            The template package installation request to be processed by <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.InstallAsync(Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest.DisplayName">
+            <summary>
+            Name to be used when display the request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest.InstallerName">
+            <summary>
+            Installer to be used to install the request.
+            </summary>
+            <remarks>
+            This can be null, but if multiple installers return <c>true</c> from <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.CanInstallAsync(Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest,System.Threading.CancellationToken)"/>
+            installation will fail. The application should select the installer to be used in this case.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest.PackageIdentifier">
+            <summary>
+            The identifier for template package to be installed. The format of identifier is defined by <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/> implementation.
+            </summary>
+            <remarks>
+            Could be folder name, NuGet PackageId, path to .nupkg...
+            </remarks>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest.Version">
+            <summary>
+            Specific version to be installed or null to install latest.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest.Details">
+            <summary>
+            Additional details, like NuGet Server(Source), that specific installer uses.
+            </summary>
+            <remarks>The keys supported by default installers are defined in <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallerConstants"/>.</remarks>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest.Force">
+            <summary>
+            Allows installation even if the package with same version is already installed.
+            Such package will be re-installed.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallResult">
+            <summary>
+            Represents the result of template package installation using <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.InstallAsync(Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallResult.InstallRequest">
+            <summary>
+            <see cref="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallResult.InstallRequest"/> processed by <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.InstallAsync(Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)"/> operation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.InstallResult.Vulnerabilities">
+            <summary>
+            Gets vulnerabilities from installed package.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.InstallResult.CreateSuccess(Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.Installer.VulnerabilityInfo})">
+            <summary>
+            Creates successful result for the operation.
+            </summary>
+            <param name="request">the processed installation request.</param>
+            <param name="templatePackage">the installed <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/>.</param>
+            <param name="vulnerabilities">Package vulnerabilities associated with the installation request.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.InstallResult.CreateFailure(Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest,Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode,System.String,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.Installer.VulnerabilityInfo})">
+            <summary>
+            Creates failure result for the operation.
+            </summary>
+            <param name="request">the processed installation request.</param>
+            <param name="error">error code, see <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode"/> for details.</param>
+            <param name="localizedFailureMessage">detailed error message.</param>
+            <param name="vulnerabilities">Package vulnerabilities associated with the check request.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.ISerializableInstaller">
+            <summary>
+            Installer needs to implement this interface if installations to be done using built-in providers.
+            <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData"/> is used to store information about installed template packages.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.ISerializableInstaller.Deserialize(Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData)">
+            <summary>
+            Deserializes <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData"/> to <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> that can be processed by <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.ISerializableInstaller"/>.
+            </summary>
+            <param name="provider">The provider that provides the data.</param>
+            <param name="data">Data to serialize.</param>
+            <returns>deserialized <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/>.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.ISerializableInstaller.Serialize(Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage)">
+            <summary>
+            Serializes <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> to <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData"/>.
+            </summary>
+            <param name="templatePackage">template package to serialize. </param>
+            <returns>serialized <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData"/>.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData">
+            <summary>
+            Represents serialized data for <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage"/>. Used to store information about template packages managed by built in providers.
+            </summary>
+            <remarks> Used in <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.ISerializableInstaller"/> methods for serialization purposes.</remarks>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData.Details">
+            <summary>
+            Details for the template package. Applicable for <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> only.
+            </summary>
+            <remarks>
+            Additional properties required for certain <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> implementations should be stored in this collection.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData.InstallerId">
+            <summary>
+            The ID of <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/> that installed the template package. Applicable for <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> only.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData.LastChangeTime">
+            <summary>
+            The last time <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage"/> was changed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData.MountPointUri">
+            <summary>
+            <see cref="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage.MountPointUri"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.UninstallResult">
+            <summary>
+            Represents the result of template package uninstallation using <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.UninstallAsync(Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.UninstallResult.TemplatePackage">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.UninstallResult.CreateSuccess(Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage)">
+            <summary>
+            Creates successful result for the operation.
+            </summary>
+            <param name="templatePackage">the uninstalled <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/>.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.UninstallResult.CreateFailure(Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage,Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode,System.String)">
+            <summary>
+            Creates failure result for the operation.
+            </summary>
+            <param name="templatePackage">the template package attempted to be uninstalled.</param>
+            <param name="error">error code, see <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode"/> for details.</param>
+            <param name="localizedFailureMessage">detailed error message.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest">
+            <summary>
+            The template package update request to be processed by <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.UpdateAsync(Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest.#ctor(Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage,System.String)">
+            <summary>
+            Creates the instance of <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest"/>.
+            </summary>
+            <param name="templatePackage">template package to update.</param>
+            <param name="targetVersion">target version.</param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest.TemplatePackage">
+            <summary>
+            <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> to be updated.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest.Version">
+            <summary>
+            Target version for the update.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult">
+            <summary>
+            Represents the result of template package update using <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.UpdateAsync(Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult.UpdateRequest">
+            <summary>
+            <see cref="P:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult.UpdateRequest"/> processed by <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.UpdateAsync(Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)"/> operation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult.Vulnerabilities">
+            <summary>
+            Gets vulnerabilities from installed package.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult.CreateSuccess(Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.Installer.VulnerabilityInfo})">
+            <summary>
+            Creates successful result for the operation.
+            </summary>
+            <param name="request">the processed <see cref="P:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult.UpdateRequest"/>.</param>
+            <param name="templatePackage">the updated <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/>.</param>
+            <param name="vulnerabilities">Package vulnerabilities associated with the update request.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult.CreateFailure(Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest,Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode,System.String,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.Installer.VulnerabilityInfo})">
+            <summary>
+            Creates failure result for the operation.
+            </summary>
+            <param name="request">the processed <see cref="P:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult.UpdateRequest"/>.</param>
+            <param name="error">error code, see <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallerErrorCode"/> for details.</param>
+            <param name="localizedFailureMessage">detailed error message.</param>
+            <param name="vulnerabilities">Package vulnerabilities associated with the update request.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult.FromInstallResult(Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest,Microsoft.TemplateEngine.Abstractions.Installer.InstallResult)">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult"/> from <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallResult"/>.
+            </summary>
+            <param name="request">the processed <see cref="P:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult.UpdateRequest"/>.</param>
+            <param name="installResult"><see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallResult"/> to be converted to <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult"/>.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Installer.VulnerabilityInfo">
+            <summary>
+            Provides information about detected vulnerabilities for a particular severity.
+            </summary>
+            <param name="Severity">Represents level of detected vulnerability: 3 stands for critical, 0 for low.</param>
+            <param name="AdvisoryUris">Link to vulnerability info.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Installer.VulnerabilityInfo.#ctor(System.Int32,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Provides information about detected vulnerabilities for a particular severity.
+            </summary>
+            <param name="Severity">Represents level of detected vulnerability: 3 stands for critical, 0 for low.</param>
+            <param name="AdvisoryUris">Link to vulnerability info.</param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.VulnerabilityInfo.Severity">
+            <summary>Represents level of detected vulnerability: 3 stands for critical, 0 for low.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Installer.VulnerabilityInfo.AdvisoryUris">
+            <summary>Link to vulnerability info.</summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IParameterSet">
+            <summary>
+            Defines a set of template parameters.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IParameterSet.ParameterDefinitions">
+            <summary>
+            Gets an enumerator iterating through the parameter definitions of the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IParameterSet.ResolvedValues">
+            <summary>
+            Gets a collection of template parameters and their values.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.IParameterSet.TryGetParameterDefinition(System.String,Microsoft.TemplateEngine.Abstractions.ITemplateParameter@)">
+            <summary>
+            Gets a parameter definition with the specified <paramref name="name"/>.
+            </summary>
+            <param name="name">Parameter name to get.</param>
+            <param name="parameter">Retrieved parameter or null if the parameter is not found.</param>
+            <returns>true if the parameter was retrieved, false otherwise.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IParameterSymbolLocalizationModel">
+            <summary>
+            Defines a parameter localization model.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IParameterSymbolLocalizationModel.Name">
+            <summary>
+            Gets the parameter name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IParameterSymbolLocalizationModel.DisplayName">
+            <summary>
+            Gets the localized friendly name of the symbol to be displayed to the user.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IParameterSymbolLocalizationModel.Description">
+            <summary>
+            Gets the localized description of the symbol.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IParameterSymbolLocalizationModel.Choices">
+            <summary>
+            Gets the localization models for choices of this symbol.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IPathInfo">
+            <summary>
+            Contains common folder paths used by TemplateEngine.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IPathInfo.UserProfileDir">
+            <summary>
+            The user profile folder.
+            E.g: "/home/userName/" on Unix and "C:\Users\userName\" on Windows.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IPathInfo.GlobalSettingsDir">
+            <summary>
+            Gets the path of template engine global settings directory.
+            The directory should be used for settings shared between all template engine hosts.
+            Usually at "C:\Users\userName\.templateengine\".
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IPathInfo.HostSettingsDir">
+            <summary>
+            Gets the path of template engine host settings directory.
+            The directory should be used for settings shared between all template engine host versions.
+            E.g.: "C:\Users\userName\.templateengine\dotnet\".
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IPathInfo.HostVersionSettingsDir">
+            <summary>
+            Gets the path of template engine host version settings directory.
+            The directory should be used for settings specific to certain host version.
+            E.g.: "C:\Users\userName\.templateengine\dotnet\v1.0.0.0\".
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IPostAction">
+            <summary>
+            Defines post action supported by the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IPostAction.Description">
+            <summary>
+            Gets the description of the post action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IPostAction.ActionId">
+            <summary>
+            Gets the identifier of the action that will be performed.
+            Note that this is not an identifier for the post action itself.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IPostAction.ContinueOnError">
+            <summary>
+            Gets a value indicating whether the template instantiation should continue
+            in case of an error with this post action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IPostAction.Args">
+            <summary>
+            Gets the arguments for this post action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IPostAction.ManualInstructions">
+            <summary>
+            Gets the instructions that should be manually performed by the user
+            as part of this post action.
+            Manual instructions are used when the host does not have the associated post action processor implemented.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IPrioritizedComponent">
+            <summary>
+            Allows component to set its own priority compared to other components of same type.
+            It is up to caller of <see cref="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.OfType``1"/> to order and respect this.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IPrioritizedComponent.Priority">
+            <summary>
+            Default priority is 0.
+            Components of same type that don't implement this interface are considered as priority 0.
+            Notice that negative priority can be used, which places component below default.
+            Example order of execution will be:
+            1) a component with priority 100
+            2) a component without priority(defaults to 0)
+            3) a component with priority -100.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IScanTemplateInfo">
+            <summary>
+            The information about the template obtained as the result of scanning <see cref="M:Microsoft.TemplateEngine.Abstractions.IGenerator.GetTemplatesFromMountPointAsync(Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint,System.Threading.CancellationToken)"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IScanTemplateInfo.Localizations">
+            <summary>
+            Gets all localizations available for the template. The key is locale name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IScanTemplateInfo.HostConfigFiles">
+            <summary>
+            Gets all host files available for the template. The key is host identifier, the value is a relative path to the host file inside the mount point <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateLocator.MountPointUri"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ITemplate">
+            <summary>
+            Defines the template that can be run by <see cref="T:Microsoft.TemplateEngine.Abstractions.IGenerator"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplate.Generator">
+            <summary>
+            Gets generator that runs the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplate.Configuration">
+            <summary>
+            Gets configuration file system entry.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplate.LocaleConfiguration">
+            <summary>
+            Gets localization file system entry.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplate.HostSpecificConfiguration">
+            <summary>
+            Gets host configuration file system entry.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplate.TemplateSourceRoot">
+            <summary>
+            Gets directory with template source files.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplate.IsNameAgreementWithFolderPreferred">
+            <summary>
+            Indicates whether he template should be created in a subdirectory under the output directory.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplate.Localization">
+            <summary>
+            Gets localization information set for the template.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost">
+            <summary>
+            Gets host-specific properties, loggers and provides access to file system.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.BuiltInComponents">
+            <summary>
+            Gets the list of built-in components provided by the host.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.FileSystem">
+            <summary>
+            Provides access to file system.
+            Depending on the settings, the file system can be physical or in-memory or both depending on the file path.
+            To virtualize certain file path, use <see cref="M:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.VirtualizeDirectory(System.String)"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.HostIdentifier">
+            <summary>
+            Gets the identifier of the host.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.FallbackHostTemplateConfigNames">
+            <summary>
+            Gets the fallback names that will be probed to locate the host specific template settings file.
+            The primary host template config name is <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.HostIdentifier"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.Logger">
+            <summary>
+            Gets default logger for given template engine host.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.LoggerFactory">
+            <summary>
+            Gets logger factory for given template engine host.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.Version">
+            <summary>
+            Gets the version of the host.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.TryGetHostParamDefault(System.String,System.String@)">
+            <summary>
+            Tries to get default host parameter by its name.
+            </summary>
+            <param name="paramName">Name of the parameter.</param>
+            <param name="value">Default value of the parameter provided by the host.</param>
+            <returns>true - if default value was provided; false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.VirtualizeDirectory(System.String)">
+            <summary>
+            Virtualizes access to the <paramref name="path"/>. After the location is virtualized, the file read/writes will be done from/to memory instead of physical file system. All subfolders in the location will be also virtualized.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.OnPotentiallyDestructiveChangesDetected(System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.IFileChange},System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.IFileChange})">
+            <summary>
+            Action to be done when potentially destructive changes on template instantiation are detected.
+            The host can implement it as needed: prompt user, show error, etc.
+            In case template instantiation should proceed, the method should return true.
+            In case template instantiation should be aborted, the method should return false.
+            </summary>
+            <param name="changes">the list of file changes to be done on template instantiation.</param>
+            <param name="destructiveChanges">the list of destructive file changes (modify/remove) to be performed on template instantiation.</param>
+            <returns>
+            true - in case template engine should proceed with template instantiation and perform destructive changes;
+            false - if the template instantiation should be aborted.
+            </returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo">
+            <summary>
+            Template information, used to be stored in the template cache.
+            This information is common for all templates that can be managed by different <see cref="T:Microsoft.TemplateEngine.Abstractions.IGenerator"/>s.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateInfo.Parameters">
+            <summary>
+            Gets the list of template parameters.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ITemplateLocator">
+            <summary>
+            Defines the location of a template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateLocator.GeneratorId">
+            <summary>
+            Gets generator ID the template should be processed by.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateLocator.MountPointUri">
+            <summary>
+            Gets template mount point URI.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateLocator.ConfigPlace">
+            <summary>
+            Gets the path to template configuration inside mount point.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IExtendedTemplateLocator.LocaleConfigPlace">
+            <summary>
+            Gets the path to the localization configuration inside the mount point.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IExtendedTemplateLocator.HostConfigPlace">
+            <summary>
+            Gets the path to the host configuration inside the mount point.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata">
+            <summary>
+            Common template metadata.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Author">
+            <summary>
+            Gets template author.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Description">
+            <summary>
+            Gets template description.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Classifications">
+            <summary>
+            Gets template classifications.
+            </summary>
+            <example>"Common", "Library", "Windows", "Tests", "Web".</example>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.DefaultName">
+            <summary>
+            Gets default name.
+            </summary>
+            <remarks>
+            It is used as source name, in case name and fallback name passed to TemplateCreator is null.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Identity">
+            <summary>
+            Gets template identity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.GroupIdentity">
+            <summary>
+            Gets template group identity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Precedence">
+            <summary>
+            Gets template precedence.
+            The precedence is used to prioritized templates inside template groups: the template with the higher value will be prioritized over the template with lower value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Name">
+            <summary>
+            Gets template name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.TagsCollection">
+            <summary>
+            Gets template tags.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.ParameterDefinitions">
+            <summary>
+            Gets the list of template parameters.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.ThirdPartyNotices">
+            <summary>
+            Gets third party notices.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.BaselineInfo">
+            <summary>
+            Gets the collection of baselines defined in the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.ShortNameList">
+            <summary>
+            Gets the list of short names defined for the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.PostActions">
+            <summary>
+            Gets the list of post actions IDs defined in the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Constraints">
+            <summary>
+            Gets the information about constraints defined in the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.PreferDefaultName">
+            <summary>
+            Gets template's preference for using the default name on creation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ITemplateParameter">
+            <summary>
+            Template parameter definition.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.Description">
+            <summary>
+            Gets parameter description.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.Name">
+            <summary>
+            Gets parameter name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.Priority">
+            <summary>
+            Gets parameter priority.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.Precedence">
+            <summary>
+            Indicates the precedence of the parameter.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.Type">
+            <summary>
+            Gets parameter type.
+            In Orchestrator.RunnableProjects the type is always 'parameter'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.IsName">
+            <summary>
+            Returns true when parameter is default name symbol.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.DefaultValue">
+            <summary>
+            Gets the default value to be used if the parameter is not passed for template instantiation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.DataType">
+            <summary>
+            Gets data type of parameter (boolean, string, choice, etc).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.Choices">
+            <summary>
+            Gets collection of choices for choice <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.DataType"/>.
+            <c>null</c> for other <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.DataType"/>s.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.DisplayName">
+            <summary>
+            Gets the friendly name of the parameter to be displayed to the user.
+            This property is localized if localizations are provided.
+            May contain accelerator key (_) which should be processed or removed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.AllowMultipleValues">
+            <summary>
+            Indicates whether parameter arity is allowed to be > 1.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.DefaultIfOptionWithoutValue">
+            <summary>
+            Gets the default value to be used if the parameter is passed without value for template instantiation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IValidationEntry">
+            <summary>
+            Represents a validation error when loading the template.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IValidationEntry.SeverityLevel">
+            <summary>
+            Error severity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IValidationEntry.Severity">
+            <summary>
+            Gets the error severity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IValidationEntry.Code">
+            <summary>
+            Gets the code of the error.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IValidationEntry.ErrorMessage">
+            <summary>
+            Gets the error message (localized when available).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IValidationEntry.Location">
+            <summary>
+            Gets the details about error location.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IValidationEntry.ErrorLocation">
+            <summary>
+            Details of the error location.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IValidationEntry.ErrorLocation.Filename">
+            <summary>
+            Gets the filename where the error occurred.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IValidationEntry.ErrorLocation.LineNumber">
+            <summary>
+            Gets the filename where the error occurred.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IValidationEntry.ErrorLocation.Position">
+            <summary>
+            Gets the filename where the error occurred.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IValidationInfo.IsValid">
+            <summary>
+            <see langword="true"/> when the template is valid to be used.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IValidationInfo.ValidationErrors">
+            <summary>
+            Gets the results of template validation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.IVariableCollection">
+            <summary>
+            Defines an interface for generic variable collection.
+            The variable collection may have a parent.
+            The parent collection is used when the value is not found in current collection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.IVariableCollection.Parent">
+            <summary>
+            Gets the parent collection for the instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Mount.FileSystemInfoKind">
+            <summary>
+            Defines the kind of a <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo"/> entry.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Mount.FileSystemInfoKind.File">
+            <summary>
+            Entry is a file.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Mount.FileSystemInfoKind.Directory">
+            <summary>
+            Entry is a directory.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Mount.IDirectory">
+            <summary>
+            Defines directory <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo"/> entry.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Mount.IDirectory.EnumerateFileSystemInfos(System.String,System.IO.SearchOption)">
+            <summary>
+            Enumerates the <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo"/> entries in the directory.
+            </summary>
+            <param name="pattern">Matching pattern for the entries, see <see cref="M:System.IO.Directory.EnumerateFileSystemEntries(System.String,System.String,System.IO.SearchOption)"/> for more details.</param>
+            <param name="searchOption">Matching pattern for the entries, see <see cref="M:System.IO.Directory.EnumerateFileSystemEntries(System.String,System.String,System.IO.SearchOption)"/> for more details.</param>
+            <returns>The enumerator to <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo"/> entries in the directory.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Mount.IDirectory.EnumerateFiles(System.String,System.IO.SearchOption)">
+            <summary>
+            Enumerates the <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IFile"/> entries in the directory.
+            </summary>
+            <param name="pattern">Matching pattern for the entries, see <see cref="M:System.IO.Directory.EnumerateFiles(System.String,System.String,System.IO.SearchOption)"/> for more details.</param>
+            <param name="searchOption">Matching pattern for the entries, see <see cref="M:System.IO.Directory.EnumerateFiles(System.String,System.String,System.IO.SearchOption)"/> for more details.</param>
+            <returns>The enumerator to <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IFile"/> entries in the directory.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Mount.IDirectory.EnumerateDirectories(System.String,System.IO.SearchOption)">
+            <summary>
+            Enumerates the <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IDirectory"/> entries in the directory.
+            </summary>
+            <param name="pattern">Matching pattern for the entries, see <see cref="M:System.IO.Directory.EnumerateDirectories(System.String,System.String,System.IO.SearchOption)"/> for more details.</param>
+            <param name="searchOption">Matching pattern for the entries, see <see cref="M:System.IO.Directory.EnumerateDirectories(System.String,System.String,System.IO.SearchOption)"/> for more details.</param>
+            <returns>The enumerator to <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IDirectory"/> entries in the directory.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Mount.IFile">
+            <summary>
+            Defines a file <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo"/> entry.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Mount.IFile.OpenRead">
+            <summary>
+            Opens the file stream for reading.
+            </summary>
+            <returns><see cref="T:System.IO.Stream"/> that can be used for reading the file.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo">
+            <summary>
+            Defines a file system entry.
+            </summary>
+            <seealso cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IDirectory"/>
+            <seealso cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IFile"/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo.Exists">
+            <summary>
+            Returns true if file system entry exists, false otherwise.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo.FullPath">
+            <summary>
+            Gets the path to file system entry inside mount point <see cref="P:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo.MountPoint"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo.Kind">
+            <summary>
+            Gets file system entry kind.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo.Parent">
+            <summary>
+            Gets parent directory of file system entry.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo.Name">
+            <summary>
+            Gets file system entry name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo.MountPoint">
+            <summary>
+            Gets mount point for file system entry.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint">
+            <summary>
+            Represents abstract directory.
+            This could be regular folder on file system, zip file, HTTP server or anything else that can
+            present files in file system hierarchy.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint.MountPointUri">
+            <summary>
+            Returns mount point URI (as received from template package provider = not normalized).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint.Root">
+            <summary>
+            Returns root directory of the mount point.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint.EnvironmentSettings">
+            <summary>
+            <see cref="T:Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings"/> used to create this instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint.FileInfo(System.String)">
+            <summary>
+            Gets the file info for the file in the mount point.
+            </summary>
+            <param name="path">The path to the file relative to mount point root.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint.DirectoryInfo(System.String)">
+            <summary>
+            Gets the directory info for the directory in the mount point.
+            </summary>
+            <param name="path">The path to the directory relative to mount point root.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint.FileSystemInfo(System.String)">
+            <summary>
+            Gets the file system entry (file or directory) info for the entry in the mount point.
+            </summary>
+            <param name="path">The path to the file system entry relative to mount point root.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Mount.IMountPointFactory">
+            <summary>
+            Implement this factory and register it with <see cref="T:Microsoft.TemplateEngine.Abstractions.IComponentManager"/>.
+            Template engine calls <see cref="M:Microsoft.TemplateEngine.Abstractions.Mount.IMountPointFactory.TryMount(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint,System.String,Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint@)"/> with Uri as parameter on all factories
+            and use mount point from first successful factory.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Mount.IMountPointFactory.TryMount(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint,System.String,Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint@)">
+            <summary>
+            Tries to mount specified Uri.
+            </summary>
+            <param name="environmentSettings">Environment to be used.</param>
+            <param name="parent">Mount points can be mounted inside each other. Pass in parent or <c>null</c>.</param>
+            <param name="mountPointUri">Valid <see cref="T:System.Uri"/> that represents mount point.</param>
+            <param name="mountPoint">Resulting mount point.</param>
+            <returns><c>true</c> if mount point was successfully mounted.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ParameterChoice">
+            <summary>
+            Represents a choice that can be assigned to a parameter.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ParameterChoice.DisplayName">
+            <summary>
+            Gets or sets the friendly name of the choice to be displayed to the user.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ParameterChoice.Description">
+            <summary>
+            Gets or sets the description of the choice to be displayed to the user.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.ParameterChoice.Localize(Microsoft.TemplateEngine.Abstractions.ParameterChoiceLocalizationModel)">
+            <summary>
+            Localizes the choice with the given localization model.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.ParameterChoiceLocalizationModel">
+            <summary>
+            Represents the data necessary for the localization of a <see cref="T:Microsoft.TemplateEngine.Abstractions.ParameterChoice"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ParameterChoiceLocalizationModel.DisplayName">
+            <summary>
+            Gets the friendly name of the choice to be displayed to the user.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.ParameterChoiceLocalizationModel.Description">
+            <summary>
+            Gets the description of the choice to be displayed to the user.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Parameters.DataSource.NoSource">
+            <summary>
+            Value was not set.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Parameters.DataSource.User">
+            <summary>
+            Those are values supplied by the host. This usually means value(s) was/were set by user.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Parameters.DataSource.HostDefault">
+            <summary>
+            Value obtained via <see cref="M:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.TryGetHostParamDefault(System.String,System.String@)"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Parameters.DataSource.HostOnError">
+            <summary>
+            Value obtained via ITemplateEngineHost.OnParameterError.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Parameters.DataSource.Default">
+            <summary>
+            Value from template - <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.DefaultValue"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Parameters.DataSource.DefaultIfNoValue">
+            <summary>
+            Value from template - <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateParameter.DefaultIfOptionWithoutValue"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Parameters.DataSource.NameParameter">
+            <summary>
+            This corresponds to Name implicit parameter value.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Parameters.DataSource.HostOther">
+            <summary>
+            To be used in case host uses advanced object model to supply values to TemplateCreator or Generator and
+             wants to indicate that it used some custom logic of inferring value for parameter
+             (e.g. custom Host calculated value of parameter based on current context and supplied the value to template engine).
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Parameters.IParameterDefinitionSet">
+            <summary>
+            The set of descriptors of template parameters extracted from the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.IParameterDefinitionSet.Keys">
+            <summary>Gets an enumerable collection that contains the keys in the read-only dictionary.</summary>
+            <returns>An enumerable collection that contains the keys in the read-only dictionary.</returns>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.IParameterDefinitionSet.Values">
+            <summary>Gets an enumerable collection that contains the values in the read-only dictionary.</summary>
+            <returns>An enumerable collection that contains the values in the read-only dictionary.</returns>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.IParameterDefinitionSet.Item(System.String)">
+            <summary>Gets the element that has the specified key in the read-only dictionary.</summary>
+            <param name="key">The key to locate.</param>
+            <returns>The element that has the specified key in the read-only dictionary.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="key">key</paramref> is null.</exception>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The property is retrieved and <paramref name="key">key</paramref> is not found.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.IParameterDefinitionSet.ContainsKey(System.String)">
+            <summary>Determines whether the read-only dictionary contains an element that has the specified key.</summary>
+            <param name="key">The key to locate.</param>
+            <returns>true if the read-only dictionary contains an element that has the specified key; otherwise, false.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="key">key</paramref> is null.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.IParameterDefinitionSet.TryGetValue(System.String,Microsoft.TemplateEngine.Abstractions.ITemplateParameter@)">
+            <summary>Gets the value that is associated with the specified key.</summary>
+            <param name="key">The key to locate.</param>
+            <param name="value">When this method returns, the value associated with the specified key, if the key is found; otherwise, the default value for the type of the value parameter. This parameter is passed uninitialized.</param>
+            <returns>true if the object that implements the <see cref="T:System.Collections.Generic.IReadOnlyDictionary`2"></see> interface contains an element that has the specified key; otherwise, false.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="key">key</paramref> is null.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.IParameterDefinitionSet.AsReadonlyDictionary">
+            <summary>
+            Casts the Parameter set to IReadOnlyDictionary.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData">
+            <summary>
+            Data model for bound and merged dataset to be used to substitute and evaluate active sections within templates.
+             Data are possibly merged from multiple sources (default values in definition, values supplied by host, user, etc.).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData.ParametersDefinition">
+            <summary>
+            Descriptors for the parameters - inferred from the template.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData">
+            <summary>
+            Data model for template parameter instance data. Mainly used as input for <see cref="T:Microsoft.TemplateEngine.Abstractions.IGenerator"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData.#ctor(Microsoft.TemplateEngine.Abstractions.ITemplateParameter,System.Object,Microsoft.TemplateEngine.Abstractions.Parameters.DataSource,System.Boolean)">
+            <summary>
+            Creates new instance of <see cref="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData"/> class.
+            </summary>
+            <param name="parameterDefinition">Descriptor of the parameter inferred from the template.</param>
+            <param name="value">The value of the parameter derived from the instantiation context.</param>
+            <param name="source">Source of value for template instantiation in the current context.</param>
+            <param name="isEnabled">Indicates whether the parameter is enabled or disabled (and hence completely ignored).</param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData.ParameterDefinition">
+            <summary>
+            Descriptor of the parameter inferred from the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData.Value">
+            <summary>
+            The value of the parameter derived from the instantiation context (actual source of value indicated in <see cref="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData.DataSource"/>).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData.DataSource">
+            <summary>
+            Source of value for template instantiation in the current context.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData.IsEnabled">
+            <summary>
+            Indicates whether the parameter is enabled or disabled (and hence completely ignored). Disabling of parameter can be achieved via
+             condition or constant for IsEnabled property in Template.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet">
+            <inheritdoc />
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.Empty">
+            <summary>
+            Empty descriptor set.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.#ctor(System.Collections.Generic.IReadOnlyDictionary{System.String,Microsoft.TemplateEngine.Abstractions.ITemplateParameter})">
+            <summary>
+            Initializes new instance of the <see cref="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet"/> type.
+            </summary>
+            <param name="parameters"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.#ctor(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.ITemplateParameter})">
+            <summary>
+            Initializes new instance of the <see cref="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet"/> type.
+            </summary>
+            <param name="parameters"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.#ctor(Microsoft.TemplateEngine.Abstractions.Parameters.IParameterDefinitionSet)">
+            <summary>
+            Initializes new instance of the <see cref="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet"/> type.
+            </summary>
+            <param name="other">Instance to be cloned.</param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.Keys">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.Values">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.Count">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.Item(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.Item(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.AsReadonlyDictionary">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.ContainsKey(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.TryGetValue(System.String,Microsoft.TemplateEngine.Abstractions.ITemplateParameter@)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterDefinitionSet.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.#ctor(Microsoft.TemplateEngine.Abstractions.Parameters.IParameterDefinitionSet,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData})">
+            <summary>
+            Creates new instance of the <see cref="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData"/> data type.
+            </summary>
+            <param name="parameters"></param>
+            <param name="parameterData"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.#ctor(Microsoft.TemplateEngine.Abstractions.ITemplateInfo)">
+            <summary>
+            Creates new instance of the <see cref="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData"/> data type, not initialized with any actual instantiation data.
+            To be used for compatibility purposes in places where old dictionary parameter set was used.
+            </summary>
+            <param name="templateInfo"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.#ctor(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+            Creates new instance of the <see cref="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData"/> data type.
+            To be used for compatibility purposes in places where old dictionary parameter set was used.
+            </summary>
+            <param name="templateInfo"></param>
+            <param name="inputParameters"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.#ctor(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <summary>
+            Creates new instance of the <see cref="T:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData"/> data type.
+            To be used for compatibility purposes in places where old dictionary parameter set was used.
+            </summary>
+            <param name="templateInfo"></param>
+            <param name="inputParameters"></param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.Empty">
+            <summary>
+            Empty instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.ParametersDefinition">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.Count">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.Keys">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.Values">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.Item(Microsoft.TemplateEngine.Abstractions.ITemplateParameter)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.ContainsKey(Microsoft.TemplateEngine.Abstractions.ITemplateParameter)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetData.TryGetValue(Microsoft.TemplateEngine.Abstractions.ITemplateParameter,Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetDataExtensions.GetValue(Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData,System.String)">
+            <summary>
+            Fetches the value of parameter from the set, based on the name of the parameter.
+            </summary>
+            <param name="data"></param>
+            <param name="parameterName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.Parameters.ParameterSetDataExtensions.TryGetValue(Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData,System.String,Microsoft.TemplateEngine.Abstractions.Parameters.ParameterData@)">
+            <summary>
+            Attempts to fetch the value of parameter from the set, based on the name of the parameter.
+            </summary>
+            <param name="data"></param>
+            <param name="parameterName"></param>
+            <param name="parameterData"></param>
+            <returns>True if parameter data was found. False otherwise.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem">
+            <summary>
+            Abstraction of FileSystem APIs, this allows unit tests to execute without touching hard drive.
+            But also allows host to not store anything on physical file system, instead everything can be
+            kept in memory and discarded after running.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.DirectoryExists(System.String)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.Directory.Exists(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.FileExists(System.String)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.File.Exists(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.CreateFile(System.String)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.File.Create(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.CreateDirectory(System.String)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.Directory.CreateDirectory(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.GetCurrentDirectory">
+            <summary>
+            Same behavior as <see cref="M:System.IO.Directory.GetCurrentDirectory"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.EnumerateFileSystemEntries(System.String,System.String,System.IO.SearchOption)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.Directory.EnumerateFileSystemEntries(System.String,System.String,System.IO.SearchOption)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.FileCopy(System.String,System.String,System.Boolean)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.File.Copy(System.String,System.String,System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.DirectoryDelete(System.String,System.Boolean)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.Directory.Delete(System.String,System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.ReadAllText(System.String)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.File.ReadAllText(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.ReadAllBytes(System.String)">
+            <summary>
+            Opens a binary file, reads the contents of the file into a byte array, and then closes the file.
+            Same behavior as <see cref="M:System.IO.File.ReadAllBytes(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.WriteAllText(System.String,System.String)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.File.WriteAllText(System.String,System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.EnumerateDirectories(System.String,System.String,System.IO.SearchOption)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.Directory.EnumerateDirectories(System.String,System.String,System.IO.SearchOption)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.EnumerateFiles(System.String,System.String,System.IO.SearchOption)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.Directory.EnumerateFiles(System.String,System.String,System.IO.SearchOption)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.OpenRead(System.String)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.File.OpenRead(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.FileDelete(System.String)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.File.Delete(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.GetFileAttributes(System.String)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.File.GetAttributes(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.SetFileAttributes(System.String,System.IO.FileAttributes)">
+            <summary>
+            Same behavior as <see cref="M:System.IO.File.SetAttributes(System.String,System.IO.FileAttributes)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.WatchFileChanges(System.String,System.IO.FileSystemEventHandler)">
+            <summary>
+            Same behavior as <see cref="T:System.IO.FileSystemWatcher"/>.
+            </summary>
+            <remarks>
+            Creates new <see cref="T:System.IO.FileSystemWatcher"/> which monitors specified path and on any changes calls <paramref name="fileChanged"/> callback.
+            To stop watching dispose returned object.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.GetLastWriteTimeUtc(System.String)">
+            <summary>
+            Gets the last write time for the <paramref name="file"/> in UTC.
+            Same behavior as <see cref="M:System.IO.File.GetLastWriteTimeUtc(System.String)"/>.
+            </summary>
+            <param name="file">The file to get last write time for.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.SetLastWriteTimeUtc(System.String,System.DateTime)">
+            <summary>
+            Sets the last write time for the <paramref name="file"/> in UTC.
+            Same behavior as <see cref="M:System.IO.File.SetLastWriteTimeUtc(System.String,System.DateTime)"/>.
+            </summary>
+            <param name="file">The file to set last write time for.</param>
+            <param name="lastWriteTimeUtc">the time to set.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.PhysicalFileSystem.IPhysicalFileSystem.PathRelativeTo(System.String,System.String)">
+            <summary>
+            If target is a sub-path of relativeTo a relative bath from relativeTo to sub-path will be returned.
+            </summary>
+            <param name="target">Path to be converted to relative if possible.</param>
+            <param name="relativeTo">Base of the relative path to be returned.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.PrecedenceDefinition">
+            <summary>
+            Indicates parameter defined precedence.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.PrecedenceDefinition.Required">
+            <summary>
+            Parameter value is unconditionally required.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.PrecedenceDefinition.ConditionalyRequired">
+            <summary>
+            Set if and only if only the IsRequiredCondition is set.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.PrecedenceDefinition.Optional">
+            <summary>
+            Parameter value is not required from user.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.PrecedenceDefinition.Implicit">
+            <summary>
+            Parameter value is implicitly populated.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.PrecedenceDefinition.ConditionalyDisabled">
+            <summary>
+            Parameter might become disabled - value would not be needed nor used in such case.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.PrecedenceDefinition.Disabled">
+            <summary>
+            Parameter is disabled - it's value is not required and will not be used.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo">
+            <summary>
+            Template with information about matching the filters.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo.Info">
+            <summary>
+            Gets the template the filters applied to.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo.MatchDisposition">
+            <summary>
+            Gets match information for the filters applied to template.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo.AddMatchDisposition(Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo)">
+            <summary>
+            Adds the match information.
+            </summary>
+            <param name="newDisposition"></param>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo">
+            <summary>
+            Represents match information for the filter applied to template.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.#ctor(System.String,System.String,Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind)">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo"/> instance.
+            </summary>
+            <param name="name">the name for the match. See default names in <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn"/>.</param>
+            <param name="value">the value matched for.</param>
+            <param name="kind">the match kind between <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/> value and <paramref name="value"/>.</param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.Kind">
+            <summary>
+            Defines the match status.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.Name">
+            <summary>
+            Gets the name of the match.
+            For default filter names, see <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn"/>).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.Value">
+            <summary>
+            Gets the value provided to match for.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn">
+            <summary>
+            Frequently used filter names. They are also used by Utils.WellKnownSearchFilters.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Name">
+            <summary>
+            Template name <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Name"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.ShortName">
+            <summary>
+            Template short names <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.ShortNameList"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Classification">
+            <summary>
+            Template classifications <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Classifications"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Language">
+            <summary>
+            Template language (<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateInfo.Tags"/> named "language").
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Type">
+            <summary>
+            Template type (<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateInfo.Tags"/> named "type").
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Baseline">
+            <summary>
+            Template baseline names <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.BaselineInfo"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Author">
+            <summary>
+            Template author <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Author"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo.BuiltIn.Constraint">
+            <summary>
+            Prefix used for <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint"/> matching.
+            The full name is 'Constraint.&lt;constraint type&gt;'.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind">
+            <summary>
+            Defines the match kind: how the filter with its input values matches the property(ies) of <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Exact">
+            <summary>
+            The filter exactly matches the value of <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Partial">
+            <summary>
+            The filter partially matches the value of <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            For example, <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateMetadata.Name"/> contains the value of the filter but not equal to it.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.Mismatch">
+            <summary>
+            The filter does not match the value of <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            Example: the filter is checking <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateInfo.CacheParameters"/> and the parameter name is not defined in <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.InvalidName">
+            <summary>
+            The input passed to the filter is incorrect, impossible to identify property of <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/> to check.
+            Example: the filter is checking <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateInfo.CacheParameters"/> and the parameter name is not defined in <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchKind.InvalidValue">
+            <summary>
+            The input passed to the filter is incorrect: the value is different format that is supported by <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/> property.
+            Example: the filter is checking <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateInfo.CacheParameters"/> and the parameter is boolean but value to match with is string.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage">
+            <summary>
+            Represents the package that can be managed by <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/>. <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> can additionally install, update and uninstall template package.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage.DisplayName">
+            <summary>
+            Gets the name to be used when displaying template package in UI.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage.Identifier">
+            <summary>
+            Gets the identifier of template package.
+            Identifier should be unique in scope of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> that manages the <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/>.
+            </summary>
+            <remarks>
+            This can be NuGet PackageId, path to .nupkg, folder name, depends on <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/> implementation.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage.Installer">
+            <summary>
+            Gets <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/> that installed the template package.
+            This serves as helper for grouping template package by installer so caller doesn't need to keep track of installer->template package relation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage.ManagedProvider">
+            <summary>
+            Gets <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> that manages the template package.
+            This serves as helper for grouping packages by <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/>
+            so caller doesn't need to keep track of "managed provider"->"managed package" relation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage.Version">
+            <summary>
+            Gets the version of the template package.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage.IsLocalPackage">
+            <summary>
+            Indicates whether package was installed from local source (e.g. local extracted folder, local nuget etc.).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage.GetDetails">
+            <summary>
+            Gets additional details about template package. The details depend on <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/> implementation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider">
+            <summary>
+            The provider is responsible for managing <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/>s.
+            Besides base functionality of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider"/>, it adds ability to install, update and uninstall template packages.
+            </summary>
+            <remarks>
+            The <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> keeps track of template packages managed by the provider. The actual installation is done by <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/> implementations.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider.GetLatestVersionsAsync(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage},System.Threading.CancellationToken)">
+            <summary>
+            Gets the latest version for the template packages.
+            </summary>
+            <param name="templatePackages">List of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> to get latest version for.</param>
+            <param name="cancellationToken"></param>
+            <returns>List of <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.CheckUpdateResult"/> containing the check results.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider.UpdateAsync(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest},System.Threading.CancellationToken)">
+            <summary>
+            Updates the template packages given in <paramref name="updateRequests"/> to specified version.
+            </summary>
+            <param name="updateRequests">List of <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.UpdateRequest"/> to be processed.</param>
+            <param name="cancellationToken"></param>
+            <returns>List of <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.UpdateResult"/> with update results.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider.UninstallAsync(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage},System.Threading.CancellationToken)">
+            <summary>
+            Uninstalls the template packages.
+            </summary>
+            <param name="templatePackages">list of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/>s to be uninstalled.</param>
+            <param name="cancellationToken"></param>
+            <returns>List of <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.UninstallResult"/> with uninstall results.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider.InstallAsync(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest},System.Threading.CancellationToken)">
+            <summary>
+            Installs new <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> based on <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest"/> data.
+            All <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/>s are considered via <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.CanInstallAsync(Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest,System.Threading.CancellationToken)"/> and if only 1 <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller"/>
+            returns <see langword="true" />. <see cref="M:Microsoft.TemplateEngine.Abstractions.Installer.IInstaller.InstallAsync(Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.Threading.CancellationToken)"/> is executed and result is returned.
+            </summary>
+            <param name="installRequests">Contains the list of <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest"/> to perform.</param>
+            <param name="cancellationToken"></param>
+            <returns>List of <see cref="T:Microsoft.TemplateEngine.Abstractions.Installer.InstallResult"/> with installation results.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage">
+            <summary>
+            Represents the template package.
+            Template package is a folder, .nupkg or other container that can contain single or multiple templates.
+            See <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider"/> for more information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage.LastChangeTime">
+            <summary>
+            Gets the last changed time for the template package.
+            To avoid scanning for changes every time, template engine is caching templates from
+            template packages, this timestamp is used to invalidate content and re-scan this template package.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage.MountPointUri">
+            <summary>
+            Gets mount point URI - unique location of template package.
+            This can be full URI like file://, http:// or simply file path.
+            </summary>
+            <remarks>
+            Supported mount points are defined in <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint"/> implementations.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage.Provider">
+            <summary>
+            Gets the <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider"/> that created the template package.
+            This is mostly helper for grouping packages by provider
+            so caller doesn't need to keep track of provider->package relation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider">
+            <summary>
+            Provides set of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage"/>s available to the host.
+            </summary>
+        </member>
+        <member name="E:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider.TemplatePackagesChanged">
+            <summary>
+            Raised when template packages have been changed. Indicates that caller should refresh the list of template packages in use.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider.Factory">
+            <summary>
+            Gets <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProviderFactory"/> that created the provider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider.GetAllTemplatePackagesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets the list of template packages available for the provider.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns>The list of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage"/>s.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProviderFactory">
+            <summary>
+            Factory responsible for creating <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider"/> or <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/>.
+            This is registered with <see cref="T:Microsoft.TemplateEngine.Abstractions.IComponentManager"/> either via <see cref="M:Microsoft.TemplateEngine.Abstractions.IComponentManager.Register(System.Type)"/> or
+            <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.BuiltInComponents"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProviderFactory.DisplayName">
+            <summary>
+            Gets the readable name of the factory.
+            This is used for two reasons:
+                1) To show user which provider is source of template packages (when debug/verbose flag is set)
+                2) To allow the user to pick specific provider to install templates to.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProviderFactory.CreateProvider(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings)">
+            <summary>
+            Creates new provider with specified environment, the provider may also implement <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.TemplatePackage">
+            <summary>
+            Basic <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage"/> implementation so each
+            <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider"/> doesn't need to re-implement it.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.TemplatePackage.Provider">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.TemplatePackage.MountPointUri">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.TemplatePackage.LastChangeTime">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedence">
+            <summary>
+            Indication of template parameter precedence and conditions that could influence it.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedence.Default">
+            <summary>
+            Default optional precedence.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedence.#ctor(Microsoft.TemplateEngine.Abstractions.PrecedenceDefinition,System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedence"/> class.
+            </summary>
+            <param name="precedenceDefinition"></param>
+            <param name="isRequiredCondition"></param>
+            <param name="isEnabledCondition"></param>
+            <param name="isRequired"></param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedence.PrecedenceDefinition">
+            <summary>
+            Actual precedence definition - can be used to sort parameters (e.g. for tab completion purposes).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedence.IsRequiredCondition">
+            <summary>
+            IsRequiredCondition value - if it was specified in template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedence.IsEnabledCondition">
+            <summary>
+            IsEnabledCondition value - if it was specified in template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedence.IsRequired">
+            <summary>
+            Indicates whether parameter is unconditionally required.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedence.CanBeRequired">
+            <summary>
+            Indicates whether parameter might be required (depending on values of other parameters).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedenceExtensions.ToPrecedenceDefinition(Microsoft.TemplateEngine.Abstractions.TemplateParameterPriority)">
+            <summary>
+            Converts legacy parameter priority to the PrecedenceDefinition.
+            </summary>
+            <param name="priority"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedenceExtensions.ToTemplateParameterPrecedence(Microsoft.TemplateEngine.Abstractions.TemplateParameterPriority)">
+            <summary>
+            Converts legacy parameter priority to the TemplateParameterPrecedence.
+            </summary>
+            <param name="priority"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Abstractions.TemplateParameterPrecedenceExtensions.ToTemplateParameterPriority(Microsoft.TemplateEngine.Abstractions.PrecedenceDefinition)">
+            <summary>
+            Converts the PrecedenceDefinition to legacy TemplateParameterPriority.
+            </summary>
+            <param name="precedenceDefinition"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Abstractions.TemplateParameterPriority">
+            <summary>
+            Defines the priority of a template parameter.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateParameterPriority.Required">
+            <summary>
+            The parameter is mandatory.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateParameterPriority.Optional">
+            <summary>
+            The parameter is optional.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Abstractions.TemplateParameterPriority.Implicit">
+            <summary>
+            The parameter is implicit (built-in).
+            </summary>
+        </member>
+    </members>
+</doc>

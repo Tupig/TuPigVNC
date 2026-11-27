@@ -789,6 +789,57 @@ public partial class MainWindow : Window
         AboutPage.Visibility = page == "about" ? Visibility.Visible : Visibility.Collapsed;
         if (records) RefreshHistory();
         if (page == "settings") RenderSettings();
+
+        // 设置页字段多、关于页有更新说明，固定 560 会把内容挤到看不见——
+        // 用户明确要求「点设置时自适应高度，别隐藏」。切到这两页就按内容
+        // 撑高窗口（有 MaxHeight 兜底），切回记录页恢复默认高度。
+        AdaptWindowHeight(page);
+    }
+
+    /* 记录页默认高度；设置/关于页按内容撑高。 */
+    private const double DefaultWindowHeight = 560;
+
+    /// <summary>
+    /// 按当前页内容调整窗口高度：需要多高就长多高，一屏看完不滚动。
+    ///
+    /// 做法是把窗口切到 SizeToContent=Height（内容决定高度），
+    /// 主区第 3 行是 Height="*"，在 SizeToContent 下会塌成内容高度，
+    /// 于是窗口刚好包住内容。记录页恢复固定高度，避免列表项
+    /// 多少把窗口拉得忽高忽低。
+    /// </summary>
+    private void AdaptWindowHeight(string page)
+    {
+        if (!IsLoaded || _mainRow is null) return;
+
+        bool fitsContent = page is "settings" or "about";
+
+        // 记录页：主区吃满窗口（Height="*"），列表在自己的区域里滚动。
+        // 设置/关于页：主区改成 Auto，让内容决定高度，窗口再跟着长。
+        _mainRow.Height = fitsContent ? GridLength.Auto : new GridLength(1, GridUnitType.Star);
+
+        if (!fitsContent)
+        {
+            Height = DefaultWindowHeight;
+            return;
+        }
+
+        // 等布局跑完再量，否则拿到的还是切换前的尺寸。
+        Dispatcher.BeginInvoke(new Action(() =>
+        {
+            var pageRoot = page == "settings" ? (FrameworkElement)SettingsPage : AboutPage;
+            if (pageRoot.ActualHeight <= 0) return;
+
+            double chrome =
+                (TitleBarRow?.ActualHeight ?? 32) +
+                (AddressBarRow?.ActualHeight ?? 0) +
+                (StatusBarRow?.ActualHeight ?? 0);
+
+            double target = pageRoot.ActualHeight + chrome + 4;
+
+            // 上限是屏幕工作区减边距，避免窗口比屏幕还高。
+            double maxAllowed = SystemParameters.WorkArea.Height - 40;
+            Height = Math.Clamp(target, DefaultWindowHeight, Math.Min(maxAllowed, MaxHeight));
+        }), System.Windows.Threading.DispatcherPriority.Loaded);
     }
     private void Search_TextChanged(object sender, TextChangedEventArgs e)
     {
@@ -1724,7 +1775,14 @@ public partial class MainWindow : Window
     private void SetButton(Button button, string label, string icon) => SetLabel(button, label, icon);
     private void SetLabel(ContentControl control, string label, string icon)
     {
-        var panel = new StackPanel { Orientation = Orientation.Horizontal };
+        // 图标和文字必须显式垂直居中，否则两者基线不一致——按不同字体
+        // 度量算出来的行高不同，看起来就是「文字没和图标对齐」。
+        var panel = new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Left,
+        };
         var path = new ShapePath
         {
             Data = Geometry.Parse(IconPaths[icon]), Width = 14, Height = 14, Stretch = Stretch.Uniform,
@@ -1734,7 +1792,12 @@ public partial class MainWindow : Window
         };
         path.SetBinding(ShapePath.StrokeProperty, new System.Windows.Data.Binding("Foreground") { Source = control });
         panel.Children.Add(path);
-        panel.Children.Add(new TextBlock { Text = label, VerticalAlignment = VerticalAlignment.Center });
+        panel.Children.Add(new TextBlock
+        {
+            Text = label,
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Left,
+        });
         control.Content = panel;
         AutomationProperties.SetName(control, label);
     }

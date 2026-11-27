@@ -58,6 +58,9 @@ public:
   // 显示时套用 Windows 11 系统圆角（对应设计稿的 20px 圆角卡片）
   void show() override;
 
+  // DEBUG: 临时红块，用来确认 draw() 是否执行
+  void draw() override;
+
 protected:
   static void handleLoad(Fl_Widget *widget, void *data);
   static void handleSaveAs(Fl_Widget *widget, void *data);

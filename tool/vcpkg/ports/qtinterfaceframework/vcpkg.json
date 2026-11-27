@@ -1,0 +1,46 @@
+{
+  "name": "qtinterfaceframework",
+  "version": "6.12.0",
+  "description": "The Qt Interface Framework module provides both the tools and the core APIs, for you to implement Middleware APIs, Middleware Back ends, and Middleware Services.",
+  "homepage": "https://www.qt.io",
+  "license": null,
+  "dependencies": [
+    {
+      "name": "pkgconf",
+      "host": true
+    },
+    {
+      "name": "qtdeclarative",
+      "default-features": false
+    },
+    {
+      "name": "qtinterfaceframework",
+      "host": true,
+      "default-features": false
+    },
+    {
+      "name": "qtremoteobjects",
+      "default-features": false
+    },
+    {
+      "name": "qttools",
+      "default-features": false
+    },
+    {
+      "name": "vcpkg-get-python-packages",
+      "host": true,
+      "default-features": false
+    }
+  ],
+  "features": {
+    "mqtt": {
+      "description": "Enable the QtMqtt based ifcodegen backend templates",
+      "dependencies": [
+        {
+          "name": "qtmqtt",
+          "default-features": false
+        }
+      ]
+    }
+  }
+}

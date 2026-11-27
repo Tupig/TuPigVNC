@@ -3,7 +3,8 @@
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
  Title="TuPigVNC" Icon="/TuPigVNC;component/Assets/TuPigVNC.ico" Width="1120" Height="780" MinWidth="720" MinHeight="480"
  Background="{StaticResource BgBrush}" Foreground="{StaticResource TextBrush}"
- FontFamily="Segoe UI, Microsoft YaHei UI" FontSize="13"
+ FontFamily="Microsoft YaHei UI, Segoe UI" FontSize="14"
+ TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="ClearType"
  UseLayoutRounding="True" SnapsToDevicePixels="True" WindowStartupLocation="CenterScreen"
  Closing="Window_Closing" Deactivated="Window_Deactivated"
  PreviewKeyDown="Window_KeyDown" PreviewKeyUp="Window_KeyUp">
@@ -12,7 +13,7 @@
    <Setter Property="MinHeight" Value="36"/>
    <Setter Property="Padding" Value="12,6"/>
    <Setter Property="Margin" Value="0,0,8,0"/>
-   <Setter Property="FontSize" Value="13"/>
+   <Setter Property="FontSize" Value="14"/>
    <Setter Property="Height" Value="Auto"/>
    <Setter Property="Template">
     <Setter.Value>

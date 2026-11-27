@@ -1,0 +1,96 @@
+vcpkg_from_github(
+    OUT_SOURCE_PATH SOURCE_PATH
+    REPO nats-io/nats.c
+    REF "v${VERSION}"
+    SHA512 8f2574a67119fa93c49990519a4b445eeea451417113ee6fc8de4792b2d400f06447001239090443f047e528a8446f9fe294d6544464622020de1e32aeb7fd7f
+    HEAD_REF main
+    PATCHES
+        fix-sodium-dep.patch
+        fix_install_path.patch
+)
+
+vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
+    FEATURES
+        "sodium"     NATS_BUILD_USE_SODIUM
+        "streaming"  NATS_BUILD_STREAMING
+)
+
+if (VCPKG_LIBRARY_LINKAGE STREQUAL dynamic)
+    list(APPEND OPTIONS -DNATS_BUILD_LIB_SHARED=ON)
+    list(APPEND OPTIONS -DNATS_BUILD_LIB_STATIC=OFF)
+else()
+    list(APPEND OPTIONS -DNATS_BUILD_LIB_SHARED=OFF)
+    list(APPEND OPTIONS -DNATS_BUILD_LIB_STATIC=ON)
+endif()
+
+vcpkg_cmake_configure(
+    SOURCE_PATH ${SOURCE_PATH}
+    OPTIONS
+        ${FEATURE_OPTIONS}
+        ${OPTIONS}
+        -DBUILD_TESTING=OFF
+        -DNATS_BUILD_EXAMPLES=OFF
+)
+
+vcpkg_cmake_install(ADD_BIN_TO_PATH)
+
+if(VCPKG_TARGET_IS_WINDOWS)
+    if (VCPKG_LIBRARY_LINKAGE STREQUAL dynamic)
+        if(EXISTS "${CURRENT_PACKAGES_DIR}/lib/nats.dll")
+            file(MAKE_DIRECTORY "${CURRENT_PACKAGES_DIR}/bin")
+            file(RENAME "${CURRENT_PACKAGES_DIR}/lib/nats.dll" "${CURRENT_PACKAGES_DIR}/bin/nats.dll")
+        endif()
+        if(EXISTS "${CURRENT_PACKAGES_DIR}/debug/lib/natsd.dll")
+            file(MAKE_DIRECTORY "${CURRENT_PACKAGES_DIR}/debug/bin")
+            file(RENAME "${CURRENT_PACKAGES_DIR}/debug/lib/natsd.dll" "${CURRENT_PACKAGES_DIR}/debug/bin/natsd.dll")
+        endif()
+    endif()
+endif()
+
+vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/${PORT})
+
+if(VCPKG_TARGET_IS_WINDOWS)
+    if (VCPKG_LIBRARY_LINKAGE STREQUAL dynamic)
+        if(EXISTS "${CURRENT_PACKAGES_DIR}/share/cnats/cnats-config-debug.cmake")
+            vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/share/cnats/cnats-config-debug.cmake"
+                "\${_IMPORT_PREFIX}/debug/lib/natsd.dll" "\${_IMPORT_PREFIX}/debug/bin/natsd.dll")
+        endif()
+        if(EXISTS "${CURRENT_PACKAGES_DIR}/share/cnats/cnats-config-release.cmake")
+            vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/share/cnats/cnats-config-release.cmake"
+                "\${_IMPORT_PREFIX}/lib/nats.dll" "\${_IMPORT_PREFIX}/bin/nats.dll")
+        endif()
+    endif()
+endif()
+
+if(NOT VCPKG_TARGET_IS_WINDOWS)
+    set(pc_requires openssl)
+    if("sodium" IN_LIST FEATURES)
+        list(APPEND pc_requires libsodium)
+    endif()
+    if("streaming" IN_LIST FEATURES)
+        list(APPEND pc_requires libprotobuf-c)
+    endif()
+    list(JOIN pc_requires " " pc_requires)
+
+    set(pc_library nats)
+    if(VCPKG_LIBRARY_LINKAGE STREQUAL static)
+        string(APPEND pc_library "_static")
+    endif()
+    set(pc_libs "-lnats\nLibs.private: -L\"\${libdir}\" -lnats")
+    set(pc_private "Libs.private: -pthread\nRequires.private: ${pc_requires}")
+    vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/lib/pkgconfig/libnats.pc"
+        "${pc_libs}" "-l${pc_library}\n${pc_private}")
+    if(NOT VCPKG_BUILD_TYPE)
+        vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/debug/lib/pkgconfig/libnats.pc"
+            "${pc_libs}" "-l${pc_library}d\n${pc_private}")
+    endif()
+endif()
+
+vcpkg_fixup_pkgconfig()
+
+vcpkg_copy_pdbs()
+
+file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
+
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")
+

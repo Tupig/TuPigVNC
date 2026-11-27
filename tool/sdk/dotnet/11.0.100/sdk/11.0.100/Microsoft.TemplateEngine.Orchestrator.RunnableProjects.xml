@@ -1,0 +1,1698 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.TemplateEngine.Orchestrator.RunnableProjects</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IDeferredMacro">
+            <summary>
+            An interface for macros created that can create the config from other config (deferred config).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IDeferredMacro.CreateConfig(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfig)">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfig"/> from <paramref name="rawConfig"/>.
+            </summary>
+            <remarks>
+            Deprecated as <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro"/> can process only own configuration.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IDeterministicModeMacro">
+            <summary>
+            A macro that supports deterministic mode (for test purposes).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IDeterministicModeMacro.EvaluateConfigDeterministically(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IVariableCollection,Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfig)">
+            <summary>
+            Evaluates the macro based on <paramref name="config"/>. The result is modification of variable collection <paramref name="variables"/>.
+            The evaluation is performed deterministically, i.e. different external factors cannot impact the result and the recurrent evaluation is guaranteed to provide same result.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IDeterministicModeMacro`1">
+            <summary>
+            A macro that supports deterministic mode (for test purposes).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IDeterministicModeMacro`1.EvaluateDeterministically(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IVariableCollection,`0)">
+            <summary>
+            Evaluates the macro based on <paramref name="config"/>. The result is modification of variable collection <paramref name="variables"/>.
+            The evaluation is performed deterministically, i.e. different external factors cannot impact the result and the recurrent evaluation is guaranteed to provide same result.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolConfig">
+            <summary>
+            Represents the configuration of <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolMacro"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolConfig.DataType">
+            <summary>
+            Gets data type of the variable to be created.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolConfig.Parameters">
+            <summary>
+            Gets the collection of additional macro parameters, where key is a parameter name, and value is a JSON value serialized to string.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolMacro">
+            <summary>
+            An interface for a macro created via generated symbols.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolMacro.CreateConfig(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolConfig)">
+            <summary>
+            Creates a macro configuration based on the provided engine environment settings and generated symbol configuration.
+            This method allows to instantiate generated macro during <seealso cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.GlobalRunConfig.Macros"></seealso> population.
+            </summary>
+            <param name="environmentSettings">The engine environment settings.</param>
+            <param name="generatedSymbolConfig">The generated symbol configuration.</param>
+            <returns>The macro configuration.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolMacro`1">
+            <summary>
+            An interface for a typed macro created via generated symbols.
+            </summary>
+            <typeparam name="T">The type of macro configuration.</typeparam>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolMacro`1.CreateConfig(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolConfig)">
+            <summary>
+            Creates a macro configuration based on the provided engine environment settings and generated symbol configuration.
+            Method is needed for supporting <seealso cref="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro.EvaluateConfig(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IVariableCollection,Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfig)"/> invocation.
+            </summary>
+            <param name="environmentSettings">The engine environment settings.</param>
+            <param name="generatedSymbolConfig">The generated symbol configuration.</param>
+            <returns>The typed macro configuration <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro">
+            <summary>
+            Represents a macro that can modify variable collection before template instantiation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro.Type">
+            <summary>
+            Gets macro type. The type identifies the macro and should be unique.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro.EvaluateConfig(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IVariableCollection,Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfig)">
+            <summary>
+            Evaluates the macro based on <paramref name="config"/>. The result is modification of variable collection <paramref name="vars"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro`1">
+            <summary>
+            Represents a macro that can modify variable collection before template instantiation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro`1.Evaluate(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IVariableCollection,`0)">
+            <summary>
+            Evaluates the macro based on <paramref name="config"/>. The result is modification of variable collection <paramref name="variables"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfig">
+            <summary>
+            Base interface for <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro"/> configurations.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfig.VariableName">
+            <summary>
+            Gets the variable name for this <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfig.Type">
+            <summary>
+            Gets <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro"/> type.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfigDependency">
+            <summary>
+            Represents a configuration for the macro that configures dependencies on other symbols.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfigDependency.Dependencies">
+            <summary>
+            Gets the set of symbol names required by the macro.
+            ResolveSymbolDependencies method should be called prior to accessing the property.
+            Before it the property won't be populated.
+            </summary>
+            <exception cref="T:System.ArgumentException">when <see cref="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfigDependency.ResolveSymbolDependencies(System.Collections.Generic.IReadOnlyList{System.String})"/> is not called for the property population.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfigDependency.ResolveSymbolDependencies(System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Resolves the macro dependencies out of the provided list of symbols.
+            As the result of method execution, <see cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfigDependency.Dependencies" /> should be populated.
+            </summary>
+            <param name="symbols">The list of symbols that exist in configuration.
+            The method should identify which of those symbols are the dependencies for given macro.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.BindSymbolEvaluator.EvaluateBindSymbolsAsync(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BindSymbol},Microsoft.TemplateEngine.Abstractions.IVariableCollection,System.Threading.CancellationToken)">
+            <summary>
+            Evaluates bind symbols from external sources.
+            Sets the evaluated symbols to <paramref name="variableCollection"/>.
+            </summary>
+            <param name="symbols">The symbols to evaluate.</param>
+            <param name="variableCollection">The variable collection to set results to.</param>
+            <param name="cancellationToken">The cancellation token that allows cancelling the operation.</param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseReplaceSymbol.Replaces">
+            <summary>
+            Gets the text that should be replaced by the value of this symbol.
+            Corresponds to "replaces" JSON property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseReplaceSymbol.ReplacementContexts">
+            <summary>
+            Gets the replacement contexts that determine when this symbol is allowed to do replacement operations.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseReplaceSymbol.FileRename">
+            <summary>
+            Gets the part of the file name that should be replaced with the value of this symbol.
+            Corresponds to "fileRename" JSON property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseSymbol.Name">
+            <summary>
+            Gets the name of the symbol.
+            Corresponds to key that defines the symbol in "symbols" JSON object.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseSymbol.Type">
+            <summary>
+            Gets the type of the symbol.
+            Corresponds to "type" JSON property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseSymbol.IsImplicit">
+            <summary>
+            Indicates that the symbol is implicit and was created by generator itself.
+            Those symbols are not part of JSON.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseValueSymbol.#ctor(System.String,System.Text.Json.Nodes.JsonObject,System.String,System.Boolean)">
+            <summary>
+            Initializes this instance with given JSON data.
+            </summary>
+            <param name="name"></param>
+            <param name="jObject"></param>
+            <param name="defaultOverride"></param>
+            <param name="symbolConditionsSupported"></param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseValueSymbol.DefaultValue">
+            <summary>
+            Gets default value of the symbol.
+            Corresponds to "defaultValue" JSON property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseValueSymbol.Forms">
+            <summary>
+            Gets the forms defined for the symbol
+            Corresponds to "forms" JSON property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseValueSymbol.IsRequired">
+            <summary>
+            Specifies if the symbol is required.
+            Corresponds to "isRequired" JSON property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseValueSymbol.DataType">
+            <summary>
+            Gets the data type of the symbol.
+            Corresponds to "datatype" JSON property.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BindSymbol">
+            <summary>
+            Defines the symbol of type "bind".
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BindSymbol.Binding">
+            <summary>
+            Gets the name of the host property or the environment variable which will provide the value of this symbol.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BindSymbol.Type">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BindSymbol.DefaultValue">
+            <summary>
+            Gets default value of the symbol.
+            Corresponds to "defaultValue" JSON property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BindSymbol.DataType">
+            <summary>
+            Gets the data type of the symbol.
+            Corresponds to "datatype" JSON property.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ComputedSymbol">
+            <summary>
+            Defines the symbol of type "computed".
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ComputedSymbol.Value">
+            <summary>
+            Defines the value of the computed symbol.
+            Corresponds to "value" JSON property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ComputedSymbol.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ComputedSymbol.Evaluator">
+            <summary>
+            Defines the evaluator to be used when computing the symbol value.
+            Corresponds to "evaluator" JSON property.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ConditionedConfigurationElement._conditionResult">
+            <summary>
+            Stores the result of the condition evaluation. If the condition
+            was not evaluated before, the value is null.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ConditionedConfigurationElement.Condition">
+            <summary>
+            Gets the condition string to be evaluated so that configuration element is applied.
+            Usually corresponds to "condition" JSON property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ConditionedConfigurationElement.ConditionResult">
+            <summary>
+            Stores the result of condition evaluation. <see cref="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ConditionedConfigurationElement.EvaluateCondition(Microsoft.Extensions.Logging.ILogger,Microsoft.TemplateEngine.Abstractions.IVariableCollection)"/> should be done before accessing this property.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">when the property is accessed prior to <see cref="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ConditionedConfigurationElement.EvaluateCondition(Microsoft.Extensions.Logging.ILogger,Microsoft.TemplateEngine.Abstractions.IVariableCollection)"/> method is called.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ConditionedConfigurationElement.EvaluateCondition(Microsoft.Extensions.Logging.ILogger,Microsoft.TemplateEngine.Abstractions.IVariableCollection)">
+            <summary>
+            Evaluates the condition <see cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ConditionedConfigurationElement.Condition"/>.
+            </summary>
+            <param name="logger">the logger to be used to log the messages during evaluation.</param>
+            <param name="variables">the variable collection that will be used to evaluate the condition.</param>
+            <returns>true if condition evaluates to true or not specified, otherwise false.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.CustomFileGlobModel">
+            <summary>
+            Defines operation for specific files.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.CustomFileGlobModel.Glob">
+            <summary>
+            Gets the glob which defines the files that operations should be applied to.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.CustomFileGlobModel.Operations">
+            <summary>
+            Gets the collection of operations to apply.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.CustomFileGlobModel.FlagPrefix">
+            <summary>
+            Gets the prefix that is used in flags.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.CustomFileGlobModel.VariableFormat">
+            <summary>
+            Gets the variable configuration format.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.CustomOperationModel">
+            <summary>
+            Defines the operation configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.CustomOperationModel.Type">
+            <summary>
+            Gets the operation type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.CustomOperationModel.Configuration">
+            <summary>
+            Gets the operation raw configuration in JSON format.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.DerivedSymbol">
+            <summary>
+            Defines the symbol of type "derived".
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.DerivedSymbol.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.DerivedSymbol.ValueTransform">
+            <summary>
+            Defines the transformation to be applied to <see cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.DerivedSymbol.ValueSource"/> (value form).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.DerivedSymbol.ValueSource">
+            <summary>
+            Defines the variable to be transformed.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ExtendedFileSource">
+            <summary>
+            Defines the sources. Corresponds to the element of "sources" JSON array.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ExtendedFileSource.CopyOnly">
+            <summary>
+            Defines the files to be just copied when instantiating template. Operations will not be applied to them.
+            Can be glob. If single value is given, it can be also a filename where from to read this configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ExtendedFileSource.Include">
+            <summary>
+            Defines the files to be include when instantiating template. Operations will be applied to them.
+            Can be glob. If single value is given, it can be also a filename where from to read this configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ExtendedFileSource.Exclude">
+            <summary>
+            Defines the files to be excluded when instantiating template. These files will not be processed during template instantiation.
+            Can be glob. If single value is given, it can be also a filename where from to read this configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ExtendedFileSource.Rename">
+            <summary>
+            Defines the files to be renamed when instantiating the template. The key is a source file name, the value is the final file name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ExtendedFileSource.Source">
+            <summary>
+            Defines the path to the source files to apply the settings to. The path is relative to the directory containing the .template.config folder.
+            Default value: "./".
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ExtendedFileSource.Target">
+            <summary>
+            Defines the path the content should be written to. The path is relative to the directory the user has specified to instantiate the template to.
+            Default value: "./".
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ExtendedFileSource.Modifiers">
+            <summary>
+            A list of additional source information which gets added to the top-level source information, based on evaluation the corresponding "source.modifiers.condition".
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.GeneratedSymbol">
+            <summary>
+            Defines the symbol of type "generated".
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.GeneratedSymbol.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.GeneratedSymbol.DataType">
+            <summary>
+            Defines the data type of generated value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.GeneratedSymbol.Generator">
+            <summary>
+            Refers to the Type property value of a concrete IMacro.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.GeneratedSymbol.Parameters">
+            <summary>
+            Defines the parameters to be used for generating the value.
+            - the key is a parameter name
+            - the value is a JSON value.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ManualInstructionModel">
+            <summary>
+            Represents an instruction that should be manually performed by the user
+            as part of a post action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ManualInstructionModel.Id">
+            <summary>
+            Gets the string identifying this instruction within the post action.
+            This property can be null if the author has not provided one. In that case this manual instruction
+            cannot be referenced in a context where an id is required, such as in templatestrings.json files.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ManualInstructionModel.Text">
+            <summary>
+            Gets the text explaining the steps the user should take.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ManualInstructionModel.Localize(System.String)">
+            <summary>
+            Localizes this manual instruction by replacing the value of the <see cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ManualInstructionModel.Text"/> property the given text.
+            </summary>
+            <param name="localizedText">Localized <see cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ManualInstructionModel.Text"/>.</param>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol">
+            <summary>
+            Defines the symbol of type "parameter".
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol.#ctor(System.String,System.Text.Json.Nodes.JsonObject,System.String)">
+            <summary>
+            Creates an instance of <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol"/> using
+            the provided JSON Data.
+            </summary>
+            <param name="name"></param>
+            <param name="jObject">JSON to initialize the symbol with.</param>
+            <param name="defaultOverride"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol.#ctor(Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol,Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.SymbolValueFormsModel)">
+            <summary>
+            Creates a clone of the given <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol"/>.
+            </summary>
+            <param name="cloneFrom">The symbol to copy the values from.</param>
+            <param name="formsFallback">The value to be used for <see cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseValueSymbol.Forms"/> in the case
+            that the <paramref name="cloneFrom"/> does not specify a value for <see cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.BaseValueSymbol.Forms"/>.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol.#ctor(System.String,System.String)">
+            <summary>
+            Creates a default instance of <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol.DisplayName">
+            <summary>
+            Gets the friendly name of the symbol to be displayed to the user.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol.Description">
+            <summary>
+            Gets the description of the parameter.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol.DefaultIfOptionWithoutValue">
+            <summary>
+            If this is set, the option can be provided without a value. It will be given this value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol.AllowMultipleValues">
+            <summary>
+            If this is set, it's allowed to specify multiple values of that parameter.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ParameterSymbol.EnableQuotelessLiterals">
+            <summary>
+             If this is set, it's allowed to specify choice literals without quotation within conditions.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PostActionModel.DefaultIdForSingleManualInstruction">
+            <summary>
+            Default id to be used when post action contains only one manual instruction
+            and the author has not explicitly specified an id.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PostActionModel.Id">
+            <summary>
+            Gets a string that uniquely identifies this post action within a template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PostActionModel.Description">
+            <summary>
+            Gets the description of the post action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PostActionModel.ActionId">
+            <summary>
+            Gets the identifier of the action that will be performed.
+            Note that this is not an identifier for the post action itself.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PostActionModel.ContinueOnError">
+            <summary>
+            Gets a value indicating whether the template instantiation should continue
+            in case of an error with this post action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PostActionModel.Args">
+            <summary>
+            Gets the arguments for this post action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PostActionModel.ApplyFileRenamesToArgs">
+            <summary>
+            Gets the list of arguments to which file renames should be applied.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PostActionModel.ApplyFileRenamesToManualInstructions">
+            <summary>
+            Gets a value indicating whether the file renames should be applied to manual instructions.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PostActionModel.ManualInstructionInfo">
+            <summary>
+            Gets the list of instructions that should be manually performed by the user.
+            "instruction" contains the text that explains the steps to be taken by the user.
+            An instruction is only considered if the "condition" evaluates to true.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PrimaryOutputModel">
+            <summary>
+            Defines the primary output. Corresponds to the element of "primaryOutputs" JSON array.
+            Primary outputs define the list of template files for further processing.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.PrimaryOutputModel.Path">
+            <summary>
+            Defines the relative path to the file after the template is instantiated.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ReplacementContext">
+            <summary>
+            Defines the replacement context for the symbol.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ReplacementContext.OnlyIfBefore">
+            <summary>
+            Gets the context that should be present before the symbol, in order to replacement to be applied.
+            Corresponds to "onlyIf.before" JSON property.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ReplacementContext.OnlyIfAfter">
+            <summary>
+            Gets the context that should be present after the symbol, in order to replacement to be applied.
+            Corresponds to "onlyIf.after" JSON property.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.SourceModifier">
+            <summary>
+            Defines the source modifier, these settings are applied to in addition to the top-level source information, in case <see cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.ConditionedConfigurationElement.Condition"/> is met.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.SourceModifier.CopyOnly">
+            <summary>
+            Defines the files to be just copied when instantiating template. Operations will not be applied to them.
+            Can be glob. If single value is given, it can be also a filename where from to read this configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.SourceModifier.Include">
+            <summary>
+            Defines the files to be include when instantiating template. Operations will be applied to them.
+            Can be glob. If single value is given, it can be also a filename where from to read this configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.SourceModifier.Exclude">
+            <summary>
+            Defines the files to be excluded when instantiating template. These files will not be processed during template instantiation.
+            Can be glob. If single value is given, it can be also a filename where from to read this configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.SourceModifier.Rename">
+            <summary>
+            Defines the files to be renamed when instantiating the template. The key is a source file name, the value is the final file name.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel">
+            <summary>
+            The class represents model of template.json.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Author">
+            <summary>
+            Gets the template author ("author" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.DefaultName">
+            <summary>
+            Gets the default name for the template ("defaultName" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Description">
+            <summary>
+            Gets the description of the template ("description" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.GroupIdentity">
+            <summary>
+            Gets the group identity of the template ("groupIdentity" JSON property).
+            This allows multiple templates to be displayed as one, with the the decision for which one to use based on <see cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Precedence"/> and other parameters added by user for the instantiation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Precedence">
+            <summary>
+            Gets the precedence of the template in a group ("precedence" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Name">
+            <summary>
+            Gets the template name ("name" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.ThirdPartyNotices">
+            <summary>
+            Gets the link to 3rd party notices ("thirdPartyNotices" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.PreferNameDirectory">
+            <summary>
+            Indicates whether to create a directory for the template if name is specified but an output directory is not set (instead of creating the content directly in the current directory) ("preferNameDirectory" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.PreferDefaultName">
+            <summary>
+            Indicates whether to use the template's default name or parent folder's name for template name ("preferDefaultName: JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Tags">
+            <summary>
+            Gets the collection of template tags ("tags" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.ShortNameList">
+            <summary>
+            Gets the list of template short names ("shortName" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.PostActionModels">
+            <summary>
+            Gets the list of post actions defined for the template ("postActions" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.PrimaryOutputs">
+            <summary>
+            Gets the list of template primary outputs ("primaryOutputs" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.GeneratorVersions">
+            <summary>
+            Gets version expression which defines which generator versions is supported by the template ("generatorVersions" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.BaselineInfo">
+            <summary>
+            Gets the list of baselines defined for the template ("baselines" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Identity">
+            <summary>
+            Gets the template identity ("identity" JSON property) - a unique name for this template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Classifications">
+            <summary>
+            Gets the list of classifications of the template ("classifications" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Guids">
+            <summary>
+            Gets the list of guids defined in the template ("guids" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.SourceName">
+            <summary>
+            Gets the source name defined in the template ("sourceName" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Sources">
+            <summary>
+            Gets the list of sources defined in the template ("sources" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Constraints">
+            <summary>
+            Gets the list of constraints defined in the template ("constraints" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Symbols">
+            <summary>
+            Gets the list of symbols defined in the template ("symbols" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Forms">
+            <summary>
+            Gets the list of forms defined in the template ("forms" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.PlaceholderFilename">
+            <summary>
+            Gets the placeholder filename defined in the template ("placeholderFilename" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.GlobalCustomOperations">
+            <summary>
+            Gets the list of global custom operations defined for the template ("globalCustomOperations" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.SpecialCustomOperations">
+            <summary>
+            Gets the list of custom operations defined for the template for specific files ("specialCustomOperations" JSON property).
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.ValidationErrors">
+            <summary>
+            Gets the list of validation errors for template.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.FromStream(System.IO.Stream,Microsoft.Extensions.Logging.ILogger,System.String)">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel"/> from stream <paramref name="content"/>.
+            </summary>
+            <param name="content">The stream containing template configuration in JSON format.</param>
+            <param name="logger">The logger to use for reporting errors/messages.</param>
+            <param name="filename">The file path of template configuration (optional, used for logging).</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.FromString(System.String,Microsoft.Extensions.Logging.ILogger,System.String)">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel"/> from string <paramref name="content"/>.
+            </summary>
+            <param name="content">The string containing template configuration in JSON format.</param>
+            <param name="logger">The logger to use for reporting errors/messages.</param>
+            <param name="filename">The file path of template configuration (optional, used for logging).</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Localize(Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.LocalizationModel)">
+            <summary>
+            Localizes this <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel"/> with given localization model.
+            </summary>
+            <param name="locModel">Localization model containing the localized strings.</param>
+            <remarks>This method works on a best-effort basis. If the given model is invalid or incompatible,
+            erroneous data will be skipped. No errors will be logged. Use <see cref="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.Localize(Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.LocalizationModel)"/>
+            to validate localization models before calling this method.</remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.ExtractParameters">
+            <summary>
+            Extracts parameters from the model.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate">
+            <summary>
+            The class represents the template loaded from directory.
+            The configuration can be loaded from file (production scenario) or loaded from <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel"/> (test scenario).
+            In both cases the template should be available from <see cref="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.TemplateSourceRoot"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.#ctor(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IGenerator,Microsoft.TemplateEngine.Abstractions.Mount.IFile,System.String)">
+            <summary>
+            Creates the instance of the class based on configuration from <paramref name="templateFile"/>.
+            </summary>
+            <exception cref="T:Microsoft.TemplateEngine.Utils.TemplateAuthoringException">when template configuration is invalid.</exception>
+            <exception cref="T:System.InvalidOperationException">when template identity is null.</exception>
+            <exception cref="T:System.NotSupportedException">when the template is not supported by current generator version.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.#ctor(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IGenerator,Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel,Microsoft.TemplateEngine.Abstractions.Mount.IDirectory)">
+            <summary>
+            Test constructor. Do not use in production.
+            This constructor does not set the location of configuration file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.ConfigurationModel">
+            <summary>
+            Gets the configuration model.
+            For test purposes, preloaded model can be used.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.TemplateSourceRoot">
+            <summary>
+            Gets the directory with source files for the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.ConfigFile">
+            <summary>
+            Gets configuration <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IFile"></see>. <see langword="null"/> when the template is created from the model built from code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.ConfigDirectory">
+            <summary>
+            Gets the configuration directory. <see langword="null"/> when the template is created from the model built from code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.Parameters">
+            <summary>
+            Gets the template parameters.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.ParseHostFileName(System.String)">
+            <summary>
+            Parses host file name to get host identifier.
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.ParseLocFileName(Microsoft.TemplateEngine.Abstractions.Mount.IFile)">
+            <summary>
+            Parses localization file name to get locale.
+            </summary>
+            <param name="locFile">localization file.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.MergeAdditionalConfiguration(System.Text.Json.Nodes.JsonObject,Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo)">
+            <summary>
+            Checks the <paramref name="primarySource"/> for additional configuration files.
+            If found, merges them all together.
+            Returns the merged JObject (or the original if there was nothing to merge).
+            Additional files must be in the same folder as the template file.
+            </summary>
+            <exception cref="T:Microsoft.TemplateEngine.Utils.TemplateAuthoringException">when additional files configuration is invalid.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.DirectoryBasedTemplate.CheckGeneratorVersionRequiredByTemplate">
+            <summary>
+            Checks if the template is supported by current generator version.
+            </summary>
+            <exception cref="T:System.NotSupportedException">when the template is not supported by current generator version.</exception>
+            <exception cref="T:System.InvalidOperationException">when check for the version leads to unexpected result.</exception>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType.CPP2">
+            <summary>
+            C++ V2 style evaluator, see <see cref="T:Microsoft.TemplateEngine.Core.Expressions.Cpp2.Cpp2StyleEvaluatorDefinition"/> for more details.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType.CPP">
+            <summary>
+            C++ style evaluator, see <see cref="T:Microsoft.TemplateEngine.Core.Expressions.Cpp.CppStyleEvaluatorDefinition"/> for more details.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType.MSBuild">
+            <summary>
+            MSBuild style evaluator, see <see cref="T:Microsoft.TemplateEngine.Core.Expressions.MSBuild.MSBuildStyleEvaluatorDefinition"/> for more details.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType.VB">
+            <summary>
+            VB style evaluator, see <see cref="T:Microsoft.TemplateEngine.Core.Expressions.VisualBasic.VisualBasicStyleEvaluatorDefintion"/> for more details.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorSelector.SelectStringEvaluator(Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType)">
+            <summary>
+            Gets <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConditionStringEvaluator"/> based on selected <paramref name="evaluatorType"/>.
+            </summary>
+            <param name="evaluatorType">The evaluator type to use. See <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType"/> for more info.</param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConditionStringEvaluator"/>.</returns>
+            <exception cref="T:System.NotSupportedException">when <paramref name="evaluatorType"/> is not supported (unknown).</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorSelector.ParseEvaluatorName(System.String,System.Nullable{Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType})">
+            <summary>
+            Parses <paramref name="name"/> to <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType"/>.
+            </summary>
+            <param name="name">the string value to parse.</param>
+            <param name="default">default <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType"/> to use, when the <paramref name="name"/> is null or empty.
+            The parameter is optional. In case it is not passed or <see langword="null"/> is passed, <see cref="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType.CPP"/> is used.</param>
+            <returns>Parsed <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType"/>.</returns>
+            <exception cref="T:Microsoft.TemplateEngine.Utils.TemplateAuthoringException">when <paramref name="name"/> cannot is unknown and cannot be parsed.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorSelector.Select(Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType)">
+            <summary>
+            Gets <see cref="T:Microsoft.TemplateEngine.Core.Operations.ConditionEvaluator"/> based on selected <paramref name="evaluatorType"/>.
+            </summary>
+            <param name="evaluatorType">The evaluator type to use. See <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.EvaluatorType"/> for more info.</param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Core.Operations.ConditionEvaluator"/>.</returns>
+            <exception cref="T:System.NotSupportedException">when <paramref name="evaluatorType"/> is not supported (unknown).</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.FileRenameGenerator.AugmentFileRenames(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,System.String,Microsoft.TemplateEngine.Abstractions.Mount.IDirectory,System.String,System.String@,System.Object,Microsoft.TemplateEngine.Abstractions.IVariableCollection,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Core.Contracts.IReplacementTokens})">
+            <summary>
+            Creates the complete file rename mapping for the template invocation being processed.
+            Renames are based on:
+             - parameters with a FileRename specified
+             - the source and target names.
+            Any input fileRenames will be applied before the parameter symbol renames.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.FileRenameGenerator.ApplyRenameToString(System.String)">
+            <summary>
+            Applies configured renames to <paramref name="stringToReplace"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.FileRenameGenerator.SetupSourceBasedRenameProcessor(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+            Creates and returns the processor used to create the file rename mapping for source based file renames.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.FileRenameGenerator.SetupSymbolBasedRenameProcessor(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,System.String,System.Object,Microsoft.TemplateEngine.Abstractions.IVariableCollection,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Core.Contracts.IReplacementTokens})">
+            <summary>
+            Creates and returns the processor used to create the file rename mapping based on the symbols with fileRename defined.
+            Also sets up rename for the target directory.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.FileRenameGenerator.SetupRenameForTargetDirectory(System.String,System.Object,System.Collections.Generic.List{Microsoft.TemplateEngine.Core.Contracts.IOperationProvider})">
+            <summary>
+            Sets up a rename based on the "name" parameter.
+            </summary>
+            <param name="sourceName"></param>
+            <param name="resolvedNameParamValue"></param>
+            <param name="operations"></param>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IParameterBasedVariableCollection">
+            <summary>
+            Extends the <see cref="T:Microsoft.TemplateEngine.Abstractions.IVariableCollection"/> contract with the metadata
+            about data from template parameters.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IParameterBasedVariableCollection.ParameterSetData">
+            <summary>
+            Bound and merged parameter data and their metadata.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IRunnableProjectConfig.SpecialOperationConfig">
+            <summary>
+            Gets the list of <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.GlobalRunConfig"/> to be applied to specific files included in glob.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IRunnableProjectConfig.GlobalOperationConfig">
+            <summary>
+            Gets the <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.GlobalRunConfig"/> to be applied to all template files.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IRunnableProjectConfig.EvaluatedSources">
+            <summary>
+            Gets the list of evaluated sources based on configuration. <see cref="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IRunnableProjectConfig.Evaluate(Microsoft.TemplateEngine.Abstractions.IVariableCollection)"/> method should be called first before accessing it.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IRunnableProjectConfig.PostActions">
+            <summary>
+            Gets the list of enabled post actions. <see cref="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IRunnableProjectConfig.Evaluate(Microsoft.TemplateEngine.Abstractions.IVariableCollection)"/> method should be called first before accessing it.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IRunnableProjectConfig.PrimaryOutputs">
+            <summary>
+            Gets the list of enabled primary outputs. <see cref="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IRunnableProjectConfig.Evaluate(Microsoft.TemplateEngine.Abstractions.IVariableCollection)"/> method should be called first before accessing it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IRunnableProjectConfig.Evaluate(Microsoft.TemplateEngine.Abstractions.IVariableCollection)">
+            <summary>
+            Evaluates conditional elements based on <paramref name="rootVariableCollection"/>.
+            </summary>
+            <param name="rootVariableCollection"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.IRunnableProjectConfig.RemoveParameter(Microsoft.TemplateEngine.Abstractions.ITemplateParameter)">
+            <summary>
+            Removes parameter from template.
+            </summary>
+            <param name="parameter"></param>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizationModelDeserializer.KeySeparator">
+            <summary>
+            Character to be used when separating a key into parts.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizationModelDeserializer.Deserialize(Microsoft.TemplateEngine.Abstractions.Mount.IFile)">
+            <summary>
+            Deserializes the given localization file into an <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.LocalizationModel"/>.
+            </summary>
+            <param name="file">File to be deserialized.</param>
+            <returns>loaded localization model.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="file"/> is null.</exception>
+            <exception cref="T:System.Exception">The file does not contain valid JSON data, JSON data contains element other than strings.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizationModelDeserializer.LoadSymbolModels(System.Collections.Generic.List{System.ValueTuple{System.String,System.String}})">
+            <summary>
+            Generates parameter symbol localization models from the given localized strings.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizationModelDeserializer.LoadChoiceModels(System.Collections.Generic.IEnumerable{System.ValueTuple{System.Collections.Generic.IEnumerable{System.String},System.String}})">
+            <summary>
+            Generates post action localization models. The given parts should begin with the choice name
+            as shown below (prior parts of the name such as "symbols" and parameter name shouldn't be included).
+            <list type="table">
+            <item>net5.0/displayName</item>
+            <item>net5.0/description</item>
+            <item>netstandard2.0/description</item>
+            </list>
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizationModelDeserializer.LoadPostActionModels(System.Collections.Generic.List{System.ValueTuple{System.String,System.String}})">
+            <summary>
+            Generates post action localization models from the given localized strings.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizationModelDeserializer.LoadManualInstructionModels(System.Collections.Generic.IEnumerable{System.ValueTuple{System.Collections.Generic.IEnumerable{System.String},System.String}})">
+            <summary>
+            Generates manual instruction localization models.
+            The given parts should begin with the manual instruction id.
+            <list type="table">
+            <item>instructionToRestore/text</item>
+            <item>instructionToRestart/text</item>
+            </list>
+            </summary>
+            <returns>The localized manual instructions where each key represents the instruction id.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.LocalizationModel">
+            <summary>
+            Represents the data model that contains the localized strings for a template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.LocalizationModel.Author">
+            <summary>
+            Gets the localized author name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.LocalizationModel.Name">
+            <summary>
+            Gets the localized template name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.LocalizationModel.Description">
+            <summary>
+            Gets the localized template description.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.LocalizationModel.ParameterSymbols">
+            <summary>
+            Gets the localization models for the parameter symbols defined in this template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.LocalizationModel.PostActions">
+            <summary>
+            Gets the localization models for the post actions defined in this template.
+            The keys represent the id of the post actions.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.PostActionLocalizationModel.Description">
+            <summary>
+            Localized description of the post action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Localization.PostActionLocalizationModel.Instructions">
+            <summary>
+            Gets or sets the localized manual instructions of the post action.
+            The keys represent the manual instruction ids.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.MacroProcessor.ProcessMacros(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacroConfig},Microsoft.TemplateEngine.Abstractions.IVariableCollection)">
+            <summary>
+            Processes the macros defined in <paramref name="macroConfigs"/>.
+            </summary>
+            <exception cref="T:Microsoft.TemplateEngine.Utils.TemplateAuthoringException">when <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IGeneratedSymbolMacro"/> config is invalid.</exception>
+            <exception cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.MacroProcessingException">when the error occurs when macro is processed.</exception>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Macros.BaseGeneratedSymbolMacro`1">
+            <summary>
+            Base class for the macro defined via generated symbol.
+            </summary>
+            <typeparam name="T">The macro config.</typeparam>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Macros.BaseNondeterministicMacro`1">
+            <summary>
+            Base class for the macro defined via generated symbol, that may run non-deterministically and implements deterministic mode for the macro.
+            Note: this class only implements deterministic mode for the macro as <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Abstractions.IMacro`1"/>. To implement deterministic mode for direct generated symbol evaluation, use <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Macros.BaseNondeterministicGenSymMacro`1"/>.
+            </summary>
+            <typeparam name="T">The macro config.</typeparam>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Macros.BaseNondeterministicGenSymMacro`1">
+            <summary>
+            Base class for the macro defined via generated symbol, that may run non-deterministically and implements deterministic mode for the macro as generated symbol.
+            </summary>
+            <typeparam name="T">The macro config.</typeparam>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.OperationConfig.OperationConfigDefault.Default">
+            <summary>
+            Gets default operation config.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.OperationConfig.OperationConfigDefault.DefaultGlobalConfig">
+            <summary>
+            Gets default global operation config.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.OperationConfig.OperationConfigDefault.DefaultSpecialConfig">
+            <summary>
+            Gets default special operation config.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.OperationConfig.OperationConfigDefault.Glob">
+            <summary>
+            Gets the files the config applies to.
+            Empty string means that the config is applied to all files.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.OperationConfig.OperationConfigDefault.Evaluator">
+            <summary>
+            Gets the evaluator to use for the applicable files.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.OperationConfig.OperationConfigDefault.FlagPrefix">
+            <summary>
+            Gets the prefix for flags to use for the applicable files.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.OperationConfig.OperationConfigDefault.ConditionalStyle">
+            <summary>
+            Gets conditional type to use for the applicable files.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectConfig">
+            <summary>
+            The class represent the template ready to be run.
+            The class is disposable, as it holds the mount point to template sources.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectConfig.#ctor(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IGenerator,Microsoft.TemplateEngine.Abstractions.Mount.IFile,Microsoft.TemplateEngine.Abstractions.Mount.IFile,Microsoft.TemplateEngine.Abstractions.Mount.IFile,System.String)">
+            <summary>
+            Instantiation constructor - loads template with specific localization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectConfig.#ctor(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IGenerator,Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel,Microsoft.TemplateEngine.Abstractions.Mount.IDirectory)">
+            <summary>
+            Test constructor.
+            Loads the template based on <paramref name="configuration"/> instead of reading it from file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectConfig.SourceMountPoint">
+            <summary>
+            Gets the mount point where template sources are located.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectConfig.Evaluate(Microsoft.TemplateEngine.Abstractions.IVariableCollection)">
+            <summary>
+            Evaluates the conditions in template configurations: conditions in special custom operations, in sources and primary outputs.
+            File renames are also applied at this step.
+            </summary>
+            <param name="rootVariableCollection"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectConfig.EvaluateBindSymbolsAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IVariableCollection,System.Threading.CancellationToken)">
+            <summary>
+            Evaluates the bind symbols.
+            The evaluated bind symbols are written to <paramref name="variableCollection"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectGenerator.Microsoft#TemplateEngine#Abstractions#IIdentifiedComponent#Id">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectGenerator.Microsoft#TemplateEngine#Abstractions#IGenerator#GetTemplatesFromMountPointAsync(Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectGenerator.Microsoft#TemplateEngine#Abstractions#IGenerator#LoadTemplateAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplateLocator,System.String,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectGenerator.Microsoft#TemplateEngine#Abstractions#IGenerator#ConvertParameterValueToType(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplateParameter,System.String,System.Boolean@)">
+            <summary>
+            Converts the raw, string version of a parameter to a strongly typed value. If the parameter has a datatype specified, use that. Otherwise attempt to infer the type.
+            Throws a TemplateParamException if the conversion fails for any reason.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectGenerator.Microsoft#TemplateEngine#Abstractions#IGenerator#TryEvaluateFromString(Microsoft.Extensions.Logging.ILogger,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Boolean@,System.String@,System.Collections.Generic.HashSet{System.String})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectGenerator.Microsoft#TemplateEngine#Abstractions#IGenerator#GetCreationEffectsAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData,System.String,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectGenerator.Microsoft#TemplateEngine#Abstractions#IGenerator#CreateAsync(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.Parameters.IParameterSetData,System.String,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectGenerator.Microsoft#TemplateEngine#Abstractions#IGenerator#GetTemplatesAndLangpacksFromDir(Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint,System.Collections.Generic.IList{Microsoft.TemplateEngine.Abstractions.ILocalizationLocator}@)">
+            <summary>
+            Scans the <paramref name="source"/> for the available templates.
+            </summary>
+            <param name="source">the mount point to scan for the templates.</param>
+            <param name="localizations">found localization definitions.</param>
+            <returns>the list of found templates and list of found localizations via <paramref name="localizations"/>.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectGenerator.Microsoft#TemplateEngine#Abstractions#IGenerator#TryGetTemplateFromConfigInfo(Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo,Microsoft.TemplateEngine.Abstractions.ITemplate@,Microsoft.TemplateEngine.Abstractions.Mount.IFileSystemInfo,Microsoft.TemplateEngine.Abstractions.Mount.IFile,System.String)">
+            <summary>
+            Attempts to load template configuration from <paramref name="templateFileConfig"/>.
+            </summary>
+            <param name="templateFileConfig">the template configuration entry, should be a file.</param>
+            <param name="template">loaded template.</param>
+            <param name="localeFileConfig">the template localization configuration entry, should be a file.</param>
+            <param name="hostTemplateConfigFile">the template host configuration entry, should be a file.</param>
+            <param name="baselineName">the baseline to load.</param>
+            <returns>true when template can be loaded, false otherwise. The loaded template is returned in <paramref name="template"/>.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectGenerator.LegacyTemplate">
+            <summary>
+            Wrapper class: ScannedTemplateInfo -> ITemplate.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ScannedTemplateInfo">
+            <summary>
+            This class represent the template discovered during scanning. It is not ready to be run.
+            It also returns information about all the localizations available for the template and all host files available for the template.
+            Before running the template the caller should select localization and host file to use.
+            Use <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.RunnableProjectConfig"/> to load template for running.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ScannedTemplateInfo.#ctor(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.IGenerator,Microsoft.TemplateEngine.Abstractions.Mount.IFile)">
+            <summary>
+            Creates instance of the class based on configuration from <paramref name="templateFile"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ScannedTemplateInfo.FindHostTemplateConfigFiles">
+            <summary>
+            Attempts to find the host configuration files.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Utilities.UnicodeCharacterUtilities">
+            <summary>
+            Defines a set of helper methods to classify Unicode characters.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Utilities.UnicodeCharacterUtilities.IsIdentifierPartCharacter(System.Char)">
+            <summary>
+            Returns true if the Unicode character can be a part of an identifier.
+            </summary>
+            <param name="ch">The Unicode character.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Utilities.UnicodeCharacterUtilities.IsValidIdentifier(System.String)">
+            <summary>
+            Check that the name is a valid Unicode identifier.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Utilities.UnicodeCharacterUtilities.IsFormattingChar(System.Char)">
+            <summary>
+            Returns true if the Unicode character is a formatting character (Unicode class Cf).
+            </summary>
+            <param name="ch">The Unicode character.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Utilities.UnicodeCharacterUtilities.IsFormattingChar(System.Globalization.UnicodeCategory)">
+            <summary>
+            Returns true if the Unicode character is a formatting character (Unicode class Cf).
+            </summary>
+            <param name="cat">The Unicode character.</param>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ITemplateValidationInfo">
+            <summary>
+            Information available for template validation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ITemplateValidationInfo.ConfigModel">
+            <summary>
+            Gets template configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ITemplateValidationInfo.TemplateSourceRoot">
+            <summary>
+            Gets source template directory.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ITemplateValidationInfo.ConfigFile">
+            <summary>
+            Gets template configuration file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ITemplateValidationInfo.Localizations">
+            <summary>
+            Gets localizations available for the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ITemplateValidationInfo.HostFiles">
+            <summary>
+            Gets host files available for the template.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ITemplateValidationInfo.ValidationErrors">
+            <summary>
+            Gets the list of validation errors for template.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ITemplateValidationInfo.AddValidationError(Microsoft.TemplateEngine.Abstractions.IValidationEntry)">
+            <summary>
+            Adds validation error to the list.
+            </summary>
+            <param name="validationEntry"></param>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ValidationScope.Scanning">
+            <summary>
+            The check is run when scanning the mount point for templates, typically installation or scanning scenario.
+            This set is more exhaustive then <see cref="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ValidationScope.Instantiation"/>, and should be used to avoid installing invalid templates.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ValidationScope.Instantiation">
+            <summary>
+            The check is run when the template is being instantiated.
+            This set should be normally less exhaustive then <see cref="F:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.Validation.ValidationScope.Scanning"/>, and should be used to check for failures that may affect the template instantiation result.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.ActionableValueFormFactory">
+            <summary>
+            Base implementation for a <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueFormFactory"/> for a <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueForm"/> that doesn't have a configuration.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.BaseValueFormFactory">
+            <summary>
+            Base implementation of <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueFormFactory"/>.
+            When implementing a value form inherit from <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.ActionableValueFormFactory"/> or <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.ConfigurableValueFormFactory`1"/> or <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.DependentValueFormFactory`1"/> instead.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.ConfigurableValueFormFactory`1">
+            <summary>
+            Base implementation for a <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueFormFactory"/> for a <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueForm"/> that has a configuration of type <typeparamref name="T"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.DependentValueFormFactory`1">
+            <summary>
+            Base implementation for a <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueFormFactory"/> for a <see cref="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueForm"/> that has a configuration of type <typeparamref name="T"/> and needs to know all the forms defined to process a value form.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueForm">
+            <summary>
+            Defines an interface for value form.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueForm.Identifier">
+            <summary>
+            Gets value form identifier.
+            Identifier determines the transformation to be run.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueForm.Name">
+            <summary>
+            Gets value form name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueForm.IsDefault">
+            <summary>
+            True is the form is a default implicit form.
+            See <see cref="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ConfigModel.TemplateConfigModel.SetupValueFormMapForTemplate(System.Text.Json.Nodes.JsonObject)"/> for more details.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueForm.Process(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueForm})">
+            <summary>
+            Transforms <paramref name="value"/>.
+            </summary>
+            <param name="value"></param>
+            <param name="otherForms">other forms defined in the template.</param>
+            <returns>transformed value.</returns>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueFormFactory.Identifier">
+            <summary>
+            Gets form identifier.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueFormFactory.Create(System.String)">
+            <summary>
+            Creates the form with default configuration.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.IValueFormFactory.FromJObject(System.String,System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Creates the form from JSON configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.JsonEncodeSerializerContext.String">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.JsonEncodeSerializerContext.Default">
+            <summary>
+            The default <see cref="T:System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="T:System.Text.Json.JsonSerializerOptions"/> instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.JsonEncodeSerializerContext.GeneratedSerializerOptions">
+            <summary>
+            The source-generated options associated with this context.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.JsonEncodeSerializerContext.#ctor">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.JsonEncodeSerializerContext.#ctor(System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.ValueForms.JsonEncodeSerializerContext.GetTypeInfo(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_CONFIG0201_PostActionIdIsNotUnique">
+            <summary>Id of the post action '{0}' at index '{1}' is not unique. Only the first post action that uses this id will be localized.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_CONFIG0202_PostActionMustHaveActionId">
+            <summary>Post action at index '{0}' should have an 'actionId' to declare the action to be executed.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_CONFIG0203_ManualInstructionIdIsNotUnique">
+            <summary>'id' of the manual instruction '{0}' at index {1} is not unique. Only the first manual instruction that uses this id will be localized.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_CONFIG0204_UnknownArgumentForReplace">
+            <summary>The argument '{0}' configured in '{1}' is not listed in '{2}' and will be skipped for processing.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_CyclicDependencyInSymbols">
+            <summary>Parameter conditions contain cyclic dependency: [{0}] that is preventing deterministic evaluation.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_InvalidJsonElementInLocalizationFile">
+            <summary>Localization file should only contain elements with type 'string'. Remove elements that are not strings.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_InvalidManualInstructionLocalizationIndex">
+            <summary>In localization file under the post action with id '{1}', there are localized strings for manual instruction(s) with ids '{0}'. These manual instructions do not exist in the template.json file and should be removed from localization file.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_InvalidMultichoiceSymbol">
+            <summary>Choice parameter '{0}' is invalid. It allows multiple values ('AllowMultipleValues=true'), while some of the configured choices contain separator characters ({1}). Invalid choices: {2}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_InvalidPostActionLocalizationIndex">
+            <summary>Post action(s) with id(s) '{0}' specified in the localization file do not exist in the template.json file. Remove the localized strings from the localization file.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_InvalidRegex">
+            <summary>'{0}' could not be parsed as a regular expression</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_MalformedPostActionManualInstructions">
+            <summary>One or more postActions have a malformed or missing manualInstructions value.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_MissingValue">
+            <summary>Missing '{0}'.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_NonBoolDataTypeForRegexMatch">
+            <summary>A non-bool DataType was specified for a regexMatch type symbol</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_SourceDoesNotExist">
+            <summary>Source '{0}' in template does not exist.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_SourceIsOutsideInstallSource">
+            <summary>Source location '{0}' is outside the specified install source location.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_SourceMustBeDirectory">
+            <summary>Source must be a directory, but '{0}' is a file.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_TemplateMissingCommonInformation">
+            <summary>The template configuration {0} is missing common information:</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_TemplateNotInstalled">
+            <summary>Failed to load template from {0}:</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_TemplateNotInstalled_Message">
+            <summary>Failed to load template from {0}.
+            Details: {1}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Authoring_TemplateRootOutsideInstallSource">
+            <summary>The template root is outside the specified install source location.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.BindSymbolEvaluator_Warning_ConversionFailure">
+            <summary>Bind symbol '{0}': failed to convert value '{1}' to datatype '{2}'. The symbol processing is skipped.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.BindSymbolEvaluator_Warning_DefaultValueConversionFailure">
+            <summary>Bind symbol '{0}': failed to convert default value '{1}' to datatype '{2}'. The default value is skipped.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.BindSymbolEvaluator_Warning_EvaluationError">
+            <summary>Failed to evaluate bind symbol '{0}', it will be skipped.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.BindSymbolEvaluator_Warning_ValueAvailableFromMultipleSources">
+            <summary>Failed to evaluate binding '{0}', its value is available from multiple sources: {1}. Use the prefixed value ({2}) in template configuration instead.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.CoalesceMacro_Exception_MissedVariables">
+            <summary>Template authoring error encountered while processing macro '{0}': Variable '{1}'. Neither source nor fallback variable was found.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.EvaluatorSelector_Exception_UnknownEvaluator">
+            <summary>Unrecognized evaluator: '{0}'.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.GeneratePortNumberConfig_Warning_InvalidHighBound">
+            <summary>The high port bound '{0}' is greater than the maximum allowed, '{1}' will be used instead.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.GeneratePortNumberConfig_Warning_InvalidLowBound">
+            <summary>The low port bound '{0}' is less than the minimum allowed, '{1}' will be used instead.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.GeneratePortNumberConfig_Warning_InvalidLowHighBound">
+            <summary>The low port bound '{0}' is greater the high port bound '{1}', the default range [{2}-{3}] will be used instead.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.JoinMacroConfig_Exception_ValuePropertyIsEmpty">
+            <summary>Generated symbol '{0}': array '{1}' should contain JSON objects with property non-empty '{2}' when '{3}' is '{4}'.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.LocalizationModelDeserializer_Error_FailedToParse">
+            <summary>Failed to read or parse localization file {0}, it will be skipped from further processing.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.LocalizationModelDeserializer_Error_UnknownLocale">
+            <summary>Locale '{0}' does not match any known cultures.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroConfig_Exception_AccessToDependencies">
+            <summary>The method '{0}' must be called prior '{1}' property reading.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroConfig_Exception_ArrayShouldContainObjects">
+            <summary>Generated symbol '{0}': array '{1}' should contain JSON objects.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroConfig_Exception_InvalidJSON">
+            <summary>Generated symbol '{0}': '{1}' is not a valid JSON.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroConfig_Exception_InvalidRegex">
+            <summary>Generated symbol '{0}': the regex pattern '{1}' is invalid.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroConfig_Exception_MissingMandatoryProperty">
+            <summary>Generated symbol '{0}' of type '{1}' should have '{2}' property defined.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroConfig_Exception_MissingValueProperty">
+            <summary>Generated symbol '{0}': array '{1}' should contain JSON objects with property '{2}'.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroConfig_Exception_ValueShouldBeArray">
+            <summary>Generated symbol '{0}': '{1}' should be a valid JSON array.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroConfig_Exception_ValueShouldBeBoolean">
+            <summary>Generated symbol '{0}': '{1}' should be a boolean value.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroConfig_Exception_ValueShouldBeInteger">
+            <summary>Generated symbol '{0}': '{1}' should be an integer value.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroConfig_Exception_ValueShouldBeString">
+            <summary>Generated symbol '{0}': '{1}' should be a string value.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroProcessingException_Message">
+            <summary>Failed to process macro '{0}' of type '{1}'.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroProcessing_Warning_DependencyErrors">
+            <summary>'{0}' was not processed due to the next issues in dependencies: '{1}'.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.MacroProcessor_Warning_UnknownMacro">
+            <summary>Generated symbol '{0}': type '{1}' is unknown, processing is skipped.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.RunnableProjectConfig_OperationSetup_UnknownForm">
+            <summary>The symbol '{0}': unable to find a form '{1}', the further processing of the symbol will be skipped.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.RunnableProjectGenerator_CannotAddImplicitChoice">
+            <summary>Variable [{0}] already added with value [{1}]. Cannot add it as implicit variable with value of self.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.RunnableProjectGenerator_Exception_ConfigShouldBeFile">
+            <summary>Template configuration must be a file, but {0} is not a file.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.RunnableProjectGenerator_Exception_LocaleConfigShouldBeFile">
+            <summary>Template localization configuration must be a file, but {0} is not a file.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.RunnableProjectGenerator_Exception_TemplateValidationFailed">
+            <summary>The template configuration {0} is not valid.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.RunnableProjectGenerator_Exception_TemplateVersionNotSupported">
+            <summary>The template is not compatible with generator version: allowed versions: {0}, generator version: {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.RunnableProjectGenerator_Warning_LocFileSkipped">
+            <summary>Localization file {0} is not compatible with base configuration {1}, and will be skipped.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.SimpleConfigModel_AuthoringException_MergeConfiguration_FileNotFound">
+            <summary>Failed to load additional configuration file {0}, the file does not exist.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.SimpleConfigModel_AuthoringException_MergeConfiguration_InvalidFileName">
+            <summary>Failed to load additional configuration file {0}. Additional configuration file names must end with '.{1}'.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.SimpleConfigModel_Error_Constraints_InvalidSyntax">
+            <summary>'{0}' should contain objects.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.SimpleConfigModel_Error_Constraints_MissingType">
+            <summary>Constraint definition '{0}' does not contain mandatory property '{1}'.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.SymbolModel_Error_MandatoryPropertyMissing">
+            <summary>The symbol '{0}' of type '{1}' is incorrect: mandatory property '{2}' is not set. The symbol will be skipped.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Symbol_Error_IsRequiredNotABool">
+            <summary>Found disallowed value for IsRequired property: [{0}], expected boolean value.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Orchestrator.RunnableProjects.LocalizableStrings.Symbol_Error_IsRequiredNotABoolOrString">
+            <summary>Found disallowed value for IsRequired property: [{0}], expected boolean or string (condition) value</summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.ParameterConverter.TryConvertParameterValueToType(Microsoft.TemplateEngine.Abstractions.ITemplateParameter,System.String,System.Object@)">
+            <summary>
+            Tries to convert <paramref name="untypedValue"/> to data type defined in <paramref name="parameter"/>.
+            Supported types are: choice, bool, int, float, hex, string, text.
+            </summary>
+            <param name="parameter">the parameter to convert value to.</param>
+            <param name="untypedValue">the value to convert.</param>
+            <param name="convertedValue">the converted value, if the conversion was successful.</param>
+            <returns>True if the conversion was successful.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.ParameterConverter.InferTypeAndConvertLiteral(System.String)">
+            <summary>
+            Converts <paramref name="literal"/> to closest data type.
+            Supported types are: bool, null, float, int, hex, string/text (in order of attempting).
+            </summary>
+            <param name="literal">the string value to convert.</param>
+            <returns>Converted value.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Utils.ParameterConverter.TryConvertLiteralToDatatype(System.String,System.String,System.Object@)">
+            <summary>
+            Tries to convert <paramref name="literal"/> to <paramref name="dataType"/>.
+            If <paramref name="dataType"/> is null or empty, the type to be inferred. See <see cref="M:Microsoft.TemplateEngine.Utils.ParameterConverter.InferTypeAndConvertLiteral(System.String)"/> for more details.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToStringReadOnlyList(System.Text.Json.Nodes.JsonObject,System.String,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Reads <paramref name="propertyName"/> as read only string list/>.
+            Property value may be string or array.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetObjectProperties(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Enumerates the properties of a <see cref="T:System.Text.Json.Nodes.JsonObject"/>, handling duplicate keys gracefully.
+            </summary>
+            <remarks>
+            <see cref="T:System.Text.Json.Nodes.JsonObject"/> lazily initializes its internal dictionary when first accessed.
+            If the underlying JSON contains duplicate property keys, initialization throws
+            <see cref="T:System.ArgumentException"/>. In that case this method falls back to re-parsing via
+            <see cref="T:System.Text.Json.JsonDocument"/>, which supports duplicate keys (last-wins semantics, like Newtonsoft.Json).
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetObjectPropertiesViaDocument(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Enumerates the properties of a <see cref="T:System.Text.Json.Nodes.JsonObject"/> by re-parsing its JSON text via
+            <see cref="T:System.Text.Json.JsonDocument"/>, which tolerates duplicate keys.
+            </summary>
+            <remarks>
+            <see cref="M:System.Text.Json.Nodes.JsonObject.WriteTo(System.Text.Json.Utf8JsonWriter,System.Text.Json.JsonSerializerOptions)"/> falls back to the underlying <see cref="T:System.Text.Json.JsonElement"/>
+            when the internal dictionary has not yet been initialized, so <see cref="M:System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions)"/> is
+            safe to call even after a failed <see cref="T:System.Text.Json.Nodes.JsonObject"/> initialization.
+            Duplicate keys are de-duplicated with last-wins semantics to match normal JsonObject enumeration behavior.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonNodeDictionary(System.Text.Json.Nodes.JsonNode,System.StringComparer,System.String)">
+            <summary>
+            Converts properties of <paramref name="token"/> to dictionary.
+            Leaves the values as JsonNode.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonNodeStringDictionary(System.Text.Json.Nodes.JsonNode,System.StringComparer,System.String)">
+            <summary>
+            Converts properties of <paramref name="token"/> to dictionary.
+            Values are serialized to string (as JsonNode). Strings are serialized as JSON, i.e. needs to be parsed prior to be used.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonString(System.Object)">
+            <summary>
+            Converts <paramref name="obj"/> to valid JSON string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.TryGetValueCaseInsensitive(System.Text.Json.Nodes.JsonObject,System.String,System.Text.Json.Nodes.JsonNode@)">
+            <summary>
+            Tries to get a property value from a <see cref="T:System.Text.Json.Nodes.JsonObject"/> using case-insensitive key matching.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetPropertyCaseInsensitive(System.Text.Json.Nodes.JsonObject,System.String)">
+            <summary>
+            Gets a property from a JsonObject with case-insensitive key matching.
+            Handles duplicate keys gracefully by falling back to JsonDocument-based lookup.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetPropertyCaseInsensitiveViaDocument(System.Text.Json.Nodes.JsonObject,System.String)">
+            <summary>
+            Gets a property from a JsonObject by re-parsing via JsonDocument (tolerates duplicate keys).
+            Uses last-wins semantics for duplicate keys, consistent with Newtonsoft.Json behavior.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ParseJsonObject(System.String)">
+            <summary>
+            Parses a JSON string into a JsonObject (with comment/trailing comma support).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ParseJsonNode(System.String)">
+            <summary>
+            Parses a JSON string into a JsonNode (with comment/trailing comma support).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.FromObject(System.Object)">
+            <summary>
+            Serializes an object to a JsonObject via JSON round-trip.
+            Equivalent to Newtonsoft's JObject.FromObject().
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.DeepCloneObject(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Creates a deep clone of a <see cref="T:System.Text.Json.Nodes.JsonObject"/> by round-tripping through JSON text.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.Merge(System.Text.Json.Nodes.JsonObject,System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Merges properties from <paramref name="source"/> into <paramref name="target"/>.
+            Equivalent to Newtonsoft's JObject.Merge() with default settings:
+            - Objects are recursively merged
+            - Arrays are concatenated
+            - Other values (including null) from source overwrite target.
+            </summary>
+        </member>
+    </members>
+</doc>

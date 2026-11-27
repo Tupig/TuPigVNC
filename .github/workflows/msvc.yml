@@ -25,7 +25,7 @@ jobs:
       # 但它是 runner 自动设的环境变量，不能出现在 ${{ env.* }} 上下文里，
       # 所以这里显式声明，供 cache 步骤的 path 引用。
       VCPKG_INSTALLATION_ROOT: C:\vcpkg
-      VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg-cache
+      VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/tmp/vcpkg/binary-cache
       # 依赖集合（vcpkg install 列表）或缓存布局变化时手动递增，用于让缓存失效
       VCPKG_CACHE_VERSION: v2
       # sccache 使用 GitHub Actions 缓存后端，无需额外对象存储
@@ -83,7 +83,7 @@ jobs:
           # 缓存 installed 后，命中时 vcpkg install 直接判定已安装，几秒完成。
           # downloads 缓存源码压缩包，避免联网重复下载。
           path: |
-            vcpkg-cache
+            tmp/vcpkg/binary-cache
             ${{ env.VCPKG_INSTALLATION_ROOT }}/installed
             ${{ env.VCPKG_INSTALLATION_ROOT }}/downloads
           # 依赖集合变化时才递增 VCPKG_CACHE_VERSION。
@@ -93,7 +93,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          New-Item -ItemType Directory -Force vcpkg-cache
+          New-Item -ItemType Directory -Force tmp/vcpkg/binary-cache
           vcpkg install --triplet x64-windows-static `
             zlib libjpeg-turbo pixman fltk nettle gtest "gettext[tools]"
 
@@ -104,7 +104,7 @@ jobs:
         uses: actions/cache/save@v6
         with:
           path: |
-            vcpkg-cache
+            tmp/vcpkg/binary-cache
             ${{ env.VCPKG_INSTALLATION_ROOT }}/installed
             ${{ env.VCPKG_INSTALLATION_ROOT }}/downloads
           key: vcpkg-msvc-${{ env.VCPKG_CACHE_VERSION }}-${{ runner.os }}
@@ -132,37 +132,37 @@ jobs:
             -DENABLE_GNUTLS=OFF `
             -DENABLE_NETTLE=ON `
             -DBUILD_VIEWER=ON `
-            -S . -B build
+            -S . -B tmp/build/ci-native
 
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build tmp/build/ci-native --config Release
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: '11.0.100'
 
       - name: Publish WPF frontend
         shell: pwsh
         run: |
-          dotnet publish ui/TuPigVNC.Wpf/TuPigVNC.Wpf.csproj `
+          dotnet publish src/ui/TuPigVNC.Wpf/TuPigVNC.Wpf.csproj `
             -c Release -p:Platform=x64 --self-contained true `
-            "-p:TupigVncBuildDir=$env:GITHUB_WORKSPACE/build" `
-            -o build/publish
+            "-p:TupigVncBuildDir=$env:GITHUB_WORKSPACE/tmp/build/ci-native" `
+            -o tmp/build/ci-native/publish
           if ($LASTEXITCODE -ne 0) { throw "WPF publish failed" }
           foreach ($name in @('TuPigVNC.exe', 'TuPigVNC.dll', 'TuPigVNC.Core.dll')) {
-            if (-not (Test-Path "build/publish/$name")) { throw "Missing artifact: $name" }
+            if (-not (Test-Path "tmp/build/ci-native/publish/$name")) { throw "Missing artifact: $name" }
           }
 
       - name: Upload WPF verification build
         uses: actions/upload-artifact@v7
         with:
           name: TuPigVNC-wpf-verification-x64
-          path: build/publish/
+          path: tmp/build/ci-native/publish/
           if-no-files-found: error
 
       - name: Test
-        working-directory: build
+        working-directory: tmp/build/ci-native
         run: |
           ctest --test-dir tests/unit/ -C Release `
             --output-junit test-results.xml
@@ -172,10 +172,10 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: test-results-windows-msvc
-          path: build/tests/unit/test-results.xml
+          path: tmp/build/ci-native/tests/unit/test-results.xml
 
       # ---------------- 打包（仅 main 发布构建） ----------------
-      # Inno Setup 7.1.1 x64 安装包已入库（tools/innosetup），
+      # Inno Setup 7.1.1 x64 安装包已入库（tool/packaging/innosetup），
       # 避免 CI 每次联网下载；SHA-256 校验防止文件被篡改。
       # 注意：Chocolatey 上的 innosetup 包只到 6.3.x，而
       # SetupArchitecture=x64（生成 64 位 PE 安装器）是 Inno Setup 7 才有的指令。
@@ -183,7 +183,7 @@ jobs:
         if: steps.version.outputs.release == 'true'
         shell: pwsh
         run: |
-          $installer = Join-Path $env:GITHUB_WORKSPACE "tools\innosetup\innosetup-7.1.1-x64.exe"
+          $installer = Join-Path $env:GITHUB_WORKSPACE "tool\packaging\innosetup\innosetup-7.1.1-x64.exe"
           $expected = "8a5a6711c3766a6e5fb74f280ba0e3551e719ce94538d901fdbd1f8f9920b3f0"
           $actual = (Get-FileHash $installer -Algorithm SHA256).Hash.ToLower()
           if ($actual -ne $expected) {
@@ -205,13 +205,13 @@ jobs:
           $env:PATH = "C:\Program Files\Inno Setup 7;C:\Program Files (x86)\Inno Setup 7;$env:PATH"
           $vcpkg = $env:VCPKG_INSTALLATION_ROOT
           $env:PATH = "$vcpkg\installed\x64-windows-static\bin;$env:PATH"
-          cmake --build build --config Release --target installer
+          cmake --build tmp/build/ci-native --config Release --target installer
 
       - name: Generate checksum
         if: steps.version.outputs.release == 'true'
         shell: pwsh
         run: |
-          Get-ChildItem build\release\*.exe | ForEach-Object {
+          Get-ChildItem tmp\build\ci-native\release\*.exe | ForEach-Object {
             $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower()
             "$hash  $($_.Name)" | Out-File -Encoding ASCII -NoNewline "$($_.FullName).sha256"
             Write-Host "$($_.Name): $hash"
@@ -237,8 +237,8 @@ jobs:
           tag_name: v${{ steps.version.outputs.next }}
           name: TuPigVNC v${{ steps.version.outputs.next }}
           files: |
-            build/release/*.exe
-            build/release/*.sha256
+            tmp/build/ci-native/release/*.exe
+            tmp/build/ci-native/release/*.sha256
           generate_release_notes: true
           draft: false
           prerelease: false
@@ -273,7 +273,7 @@ jobs:
       security-events: write
     env:
       VCPKG_INSTALLATION_ROOT: C:\vcpkg
-      VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg-cache
+      VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/tmp/vcpkg/binary-cache
       VCPKG_CACHE_VERSION: v2
     steps:
       - uses: actions/checkout@v6
@@ -282,14 +282,14 @@ jobs:
         uses: actions/cache/restore@v6
         with:
           path: |
-            vcpkg-cache
+            tmp/vcpkg/binary-cache
             ${{ env.VCPKG_INSTALLATION_ROOT }}/installed
             ${{ env.VCPKG_INSTALLATION_ROOT }}/downloads
           key: vcpkg-msvc-${{ env.VCPKG_CACHE_VERSION }}-${{ runner.os }}
 
       - name: Install dependencies
         run: |
-          New-Item -ItemType Directory -Force vcpkg-cache
+          New-Item -ItemType Directory -Force tmp/vcpkg/binary-cache
           vcpkg install --triplet x64-windows-static `
             zlib libjpeg-turbo pixman fltk nettle gtest "gettext[tools]"
 
@@ -314,10 +314,10 @@ jobs:
             -DENABLE_GNUTLS=OFF `
             -DENABLE_NETTLE=ON `
             -DBUILD_VIEWER=ON `
-            -S . -B build
+            -S . -B tmp/build/ci-native
 
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build tmp/build/ci-native --config Release
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4

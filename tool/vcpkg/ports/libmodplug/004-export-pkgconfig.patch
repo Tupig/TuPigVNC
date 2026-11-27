@@ -1,0 +1,29 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2a8a8ce..8483722 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -165,12 +165,18 @@ install(FILES
+ if (NOT MSVC)
+   if(MINGW OR CYGWIN)
+     set(LIBS_PRIVATE "-luser32 -lstdc++")
++  elseif(APPLE)
++    set(LIBS_PRIVATE "-lc++")
+   else()
+     set(LIBS_PRIVATE "-lstdc++")
+-    if(MATH_LIB)
++    if(UNIX AND NOT APPLE)
+       set(LIBS_PRIVATE "${LIBS_PRIVATE} -lm")
+     endif()
+   endif()
++else()
++  set(LIBS_PRIVATE "-luser32")
++endif()
++
+   set(prefix ${CMAKE_INSTALL_PREFIX})
+   set(exec_prefix ${CMAKE_INSTALL_PREFIX})
+   set(libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+@@ -181,4 +187,3 @@ if (NOT MSVC)
+   install(FILES "${PROJECT_BINARY_DIR}/libmodplug.pc"
+     DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+   )
+-endif ()

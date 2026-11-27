@@ -7,46 +7,165 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Window.H>
+#include <FL/Fl_RGB_Image.H>
 #include <FL/fl_draw.H>
 
 #include <math.h>
+#include <stdio.h>
 #include <string.h>
+
+// FLTK 1.3 的 GDI 绘制是硬边（圆角、圆、斜线全是锯齿）。
+// 这里接 GDI+ 做抗锯齿：Graphics 直接包住 FLTK 当前的 fl_gc，
+// 边缘像素与 DC 上已画好的背景做 alpha 混合，因此调用方必须先
+// 画背景再画形状，且窗口建议用 Fl_Double_Window 避免闪烁。
+#ifdef WIN32
+#include <FL/x.H>
+#include <windows.h>
+#include <gdiplus.h>
+#pragma comment(lib, "gdiplus.lib")
+#pragma comment(lib, "msimg32.lib")
+
+namespace {
+
+struct GdiplusBoot {
+  ULONG_PTR token = 0;
+  GdiplusBoot()
+  {
+    Gdiplus::GdiplusStartupInput input;
+    Gdiplus::GdiplusStartup(&token, &input, nullptr);
+  }
+  ~GdiplusBoot() { Gdiplus::GdiplusShutdown(token); }
+};
+
+void ensureGdiplus()
+{
+  // 局部静态：首次调用时才加载 gdiplus.dll，线程安全
+  static GdiplusBoot boot;
+  (void)boot;
+}
+
+Gdiplus::Color toGdiColor(Fl_Color c)
+{
+  uchar r = 0, g = 0, b = 0;
+  Fl::get_color(c, r, g, b);
+  return Gdiplus::Color(255, r, g, b);
+}
+
+void addRoundRect(Gdiplus::GraphicsPath &path, float x, float y, float w,
+                  float h, float r)
+{
+  if (r * 2 > w)
+    r = w / 2;
+  if (r * 2 > h)
+    r = h / 2;
+  if (r <= 0.0f) {
+    path.AddRectangle(Gdiplus::RectF(x, y, w, h));
+    return;
+  }
+  path.AddArc(x, y, r * 2, r * 2, 180, 90);
+  path.AddArc(x + w - r * 2, y, r * 2, r * 2, 270, 90);
+  path.AddArc(x + w - r * 2, y + h - r * 2, r * 2, r * 2, 0, 90);
+  path.AddArc(x, y + h - r * 2, r * 2, r * 2, 90, 90);
+  path.CloseFigure();
+}
+
+/* GDI+ 直接画到 FLTK 的 DC 上在部分环境下不可见，这里先画到
+ * 32 位 DIB（带 alpha），再交给 FLTK 的 Fl_RGB_Image 做 alpha 混合
+ * 绘制 —— 这是 FLTK 自己画图片走的同一条路径，保证能显示。 */
+template <typename PaintFn>
+void paintAA(int x, int y, int w, int h, PaintFn paint)
+{
+  if (w <= 0 || h <= 0)
+    return;
+  ensureGdiplus();
+
+  BITMAPINFO bmi = {};
+  bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+  bmi.bmiHeader.biWidth = w;
+  bmi.bmiHeader.biHeight = -h;  // 自上而下
+  bmi.bmiHeader.biPlanes = 1;
+  bmi.bmiHeader.biBitCount = 32;
+  bmi.bmiHeader.biCompression = BI_RGB;
+
+  void *bits = nullptr;
+  HDC mem = CreateCompatibleDC(fl_gc);
+  HBITMAP bmp =
+      CreateDIBSection(mem, &bmi, DIB_RGB_COLORS, &bits, nullptr, 0);
+  if (bmp == nullptr) {
+    DeleteDC(mem);
+    return;
+  }
+  HGDIOBJ old = SelectObject(mem, bmp);
+
+  {
+    Gdiplus::Graphics g(mem);
+    g.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+    g.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+    g.Clear(Gdiplus::Color(0, 0, 0, 0));
+    paint(g);
+    g.Flush();
+  }
+
+  SelectObject(mem, old);
+  DeleteDC(mem);
+
+  // DIB 是 BGRA（Windows 字节序），Fl_RGB_Image 要 RGBA
+  unsigned char *px = (unsigned char *)bits;
+  const int npix = w * h;
+  for (int i = 0; i < npix; i++) {
+    const unsigned char t = px[i * 4];
+    px[i * 4] = px[i * 4 + 2];
+    px[i * 4 + 2] = t;
+  }
+
+  Fl_RGB_Image img(px, w, h, 4, w * 4);
+  img.draw(x, y);
+
+  DeleteObject(bmp);
+}
+
+}  // namespace
+#endif
 
 namespace mat {
 
 // ---- 调色板（初始为默认值，initColors 会按需覆盖）----
-Fl_Color Card = 0xFFFFFF00;
-Fl_Color Bg = 0xFBFAFF00;
-Fl_Color CardHover = 0xF7F4FF00;
-Fl_Color Text = 0x1A152600;
-Fl_Color Text2 = 0x6B658000;
-Fl_Color Text3 = 0xA29BB800;
-Fl_Color Accent = 0x6C5CE700;
-Fl_Color AccentSoft = 0xEFEBFF00;
-Fl_Color AccentHover = 0x5B4DD600;
-Fl_Color Stroke = 0xEDE8FA00;
-Fl_Color Stroke2 = 0xE0D9F200;
-Fl_Color Ok = 0x2E9E5B00;
-Fl_Color OkSoft = 0xDCF6E500;
-Fl_Color Err = 0xE5484D00;
-Fl_Color ErrSoft = 0xFFE8EA00;
+// 暗色 Material 3：底色近黑，强调色用提亮的紫，保证暗底上的对比度
+Fl_Color Card = 0x1C1A2400;
+Fl_Color Bg = 0x14121A00;
+Fl_Color CardHover = 0x26233200;
+Fl_Color Text = 0xEAE6F500;
+Fl_Color Text2 = 0xA8A2BB00;
+Fl_Color Text3 = 0x6E688000;
+Fl_Color Accent = 0xB4A6FF00;
+Fl_Color AccentSoft = 0x2E284600;
+Fl_Color AccentHover = 0xC4B8FF00;
+Fl_Color Stroke = 0x2A263600;
+Fl_Color Stroke2 = 0x38324300;
+Fl_Color Ok = 0x6DD58C00;
+Fl_Color OkSoft = 0x1E3A2800;
+Fl_Color Err = 0xFFB4AB00;
+Fl_Color ErrSoft = 0x3B1A1E00;
+Fl_Color OnAccent = 0x2A1E5C00;
 
 void initColors() {
-  Card = fl_rgb_color(255, 255, 255);
-  Bg = fl_rgb_color(251, 250, 255);
-  CardHover = fl_rgb_color(247, 244, 255);
-  Text = fl_rgb_color(26, 21, 38);
-  Text2 = fl_rgb_color(107, 101, 128);
-  Text3 = fl_rgb_color(162, 155, 184);
-  Accent = fl_rgb_color(108, 92, 231);
-  AccentSoft = fl_rgb_color(239, 235, 255);
-  AccentHover = fl_rgb_color(91, 77, 214);
-  Stroke = fl_rgb_color(237, 232, 250);
-  Stroke2 = fl_rgb_color(224, 217, 242);
-  Ok = fl_rgb_color(46, 158, 91);
-  OkSoft = fl_rgb_color(220, 246, 229);
-  Err = fl_rgb_color(229, 72, 77);
-  ErrSoft = fl_rgb_color(255, 232, 234);
+  // 暗色 Material 3 调色板
+  Card = fl_rgb_color(28, 26, 36);        // #1C1A24 卡片/窗口底
+  Bg = fl_rgb_color(20, 18, 26);          // #14121A 输入框/面板底
+  CardHover = fl_rgb_color(38, 35, 50);   // #262332
+  Text = fl_rgb_color(234, 230, 245);     // #EAE6F5
+  Text2 = fl_rgb_color(168, 162, 187);    // #A8A2BB
+  Text3 = fl_rgb_color(110, 104, 128);    // #6E6880
+  Accent = fl_rgb_color(180, 166, 255);   // #B4A6FF
+  AccentSoft = fl_rgb_color(46, 40, 70);  // #2E2846
+  AccentHover = fl_rgb_color(196, 184, 255);  // #C4B8FF
+  Stroke = fl_rgb_color(42, 38, 54);      // #2A2636
+  Stroke2 = fl_rgb_color(56, 50, 67);     // #383243
+  Ok = fl_rgb_color(109, 213, 140);      // #6DD58C
+  OkSoft = fl_rgb_color(30, 58, 40);      // #1E3A28
+  Err = fl_rgb_color(255, 180, 171);      // #FFB4AB
+  ErrSoft = fl_rgb_color(59, 26, 30);     // #3B1A1E
+  OnAccent = fl_rgb_color(42, 30, 92);    // #2A1E5C
 }
 
 Fl_Color shade(Fl_Color c, double t) {
@@ -75,6 +194,14 @@ void roundRectFill(int x, int y, int w, int h, int r, Fl_Color c) {
     r = h / 2;
   if (r > w / 2)
     r = w / 2;
+#ifdef WIN32
+  paintAA(x, y, w, h, [&](Gdiplus::Graphics &g) {
+    Gdiplus::GraphicsPath path;
+    addRoundRect(path, 0.0f, 0.0f, (float)w, (float)h, (float)r);
+    Gdiplus::SolidBrush brush(toGdiColor(c));
+    g.FillPath(&brush, &path);
+  });
+#else
   fl_color(c);
   if (r <= 0) {
     fl_rectf(x, y, w, h);
@@ -93,6 +220,7 @@ void roundRectFill(int x, int y, int w, int h, int r, Fl_Color c) {
     fl_xyline(x + inset, y + i, x + w - inset - 1);
     fl_xyline(x + inset, y + h - 1 - i, x + w - inset - 1);
   }
+#endif
 }
 
 void roundRectOutline(int x, int y, int w, int h, int r, Fl_Color c) {
@@ -102,6 +230,17 @@ void roundRectOutline(int x, int y, int w, int h, int r, Fl_Color c) {
     r = h / 2;
   if (r > w / 2)
     r = w / 2;
+#ifdef WIN32
+  // 描边要沿形状中心线走，否则右/下边会被裁掉半个像素；
+  // 外扩 1px 给 pen 宽度留出空间
+  paintAA(x - 1, y - 1, w + 2, h + 2, [&](Gdiplus::Graphics &g) {
+    Gdiplus::GraphicsPath path;
+    addRoundRect(path, 1.5f, 1.5f, (float)w - 2.0f, (float)h - 2.0f,
+                 (float)r - 0.5f);
+    Gdiplus::Pen pen(toGdiColor(c), 1.0f);
+    g.DrawPath(&pen, &path);
+  });
+#else
   fl_color(c);
   if (r <= 0) {
     fl_rect(x, y, w, h);
@@ -121,6 +260,40 @@ void roundRectOutline(int x, int y, int w, int h, int r, Fl_Color c) {
   fl_arc(x + w - r * 2 - 1, y, r * 2, r * 2, 0, 90);
   fl_arc(x, y + h - r * 2 - 1, r * 2, r * 2, 180, 270);
   fl_arc(x + w - r * 2 - 1, y + h - r * 2 - 1, r * 2, r * 2, 270, 360);
+#endif
+}
+
+void circleFill(int cx, int cy, int radius, Fl_Color c) {
+  if (radius <= 0)
+    return;
+#ifdef WIN32
+  paintAA(cx - radius, cy - radius, radius * 2, radius * 2,
+          [&](Gdiplus::Graphics &g) {
+            Gdiplus::SolidBrush brush(toGdiColor(c));
+            g.FillEllipse(&brush, 0.0f, 0.0f, (float)(radius * 2),
+                          (float)(radius * 2));
+          });
+#else
+  fl_color(c);
+  fl_pie(cx - radius, cy - radius, radius * 2, radius * 2, 0, 360);
+#endif
+}
+
+void lineAA(int x1, int y1, int x2, int y2, Fl_Color c) {
+#ifdef WIN32
+  const int lx = (x1 < x2 ? x1 : x2) - 2;
+  const int ly = (y1 < y2 ? y1 : y2) - 2;
+  const int lw = (x1 > x2 ? x1 - x2 : x2 - x1) + 5;
+  const int lh = (y1 > y2 ? y1 - y2 : y2 - y1) + 5;
+  paintAA(lx, ly, lw, lh, [&](Gdiplus::Graphics &g) {
+    Gdiplus::Pen pen(toGdiColor(c), 1.0f);
+    g.DrawLine(&pen, (float)(x1 - lx), (float)(y1 - ly), (float)(x2 - lx),
+               (float)(y2 - ly));
+  });
+#else
+  fl_color(c);
+  fl_line(x1, y1, x2, y2);
+#endif
 }
 
 void roundRect(int x, int y, int w, int h, int r, Fl_Color fill,
@@ -168,7 +341,7 @@ void MButton::draw() {
     case Filled:
       bg = down_ ? mat::shade(mat::Accent, 0.75)
                  : (hover_ ? mat::AccentHover : mat::Accent);
-      fg = FL_WHITE;
+      fg = mat::OnAccent;
       stroke = bg;
       break;
     case Ghost:
@@ -183,7 +356,7 @@ void MButton::draw() {
       break;
     case Tab:
       bg = active_ ? mat::Accent : (hover_ ? mat::CardHover : mat::Card);
-      fg = active_ ? FL_WHITE : mat::Text2;
+      fg = active_ ? mat::OnAccent : mat::Text2;
       stroke = active_ ? mat::Accent : mat::Stroke;
       break;
   }
@@ -286,21 +459,21 @@ void MEntryCard::subtitle(const char *s) {
 }
 
 void MEntryCard::drawIcon(int cx, int cy, int size) {
-  fl_color(mat::Accent);
   const int h = size / 2;
+  const Fl_Color ic = mat::Accent;
   switch (icon_) {
     case History: {
-      // 圆 + 时钟指针 + 左侧箭头
+      // 圆 + 时钟指针 + 左侧箭头（抗锯齿）
       // FLTK 要求 a2 >= a1，这里扫 300°（300..600），左下留 60° 缺口
-      fl_arc(cx - h, cy - h, size, size, 300, 600);
-      fl_line(cx, cy, cx, cy - h + 2);
-      fl_line(cx, cy, cx + h - 3, cy + 2);
-      fl_line(cx - h + 1, cy - h + 3, cx - h + 1, cy - h + 6);
+      mat::roundRectOutline(cx - h, cy - h, size, size, h, ic);
+      mat::lineAA(cx, cy, cx, cy - h + 2, ic);
+      mat::lineAA(cx, cy, cx + h - 3, cy + 2, ic);
+      mat::lineAA(cx - h + 1, cy - h + 3, cx - h + 1, cy - h + 6, ic);
       break;
     }
     case Options: {
       // 齿轮：外圆 + 8 根齿 + 内圆
-      fl_circle(cx, cy, h - 1);
+      mat::roundRectOutline(cx - h, cy - h, size, size, h, ic);
       const double pi = 3.14159265358979;
       for (int i = 0; i < 8; i++) {
         const double a = i * pi / 4.0;
@@ -308,24 +481,25 @@ void MEntryCard::drawIcon(int cx, int cy, int size) {
         const int y1 = cy + (int)(sin(a) * (h - 1));
         const int x2 = cx + (int)(cos(a) * h);
         const int y2 = cy + (int)(sin(a) * h);
-        fl_line(x1, y1, x2, y2);
+        mat::lineAA(x1, y1, x2, y2, ic);
       }
-      fl_circle(cx, cy, h / 3);
+      mat::roundRectOutline(cx - h / 3, cy - h / 3, (h / 3) * 2,
+                            (h / 3) * 2, h / 3, ic);
       break;
     }
     case Update: {
       // 下载：竖线 + 箭头 + 底部托盘
-      fl_line(cx, cy - h, cx, cy + 1);
-      fl_line(cx, cy + 1, cx - 4, cy - 3);
-      fl_line(cx, cy + 1, cx + 4, cy - 3);
-      fl_line(cx - h, cy + h - 1, cx + h, cy + h - 1);
+      mat::lineAA(cx, cy - h, cx, cy + 1, ic);
+      mat::lineAA(cx, cy + 1, cx - 4, cy - 3, ic);
+      mat::lineAA(cx, cy + 1, cx + 4, cy - 3, ic);
+      mat::lineAA(cx - h, cy + h - 1, cx + h, cy + h - 1, ic);
       break;
     }
     case About: {
       // 信息：圆 + i
-      fl_circle(cx, cy, h);
-      fl_line(cx, cy - 3, cx, cy - 4);
-      fl_line(cx, cy - 1, cx, cy + 4);
+      mat::roundRectOutline(cx - h, cy - h, size, size, h, ic);
+      mat::lineAA(cx, cy - 3, cx, cy - 4, ic);
+      mat::lineAA(cx, cy - 1, cx, cy + 4, ic);
       break;
     }
   }
@@ -357,8 +531,7 @@ void MEntryCard::draw() {
 
   // 右上角红点
   if (badge_) {
-    fl_color(mat::Err);
-    fl_pie(x() + w() - 19, y() + 12, 7, 7, 0, 360);
+    mat::circleFill(x() + w() - 15, y() + 15, 4, mat::Err);
   }
 }
 
@@ -435,8 +608,7 @@ void MChip::draw() {
                  on ? mat::Accent : mat::Stroke);
 
   // 绿点
-  fl_color(mat::Ok);
-  fl_pie(x() + 10, y() + (h() - 6) / 2, 6, 6, 0, 360);
+  mat::circleFill(x() + 13, y() + h() / 2, 3, mat::Ok);
 
   // 文字
   fl_font(FL_HELVETICA, 11);
@@ -643,6 +815,7 @@ int matChoice(const char *title, const char *message,
   const int W = 440;
   const int H = 200;
 
+  // 用双缓冲窗口：GDI+ 抗锯齿要读背景像素做混合，直接画屏幕 DC 会闪
   Fl_Window *win = new Fl_Window(W, H);
   win->color(mat::Card);
   win->set_modal();

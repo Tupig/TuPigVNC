@@ -96,7 +96,7 @@
   <Style x:Key="AccentButton" TargetType="Button">
     <Setter Property="Foreground" Value="{StaticResource OnAccentBrush}"/>
     <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
-    <Setter Property="FontSize" Value="13"/>
+    <Setter Property="FontSize" Value="14"/>
     <Setter Property="FontWeight" Value="SemiBold"/>
     <Setter Property="Height" Value="34"/>
     <Setter Property="Padding" Value="16,0"/>
@@ -118,10 +118,18 @@
             <Trigger Property="IsPressed" Value="True">
               <Setter TargetName="Root" Property="Opacity" Value="0.85"/>
             </Trigger>
+            <!--
+              禁用态必须同时改 Background 属性本身：
+              只改 TargetName="Root" 时，Button.Background 仍是 AccentBrush
+              （浅蓝），Foreground 却是 Text3Brush（灰）——浅蓝底灰字，
+              对比度只有 1.6:1，基本看不见。
+            -->
             <Trigger Property="IsEnabled" Value="False">
               <Setter Property="Foreground" Value="{StaticResource Text3Brush}"/>
+              <Setter Property="Background" Value="{StaticResource CardHoverBrush}"/>
               <Setter TargetName="Root" Property="Background" Value="{StaticResource CardHoverBrush}"/>
               <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource StrokeBrush}"/>
+              <Setter TargetName="Root" Property="BorderThickness" Value="1"/>
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -133,7 +141,7 @@
   <Style x:Key="GhostButton" TargetType="Button">
     <Setter Property="Foreground" Value="{StaticResource Text2Brush}"/>
     <Setter Property="Background" Value="Transparent"/>
-    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="FontSize" Value="13"/>
     <Setter Property="Height" Value="28"/>
     <Setter Property="Padding" Value="10,0"/>
     <Setter Property="Cursor" Value="Hand"/>
@@ -166,8 +174,9 @@
 
   <!-- ============ 文字链接 .about-links a ============ -->
   <Style x:Key="LinkButton" TargetType="Button">
+    <Setter Property="Background" Value="Transparent"/>
     <Setter Property="Foreground" Value="{StaticResource LinkBrush}"/>
-    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="FontSize" Value="13"/>
     <Setter Property="Padding" Value="0"/>
     <Setter Property="Cursor" Value="Hand"/>
     <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
@@ -206,7 +215,7 @@
   <Style x:Key="CaptionButton" TargetType="Button">
     <Setter Property="Foreground" Value="{StaticResource Text2Brush}"/>
     <Setter Property="Background" Value="Transparent"/>
-    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="FontSize" Value="13"/>
     <Setter Property="Width" Value="34"/>
     <Setter Property="Height" Value="32"/>
     <Setter Property="Cursor" Value="Hand"/>
@@ -270,7 +279,7 @@
     <Setter Property="Background" Value="{StaticResource InputBrush}"/>
     <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}"/>
     <Setter Property="SelectionBrush" Value="{StaticResource AccentSoftBrush}"/>
-    <Setter Property="FontSize" Value="13"/>
+    <Setter Property="FontSize" Value="14"/>
     <Setter Property="Height" Value="34"/>
     <Setter Property="Padding" Value="12,0"/>
     <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -284,8 +293,17 @@
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}"
                   SnapsToDevicePixels="True">
-            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"
-                          VerticalAlignment="Center"/>
+            <!--
+              内边距必须走 ScrollViewer 的 Padding，不能用 Margin：
+              ScrollViewer 自带 4,2 的默认 Padding，用 Margin 会再叠一次，
+              文字前面凭空多出 4px；同时 VerticalAlignment=Center 时
+              Margin 不参与布局高度计算，光标和文字会错位。
+            -->
+            <ScrollViewer x:Name="PART_ContentHost"
+                          Padding="{TemplateBinding Padding}"
+                          VerticalAlignment="Center"
+                          HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Hidden"/>
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
@@ -315,7 +333,7 @@
   <Style x:Key="ChipButton" TargetType="Button">
     <Setter Property="Foreground" Value="{StaticResource Text2Brush}"/>
     <Setter Property="Background" Value="{StaticResource BgBrush}"/>
-    <Setter Property="FontSize" Value="11"/>
+    <Setter Property="FontSize" Value="12"/>
     <Setter Property="Height" Value="24"/>
     <Setter Property="Padding" Value="6,0,10,0"/>
     <Setter Property="Margin" Value="0,0,8,0"/>
@@ -399,8 +417,9 @@
 
   <!-- ============ 选项分类标签 .tabs button ============ -->
   <Style x:Key="OptionTab" TargetType="RadioButton">
+    <Setter Property="Background" Value="Transparent"/>
     <Setter Property="Foreground" Value="{StaticResource Text2Brush}"/>
-    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="FontSize" Value="13"/>
     <Setter Property="Height" Value="28"/>
     <Setter Property="Margin" Value="0,0,4,0"/>
     <Setter Property="Cursor" Value="Hand"/>
@@ -437,8 +456,9 @@
 
   <!-- ============ 快捷键修饰键（ToggleButton 样式） ============ -->
   <Style x:Key="DarkToggle" TargetType="ToggleButton">
+    <Setter Property="Background" Value="Transparent"/>
     <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
-    <Setter Property="FontSize" Value="11"/>
+    <Setter Property="FontSize" Value="12"/>
     <Setter Property="Height" Value="28"/>
     <Setter Property="Width" Value="60"/>
     <Setter Property="Margin" Value="0,0,6,0"/>
@@ -477,7 +497,9 @@
   <!-- ============ 暗色复选框 ============ -->
   <Style x:Key="DarkCheckBox" TargetType="CheckBox">
     <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
-    <Setter Property="FontSize" Value="12"/>
+    <!-- 不设 Background 会继承系统白色，暗色主题下禁用/悬停时露白 -->
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="FontSize" Value="13"/>
     <Setter Property="Cursor" Value="Hand"/>
     <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
     <Setter Property="Template">
@@ -519,15 +541,16 @@
 
   <!-- ============ 暗色下拉框 ============ -->
   <Style x:Key="DarkComboBox" TargetType="ComboBox">
+    <Setter Property="Background" Value="{StaticResource InputBrush}"/>
     <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
-    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="FontSize" Value="13"/>
     <Setter Property="Height" Value="28"/>
     <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocusRing}"/>
     <Setter Property="ItemContainerStyle">
       <Setter.Value>
         <Style TargetType="ComboBoxItem">
           <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
-          <Setter Property="FontSize" Value="12"/>
+          <Setter Property="FontSize" Value="13"/>
           <Setter Property="Padding" Value="10,5"/>
           <Setter Property="Template">
             <Setter.Value>
@@ -585,15 +608,23 @@
                 </ControlTemplate>
               </ToggleButton.Template>
             </ToggleButton>
+            <!--
+              Popup 是独立的视觉树，继承不到 Window 的 Foreground——
+              不显式设置的话，下拉项文字会落到系统默认的黑色，
+              在暗色卡片背景上几乎看不见。
+              TextElement.Foreground 设在 Popup 根上，所有子项一起继承。
+            -->
             <Popup x:Name="PART_Popup" Placement="Bottom"
                    IsOpen="{TemplateBinding IsDropDownOpen}"
-                   AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
+                   AllowsTransparency="True" Focusable="False" PopupAnimation="Fade"
+                   TextElement.Foreground="{StaticResource TextBrush}">
               <Border Background="{StaticResource CardBrush}"
                       BorderBrush="{StaticResource Stroke2Brush}"
                       BorderThickness="1" CornerRadius="6" Margin="0,4,0,0"
                       MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
                       MaxHeight="240">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
                   <ItemsPresenter/>
                 </ScrollViewer>
               </Border>
@@ -615,7 +646,7 @@
     <Setter Property="Background" Value="{StaticResource InputBrush}"/>
     <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}"/>
     <Setter Property="SelectionBrush" Value="{StaticResource AccentSoftBrush}"/>
-    <Setter Property="FontSize" Value="13"/>
+    <Setter Property="FontSize" Value="14"/>
     <Setter Property="Height" Value="34"/>
     <Setter Property="Padding" Value="12,0"/>
     <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -649,15 +680,104 @@
 
   <!-- ============ 小标题 / 字段标签 ============ -->
   <Style x:Key="SectionCaption" TargetType="TextBlock">
-    <Setter Property="FontSize" Value="11"/>
+    <Setter Property="FontSize" Value="12"/>
     <Setter Property="Foreground" Value="{StaticResource Text3Brush}"/>
     <Setter Property="Margin" Value="0,0,0,4"/>
   </Style>
 
   <Style x:Key="FieldLabel" TargetType="TextBlock">
-    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="FontSize" Value="13"/>
     <Setter Property="Foreground" Value="{StaticResource Text2Brush}"/>
     <Setter Property="Margin" Value="0,0,0,5"/>
+  </Style>
+
+  <!-- ============ 提示气泡 ============ -->
+  <!--
+    ToolTip 是独立弹出层，默认浅色背景 + 黑字，在暗色界面里非常刺眼。
+    这里统一成与卡片一致的深色。
+  -->
+  <Style TargetType="ToolTip">
+    <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+    <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+    <Setter Property="BorderBrush" Value="{StaticResource Stroke2Brush}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="FontSize" Value="13"/>
+    <Setter Property="Padding" Value="10,6"/>
+    <Setter Property="HasDropShadow" Value="True"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ToolTip">
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="6" Padding="{TemplateBinding Padding}"
+                  SnapsToDevicePixels="True">
+            <ContentPresenter/>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- ============ 右键菜单 ============ -->
+  <!--
+    ContextMenu 同样在独立视觉树里，不设的话是系统浅色。
+    同时给 MenuItem 定义暗色模板——默认模板在高对比度系统主题下会变白底。
+  -->
+  <Style TargetType="ContextMenu">
+    <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+    <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+    <Setter Property="BorderBrush" Value="{StaticResource Stroke2Brush}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="FontSize" Value="13"/>
+    <Setter Property="Padding" Value="4"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ContextMenu">
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="6" Padding="{TemplateBinding Padding}"
+                  SnapsToDevicePixels="True">
+            <ItemsPresenter/>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style TargetType="MenuItem">
+    <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+    <Setter Property="FontSize" Value="13"/>
+    <Setter Property="Padding" Value="10,6"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="MenuItem">
+          <Border x:Name="Bd" Background="Transparent" CornerRadius="4"
+                  Padding="{TemplateBinding Padding}">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <ContentPresenter x:Name="Icon" Grid.Column="0" Margin="0,0,8,0"
+                                VerticalAlignment="Center"/>
+              <ContentPresenter Grid.Column="1" ContentSource="Header"
+                                VerticalAlignment="Center"/>
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsHighlighted" Value="True">
+              <Setter TargetName="Bd" Property="Background" Value="{StaticResource AccentSoftBrush}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Foreground" Value="{StaticResource Text3Brush}"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
 
 </ResourceDictionary>

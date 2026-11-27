@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    TuPigVNC · WPF 功能行为测试
+
+    不走 xUnit/NUnit（那要联网拉包），整成一个自包含控制台程序：
+    加载真实的 TuPigVNC.Wpf 程序集，反射调用每个事件处理方法，
+    断言界面状态、配置持久化、历史记录、输入映射等真的按预期变化。
+
+    用法：
+      dotnet run -c Release (项目路径 src/tests/wpf)
+    退出码 0 = 全过，非 0 = 有用例失败。
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net11.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>WpfFunctionalTests</AssemblyName>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)..\..\..\tmp\build\managed\obj\WpfFunctionalTests\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)..\..\..\tmp\build\managed\bin\WpfFunctionalTests\</BaseOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 被测程序集：用 build.ps1 产出的发布副本，保证测的就是要发出去的东西 -->
+    <Reference Include="TuPigVNC">
+      <HintPath>$(MSBuildThisFileDirectory)..\..\..\tmp\build\publish\TuPigVNC.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

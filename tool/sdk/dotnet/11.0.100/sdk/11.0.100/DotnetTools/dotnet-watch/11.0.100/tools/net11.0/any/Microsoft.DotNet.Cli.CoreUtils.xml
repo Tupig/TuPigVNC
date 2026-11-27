@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.DotNet.Cli.CoreUtils</name>
+    </assembly>
+    <members>
+        <member name="P:Microsoft.DotNet.Cli.Utils.DotnetFiles.VersionFile">
+            <summary>
+            The SDK ships with a .version file that stores the commit information and SDK version
+            </summary>
+        </member>
+        <member name="P:Microsoft.DotNet.Cli.Utils.DotnetVersionFile.BuildRid">
+            <summary>
+            The runtime identifier (rid) that this CLI was built for.
+            </summary>
+            <remarks>
+            This is different than RuntimeInformation.RuntimeIdentifier because the
+            BuildRid is a RID that is guaranteed to exist and works on the current machine. The
+            RuntimeInformation.RuntimeIdentifier may be for a new version of the OS that
+            doesn't have full support yet.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.DotNet.Cli.Utils.SdkPaths">
+            <summary>
+             Canonical SDK filesystem locations for both the managed CLI and the Native AOT CLI. The first is
+             <see cref="P:Microsoft.DotNet.Cli.Utils.SdkPaths.SdkDirectory"/> - the versioned SDK directory (the folder that contains <c>dotnet.dll</c>,
+             <c>MSBuild.dll</c>, <c>Sdks\</c>, <c>DotnetTools\</c>, and the SDK targets). Prefer these over BCL
+             "where am I" APIs so paths resolve correctly in both hosts.
+            </summary>
+            <remarks>
+             <para>
+              Under the Native AOT CLI (<c>dotnet-aot</c> loaded directly by the muxer) the BCL location APIs do
+              NOT point at the versioned SDK directory: <see cref="P:System.AppContext.BaseDirectory"/> and
+              <c>Environment.ProcessPath</c> resolve to the install root (the muxer's own
+              directory) and <c>Assembly.Location</c> is empty. The AOT entry point therefore publishes the
+              resolved SDK directory as the <c>Microsoft.DotNet.Sdk.Root</c> AppContext value, which this helper
+              reads first. Code that needs an SDK-relative path (MSBuild, tasks, tools, forwarders) should use
+              this helper rather than probing a dll path.
+             </para>
+             <para>
+              Resolution order (resolved once and cached): the <c>Microsoft.DotNet.Sdk.Root</c> AppContext value,
+              then the directory of the SDK assembly (empty under single-file / NativeAOT), then
+              <see cref="P:System.AppContext.BaseDirectory"/>. See <c>src/Cli/dotnet-aot/SdkRootResolution.md</c>.
+             </para>
+            </remarks>
+        </member>
+        <member name="F:Microsoft.DotNet.Cli.Utils.SdkPaths.DataName">
+            <summary>
+             The <see cref="T:System.AppContext"/> data name the Native AOT bridge uses to publish the resolved
+             versioned SDK directory for the assemblies compiled into it. An AppContext value is process-local
+             (unlike an environment variable it is not inherited by child processes) and can also be supplied
+             through a <c>runtimeconfig.json</c> <c>configProperties</c> entry.
+            </summary>
+        </member>
+        <member name="P:Microsoft.DotNet.Cli.Utils.SdkPaths.SdkDirectory">
+            <summary>
+             The versioned SDK directory, resolved once and cached. Prefers the
+             <c>Microsoft.DotNet.Sdk.Root</c> AppContext value (published by the AOT bridge); otherwise the
+             directory of the SDK assembly, falling back to <see cref="P:System.AppContext.BaseDirectory"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.DotNet.Cli.Utils.VerbosityOptions">
+            <summary>
+            Represents the desired verbosity level for command output.
+            Maps mostly to MSBuild's verbosity levels.
+            The odd naming is because we're currently leaning entirely on System.CommandLine's
+            default enum parsing.
+            </summary>
+        </member>
+    </members>
+</doc>

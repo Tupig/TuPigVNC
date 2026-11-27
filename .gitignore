@@ -1,31 +1,108 @@
-*.[ao]
-*.mo
-*.la
-*.lo
-.deps
-.libs
+# ============================================================
+# TuPigVNC · 版本控制边界
+#
+# 原则：仓库自带完整工具链和依赖，clone 下来零配置即可构建。
+# 凡是「构建过程产生」或「本机私有」的东西一律不入库。
+# ============================================================
 
-CMakeFiles
+# ---------- 原生构建产物 ----------
+*.[ao]
+*.obj
+*.lo
+*.la
+*.mo
+
+CMakeFiles/
 CMakeCache.txt
 Makefile
 Makefile.in
-config.h
 cmake_install.cmake
 cmake_uninstall.cmake
 install_manifest.txt
+config.h
+compile_commands.json
+*.ninja
+.ninja_deps
+.ninja_log
 
-# 本地构建目录
-build/
+# ---------- 托管构建产物 ----------
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.pdb
+*.psscg
+*.binlog
+*.nupkg.bak
+project.lock.json
 
-# Claude 相关文件不提交
+# ---------- 构建树与缓存 ----------
+# 根目录旧构建产物；不能误屏蔽 tool/build 构建入口
+/build/
+# 全部可重建的中间产物、日志、验证输出
+/tmp/
+# 依赖缓存（离线包已经在 tool/packages 入库，这里是解包后的副本）
+/tmp/nuget/
+
+# ---------- 工具链缓存 ----------
+# vcpkg 的编译中间物、下载缓存、安装结果都可在任何机器上重建
+/tool/vcpkg/buildtrees/
+/tool/vcpkg/downloads/
+/tool/vcpkg/packages/
+/tool/vcpkg/installed/
+/tool/vcpkg/vcpkg-installed/
+# vcpkg 自身的构建产物
+/tool/vcpkg/**/CMakeFiles/
+/tool/vcpkg/**/CMakeCache.txt
+/tool/vcpkg/**/build.ninja
+/tool/vcpkg/**/.ninja_deps
+/tool/vcpkg/**/.ninja_log
+
+# ---------- 系统垃圾 ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+*.tmp
+*.log
+!doc/**/*.log
+
+# ---------- 本机过程材料 ----------
+# .claude/ 全部不入库：skill、规则、计划都是本机过程材料
 .claude/
 
-# TODO 清单不提交
-TODO.md
+/TODO.md
+/log/*
+!/log/.gitkeep
 
-# 日志目录只保留目录本身，目录内文件不提交
-log/*
-!log/.gitkeep
+# ---------- 翻译备份 ----------
+/i18n/*.bak*
+/src/i18n/*.bak*
 
-# 翻译备份文件
-i18n/*.bak*
+# ============================================================
+# 强制入库的例外（上面的规则不能吃掉这些）
+# ============================================================
+
+# 静态库是依赖本体，不是构建产物
+!/tool/deps/**/*.a
+!/tool/deps/**/*.lib
+# 依赖里的头文件
+!/tool/deps/**/*.h
+!/tool/deps/**/*.hpp
+# SDK 里的可执行文件和程序集
+!/tool/sdk/**/*.exe
+!/tool/sdk/**/*.dll
+!/tool/sdk/**/*.json
+#!/tool/sdk/**/*.xml
+# 离线包
+!/tool/packages/**/*.nupkg
+# 打包工具
+!/tool/packaging/**/*
+# 依赖清单
+!/tool/manifests/**/*
+# 构建脚本
+!/tool/build/**/*

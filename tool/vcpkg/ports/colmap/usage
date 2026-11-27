@@ -1,0 +1,10 @@
+Under Windows, execute COLMAP as:
+
+    <VCPKG-ROOT>\packages\colmap_<TRIPLET>\tools\colmap\colmap.exe gui
+    <VCPKG-ROOT>\packages\colmap_<TRIPLET>\tools\colmap\colmap.exe mapper
+    <VCPKG-ROOT>\packages\colmap_<TRIPLET>\tools\colmap\colmap.exe ...
+
+colmap provides CMake targets:
+
+    find_package(colmap CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE colmap::colmap)

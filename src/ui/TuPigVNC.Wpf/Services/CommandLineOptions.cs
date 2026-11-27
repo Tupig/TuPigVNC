@@ -86,6 +86,21 @@ public sealed record CommandLineOptions
 
             if (server is not null)
                 return new CommandLineOptions { Error = $"多余的参数「{arg}」；只能指定一个服务器地址。" };
+
+            // 地址里显式写了端口就必须是合法端口：host::port 或 host:display。
+            // 不校验的话，host:99999 会一路走到 TCP 连接，最后报一个
+            // 跟参数完全无关的网络错误，用户根本不知道是地址写错了。
+            if (TrySplitExplicitPort(arg, out string hostPart, out string portText))
+            {
+                if (!IsPort(portText))
+                    return new CommandLineOptions
+                    {
+                        Error = $"端口「{portText}」超出 1-65535 范围（地址：{arg}）。",
+                    };
+                if (hostPart.Length == 0)
+                    return new CommandLineOptions { Error = $"地址「{arg}」缺少主机名。" };
+            }
+
             server = arg;
         }
 
@@ -108,6 +123,40 @@ public sealed record CommandLineOptions
     private static bool IsPort(string value) =>
         value.Length is > 0 and <= 5 && value.All(char.IsAsciiDigit) && int.TryParse(value, out int port)
         && port is > 0 and <= 65535;
+
+    /// <summary>
+    /// 拆出地址里「显式指定的端口」。
+    /// 支持 <c>host::port</c>（双冒号，直接端口）和 <c>host:display</c>（显示号）。
+    /// 没有冒号、或末尾不是纯数字时返回 false（交给后续解析）。
+    /// IPv6 字面量（含多个冒号）不在此处理，视为无需校验。
+    /// </summary>
+    private static bool TrySplitExplicitPort(string address, out string host, out string portText)
+    {
+        host = address;
+        portText = "";
+
+        if (string.IsNullOrEmpty(address)) return false;
+
+        // 双冒号形式：host::port
+        int doubleColon = address.LastIndexOf("::", StringComparison.Ordinal);
+        if (doubleColon > 0)
+        {
+            // 多个双冒号说明是 IPv6，不在这里校验。
+            if (address.IndexOf("::", StringComparison.Ordinal) != doubleColon) return false;
+            host = address[..doubleColon];
+            portText = address[(doubleColon + 2)..];
+            return portText.Length > 0;
+        }
+
+        // 单冒号形式：host:display，且主机部分不能再有冒号（否则是 IPv6）
+        int colon = address.LastIndexOf(':');
+        if (colon <= 0) return false;
+        if (address[..colon].Contains(':')) return false;
+
+        host = address[..colon];
+        portText = address[(colon + 1)..];
+        return portText.Length > 0;
+    }
 
     /// <summary>帮助文本。对照原版 usage()，只列本版实际支持的形式。</summary>
     public static string HelpText(string programName) => new StringBuilder()

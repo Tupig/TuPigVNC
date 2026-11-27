@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         Title="TuPigVNC" Icon="/TuPigVNC;component/Assets/TuPigVNC.ico"
-        Width="540" MinWidth="540" MinHeight="480" SizeToContent="Height"
+        Width="620" Height="560" MinWidth="620" MinHeight="520" MaxHeight="1600"
         WindowStyle="None" ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen" Background="{StaticResource BgBrush}"
-        Foreground="{StaticResource TextBrush}" FontFamily="Segoe UI, Microsoft YaHei UI" FontSize="13"
-        TextOptions.TextFormattingMode="Display" UseLayoutRounding="True"
+        Foreground="{StaticResource TextBrush}" FontFamily="Microsoft YaHei UI, Segoe UI" FontSize="14"
+        TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True" SnapsToDevicePixels="True"
         SourceInitialized="Window_SourceInitialized" Closing="Window_Closing">
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="32" ResizeBorderThickness="5"
@@ -15,16 +16,33 @@
                             UseAeroCaptionButtons="False"/>
     </shell:WindowChrome.WindowChrome>
     <Window.Resources>
+        <!--
+          .nav 里的导航项：图标 + 文字横向排列，垂直居中，左对齐。
+          模板里的 ContentPresenter 必须显式 HorizontalAlignment=Left 且
+          VerticalAlignment=Center，否则内嵌的 StackPanel（图标+文字）会
+          按默认 Stretch 撑开，图标和文字基线不一致，看起来像「没对齐」。
+        -->
         <Style x:Key="NavButton" TargetType="RadioButton" BasedOn="{StaticResource OptionTab}">
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Margin" Value="0,0,0,5"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Padding" Value="12,0"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Foreground" Value="{StaticResource Text2Brush}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
-                        <Border x:Name="Root" Background="Transparent" CornerRadius="5" Padding="5,0">
-                            <ContentPresenter VerticalAlignment="Center"/>
+                        <!--
+                          基础边框厚度必须和选中态一样（2,0,0,0）：
+                          否则勾选时文字会整体右移 2px，切换导航时肉眼可见地抖。
+                        -->
+                        <Border x:Name="Root" Background="Transparent" CornerRadius="5"
+                                BorderBrush="Transparent" BorderThickness="2,0,0,0"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Left"
+                                              VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Root" Property="Background" Value="{StaticResource CardHoverBrush}"/><Setter Property="Foreground" Value="{StaticResource TextBrush}"/></Trigger>
@@ -49,25 +67,66 @@
                 </ControlTemplate>
             </Setter.Value></Setter>
         </Style>
-        <!-- .nav 里的工具入口：无底色、左对齐、12 号字。 -->
+        <!--
+          .nav 里的工具入口（载入/另存为）：外观必须和 NavButton 完全一致，
+          否则「载入配置」的图标会比其他导航项左移——GhostButton 基类的
+          BorderThickness=1、CornerRadius 与 NavButton 的模板不同，叠加后偏移。
+          这里改用与 NavButton 相同的模板，只有 TargetType 不同。
+        -->
         <Style x:Key="NavToolButton" TargetType="Button" BasedOn="{StaticResource GhostButton}">
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Padding" Value="5,0"/>
-            <Setter Property="Margin" Value="0,0,0,5"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
             <Setter Property="Foreground" Value="{StaticResource Text2Brush}"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root" Background="Transparent" CornerRadius="5"
+                                BorderBrush="Transparent" BorderThickness="0"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Left"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="{StaticResource CardHoverBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{StaticResource Text3Brush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     <Border x:Name="WindowFrame" BorderBrush="{StaticResource Stroke2Brush}" BorderThickness="1" CornerRadius="9" Background="{StaticResource BgBrush}">
-        <StackPanel>
+        <!--
+          外层必须是 Grid 而不是 StackPanel：
+          StackPanel 按内容累加高度，中段拿不到「剩余空间」，
+          窗口拉高时下面会留白、拉矮时内容被裁掉。
+          Grid 让第 3 行（.layout 主区）吃满剩余高度，自适应窗口尺寸。
+        -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>   <!-- 标题栏 -->
+                <RowDefinition Height="Auto"/>   <!-- 地址栏 -->
+                <RowDefinition x:Name="_mainRow" Height="*"/>  <!-- 主区：记录页吃满，设置/关于页 Auto -->
+                <RowDefinition Height="Auto"/>   <!-- 通知条 -->
+                <RowDefinition Height="Auto"/>   <!-- 状态栏 -->
+            </Grid.RowDefinitions>
             <!-- .bar：32 高自绘标题栏，19px 品牌图 + 名称 + 窗口按钮。 -->
-            <Border Background="{StaticResource CardBrush}" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,0,0,1" CornerRadius="8,8,0,0">
+            <Border x:Name="TitleBarRow" Grid.Row="0" Background="{StaticResource CardBrush}" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,0,0,1" CornerRadius="8,8,0,0">
                 <Grid Height="32">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0">
                         <Image Source="/TuPigVNC;component/Assets/Brand.png" Width="19" Height="19" Stretch="Uniform"/>
-                        <TextBlock Text="TuPigVNC" FontSize="12" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="TuPigVNC" FontSize="13" Margin="8,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" shell:WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button x:Name="MinimizeButton" Style="{StaticResource CaptionButton}" Click="Minimize_Click" AutomationProperties.Name="最小化" ToolTip="最小化">
@@ -83,7 +142,7 @@
                 </Grid>
             </Border>
             <!-- .quick：地址与连接按钮，错误和认证在原位展开。 -->
-            <Border Background="{StaticResource CardBrush}" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,0,0,1" Padding="12">
+            <Border x:Name="AddressBarRow" Grid.Row="1" Background="{StaticResource CardBrush}" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,0,0,1" Padding="16,14">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
@@ -93,11 +152,11 @@
                         </Grid>
                         <Button x:Name="ConnectButton" Grid.Column="1" Style="{StaticResource AccentButton}" Margin="8,0,0,0" Padding="18,0" Click="Connect_Click"/>
                     </Grid>
-                    <TextBlock x:Name="ErrorText" Visibility="Collapsed" Margin="0,7,0,0" TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource ErrBrush}" AutomationProperties.LiveSetting="Assertive"/>
+                    <TextBlock x:Name="ErrorText" Visibility="Collapsed" Margin="0,7,0,0" TextWrapping="Wrap" FontSize="13" Foreground="{StaticResource ErrBrush}" AutomationProperties.LiveSetting="Assertive"/>
                     <StackPanel x:Name="AuthPanel" Visibility="Collapsed" Margin="0,12,0,0">
                         <Border BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,1,0,0" Padding="0,10,0,0">
                             <StackPanel>
-                                <TextBlock x:Name="AuthCaption" TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource Text2Brush}"/>
+                                <TextBlock x:Name="AuthCaption" TextWrapping="Wrap" FontSize="13" Foreground="{StaticResource Text2Brush}"/>
                                 <StackPanel x:Name="AuthUserField" Margin="0,8,0,0">
                                     <TextBlock Text="用户名" Style="{StaticResource FieldLabel}"/>
                                     <TextBox x:Name="AuthUser" Style="{StaticResource DarkTextBox}" AutomationProperties.Name="认证用户名"/>
@@ -111,7 +170,7 @@
                                               Style="{StaticResource DarkCheckBox}" Margin="0,8,0,0"
                                               AutomationProperties.Name="记住密码"/>
                                 </StackPanel>
-                                <TextBlock x:Name="AuthError" Margin="0,6,0,0" FontSize="12" Foreground="{StaticResource ErrBrush}" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="AuthError" Margin="0,6,0,0" FontSize="13" Foreground="{StaticResource ErrBrush}" TextWrapping="Wrap"/>
                                 <StackPanel Orientation="Horizontal" Margin="0,9,0,0">
                                     <Button x:Name="AuthContinue" Style="{StaticResource AccentButton}" Click="AuthContinue_Click"/>
                                     <Button x:Name="AuthCancel" Style="{StaticResource GhostButton}" Click="CancelConnect_Click" Margin="7,0,0,0" Height="34" Padding="14,0"/>
@@ -123,9 +182,9 @@
                     <StackPanel x:Name="TrustPanel" Visibility="Collapsed" Margin="0,12,0,0">
                         <Border BorderBrush="{StaticResource WarnBrush}" BorderThickness="2,0,0,0" Background="{StaticResource WarnSoftBrush}" Padding="10,9" CornerRadius="0,6,6,0">
                             <StackPanel>
-                                <TextBlock x:Name="TrustTitle" Text="请核对服务器身份" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource WarnBrush}" TextWrapping="Wrap"/>
-                                <TextBlock x:Name="TrustCaption" FontSize="12" Foreground="{StaticResource Text2Brush}" TextWrapping="Wrap" Margin="0,4,0,0"/>
-                                <TextBlock x:Name="TrustFingerprintText" FontFamily="Consolas" FontSize="11" Foreground="{StaticResource TextBrush}" TextWrapping="Wrap" Margin="0,7,0,0"/>
+                                <TextBlock x:Name="TrustTitle" Text="请核对服务器身份" FontWeight="SemiBold" FontSize="13" Foreground="{StaticResource WarnBrush}" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="TrustCaption" FontSize="13" Foreground="{StaticResource Text2Brush}" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                <TextBlock x:Name="TrustFingerprintText" FontFamily="Consolas" FontSize="12" Foreground="{StaticResource TextBrush}" TextWrapping="Wrap" Margin="0,7,0,0"/>
                                 <CheckBox x:Name="TrustCheck" Content="我已通过可信渠道核对上面的指纹" Style="{StaticResource DarkCheckBox}" Margin="0,9,0,0" Checked="TrustCheck_Changed" Unchecked="TrustCheck_Changed"/>
                                 <StackPanel Orientation="Horizontal" Margin="0,9,0,0">
                                     <Button x:Name="TrustAccept" Style="{StaticResource AccentButton}" Click="TrustAccept_Click" IsEnabled="False"/>
@@ -136,46 +195,59 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
-            <!-- .layout：108 / 可变 / 184 三栏，中段最小高 366。 -->
-            <Grid MinHeight="366">
-                <Grid.ColumnDefinitions><ColumnDefinition Width="108"/><ColumnDefinition Width="*"/><ColumnDefinition Width="184"/></Grid.ColumnDefinitions>
-                <Border Background="{StaticResource CardBrush}" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,0,1,0" Padding="5,12">
-                    <DockPanel LastChildFill="False">
-                        <StackPanel DockPanel.Dock="Top">
-                            <RadioButton x:Name="NavRecent" GroupName="Navigation" Tag="recent" Style="{StaticResource NavButton}" Checked="Navigation_Checked"/>
-                            <RadioButton x:Name="NavAll" GroupName="Navigation" Tag="all" Style="{StaticResource NavButton}" Checked="Navigation_Checked"/>
-                        </StackPanel>
-                        <StackPanel DockPanel.Dock="Bottom">
-                            <Button x:Name="LoadButton" Style="{StaticResource NavToolButton}" Click="LoadConfig_Click"/>
-                            <Button x:Name="SaveButton" Style="{StaticResource NavToolButton}" Click="SaveAs_Click"/>
-                            <RadioButton x:Name="NavSettings" GroupName="Navigation" Tag="settings" Style="{StaticResource NavButton}" Checked="Navigation_Checked"/>
-                            <RadioButton x:Name="NavAbout" GroupName="Navigation" Tag="about" Style="{StaticResource NavButton}" Checked="Navigation_Checked"/>
-                        </StackPanel>
-                    </DockPanel>
+            <!--
+              .layout：120 / 可变 / 184 三栏。
+              高度由外层 Grid 的第 3 行（Height="*"）决定，跟着窗口自适应；
+              不写死行高，否则窗口拉高会留白、拉矮会裁掉导航项。
+              120 宽是为了让「更新与关于」5 个字加图标不折行。
+            -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="132"/><ColumnDefinition Width="*"/><ColumnDefinition Width="196"/></Grid.ColumnDefinitions>
+                <Border Background="{StaticResource CardBrush}" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,0,1,0" Padding="8,14">
+                    <!--
+                      窗口再矮也要能访问全部导航项：用 ScrollViewer 兜底，
+                      内容放得下时不出现滚动条（Auto），放不下时才出。
+                      用 DockPanel 把「设置/关于」贴底，符合桌面软件习惯。
+                    -->
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <DockPanel LastChildFill="False">
+                            <StackPanel DockPanel.Dock="Top">
+                                <RadioButton x:Name="NavRecent" GroupName="Navigation" Tag="recent" Style="{StaticResource NavButton}" Checked="Navigation_Checked"/>
+                                <RadioButton x:Name="NavAll" GroupName="Navigation" Tag="all" Style="{StaticResource NavButton}" Checked="Navigation_Checked"/>
+                            </StackPanel>
+                            <StackPanel DockPanel.Dock="Bottom">
+                                <Button x:Name="LoadButton" Style="{StaticResource NavToolButton}" Click="LoadConfig_Click"/>
+                                <Button x:Name="SaveButton" Style="{StaticResource NavToolButton}" Click="SaveAs_Click"/>
+                                <RadioButton x:Name="NavSettings" GroupName="Navigation" Tag="settings" Style="{StaticResource NavButton}" Checked="Navigation_Checked"/>
+                                <RadioButton x:Name="NavAbout" GroupName="Navigation" Tag="about" Style="{StaticResource NavButton}" Checked="Navigation_Checked"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </ScrollViewer>
                 </Border>
-                <Grid x:Name="RecordsPage" Grid.Column="1" Margin="8,15,8,12">
+                <Grid x:Name="RecordsPage" Grid.Column="1" Margin="14,16,14,14">
                     <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
                     <Grid Margin="0,0,0,9"><TextBlock x:Name="ListTitle" Text="最近连接" FontWeight="SemiBold"/><TextBlock x:Name="VisibleCount" HorizontalAlignment="Right" Foreground="{StaticResource Text2Brush}"/></Grid>
                     <Grid Grid.Row="1" Margin="0,0,0,10">
-                        <TextBox x:Name="SearchInput" Style="{StaticResource DarkTextBox}" FontSize="12" Height="30" AutomationProperties.Name="搜索连接" ToolTip="搜索连接" TextChanged="Search_TextChanged"/>
-                        <TextBlock x:Name="SearchPlaceholder" Text="搜索连接" Foreground="{StaticResource Text3Brush}" FontSize="12" IsHitTestVisible="False" VerticalAlignment="Center" Margin="12,0"/>
+                        <TextBox x:Name="SearchInput" Style="{StaticResource DarkTextBox}" FontSize="13" Height="30" AutomationProperties.Name="搜索连接" ToolTip="搜索连接" TextChanged="Search_TextChanged"/>
+                        <TextBlock x:Name="SearchPlaceholder" Text="搜索连接" Foreground="{StaticResource Text3Brush}" FontSize="13" IsHitTestVisible="False" VerticalAlignment="Center" Margin="12,0"/>
                     </Grid>
                     <ListBox x:Name="HistoryList" Grid.Row="2" BorderThickness="0" Background="Transparent" ItemContainerStyle="{StaticResource RecordItem}" SelectionChanged="History_SelectionChanged" MouseDoubleClick="History_DoubleClick" KeyDown="History_KeyDown" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AutomationProperties.Name="连接记录">
-                        <ListBox.ItemTemplate><DataTemplate><StackPanel><TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" FontSize="13"/><TextBlock Text="{Binding Host}" FontFamily="Consolas" FontSize="12" Foreground="{StaticResource Text2Brush}" TextWrapping="Wrap" Margin="0,6,0,0"/></StackPanel></DataTemplate></ListBox.ItemTemplate>
+                        <ListBox.ItemTemplate><DataTemplate><StackPanel><TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" FontSize="14"/><TextBlock Text="{Binding Host}" FontFamily="Consolas" FontSize="13" Foreground="{StaticResource Text2Brush}" TextWrapping="Wrap" Margin="0,6,0,0"/></StackPanel></DataTemplate></ListBox.ItemTemplate>
                     </ListBox>
-                    <TextBlock x:Name="EmptyRecords" Grid.Row="2" Text="还没有连接记录。&#10;在顶部输入地址开始连接。" Foreground="{StaticResource Text2Brush}" FontSize="12" TextWrapping="Wrap" Margin="4,10,4,0" Visibility="Collapsed"/>
+                    <TextBlock x:Name="EmptyRecords" Grid.Row="2" Text="还没有连接记录。&#10;在顶部输入地址开始连接。" Foreground="{StaticResource Text2Brush}" FontSize="13" TextWrapping="Wrap" Margin="4,10,4,0" Visibility="Collapsed"/>
                 </Grid>
-                <Border x:Name="Inspector" Grid.Column="2" Background="{StaticResource CardBrush}" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="1,0,0,0" Padding="12,17">
+                <Border x:Name="Inspector" Grid.Column="2" Background="{StaticResource CardBrush}" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="1,0,0,0" Padding="16,18">
                     <StackPanel>
-                        <TextBlock x:Name="DetailName" Text="选择一条记录" FontWeight="SemiBold" FontSize="13" TextWrapping="Wrap"/>
-                        <TextBlock x:Name="DetailHost" FontFamily="Consolas" FontSize="12" Foreground="{StaticResource Text2Brush}" TextWrapping="Wrap" Margin="0,8,0,0"/>
+                        <TextBlock x:Name="DetailName" Text="选择一条记录" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="DetailHost" FontFamily="Consolas" FontSize="13" Foreground="{StaticResource Text2Brush}" TextWrapping="Wrap" Margin="0,8,0,0"/>
                         <StackPanel x:Name="DetailBody" Visibility="Collapsed">
                             <Grid Margin="0,19,0,17">
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="60"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
-                                <TextBlock Text="上次连接" FontSize="12" Foreground="{StaticResource Text2Brush}"/><TextBlock x:Name="DetailTime" Grid.Column="1" FontSize="12" TextWrapping="Wrap"/>
-                                <TextBlock Grid.Row="1" Text="连接配置" FontSize="12" Foreground="{StaticResource Text2Brush}" Margin="0,10,0,0"/><TextBlock Grid.Row="1" Grid.Column="1" Text="核心默认" FontSize="12" Margin="0,10,0,0"/>
-                                <TextBlock Grid.Row="2" Text="状态" FontSize="12" Foreground="{StaticResource Text2Brush}" Margin="0,10,0,0"/><TextBlock x:Name="DetailStatus" Grid.Row="2" Grid.Column="1" Text="未连接" FontSize="12" Margin="0,10,0,0" TextWrapping="Wrap"/>
+                                <TextBlock Text="上次连接" FontSize="13" Foreground="{StaticResource Text2Brush}"/><TextBlock x:Name="DetailTime" Grid.Column="1" FontSize="13" TextWrapping="Wrap"/>
+                                <TextBlock Grid.Row="1" Text="连接配置" FontSize="13" Foreground="{StaticResource Text2Brush}" Margin="0,10,0,0"/><TextBlock Grid.Row="1" Grid.Column="1" Text="核心默认" FontSize="13" Margin="0,10,0,0"/>
+                                <TextBlock Grid.Row="2" Text="状态" FontSize="13" Foreground="{StaticResource Text2Brush}" Margin="0,10,0,0"/><TextBlock x:Name="DetailStatus" Grid.Row="2" Grid.Column="1" Text="未连接" FontSize="13" Margin="0,10,0,0" TextWrapping="Wrap"/>
                             </Grid>
                             <Button x:Name="DetailConnect" Style="{StaticResource AccentButton}" HorizontalAlignment="Stretch" Click="DetailConnect_Click"/>
                             <Border BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,1,0,0" Margin="0,17,0,0" Padding="0,8,0,0">
@@ -187,19 +259,19 @@
                             </Border>
                             <StackPanel x:Name="RenamePanel" Visibility="Collapsed" Margin="0,10,0,0">
                                 <TextBlock Text="记录名称" Style="{StaticResource FieldLabel}"/><TextBox x:Name="RenameInput" Style="{StaticResource DarkTextBox}" MaxLength="40" Margin="0,0,0,6" AutomationProperties.Name="记录名称"/>
-                                <TextBlock x:Name="RenameError" FontSize="12" Foreground="{StaticResource ErrBrush}" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="RenameError" FontSize="13" Foreground="{StaticResource ErrBrush}" TextWrapping="Wrap"/>
                                 <WrapPanel Margin="0,6,0,0"><Button x:Name="RenameSave" Style="{StaticResource GhostButton}" Click="RenameSave_Click"/><Button x:Name="RenameCancel" Style="{StaticResource GhostButton}" Click="RecordCancel_Click" Margin="7,0,0,0"/></WrapPanel>
                             </StackPanel>
                             <StackPanel x:Name="DeletePanel" Visibility="Collapsed" Margin="0,10,0,0">
-                                <TextBlock Text="删除这条记录？不会删除远程电脑上的内容。" TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource Text2Brush}"/>
+                                <TextBlock Text="删除这条记录？不会删除远程电脑上的内容。" TextWrapping="Wrap" FontSize="13" Foreground="{StaticResource Text2Brush}"/>
                                 <WrapPanel Margin="0,6,0,0"><Button x:Name="DeleteConfirm" Style="{StaticResource GhostButton}" Foreground="{StaticResource ErrBrush}" Click="DeleteConfirm_Click"/><Button x:Name="DeleteCancel" Style="{StaticResource GhostButton}" Click="RecordCancel_Click" Margin="7,0,0,0"/></WrapPanel>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </Border>
                 <!-- .workspace：设置页跨两栏，两列表单。 -->
-                <StackPanel x:Name="SettingsPage" Grid.Column="1" Grid.ColumnSpan="2" Margin="15,17" Visibility="Collapsed">
-                    <TextBlock Text="连接设置" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,14"/>
+                <StackPanel x:Name="SettingsPage" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="20,18" Visibility="Collapsed">
+                    <TextBlock Text="连接设置" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,14"/>
                     <Border BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,0,0,1" Padding="0,0,0,9" Margin="0,0,0,13">
                         <WrapPanel x:Name="SettingsTabs"/>
                     </Border>
@@ -207,38 +279,38 @@
                     <Border BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,1,0,0" Margin="0,13,0,0" Padding="0,11,0,0">
                         <WrapPanel><Button x:Name="ApplySettings" Style="{StaticResource AccentButton}" Click="ApplySettings_Click"/><Button x:Name="ResetSettings" Style="{StaticResource GhostButton}" Click="ResetSettings_Click" Margin="7,0,0,0" Height="34" Padding="14,0"/></WrapPanel>
                     </Border>
-                    <TextBlock x:Name="SettingsNotice" Margin="0,10,0,0" FontSize="12" Foreground="{StaticResource Text2Brush}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite"/>
-                    <TextBlock Text="点“应用”后，已经接通的选项会写入当前配置，并在下一次连接时生效；其余选项仍只保留在界面里，不会伪装成已生效。" Foreground="{StaticResource Text3Brush}" FontSize="11" TextWrapping="Wrap" Margin="0,8,0,0"/>
+                    <TextBlock x:Name="SettingsNotice" Margin="0,10,0,0" FontSize="13" Foreground="{StaticResource Text2Brush}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite"/>
+                    <TextBlock Text="点“应用”后，已经接通的选项会写入当前配置，并在下一次连接时生效；其余选项仍只保留在界面里，不会伪装成已生效。" Foreground="{StaticResource Text3Brush}" FontSize="12" TextWrapping="Wrap" Margin="0,8,0,0"/>
                 </StackPanel>
                 <!-- #aboutPage：版本块、文字链接、更新说明。 -->
-                <StackPanel x:Name="AboutPage" Grid.Column="1" Grid.ColumnSpan="2" Margin="15,15,15,12" Visibility="Collapsed">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12"><Image Source="/TuPigVNC;component/Assets/Brand.png" Width="34" Height="34" Stretch="Uniform" Margin="0,0,12,0"/><StackPanel VerticalAlignment="Center"><TextBlock Text="TuPigVNC" FontSize="14" FontWeight="SemiBold"/><TextBlock x:Name="AboutVersionText" Text="Windows x64 · 基于 TigerVNC" Foreground="{StaticResource Text2Brush}" FontSize="11" Margin="0,4,0,0"/></StackPanel></StackPanel>
+                <StackPanel x:Name="AboutPage" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="20,16,20,14" Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12"><Image Source="/TuPigVNC;component/Assets/Brand.png" Width="34" Height="34" Stretch="Uniform" Margin="0,0,12,0"/><StackPanel VerticalAlignment="Center"><TextBlock Text="TuPigVNC" FontSize="15" FontWeight="SemiBold"/><TextBlock x:Name="AboutVersionText" Text="Windows x64 · 基于 TigerVNC" Foreground="{StaticResource Text2Brush}" FontSize="12" Margin="0,4,0,0"/></StackPanel></StackPanel>
                     <WrapPanel Margin="0,0,0,16">
                         <Button Content="项目主页" Tag="https://github.com/TuPig/TuPigVNC" Style="{StaticResource LinkButton}" Click="OpenLink_Click" Margin="0,0,15,0"/>
                         <Button Content="问题反馈" Tag="https://github.com/TuPig/TuPigVNC/issues" Style="{StaticResource LinkButton}" Click="OpenLink_Click" Margin="0,0,15,0"/>
                         <Button Content="版本发布" Tag="https://github.com/TuPig/TuPigVNC/releases" Style="{StaticResource LinkButton}" Click="OpenLink_Click" Margin="0,0,15,0"/>
                         <Button Content="许可证" Tag="https://github.com/TuPig/TuPigVNC/blob/main/LICENCE.TXT" Style="{StaticResource LinkButton}" Click="OpenLink_Click"/>
                     </WrapPanel>
-                    <TextBlock Text="Windows VNC 远程桌面客户端" FontSize="12" Foreground="{StaticResource Text2Brush}"/>
+                    <TextBlock Text="Windows VNC 远程桌面客户端" FontSize="13" Foreground="{StaticResource Text2Brush}"/>
                     <Border BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,1,0,0" Margin="0,13,0,0" Padding="0,12,0,0">
                         <StackPanel>
                             <Grid>
-                                <TextBlock Text="版本更新" FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                                <TextBlock Text="示例发布说明" FontSize="10" Foreground="{StaticResource Text3Brush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                <TextBlock Text="版本更新" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center"/>
+                                <TextBlock Text="示例发布说明" FontSize="11" Foreground="{StaticResource Text3Brush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             </Grid>
-                            <TextBlock x:Name="CurrentVersionText" Foreground="{StaticResource Text2Brush}" FontSize="11" Margin="0,5,0,10"/>
+                            <TextBlock x:Name="CurrentVersionText" Foreground="{StaticResource Text2Brush}" FontSize="12" Margin="0,5,0,10"/>
                             <Button x:Name="CheckUpdate" Style="{StaticResource GhostButton}" HorizontalAlignment="Left" Click="CheckUpdate_Click"/>
-                            <TextBlock x:Name="UpdateNotice" Text="更新接口尚未接入，不会在后台下载或安装。" TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource Text2Brush}" Margin="0,10,0,0" AutomationProperties.LiveSetting="Polite"/>
+                            <TextBlock x:Name="UpdateNotice" Text="更新接口尚未接入，不会在后台下载或安装。" TextWrapping="Wrap" FontSize="13" Foreground="{StaticResource Text2Brush}" Margin="0,10,0,0" AutomationProperties.LiveSetting="Polite"/>
                             <Border BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,1,0,0" Margin="0,12,0,0" Padding="0,10,0,0">
                                 <StackPanel>
-                                    <TextBlock Text="更新说明" FontWeight="SemiBold" FontSize="13"/>
-                                    <TextBlock x:Name="ReleaseMetadata" Text="版本、发布日期与适用平台：等待检查" Foreground="{StaticResource Text2Brush}" FontSize="11" TextWrapping="Wrap" Margin="0,5,0,0"/>
-                                    <TextBlock x:Name="ReleaseNotes" Text="检查到新版本后，这里显示该版本的正式更新说明。" Foreground="{StaticResource Text2Brush}" FontSize="12" TextWrapping="Wrap" Margin="0,7,0,0"/>
+                                    <TextBlock Text="更新说明" FontWeight="SemiBold" FontSize="14"/>
+                                    <TextBlock x:Name="ReleaseMetadata" Text="版本、发布日期与适用平台：等待检查" Foreground="{StaticResource Text2Brush}" FontSize="12" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                    <TextBlock x:Name="ReleaseNotes" Text="检查到新版本后，这里显示该版本的正式更新说明。" Foreground="{StaticResource Text2Brush}" FontSize="13" TextWrapping="Wrap" Margin="0,7,0,0"/>
                                     <WrapPanel Margin="0,8,0,0">
                                         <Button x:Name="ReleasePrev" Content="上一页" Style="{StaticResource LinkButton}"
                                                 IsEnabled="False" Click="ReleasePrev_Click" ToolTip="查看上一页更新说明"/>
                                         <TextBlock x:Name="ReleasePageInfo" Text="— / —" Foreground="{StaticResource Text3Brush}"
-                                                   FontSize="11" VerticalAlignment="Center" Margin="10,0"/>
+                                                   FontSize="12" VerticalAlignment="Center" Margin="10,0"/>
                                         <Button x:Name="ReleaseNext" Content="下一页" Style="{StaticResource LinkButton}"
                                                 IsEnabled="False" Click="ReleaseNext_Click" ToolTip="查看下一页更新说明"/>
                                     </WrapPanel>
@@ -247,10 +319,10 @@
                             <ProgressBar x:Name="UpdateProgress" Minimum="0" Maximum="100" Value="0" Height="10" Margin="0,12,0,8" Foreground="{StaticResource InfoBrush}" Background="{StaticResource InputBrush}" BorderThickness="0" AutomationProperties.Name="更新下载进度"/>
                             <Grid>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                                <TextBlock x:Name="DownloadAmount" Text="已下载 — / —" Foreground="{StaticResource Text2Brush}" FontSize="11"/>
-                                <TextBlock x:Name="DownloadSpeed" Grid.Column="1" Text="速度 —" Foreground="{StaticResource Text2Brush}" FontSize="11"/>
+                                <TextBlock x:Name="DownloadAmount" Text="已下载 — / —" Foreground="{StaticResource Text2Brush}" FontSize="12"/>
+                                <TextBlock x:Name="DownloadSpeed" Grid.Column="1" Text="速度 —" Foreground="{StaticResource Text2Brush}" FontSize="12"/>
                             </Grid>
-                            <TextBlock x:Name="DownloadRemaining" Text="剩余时间 — · 文件校验未开始" Foreground="{StaticResource Text3Brush}" FontSize="11" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="DownloadRemaining" Text="剩余时间 — · 文件校验未开始" Foreground="{StaticResource Text3Brush}" FontSize="12" Margin="0,6,0,0" TextWrapping="Wrap"/>
                             <WrapPanel Margin="0,10,0,0">
                                 <Button x:Name="DownloadUpdate" Content="下载更新" Style="{StaticResource AccentButton}" Height="30" IsEnabled="False" Click="DownloadUpdate_Click" ToolTip="发现新版本且提供校验文件后可用"/>
                                 <Button x:Name="CancelUpdate" Content="取消下载" Style="{StaticResource GhostButton}" IsEnabled="False" Margin="7,0,0,0" Click="CancelUpdate_Click"/>
@@ -259,13 +331,13 @@
                     </Border>
                 </StackPanel>
             </Grid>
-            <Border x:Name="NoticePanel" Visibility="Collapsed" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,1,0,0" Padding="12,8">
-                <DockPanel><Button x:Name="UndoButton" DockPanel.Dock="Right" Style="{StaticResource GhostButton}" Click="UndoDelete_Click" Visibility="Collapsed"/><TextBlock x:Name="GlobalNotice" TextWrapping="Wrap" FontSize="12" VerticalAlignment="Center" Foreground="{StaticResource Text2Brush}" AutomationProperties.LiveSetting="Polite"/></DockPanel>
+            <Border Grid.Row="3" x:Name="NoticePanel" Visibility="Collapsed" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,1,0,0" Padding="12,8">
+                <DockPanel><Button x:Name="UndoButton" DockPanel.Dock="Right" Style="{StaticResource GhostButton}" Click="UndoDelete_Click" Visibility="Collapsed"/><TextBlock x:Name="GlobalNotice" TextWrapping="Wrap" FontSize="13" VerticalAlignment="Center" Foreground="{StaticResource Text2Brush}" AutomationProperties.LiveSetting="Polite"/></DockPanel>
             </Border>
             <!-- .bottom 状态条 -->
-            <Border Background="{StaticResource CardBrush}" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,1,0,0" Padding="12,9" CornerRadius="0,0,8,8">
-                <Grid><TextBlock x:Name="RecordTotal" FontSize="11" Foreground="{StaticResource Text2Brush}"/><StackPanel Orientation="Horizontal" HorizontalAlignment="Right"><Ellipse x:Name="StatusLight" Width="7" Height="7" Fill="{StaticResource Text3Brush}" Margin="0,0,6,0" VerticalAlignment="Center"/><TextBlock x:Name="StatusText" Text="未连接 · 不探测在线状态" FontSize="11" Foreground="{StaticResource Text2Brush}"/></StackPanel></Grid>
+            <Border x:Name="StatusBarRow" Grid.Row="4" Background="{StaticResource CardBrush}" BorderBrush="{StaticResource StrokeBrush}" BorderThickness="0,1,0,0" Padding="16,11" CornerRadius="0,0,8,8">
+                <Grid><TextBlock x:Name="RecordTotal" FontSize="12" Foreground="{StaticResource Text2Brush}"/><StackPanel Orientation="Horizontal" HorizontalAlignment="Right"><Ellipse x:Name="StatusLight" Width="7" Height="7" Fill="{StaticResource Text3Brush}" Margin="0,0,6,0" VerticalAlignment="Center"/><TextBlock x:Name="StatusText" Text="未连接 · 不探测在线状态" FontSize="12" Foreground="{StaticResource Text2Brush}"/></StackPanel></Grid>
             </Border>
-        </StackPanel>
+        </Grid>
     </Border>
 </Window>

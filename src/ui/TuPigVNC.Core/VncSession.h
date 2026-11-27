@@ -115,6 +115,10 @@ public:
   /* 音频后端是否可用（没有声卡时为 false）。 */
   bool isAudioAvailable() const;
 
+  /* 把一条错误报告给托管侧（走 on_error 回调）。
+     C ABI 适配层在启动事件循环失败等场景需要主动上报，不能静默。 */
+  void reportFatalError(const std::string& msg) { reportError(msg, 1); }
+
   /* 网络统计快照（供会话窗口的迷你柱状图用）。
      对照原版 CConn::getUpdateCount / getPixelCount / getPosition。 */
   struct Stats

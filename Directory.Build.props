@@ -1,20 +1,20 @@
 <!--
   TuPigVNC · .NET 项目统一配置
 
-  - 构建产物（obj/bin）全部落到 .claude\build\，不污染源码目录
+  - 构建产物（obj/bin）全部落到 tmp\build\managed\，不污染源码目录
   - 版本号从 CMakeLists.txt 的 set(VERSION x.y.z) 读取（后续 CI 脚本同步）
   - 统一 TFM / RID / 平台
 
-  .claude\ 不入库（见 .gitignore）。
+  tmp\ 不入库（见 .gitignore）。
 -->
 <Project>
   <PropertyGroup>
-    <!-- 中间产物与输出目录：全部隔离到 .claude -->
-    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory).claude\build\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
-    <BaseOutputPath>$(MSBuildThisFileDirectory).claude\build\bin\$(MSBuildProjectName)\</BaseOutputPath>
+    <!-- 中间产物与输出目录：全部隔离到 tmp -->
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)tmp\build\managed\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)tmp\build\managed\bin\$(MSBuildProjectName)\</BaseOutputPath>
 
-    <!-- 统一目标框架（WPF 前端；Win10 1809+ 保留作为最低版本） -->
-    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <!-- 使用正式稳定版 .NET 11；最低平台声明不代替具体 Windows 版本验收。 -->
+    <TargetFramework>net11.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <Platforms>x64</Platforms>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
@@ -23,5 +23,16 @@
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!--
+    版本号：唯一来源是 CMakeLists.txt 的 set(VERSION x.y.z)。
+    这里的 fallback 只是防止直接构建 csproj 时得到 .NET 默认的 1.0.0——
+    那会让"检查更新"永远认为有新版本。发布脚本会用 -p:Version= 覆盖。
+  -->
+  <PropertyGroup>
+    <Version Condition="'$(Version)' == ''">0.0.6</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
   </PropertyGroup>
 </Project>

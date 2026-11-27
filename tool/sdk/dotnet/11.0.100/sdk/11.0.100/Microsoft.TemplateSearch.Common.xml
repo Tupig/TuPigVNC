@@ -1,0 +1,343 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.TemplateSearch.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplatePackageInfo">
+            <summary>
+            Represents information about template package.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.Abstractions.ITemplatePackageInfo.Name">
+            <summary>
+            Gets template package name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.Abstractions.ITemplatePackageInfo.Version">
+            <summary>
+            Gets template package version.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.Abstractions.ITemplatePackageInfo.TotalDownloads">
+            <summary>
+            Gets total number of downloads for the package.
+            Optional, might be 0 in case search provider cannot provide number of downloads.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.Abstractions.ITemplatePackageInfo.Owners">
+            <summary>
+            Gets the list of template package owners.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.Abstractions.ITemplatePackageInfo.Reserved">
+            <summary>
+            Gets the indication if the package is verified.
+            </summary>
+            <remarks>
+            For NuGet.org 'verified' means that package ID is under reserved namespaces, see  <see href="https://docs.microsoft.com/en-us/nuget/nuget-org/id-prefix-reservation"/>.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.Abstractions.ITemplatePackageInfo.Description">
+            <summary>
+            Gets the NuGet package description.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.Abstractions.ITemplatePackageInfo.IconUrl">
+            <summary>
+            Gets the URL to the package icon.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProvider">
+            <summary>
+            The template search provider searches for the templates at the source.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProvider.Factory">
+            <summary>
+            Gets <see cref="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProviderFactory"/> that created the provider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProvider.SearchForTemplatePackagesAsync(System.Func{Microsoft.TemplateSearch.Common.TemplatePackageSearchData,System.Boolean},System.Func{Microsoft.TemplateSearch.Common.TemplatePackageSearchData,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.ITemplateInfo}},System.Threading.CancellationToken)">
+            <summary>
+            Searches the source for the available templates that matches the filters.
+            </summary>
+            <param name="packFilters">The filter that defines if <see cref="T:Microsoft.TemplateSearch.Common.TemplatePackageSearchData"/> is a match.</param>
+            <param name="matchingTemplatesFilter">The filter that list of templates that are the match inside given <see cref="T:Microsoft.TemplateSearch.Common.TemplatePackageSearchData"/>.</param>
+            <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+            <returns>The list of packages and matching templates for the source.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProviderFactory">
+            <summary>
+            The factory to create <see cref="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProvider"/>s.
+            This is a template engine component that can be installed for <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProviderFactory.DisplayName">
+            <summary>
+            Gets the display name of the component.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProviderFactory.CreateProvider(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Func{System.Object,System.Object}})">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProvider"/>.
+            </summary>
+            <param name="environmentSettings">template engine environment settings.</param>
+            <param name="additionalDataReaders">additional readers to be used to read the information from the source (optional).</param>
+            <returns>Created <see cref="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProvider"/>.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateSearch.Common.TemplatePackageSearchData">
+            <summary>
+            Template package searchable data.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplatePackageSearchData.Name">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplatePackageSearchData.Version">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplatePackageSearchData.TotalDownloads">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplatePackageSearchData.Owners">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplatePackageSearchData.Reserved">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplatePackageSearchData.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplatePackageSearchData.IconUrl">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplatePackageSearchData.Templates">
+            <summary>
+            Gets the list of templates in template package.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplatePackageSearchData.AdditionalData">
+            <summary>
+            Gets the additional data available for template package.
+            </summary>
+            <remarks>
+            Additional data may be read by additional readers provider to <see cref="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProviderFactory"/> when creating the <see cref="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProvider"/>.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.TemplateSearch.Common.TemplateSearchData">
+            <summary>
+            Template searchable data.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.AdditionalData">
+            <summary>
+            Gets the additional data available for template package.
+            </summary>
+            <remarks>
+            Additional data may be read by additional readers provider to <see cref="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProviderFactory"/> when creating the <see cref="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProvider"/>.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.Identity">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.GroupIdentity">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.Name">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.ShortNameList">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.Microsoft#TemplateEngine#Abstractions#ITemplateMetadata#PreferDefaultName">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.Author">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.Description">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.Classifications">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.TagsCollection">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.ParameterDefinitions">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.Parameters">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.Precedence">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.TemplateSearchData.ThirdPartyNotices">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateSearch.Common.Providers.NuGetMetadataSearchProvider.#ctor(Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProviderFactory,Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Func{System.Object,System.Object}},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Test constructor allowing override search cache Uris.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateSearch.Common.Providers.NuGetMetadataSearchProvider.AcquireFileFromCloudAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Attempt to get the search metadata file from cloud storage and place it in the expected search location.
+            Return true on success, false on failure.
+            Implement If-None-Match/ETag headers to avoid re-downloading the same content over and over again.
+            </summary>
+            <param name="searchMetadataFileLocation"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateSearch.Common.SearchResult">
+            <summary>
+            Results of the search performed by <see cref="T:Microsoft.TemplateSearch.Common.TemplateSearchCoordinator"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.SearchResult.Provider">
+            <summary>
+            Gets <see cref="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProvider"/> that performed the search.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.SearchResult.Success">
+            <summary>
+            <see langword="true"/> if search completed successfully.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.SearchResult.ErrorMessage">
+            <summary>
+            Gets localized error message if the search failed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.SearchResult.SearchHits">
+            <summary>
+            Gets search hits returned by <see cref="P:Microsoft.TemplateSearch.Common.SearchResult.Provider"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateSearch.Common.TemplateSearchCoordinator">
+            <summary>
+            <see cref="T:Microsoft.TemplateSearch.Common.TemplateSearchCoordinator"/> performs the search for the templates in registered search providers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateSearch.Common.TemplateSearchCoordinator.SearchAsync(System.Func{Microsoft.TemplateSearch.Common.TemplatePackageSearchData,System.Boolean},System.Func{Microsoft.TemplateSearch.Common.TemplatePackageSearchData,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.ITemplateInfo}},System.Threading.CancellationToken)">
+            <summary>
+            Searches for the templates matching the filters in registered search providers.
+            </summary>
+            <param name="packFilter">The filter that defines if <see cref="T:Microsoft.TemplateSearch.Common.TemplatePackageSearchData"/> is a match.</param>
+            <param name="matchingTemplatesFilter">The filter that list of templates that are the match inside given <see cref="T:Microsoft.TemplateSearch.Common.TemplatePackageSearchData"/>.</param>
+            <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+            <returns>The list of <see cref="T:Microsoft.TemplateSearch.Common.SearchResult"/> representing the result of the search for given <see cref="T:Microsoft.TemplateSearch.Common.Abstractions.ITemplateSearchProvider"/>.</returns>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.LocalizableStrings.BlobStoreSourceFileProvider_Exception_FailedToUpdateCache">
+            <summary>Failed to update search cache.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.LocalizableStrings.BlobStoreSourceFileProvider_Exception_LocalCacheDoesNotExist">
+            <summary>Local search cache '{0}' does not exist.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.LocalizableStrings.BlobStoreSourceFileProvider_Warning_LocalCacheWillBeUsed">
+            <summary>Failed to update search cache. Local search cache will be used instead.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.LocalizableStrings.TemplateSearchCache_Exception_NotSupported">
+            <summary>The template search cache data is not supported.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateSearch.Common.LocalizableStrings.TemplateSearchCache_Exception_NotValid">
+            <summary>The template search cache data is not valid.</summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToStringReadOnlyList(System.Text.Json.Nodes.JsonObject,System.String,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Reads <paramref name="propertyName"/> as read only string list/>.
+            Property value may be string or array.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetObjectProperties(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Enumerates the properties of a <see cref="T:System.Text.Json.Nodes.JsonObject"/>, handling duplicate keys gracefully.
+            </summary>
+            <remarks>
+            <see cref="T:System.Text.Json.Nodes.JsonObject"/> lazily initializes its internal dictionary when first accessed.
+            If the underlying JSON contains duplicate property keys, initialization throws
+            <see cref="T:System.ArgumentException"/>. In that case this method falls back to re-parsing via
+            <see cref="T:System.Text.Json.JsonDocument"/>, which supports duplicate keys (last-wins semantics, like Newtonsoft.Json).
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetObjectPropertiesViaDocument(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Enumerates the properties of a <see cref="T:System.Text.Json.Nodes.JsonObject"/> by re-parsing its JSON text via
+            <see cref="T:System.Text.Json.JsonDocument"/>, which tolerates duplicate keys.
+            </summary>
+            <remarks>
+            <see cref="M:System.Text.Json.Nodes.JsonObject.WriteTo(System.Text.Json.Utf8JsonWriter,System.Text.Json.JsonSerializerOptions)"/> falls back to the underlying <see cref="T:System.Text.Json.JsonElement"/>
+            when the internal dictionary has not yet been initialized, so <see cref="M:System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions)"/> is
+            safe to call even after a failed <see cref="T:System.Text.Json.Nodes.JsonObject"/> initialization.
+            Duplicate keys are de-duplicated with last-wins semantics to match normal JsonObject enumeration behavior.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonNodeDictionary(System.Text.Json.Nodes.JsonNode,System.StringComparer,System.String)">
+            <summary>
+            Converts properties of <paramref name="token"/> to dictionary.
+            Leaves the values as JsonNode.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonNodeStringDictionary(System.Text.Json.Nodes.JsonNode,System.StringComparer,System.String)">
+            <summary>
+            Converts properties of <paramref name="token"/> to dictionary.
+            Values are serialized to string (as JsonNode). Strings are serialized as JSON, i.e. needs to be parsed prior to be used.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonString(System.Object)">
+            <summary>
+            Converts <paramref name="obj"/> to valid JSON string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.TryGetValueCaseInsensitive(System.Text.Json.Nodes.JsonObject,System.String,System.Text.Json.Nodes.JsonNode@)">
+            <summary>
+            Tries to get a property value from a <see cref="T:System.Text.Json.Nodes.JsonObject"/> using case-insensitive key matching.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetPropertyCaseInsensitive(System.Text.Json.Nodes.JsonObject,System.String)">
+            <summary>
+            Gets a property from a JsonObject with case-insensitive key matching.
+            Handles duplicate keys gracefully by falling back to JsonDocument-based lookup.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetPropertyCaseInsensitiveViaDocument(System.Text.Json.Nodes.JsonObject,System.String)">
+            <summary>
+            Gets a property from a JsonObject by re-parsing via JsonDocument (tolerates duplicate keys).
+            Uses last-wins semantics for duplicate keys, consistent with Newtonsoft.Json behavior.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ParseJsonObject(System.String)">
+            <summary>
+            Parses a JSON string into a JsonObject (with comment/trailing comma support).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ParseJsonNode(System.String)">
+            <summary>
+            Parses a JSON string into a JsonNode (with comment/trailing comma support).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.FromObject(System.Object)">
+            <summary>
+            Serializes an object to a JsonObject via JSON round-trip.
+            Equivalent to Newtonsoft's JObject.FromObject().
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.DeepCloneObject(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Creates a deep clone of a <see cref="T:System.Text.Json.Nodes.JsonObject"/> by round-tripping through JSON text.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.Merge(System.Text.Json.Nodes.JsonObject,System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Merges properties from <paramref name="source"/> into <paramref name="target"/>.
+            Equivalent to Newtonsoft's JObject.Merge() with default settings:
+            - Objects are recursively merged
+            - Arrays are concatenated
+            - Other values (including null) from source overwrite target.
+            </summary>
+        </member>
+    </members>
+</doc>

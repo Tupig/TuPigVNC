@@ -1,0 +1,1654 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.TemplateEngine.Edge</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsData">
+            <summary>
+            Used just to serialize/deserialize data to/from settings.json file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.TemplatePackageData">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.GlobalSettingsData">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.IReadOnlyDictionaryStringString">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.IReadOnlyListTemplatePackageData">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.DateTime">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.Guid">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.String">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.Default">
+            <summary>
+            The default <see cref="T:System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="T:System.Text.Json.JsonSerializerOptions"/> instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.GeneratedSerializerOptions">
+            <summary>
+            The source-generated options associated with this context.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.#ctor">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.#ctor(System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsJsonSerializerContext.GetTypeInfo(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsTemplatePackageProvider.InstallAsync(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.Installer.InstallRequest},System.Threading.CancellationToken)">
+            <inheritdoc/>
+            <exception cref="T:System.ArgumentException">when <paramref name="installRequests"/> has duplicate identifiers for given installer.</exception>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.GlobalSettingsTemplatePackageProviderFactory.Microsoft#TemplateEngine#Abstractions#IPrioritizedComponent#Priority">
+            <summary>
+            We want to have higher priority than SDK/OptionalWorkload providers.
+            So user installed templates(from this provider) override those.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.IGlobalSettings">
+            <summary>
+            Interface that represents loading/storing data into settings.json file.
+            That is shared between multiple different hosts of TemplateEngine.
+            </summary>
+        </member>
+        <member name="E:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.IGlobalSettings.SettingsChanged">
+            <summary>
+            Triggered every time when settings change.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.IGlobalSettings.GetInstalledTemplatePackagesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Returns non-cached list of the template packages.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.IGlobalSettings.SetInstalledTemplatePackagesAsync(System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.Installer.TemplatePackageData},System.Threading.CancellationToken)">
+            <summary>
+            Stores list of the template packages.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.BuiltInManagedProvider.IGlobalSettings.LockAsync(System.Threading.CancellationToken)">
+            <summary>
+            This method must be called before making any modifications to settings to ensure other processes on system
+            don't override or lose changes done by this process.
+            </summary>
+            <returns><see cref="T:System.IDisposable"/> object that needs to be disposed once modifying of settings is finished.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.EnvironmentVariablesBindSource">
+            <summary>
+            The component allows to bind environment variables.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.HostParametersBindSource">
+            <summary>
+            The component allows custom host parameters.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Constraints.ConfigurationException">
+            <summary>
+            Exception occurred when parsing configuration for <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Constraints.Extensions.ParseArrayOfConstraintStrings(System.String)">
+            <summary>
+            Attempts to parse input configuration string (presumably string or json array of strings) into enumeration of strings.
+            </summary>
+            <param name="args">Input configuration string.</param>
+            <returns>Enumeration of parsed tokens.</returns>
+            <exception cref="T:Microsoft.TemplateEngine.Edge.Constraints.ConfigurationException">Thrown on unexpected input - not a valid json string or array of string or an empty array.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Constraints.Extensions.ParseArrayOfConstraintJObjects(System.String)">
+            <summary>
+            Attempts to parse input configuration string (presumably string or json array of strings) into enumeration of JObjects.
+            </summary>
+            <param name="args">Input configuration string.</param>
+            <returns>Enumeration of parsed JObject tokens.</returns>
+            <exception cref="T:Microsoft.TemplateEngine.Edge.Constraints.ConfigurationException">Thrown on unexpected input - not a valid json array or an empty array.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Constraints.Extensions.ParseVersionSpecification(System.String)">
+            <summary>
+            Attempts to parse given string and return the version specification (throws <see cref="T:Microsoft.TemplateEngine.Edge.Constraints.ConfigurationException"/> if unsuccessful).
+            checks version in the following order:
+            NuGet exact version
+            NuGet floating version
+            NuGet version range
+            Legacy template engine exact version
+            Legacy template engine version range.
+            </summary>
+            <param name="versionString">Version string to be parsed.</param>
+            <returns>IVersionSpecification instance representing the given string representation of the version.</returns>
+            <exception cref="T:Microsoft.TemplateEngine.Edge.Constraints.ConfigurationException">Thrown if given string is not recognized as any valid version format.</exception>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.DefaultEnvironment">
+            <summary>
+            Default implementation of <see cref="T:Microsoft.TemplateEngine.Abstractions.IEnvironment"/>.
+            Gets environment variables from <see cref="T:System.Environment"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.DefaultEnvironment.NewLine">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.DefaultEnvironment.ConsoleBufferWidth">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.DefaultEnvironment.ExpandEnvironmentVariables(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.DefaultEnvironment.GetEnvironmentVariable(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.DefaultEnvironment.GetEnvironmentVariables">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.DefaultPathInfo">
+            <summary>
+            Default implementation of <see cref="T:Microsoft.TemplateEngine.Abstractions.IPathInfo"/>. If custom settings location are not passed, the following locations to be used: <br/>
+            - global settings: [user profile directory]/.templateengine <br/>
+            - host settings: [user profile directory]/.templateengine/[<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.HostIdentifier"/>] <br/>
+            - host version settings: [user profile directory]/.templateengine/[<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.HostIdentifier"/>]/[<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.Version"/>].
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.DefaultPathInfo.#ctor(Microsoft.TemplateEngine.Abstractions.IEnvironment,Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost,System.String,System.String,System.String)">
+            <summary>
+            Creates the instance.
+            </summary>
+            <param name="environment"><see cref="T:Microsoft.TemplateEngine.Abstractions.IEnvironment"/> implementation to be used to get location of user profile directory.</param>
+            <param name="host"><see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost"/> implementation.</param>
+            <param name="globalSettingsDir">
+            If specified, the directory will be used for storing global settings.
+            Default location: [user profile directory]/.templateengine.
+            </param>
+            <param name="hostSettingsDir">
+            If specified, the directory will be used for storing host settings.
+            Default location: host settings: [user profile directory]/.templateengine/[<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.HostIdentifier"/>].
+            </param>
+            <param name="hostVersionSettingsDir">
+            If specified, the directory will be used for storing host version settings.
+            Default location: host settings: [user profile directory]/.templateengine/[<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.HostIdentifier"/>]/[<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.Version"/>].
+            </param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.DefaultPathInfo.UserProfileDir">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.DefaultPathInfo.GlobalSettingsDir">
+            <summary>
+            Gets global settings directory.
+            If not specified via constructor, the default location is [<see cref="P:Microsoft.TemplateEngine.Edge.DefaultPathInfo.UserProfileDir"/>]/.templateengine.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.DefaultPathInfo.HostSettingsDir">
+            <summary>
+            Gets host settings directory.
+            If not specified via constructor, the default location is [<see cref="P:Microsoft.TemplateEngine.Edge.DefaultPathInfo.GlobalSettingsDir"/>]/[host identifier].
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.DefaultPathInfo.HostVersionSettingsDir">
+            <summary>
+            Gets host version settings directory.
+            If not specified via constructor, the default location is [<see cref="P:Microsoft.TemplateEngine.Edge.DefaultPathInfo.GlobalSettingsDir"/>]/[host identifier]/[host version].
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.EngineEnvironmentSettings">
+            <summary>
+            Default implementation of <see cref="T:Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.EngineEnvironmentSettings.#ctor(Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost,System.Boolean,System.String,Microsoft.TemplateEngine.Abstractions.IEnvironment,Microsoft.TemplateEngine.Abstractions.IComponentManager,Microsoft.TemplateEngine.Abstractions.IPathInfo)">
+            <summary>
+            Creates the instance.
+            </summary>
+            <param name="host">template engine host creating the instance.</param>
+            <param name="virtualizeSettings">if true, the settings directory will be virtualized, so the settings will be stored in memory only.</param>
+            <param name="settingsLocation">the base location of settings. If specified, the following settings paths will be used: <br/>
+            - <see cref="P:Microsoft.TemplateEngine.Abstractions.IPathInfo.GlobalSettingsDir"/> - [<paramref name="settingsLocation"/>] <br/>
+            - <see cref="P:Microsoft.TemplateEngine.Abstractions.IPathInfo.HostSettingsDir"/> - [<paramref name="settingsLocation"/>]/[<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.HostIdentifier"/>] <br/>
+            - <see cref="P:Microsoft.TemplateEngine.Abstractions.IPathInfo.HostVersionSettingsDir"/> - [<paramref name="settingsLocation"/>]/[<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.HostIdentifier"/>]/[<see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplateEngineHost.Version"/>]. <br/>
+            If <paramref name="settingsLocation"/> is specified, do not provide <paramref name="pathInfo"/>.
+            </param>
+            <param name="environment">implementation of <see cref="T:Microsoft.TemplateEngine.Abstractions.IEnvironment"/> to use. If not specified, <see cref="T:Microsoft.TemplateEngine.Edge.DefaultEnvironment"/> will be used.</param>
+            <param name="componentManager">implementation of <see cref="T:Microsoft.TemplateEngine.Abstractions.IComponentManager"/> to use. If not specified, built-in implementation will be used.</param>
+            <param name="pathInfo">implementation of <see cref="T:Microsoft.TemplateEngine.Abstractions.IPathInfo"/> to use. If not specified, <see cref="T:Microsoft.TemplateEngine.Edge.DefaultPathInfo"/> will be used (if <paramref name="settingsLocation"/> is used, settings location will be overridden as mentioned in <paramref name="settingsLocation"/> description). <br/>
+            If <paramref name="pathInfo"/> is specified, do not provide <paramref name="settingsLocation"/>.
+            </param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Installers.NuGet.NuGetApiPackageManager.DownloadPackageAsync(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Downloads the package from configured NuGet package feeds. NuGet feeds to use are read for current directory, if additional feeds are specified in installation request, they are checked as well.
+            </summary>
+            <param name="downloadPath">path to download to.</param>
+            <param name="identifier">NuGet package identifier.</param>
+            <param name="version">The version to download. If empty, the latest stable version will be downloaded (or the latest absolute version when <paramref name="includePrerelease"/> is true). If stable version is not available, the latest preview will be downloaded.</param>
+            <param name="additionalSources">Additional NuGet feeds to use (in addition to default feeds configured for current directory).</param>
+            <param name="force">If true, overwriting existing package is allowed.</param>
+            <param name="includePrerelease">If true, prerelease versions are considered when no version is specified.</param>
+            <param name="cancellationToken"></param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Edge.Installers.NuGet.NuGetPackageInfo"/>containing full path to downloaded package and package details.</returns>
+            <exception cref="T:Microsoft.TemplateEngine.Edge.Installers.NuGet.InvalidNuGetSourceException">when sources passed to install request are not valid NuGet sources or failed to read default NuGet configuration.</exception>
+            <exception cref="T:Microsoft.TemplateEngine.Edge.Installers.NuGet.DownloadException">when the download of the package failed.</exception>
+            <exception cref="T:Microsoft.TemplateEngine.Edge.Installers.NuGet.PackageNotFoundException">when the package cannot be find in default or passed to install request NuGet feeds.</exception>
+            <exception cref="T:Microsoft.TemplateEngine.Edge.Installers.NuGet.VulnerablePackageException">when the package has any vulnerabilities.</exception>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Installers.NuGet.NuGetApiPackageManager.GetLatestVersionAsync(System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets the latest stable version for the package. If the package has preview version installed, returns the latest preview.
+            Uses NuGet feeds configured for current directory and the source if specified from <paramref name="additionalSource"/>.
+            </summary>
+            <param name="identifier">NuGet package identifier.</param>
+            <param name="version">current version of NuGet package.</param>
+            <param name="additionalSource">additional NuGet feeds to check from.</param>
+            <param name="cancellationToken"></param>
+            <returns>the latest version for the <paramref name="identifier"/> and indication if installed version is latest.</returns>
+            <exception cref="T:Microsoft.TemplateEngine.Edge.Installers.NuGet.InvalidNuGetSourceException">when sources passed to install request are not valid NuGet feeds or failed to read default NuGet configuration.</exception>
+            <exception cref="T:Microsoft.TemplateEngine.Edge.Installers.NuGet.PackageNotFoundException">when the package cannot be find in default or source NuGet feeds.</exception>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Installers.NuGet.NuGetLogger">
+            <summary>
+            Default logger to be used with NuGet API. It forwards all the messages to different methods of ITemplateEngineHost depending on the log level.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Installers.NuGet.NuGetManagedTemplatePackage.#ctor(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings,Microsoft.TemplateEngine.Abstractions.Installer.IInstaller,Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+            Private constructor used for de-serialization only.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Installers.NuGet.NuGetVersionHelper.TryParseFloatRangeEx(System.String,NuGet.Versioning.FloatRange@)">
+            <summary>
+            Tries to parse given string and return <see cref="T:NuGet.Versioning.FloatRange"/> provided there
+             is an existing floating range behavior in the provided string.
+             null or empty string are regarded to be requests to any release version (behavior identical to '*').
+            </summary>
+            <param name="versionString">Input string to be parsed.</param>
+            <param name="floatRange">Output <see cref="T:NuGet.Versioning.FloatRange"/> parameter, populated in case function returned true.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Mount.Archive.ZipFileMountPoint">
+            <summary>
+            Mount point implementation for zip file.
+            NuGet packages are zip files, so they are handled by this mount point.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Mount.FileSystem.FileSystemMountPoint">
+            <summary>
+            Mount point implementation for file system directory.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Mount.FileSystem.FileSystemMountPoint.MountPointRootPath">
+            <summary>
+            Returns full path of the mounted directory.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Settings.AsyncMutex">
+            <summary>
+            Helper class to work with <see cref="T:System.Threading.Mutex"/> in <c>async</c> method, since <c>await</c>
+            can switch to different thread and <see cref="M:System.Threading.Mutex.ReleaseMutex"/> must be called from same thread.
+            Hence this helper class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.AsyncMutex.IsLocked">
+            <summary>
+            Returns true if the mutex is acquired.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.AsyncMutex.WaitAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Creates the <see cref="T:Microsoft.TemplateEngine.Edge.Settings.AsyncMutex"/> and task for waiting until underlying <see cref="T:System.Threading.Mutex"/> is acquired.
+            </summary>
+            <param name="mutexName">The mutex name. The name is case-sensitive.</param>
+            <param name="token">The <see cref="T:System.Threading.CancellationToken"/> to observe.</param>
+            <returns>created <see cref="T:Microsoft.TemplateEngine.Edge.Settings.AsyncMutex"/>.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.AsyncMutex.Dispose">
+            <summary>
+            Disposes the <see cref="T:Microsoft.TemplateEngine.Edge.Settings.AsyncMutex"/>. If disposed, the underlying <see cref="T:System.Threading.Mutex"/> is released.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Settings.InstallationScope">
+            <summary>
+            Defines the scope that managed by built-in providers.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Settings.InstallationScope.Global">
+            <summary>
+            Template packages are visible to all template hosts.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Settings.ITemplateInfoHostJsonCache">
+            <summary>
+            Extension interface of <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/> which stores .host.json data in cache so host doesn't need to re-load it from .nupkg every time.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.ITemplateInfoHostJsonCache.HostData">
+            <summary>
+            Full content of .host.json file in JSON format.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Settings.LocalizationCacheKeyComparer">
+            <summary>
+            Makes an ordinal, case insensitive comparison with the two strings of the given tuples.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Settings.Scanner">
+            <summary>
+            Utility for scanning <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint"/> for templates, localizations and components.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.Scanner.Scan(System.String)">
+            <summary>
+            Scans mount point for templates, localizations and components.
+            </summary>
+            <remarks>
+            The mount point will not be disposed by the <see cref="T:Microsoft.TemplateEngine.Edge.Settings.Scanner"/>. Use <see cref="M:Microsoft.TemplateEngine.Edge.Settings.ScanResult.Dispose"/> to dispose mount point.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.Scanner.Scan(System.String,System.Boolean)">
+             <summary>
+             Same as <see cref="M:Microsoft.TemplateEngine.Edge.Settings.Scanner.Scan(System.String)"/>, however allows to enable or disable components scanning via <paramref name="scanForComponents"/>.
+             </summary>
+             <remarks>
+             The mount point will not be disposed by the <see cref="T:Microsoft.TemplateEngine.Edge.Settings.Scanner"/>. Use <see cref="M:Microsoft.TemplateEngine.Edge.Settings.ScanResult.Dispose"/> to dispose mount point.
+             </remarks>
+            
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.Scanner.ScanAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Scans mount point for templates.
+            </summary>
+            <remarks>
+            The mount point will not be disposed by the <see cref="T:Microsoft.TemplateEngine.Edge.Settings.Scanner"/>. Use <see cref="M:Microsoft.TemplateEngine.Edge.Settings.ScanResult.Dispose"/> to dispose mount point.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.Scanner.ScanAsync(System.String,System.Boolean,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Scans mount point for templates.
+            </summary>
+            <remarks>
+            The mount point will not be disposed by the <see cref="T:Microsoft.TemplateEngine.Edge.Settings.Scanner"/>. Use <see cref="M:Microsoft.TemplateEngine.Edge.Settings.ScanResult.Dispose"/> to dispose mount point.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.Scanner.LoadAllFromPath(System.Collections.Generic.IEnumerable{System.String}@,System.String,System.String,System.IO.SearchOption)">
+            <summary>
+            Loads assemblies for components from the given <paramref name="path"/>.
+            </summary>
+            <param name="loadFailures">Errors happened when loading assemblies.</param>
+            <param name="path">The path to load assemblies from.</param>
+            <param name="pattern">Filename pattern to use when searching for files.</param>
+            <param name="searchOption"><see cref="T:System.IO.SearchOption"/> to use when searching for files.</param>
+            <returns>The list of loaded assemblies in format (filename, loaded assembly).</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Settings.ScanResult">
+            <summary>
+            Returned by <see cref="M:Microsoft.TemplateEngine.Edge.Settings.Scanner.Scan(System.String)"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.ScanResult.MountPoint">
+            <summary>
+            Gets the mount point that was scanned.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.ScanResult.Components">
+            <summary>
+            All components found inside mountpoint.
+            AssemblyPath is full path inside <see cref="T:Microsoft.TemplateEngine.Abstractions.Mount.IMountPoint"/>.
+            InterfaceType is type of interface that is implemented by component.
+            Instance is object that implements InterfaceType.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.ScanResult.Localizations">
+            <summary>
+            All template localizations found inside mountpoint.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.ScanResult.Templates">
+            <summary>
+            All templates found inside mountpoint.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.ScanResult.Dispose">
+            <summary>
+            Disposes <see cref="P:Microsoft.TemplateEngine.Edge.Settings.ScanResult.MountPoint"/> that was scanned.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.SettingsStore">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.DictionaryStringHashSetGuid">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.DictionaryStringString">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.HashSetGuid">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.HashSetString">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.Guid">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.String">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.Default">
+            <summary>
+            The default <see cref="T:System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="T:System.Text.Json.JsonSerializerOptions"/> instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.GeneratedSerializerOptions">
+            <summary>
+            The source-generated options associated with this context.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.#ctor">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.#ctor(System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.SettingsStoreJsonSerializerContext.GetTypeInfo(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplateCache.GetBestLocaleMatch(System.Collections.Generic.IEnumerable{System.String})">
+            <remarks>see https://source.dot.net/#System.Private.CoreLib/ResourceFallbackManager.cs.</remarks>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.Boolean">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.TemplateConstraintInfo">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.IBaselineInfo">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.ITemplateParameter">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.ParameterChoice">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.IParameterDefinitionSet">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.PrecedenceDefinition">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.TemplateParameterPrecedence">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.TemplateParameterPriority">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.TemplateCache">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.TemplateInfo">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.DictionaryStringDateTime">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.IReadOnlyDictionaryStringIBaselineInfo">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.IReadOnlyDictionaryStringParameterChoice">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.IReadOnlyDictionaryStringString">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.IReadOnlyListTemplateConstraintInfo">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.IReadOnlyListTemplateInfo">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.IReadOnlyListGuid">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.IReadOnlyListString">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.DateTime">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.Guid">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.Int32">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.String">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.Default">
+            <summary>
+            The default <see cref="T:System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="T:System.Text.Json.JsonSerializerOptions"/> instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.GeneratedSerializerOptions">
+            <summary>
+            The source-generated options associated with this context.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.#ctor">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.#ctor(System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplateCacheJsonSerializerContext.GetTypeInfo(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplateInfo.#ctor(Microsoft.TemplateEngine.Abstractions.IScanTemplateInfo,Microsoft.TemplateEngine.Abstractions.ILocalizationLocator,System.Nullable{System.ValueTuple{System.String,System.Text.Json.Nodes.JsonObject}})">
+            <summary>
+            Localization copy-constructor.
+            </summary>
+            <param name="template">unlocalized template.</param>
+            <param name="localizationInfo">localization information.</param>
+            <param name="hostConfig">host config information.</param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplateInfo.TemplateInfoReader.ParameterFromJObject(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Parses <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateParameter"/> from <see cref="T:System.Text.Json.Nodes.JsonObject"/>.
+            </summary>
+            <param name="jObject"></param>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Settings.TemplateInfo.TemplateInfoReader.CacheTemplateParameter">
+            <summary>
+            This class is overload on <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateParameter"/> controlling JSON serialization for template parameters in cache.
+            Not all the members are required to be serialized.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager">
+            <summary>
+            Manages all <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider"/>s available to the host.
+            Use this class to get all template packages and templates installed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.#ctor(Microsoft.TemplateEngine.Abstractions.IEngineEnvironmentSettings)">
+            <summary>
+            Creates the instance.
+            </summary>
+            <param name="environmentSettings">template engine environment settings.</param>
+        </member>
+        <member name="E:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.TemplatePackagesChanged">
+            <summary>
+            Triggered every time when the list of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage"/>s changes, this is triggered by <see cref="E:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider.TemplatePackagesChanged"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetManagedProvider(System.String)">
+            <summary>
+            Returns <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> with specified name.
+            </summary>
+            <param name="name">Name from <see cref="P:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProviderFactory.DisplayName"/>.</param>
+            <returns></returns>
+            <remarks>For default built-in providers use <see cref="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetBuiltInManagedProvider(Microsoft.TemplateEngine.Edge.Settings.InstallationScope)"/> method instead.</remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetManagedProvider(System.Guid)">
+            <summary>
+            Returns <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> with specified <see cref="T:System.Guid"/>.
+            </summary>
+            <param name="id"><see cref="T:System.Guid"/> from <see cref="P:Microsoft.TemplateEngine.Abstractions.IIdentifiedComponent.Id"/> of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProviderFactory"/>.</param>
+            <returns></returns>
+            <remarks>For default built-in providers use <see cref="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetBuiltInManagedProvider(Microsoft.TemplateEngine.Edge.Settings.InstallationScope)"/> method instead.</remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetManagedTemplatePackagesAsync(System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Same as <see cref="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetTemplatePackagesAsync(System.Boolean,System.Threading.CancellationToken)"/> but filters only <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> packages.
+            </summary>
+            <param name="force">Useful when <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> doesn't trigger <see cref="E:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider.TemplatePackagesChanged"/> event.</param>
+            <param name="cancellationToken">A cancellation token to cancel the asynchronous operation.</param>
+            <returns>The list of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/>.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetTemplatePackagesAsync(System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Returns combined list of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage"/>s that all <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider"/>s and <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/>s return.
+            <see cref="T:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager"/> caches the responses from <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider"/>s, to get non-cached response <paramref name="force"/> should be set to true.
+            Note that specifying <paramref name="force"/> will only return responses from already loaded providers. To reload providers, instantiate new instance of the <see cref="T:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager"/>.
+            </summary>
+            <param name="force">Useful when <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider"/> doesn't trigger <see cref="E:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackageProvider.TemplatePackagesChanged"/> event.</param>
+            <param name="cancellationToken">A cancellation token to cancel the asynchronous operation.</param>
+            <returns>The list of <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage"/>s.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetBuiltInManagedProvider(Microsoft.TemplateEngine.Edge.Settings.InstallationScope)">
+            <summary>
+            Returns built-in <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> of specified <see cref="T:Microsoft.TemplateEngine.Edge.Settings.InstallationScope"/>.
+            </summary>
+            <param name="scope">scope managed by built-in provider.</param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackageProvider"/> which manages packages of <paramref name="scope"/>.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetTemplatesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all templates based on current settings.
+            </summary>
+            <remarks>
+            This call is cached. And can be invalidated by <see cref="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.RebuildTemplateCacheAsync(System.Threading.CancellationToken)"/>.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetTemplatesAsync(System.Func{Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo,System.Boolean},System.Collections.Generic.IEnumerable{System.Func{Microsoft.TemplateEngine.Abstractions.ITemplateInfo,Microsoft.TemplateEngine.Abstractions.TemplateFiltering.MatchInfo}},System.Threading.CancellationToken)">
+            <summary>
+            Gets the templates filtered using <paramref name="filters"/> and <paramref name="matchFilter"/>.
+            </summary>
+            <param name="matchFilter">The criteria for <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplateFiltering.ITemplateMatchInfo"/> to be included to result collection.</param>
+            <param name="filters">The list of filters to be applied to templates.</param>
+            <param name="cancellationToken">A cancellation token to cancel the asynchronous operation.</param>
+            <returns>The filtered list of templates with match information.</returns>
+            <example>
+            <c>GetTemplatesAsync(WellKnownSearchFilters.MatchesAllCriteria, new [] { WellKnownSearchFilters.NameFilter("myname") }</c> - returns the templates which name or short name contains "myname". <br/>
+            <c>GetTemplatesAsync(TemplateListFilter.MatchesAtLeastOneCriteria, new [] { WellKnownSearchFilters.NameFilter("myname"), WellKnownSearchFilters.NameFilter("othername") })</c> - returns the templates which name or short name contains "myname" or "othername".<br/>
+            </example>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.RebuildTemplateCacheAsync(System.Threading.CancellationToken)">
+            <summary>
+            Deletes templates cache and rebuilds it.
+            Useful if user suspects cache is corrupted and wants to rebuild it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetTemplatePackageAsync(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.Threading.CancellationToken)">
+            <summary>
+            Helper method that returns <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage"/> that contains <paramref name="template"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetTemplatesAsync(Microsoft.TemplateEngine.Abstractions.TemplatePackage.ITemplatePackage,System.Threading.CancellationToken)">
+            <summary>
+            Returns all <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/> contained by <paramref name="templatePackage"/>.
+            </summary>
+            <param name="templatePackage">The template package to get template from.</param>
+            <param name="cancellationToken">A cancellation token to cancel the asynchronous operation.</param>
+            <returns>The enumerator to templates of the <paramref name="templatePackage"/>.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetManagedTemplatePackageAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Returns managed template package <see cref="T:Microsoft.TemplateEngine.Abstractions.TemplatePackage.IManagedTemplatePackage"/> matching <paramref name="packageIdentifier"/> and containing templates <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            </summary>
+            <param name="packageIdentifier">The template package identifier.</param>
+            <param name="packageVersion">The template package version, if null package version is not checked.</param>
+            <param name="cancellationToken">A cancellation token to cancel the asynchronous operation.</param>
+            <returns>The managed template package and the containing templates.</returns>
+            <exception cref="T:System.InvalidOperationException"> Throws an exception when package <paramref name="packageIdentifier"/>.</exception>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.TemplateConstraintManager">
+            <summary>
+            Manages evaluation of constraints for the templates.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.TemplateConstraintManager.GetConstraintsAsync(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.ITemplateInfo},System.Threading.CancellationToken)">
+            <summary>
+            Returns the list of initialized <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint"/>s.
+            Only returns the list of <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint"/> that were initialized successfully.
+            The constraints which failed to be initialized are skipped and warning is logged.
+            </summary>
+            <param name="templates">if given, only returns the list of constraints defined in the templates.</param>
+            <param name="cancellationToken"></param>
+            <returns>The list of successfully initialized <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.ITemplateConstraint"/>s.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.TemplateConstraintManager.EvaluateConstraintAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Evaluates the constraints with given <paramref name="type"/> for given args <paramref name="args"/>.
+            </summary>
+            <param name="type">constraint type to evaluate.</param>
+            <param name="args">arguments to use for evaluation.</param>
+            <param name="cancellationToken"></param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult"/> indicating if constraint is met, or details why the constraint is not met.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.TemplateConstraintManager.EvaluateConstraintsAsync(System.Collections.Generic.IEnumerable{Microsoft.TemplateEngine.Abstractions.ITemplateInfo},System.Threading.CancellationToken)">
+            <summary>
+            Evaluates the constraints with given <paramref name="templates"/>.
+            The method doesn't throw when the constraint is failed to be evaluated, returns <see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult"/> with status <see cref="F:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult.Status.NotEvaluated"/> instead.
+            </summary>
+            <param name="templates">the list of templates to evaluate constraints for given templates.</param>
+            <param name="cancellationToken"></param>
+            <returns><see cref="T:Microsoft.TemplateEngine.Abstractions.Constraints.TemplateConstraintResult"/> indicating if constraint is met, or details why the constraint is not met.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.TemplateConstraintManager.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.TemplateListFilter.ExactMatchFilter">
+            <summary>
+            Exact match criteria - the templates should match all filters.
+            </summary>
+            <seealso cref="M:Microsoft.TemplateEngine.Edge.TemplateListFilter.GetTemplateMatchInfo(System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.ITemplateInfo},System.Func{Microsoft.TemplateEngine.Edge.Template.ITemplateMatchInfo,System.Boolean},System.Func{Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.Nullable{Microsoft.TemplateEngine.Edge.Template.MatchInfo}}[])"/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.TemplateListFilter.PartialMatchFilter">
+            <summary>
+            Partial match criteria - the templates should match at least one of the filters.
+            </summary>
+            <seealso cref="M:Microsoft.TemplateEngine.Edge.TemplateListFilter.GetTemplateMatchInfo(System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.ITemplateInfo},System.Func{Microsoft.TemplateEngine.Edge.Template.ITemplateMatchInfo,System.Boolean},System.Func{Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.Nullable{Microsoft.TemplateEngine.Edge.Template.MatchInfo}}[])"/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.TemplateListFilter.GetTemplateMatchInfo(System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Abstractions.ITemplateInfo},System.Func{Microsoft.TemplateEngine.Edge.Template.ITemplateMatchInfo,System.Boolean},System.Func{Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.Nullable{Microsoft.TemplateEngine.Edge.Template.MatchInfo}}[])">
+            <summary>
+            Gets matching information for templates for provided filters.
+            </summary>
+            <param name="templateList">The templates to be filtered.</param>
+            <param name="matchFilter">The criteria of template to be filtered.</param>
+            <param name="filters">The list of filters to be applied.</param>
+            <returns>The filtered list of templates with matches information.</returns>
+            <example>
+            <c>GetTemplateMatchInfo(templates, TemplateListFilter.ExactMatchFilter, WellKnownSearchFilters.NameFilter("myname")</c> - returns the templates which name or short name contains "myname". <br/>
+            <c>GetTemplateMatchInfo(templates, TemplateListFilter.PartialMatchFilter, WellKnownSearchFilters.NameFilter("myname"), WellKnownSearchFilters.NameFilter("othername")</c> - returns the templates which name or short name contains "myname" or "othername".<br/>
+            </example>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus">
+            <summary>
+            Status of the template instantiation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.Success">
+            <summary>
+            The template was instantiated successfully.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.CreateFailed">
+            <summary>
+            The template instantiation failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.TemplateIssueDetected">
+            <summary>
+            The template instantiation failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.MissingMandatoryParam">
+            <summary>
+            The mandatory parameters for template are missing.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.InvalidParamValues">
+            <summary>
+            The values passed for template parameters are invalid.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.NotFound">
+            <summary>
+            The template is not found.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.Cancelled">
+            <summary>
+            The operation is cancelled.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.DestructiveChangesDetected">
+            <summary>
+            The operation is cancelled due to destructive changes to existing files are detected.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.CondtionsEvaluationMismatch">
+            <summary>
+            The host supplied conditions evaluation results did not match internal evaluation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Template.EvaluatedInputParameterData">
+            <summary>
+            Type representing input data into <see cref="T:Microsoft.TemplateEngine.Edge.Template.TemplateCreator"/> that are able to hold information about externally evaluated conditions
+             on template parameters.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.EvaluatedInputParameterData.#ctor(Microsoft.TemplateEngine.Abstractions.ITemplateParameter,System.Object,Microsoft.TemplateEngine.Abstractions.Parameters.DataSource,System.Nullable{System.Boolean},System.Nullable{System.Boolean},Microsoft.TemplateEngine.Edge.Template.InputDataState)">
+            <summary>
+            Constructor for <see cref="T:Microsoft.TemplateEngine.Edge.Template.EvaluatedInputParameterData"/> type, that allows specification of results of external evaluation of conditions.
+            </summary>
+            <param name="parameterDefinition"></param>
+            <param name="value">A string converted value of parameter or null for explicit unset. It's possible to indicate missing of parameter on input via <see cref="T:Microsoft.TemplateEngine.Edge.Template.InputDataState"/> argument.</param>
+            <param name="dataSource"></param>
+            <param name="isEnabledConditionResult"></param>
+            <param name="isRequiredConditionResult"></param>
+            <param name="inputDataState">
+            InputDataState.Unset indicates a situation that parameter was not specified on input (distinct situation from explicit null).
+             This would normally be achieved by not passing the parameter at all into the <see cref="T:Microsoft.TemplateEngine.Edge.Template.EvaluatedInputParameterData"/>, however then it would not be possible
+             to specify the results of conditions calculations.
+            </param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.EvaluatedInputParameterData.IsEnabledConditionResult">
+            <summary>
+            Externally (by the host) supplied result of the IsEnabledCondition on the template parameter.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.EvaluatedInputParameterData.IsRequiredConditionResult">
+            <summary>
+            Externally (by the host) supplied result of the IsRequiredCondition on the template parameter.
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Template.InputDataSet">
+            <summary>
+            Data model for passing data into the <see cref="T:Microsoft.TemplateEngine.Edge.Template.TemplateCreator"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.InputDataSet.#ctor(Microsoft.TemplateEngine.Abstractions.Parameters.IParameterDefinitionSet,System.Collections.Generic.IReadOnlyList{Microsoft.TemplateEngine.Edge.Template.InputParameterData})">
+            <summary>
+            Creates new instance of the <see cref="T:Microsoft.TemplateEngine.Edge.Template.InputDataSet"/> type.
+            </summary>
+            <param name="parameters"></param>
+            <param name="parameterData"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.InputDataSet.#ctor(Microsoft.TemplateEngine.Abstractions.ITemplateInfo)">
+            <summary>
+            Creates new instance of the <see cref="T:Microsoft.TemplateEngine.Edge.Template.InputDataSet"/> type.
+            To be used to convert legacy parameters dictionaries into this data model.
+            </summary>
+            <param name="templateInfo"></param>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.InputDataSet.#ctor(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+            Creates new instance of the <see cref="T:Microsoft.TemplateEngine.Edge.Template.InputDataSet"/> type.
+            To be used to convert legacy parameters dictionaries into this data model.
+            </summary>
+            <param name="templateInfo"></param>
+            <param name="inputParameters"></param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.InputDataSet.ContinueOnMismatchedConditionsEvaluation">
+            <summary>
+            Indicates whether template creator should ignore evaluation results that does not match validation evaluation.
+             Warning will be logged and external evaluation results will be used.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.InputDataSet.ParameterDefinitionSet">
+            <summary>
+            Descriptors of the parameters.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.InputDataSet.Keys">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.InputDataSet.Values">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.InputDataSet.Count">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.InputDataSet.Item(Microsoft.TemplateEngine.Abstractions.ITemplateParameter)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.InputDataSet.ContainsKey(Microsoft.TemplateEngine.Abstractions.ITemplateParameter)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.InputDataSet.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.InputDataSet.TryGetValue(Microsoft.TemplateEngine.Abstractions.ITemplateParameter,Microsoft.TemplateEngine.Edge.Template.InputParameterData@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.InputDataSet.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Template.InputDataState">
+            <summary>
+            Enumeration indicating how should the engine treat incoming value (as ignored, explicitly unset or standard value).
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.InputDataState.Set">
+            <summary>
+            Parameter is represented in input with nonempty value.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.InputDataState.Unset">
+            <summary>
+            Parameter is not represented in input.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.InputDataState.ExplicitEmpty">
+            <summary>
+            Parameter is represented in input data with a null or empty value - this can e.g. indicate multichoice with no option selected.
+            In CLI this is represented by option with explicit null string ('dotnet new mytemplate --myoptionA ""').
+            In TemplateCreator this is represented by explicit null value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.InputDataStateUtil.GetInputDataState(System.Object)">
+            <summary>
+            Tags the input value with <see cref="T:Microsoft.TemplateEngine.Edge.Template.InputDataState"/> based on it's definition.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Template.InputParameterData">
+            <summary>
+            Type representing input data into <see cref="T:Microsoft.TemplateEngine.Edge.Template.TemplateCreator"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.InputParameterData.#ctor(Microsoft.TemplateEngine.Abstractions.ITemplateParameter,System.Object,Microsoft.TemplateEngine.Abstractions.Parameters.DataSource,Microsoft.TemplateEngine.Edge.Template.InputDataState)">
+            <summary>
+            Creates new instance of the <see cref="T:Microsoft.TemplateEngine.Edge.Template.InputParameterData"/> type.
+            </summary>
+            <param name="parameterDefinition"></param>
+            <param name="value"></param>
+            <param name="dataSource"></param>
+            <param name="inputDataState"></param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.InputParameterData.ParameterDefinition">
+            <summary>
+            Descriptor of the parameter.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.InputParameterData.Value">
+            <summary>
+            Value of the parameter.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.InputParameterData.DataSource">
+            <summary>
+            Source of the parameter value. If supplied by the host - leave the default value of <see cref="F:Microsoft.TemplateEngine.Abstractions.Parameters.DataSource.User"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.InputParameterData.InputDataState">
+            <summary>
+            Input data state - indicates how the actual value should be treated (ignored, regarded as explicitly unset value, etc.).
+            </summary>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Template.ITemplateCreationResult">
+            <summary>
+            Represents result of template instantiation / dry run via <see cref="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.InstantiateAsync(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.String,System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Boolean,System.String,System.Boolean,System.Threading.CancellationToken)"></see>. />.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.ITemplateCreationResult.CreationEffects">
+            <summary>
+            Result of template dry run.
+            Template dry run always performed prior to instantiation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.ITemplateCreationResult.ErrorMessage">
+            <summary>
+            Error message, null if operation is successful.
+            Should be localized.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.ITemplateCreationResult.OutputBaseDirectory">
+            <summary>
+            The output directory used for template instantiation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.ITemplateCreationResult.CreationResult">
+            <summary>
+            The result of template instantiation.
+            Null in case of dry run.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.ITemplateCreationResult.Status">
+            <summary>
+            Status of template instantiation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.Template.ITemplateCreationResult.TemplateFullName">
+            <summary>
+            Processed template name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.MatchInfo.InputParameterName">
+            <summary>
+            stores canonical parameter name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.MatchInfo.ParameterValue">
+            <summary>
+            stores parameter value.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.MatchInfo.AdditionalInformation">
+            <summary>
+            stores the exception message if there is an args parse error.
+            </summary>
+        </member>
+        <member name="F:Microsoft.TemplateEngine.Edge.Template.MatchInfo.InputParameterFormat">
+            <summary>
+            stores the option for parameter as used in the host
+            for example dotnet CLI offers two options for Framework parameter: -f and --framework
+            if the user uses -f when executing command, <see cref="F:Microsoft.TemplateEngine.Edge.Template.MatchInfo.InputParameterFormat"/> contains -f.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreationResult.#ctor(Microsoft.TemplateEngine.Edge.Template.CreationResultStatus,System.String,System.String,Microsoft.TemplateEngine.Abstractions.ICreationResult,System.String,Microsoft.TemplateEngine.Abstractions.ICreationEffects)">
+            <summary>
+            Creates <see cref="T:Microsoft.TemplateEngine.Edge.Template.TemplateCreationResult"/>.
+            </summary>
+            <param name="status">status of template creation.</param>
+            <param name="templateName">template name.</param>
+            <param name="localizedErrorMessage">localized error message. Should be set when <paramref name="status"/> is not <see cref="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.Success"/>.
+            </param>
+            <param name="creationOutputs">results of template creation.</param>
+            <param name="outputBaseDir">output directory.</param>
+            <param name="creationEffects">results of template dry run.</param>
+            <exception cref="T:System.ArgumentException">when <paramref name="localizedErrorMessage"/> is null or empty and <paramref name="status"/> is not <see cref="F:Microsoft.TemplateEngine.Edge.Template.CreationResultStatus.Success"/>.</exception>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Template.TemplateCreator">
+            <summary>
+            The class instantiates and dry run given template with given parameters.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.InstantiateAsync(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.String,System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Boolean,System.String,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Instantiates or dry runs the template.
+            </summary>
+            <param name="templateInfo">The template to run.</param>
+            <param name="name">The name to use. Will be also used as <paramref name="outputPath"/> in case it is empty and <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplate.IsNameAgreementWithFolderPreferred"/> for <paramref name="templateInfo"/> is set to true.</param>
+            <param name="fallbackName">Fallback name in case <paramref name="name"/> is null.</param>
+            <param name="outputPath">The output directory for instantiate template to.</param>
+            <param name="inputParameters">The input parameters for the template.</param>
+            <param name="forceCreation">If true, create the template even it overwrites existing files.</param>
+            <param name="baselineName">baseline configuration to use.</param>
+            <param name="dryRun">If true, only dry run will be performed - no actual actions will be done.</param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.InstantiateAsync(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.String,System.String,System.String,Microsoft.TemplateEngine.Edge.Template.InputDataSet,System.Boolean,System.String,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Instantiates or dry runs the template.
+            </summary>
+            <param name="templateInfo">The template to run.</param>
+            <param name="name">The name to use. Will be also used as <paramref name="outputPath"/> in case it is empty and <see cref="P:Microsoft.TemplateEngine.Abstractions.ITemplate.IsNameAgreementWithFolderPreferred"/> for <paramref name="templateInfo"/> is set to true.</param>
+            <param name="fallbackName">Fallback name in case <paramref name="name"/> is null.</param>
+            <param name="outputPath">The output directory for instantiate template to.</param>
+            <param name="inputParameters">The input parameters for the template.</param>
+            <param name="forceCreation">If true, create the template even it overwrites existing files.</param>
+            <param name="baselineName">baseline configuration to use.</param>
+            <param name="dryRun">If true, only dry run will be performed - no actual actions will be done.</param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.LoadTemplateAsync(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Fully load template from <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/> usually comes from cache and is missing some information.
+            Calling this methods returns full information about template needed to instantiate template.
+            </summary>
+            <param name="info">Information about template.</param>
+            <param name="baselineName">Defines which baseline of template to load.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>Fully loaded template or <c>null</c> if it fails to load template.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.LoadTemplate(Microsoft.TemplateEngine.Abstractions.ITemplateInfo,System.String)">
+            <summary>
+            Fully load template from <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/>.
+            <see cref="T:Microsoft.TemplateEngine.Abstractions.ITemplateInfo"/> usually comes from cache and is missing some information.
+            Calling this methods returns full information about template needed to instantiate template.
+            </summary>
+            <param name="info">Information about template.</param>
+            <param name="baselineName">Defines which baseline of template to load.</param>
+            <returns>Fully loaded template or <c>null</c> if it fails to load template.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.SetupDefaultParamValuesFromTemplateAndHost(Microsoft.TemplateEngine.Abstractions.ITemplate,System.String,System.Collections.Generic.IReadOnlyList{System.String}@)">
+            <summary>
+            Reads the parameters from the template and the host and setup their values in the return IParameterSet.
+            Host param values override template defaults.
+            </summary>
+            <param name="templateInfo"></param>
+            <param name="realName"></param>
+            <param name="paramsWithInvalidValues"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.ResolveUserParameters(Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Abstractions.IParameterSet,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Collections.Generic.IReadOnlyList{System.String}@)">
+            <summary>
+            The template params for which there are same-named input parameters have their values set to the corresponding input parameters value.
+            input parameters that do not have corresponding template params are ignored.
+            </summary>
+            <param name="template"></param>
+            <param name="templateParams"></param>
+            <param name="inputParameters"></param>
+            <param name="paramsWithInvalidValues"></param>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.LegacyParamSetWrapper">
+            <summary>
+            This class is to be used solely to hold backward compatibility of <see cref="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.ResolveUserParameters(Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Edge.Template.IParameterSetBuilder,Microsoft.TemplateEngine.Edge.Template.InputDataSet,System.Collections.Generic.IReadOnlyList{System.String}@)"/> method.
+             Hence only the base and <see cref="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.LegacyParamSetWrapper.SetParameterValue(Microsoft.TemplateEngine.Abstractions.ITemplateParameter,System.Object,Microsoft.TemplateEngine.Abstractions.Parameters.DataSource)"/> are implemented - no other methods are called in scope of <see cref="M:Microsoft.TemplateEngine.Edge.Template.TemplateCreator.ResolveUserParameters(Microsoft.TemplateEngine.Abstractions.ITemplate,Microsoft.TemplateEngine.Edge.Template.IParameterSetBuilder,Microsoft.TemplateEngine.Edge.Template.InputDataSet,System.Collections.Generic.IReadOnlyList{System.String}@)"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.WellKnownSearchFilters.TagFilter(System.String)">
+            <summary>
+            Creates predicate for matching the template and given tag value.
+            If the template contains the tag <paramref name="tagFilter"/>, it is exact match, otherwise mismatch.
+            If the template has no tags defined, it is a mismatch.
+            If <paramref name="tagFilter"/> is <c>null</c> or empty the method returns <c>null</c>.
+            </summary>
+            <param name="tagFilter">tag to filter by.</param>
+            <returns>A predicate that returns if the given template matches <paramref name="tagFilter"/>.</returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.Template.WellKnownSearchFilters.AuthorFilter(System.String)">
+            <summary>
+            Creates predicate for matching the template and given author value.
+            </summary>
+            <param name="author">author to use for match.</param>
+            <returns>A predicate that returns if the given template matches defined author.</returns>
+        </member>
+        <member name="T:Microsoft.TemplateEngine.Edge.VirtualEnvironment">
+            <summary>
+            Virtualized implementation of <see cref="T:Microsoft.TemplateEngine.Abstractions.IEnvironment"/>.
+            Allows to overwrite and/or add environment variables not defined in physical environment.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.Edge.VirtualEnvironment.#ctor(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Boolean)">
+            <summary>
+            Creates new instance of <see cref="T:Microsoft.TemplateEngine.Edge.VirtualEnvironment"/>.
+            </summary>
+            <param name="virtualEnvironment">Variables to be considered as environment variables. They have precedence over physical environment variables.</param>
+            <param name="includeRealEnvironment">If set to true - variables from <see cref="T:System.Environment"/> are added.</param>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.ConditionEvaluation_Error_CyclicDependency">
+            <summary>Parameter conditions contain cyclic dependency: [{0}] that is preventing deterministic evaluation.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.ConditionEvaluation_Error_MismatchedCondition">
+            <summary>Failed to evaluate condition {0} on parameter {1} (condition text: {2}, evaluation error: {3}) - condition might be malformed or referenced parameters do not have default nor explicit values.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.ConditionEvaluation_Error_TopologicalSort">
+            <summary>Unexpected internal error - unable to perform topological sort of parameter dependencies that do not appear to have a cyclic dependencies.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.ConditionEvaluation_Warning_CyclicDependency">
+            <summary>Parameter conditions contain cyclic dependency: [{0}]. With current values of parameters it's possible to deterministically evaluate parameters - so proceeding further. However template should be reviewed as instantiation with different parameters can lead ...</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Constraint_Error_ArgumentHasEmptyString">
+            <summary>'{0}' should not contain empty items</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Constraint_Error_ArgumentsNotSpecified">
+            <summary>Argument(s) were not specified. At least one argument should be specified.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Constraint_Error_ArrayHasNoObjects">
+            <summary>'{0}' does not contain valid items.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Constraint_Error_InvalidJson">
+            <summary>'{0}' is not a valid JSON.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Constraint_Error_InvalidJsonArray_Objects">
+            <summary>'{0}' should be an array of objects.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Constraint_Error_InvalidJsonType_Array">
+            <summary>'{0}' is not a valid JSON array.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Constraint_Error_InvalidJsonType_StringOrArray">
+            <summary>'{0}' is not a valid JSON string or array.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Constraint_Error_InvalidVersion">
+            <summary>'{0}' is not a valid version or version range.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Constraint_WrongConfigurationCTA">
+            <summary>Check the constraint configuration in template.json.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.EnvironmentVariablesBindSource_Name">
+            <summary>Environment variables</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.EvaluatedInputDataSet_Error_MismatchedConditions">
+            <summary>Attempt to pass result of external evaluation of parameters conditions for parameter(s) that do not have appropriate condition set in template (IsEnabled or IsRequired attributes not populated with condition) or a failure to pass the condition results for  ...</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.EvaluatedInputParameterData_Error_ConditionsInvalid">
+            <summary>Attempt to pass result of external evaluation of parameters conditions for parameter(s) that do not have appropriate condition set in template (IsEnabled or IsRequired attributes not populated with condition) or a failure to pass the condition results for  ...</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.FolderInstaller_InstallResult_Error_FolderDoesNotExist">
+            <summary>The folder {0} doesn't exist.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Generic_Constraint_WrongConfigurationCTA">
+            <summary>Check the constraint configuration in template.json.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Generic_LatestVersion">
+            <summary>latest version</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Generic_Version">
+            <summary>version {0}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.GlobalSettingsTemplatePackageProvider_InstallResult_Error_MultipleInstallersCanBeUsed">
+            <summary>{0} can be installed by several installers. Specify the installer name to be used.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.GlobalSettingsTemplatePackageProvider_InstallResult_Error_PackageAlreadyInstalled">
+            <summary>{0} is already installed.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.GlobalSettingsTemplatePackageProvider_InstallResult_Error_PackageCannotBeInstalled">
+            <summary>{0} cannot be installed.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.GlobalSettingsTemplatePackagesProvider_Info_PackageAlreadyInstalled">
+            <summary>{0} is already installed, it will be replaced with {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.GlobalSettingsTemplatePackagesProvider_Info_PackageUninstalled">
+            <summary>{0} was successfully uninstalled.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.HostConstraint_Error_MissingMandatoryProperty">
+            <summary>'{0}' does not have mandatory property '{1}'.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.HostConstraint_Message_Restricted">
+            <summary>Running template on {0} (version: {1}) is not supported, supported hosts is/are: {2}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.HostConstraint_Name">
+            <summary>Template engine host</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.HostParametersBindSource_Name">
+            <summary>Host defined parameters</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_UpdateCheckError_VulnerablePackage">
+            <summary>The checked package {0} is vulnerable.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_DownloadError_VulnerablePackage">
+            <summary>Found package is vulnerable source: {0}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_Error_FailedToLoadSource">
+            <summary>Failed to load the NuGet source {0}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_Error_FailedToLoadSources">
+            <summary>Failed to load NuGet sources configured for the folder {0}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_Error_FailedToReadPackage">
+            <summary>Failed to read package information from NuGet source {0}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_Error_FileAlreadyExists">
+            <summary>File {0} already exists.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_Error_NoSources">
+            <summary>No NuGet sources are defined or enabled.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_Warning_InsecureFeed">
+            <summary>The NuGet sources {0} are insecure and will not be searched. If you want to include those sources for search, use --force.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_Warning_FailedToDelete">
+            <summary>Failed to remove {0} after failed download. Remove the file manually if it exists.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_Warning_FailedToDownload">
+            <summary>Failed to download {0} from NuGet feed {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_Warning_FailedToLoadSource">
+            <summary>Failed to load NuGet source {0}: the source is not valid. It will be skipped in further processing.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetApiPackageManager_Warning_PackageNotFound">
+            <summary>{0} is not found in NuGet feeds {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_Error_CopyFailed">
+            <summary>Failed to copy package {0} to {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_Error_FailedToReadPackage">
+            <summary>Failed to read content of package {0}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_Error_PackageSourceMappingMatchNotFound">
+            <summary>Package source mapping is enabled, but no source was found for package {0}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_Error_FileAlreadyExists">
+            <summary>File {0} already exists.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_DownloadFailed">
+            <summary>Failed to download {0} from {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_InstallGeneric">
+            <summary>Failed to install the package {0}.
+            Details: {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_InstallRequestNotSupported">
+            <summary>The install request {0} cannot be processed by installer {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_InvalidPackage">
+            <summary>The NuGet package {0} is invalid.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_VulnerablePackage">
+            <summary>The requested package {0} has vulnerabilities.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_InvalidSources">
+            <summary>The configured NuGet sources are invalid: {0}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_InvalidSources_None">
+            <summary>No NuGet sources are configured.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_OperationCancelled">
+            <summary>The operation was cancelled.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_PackageNotFound">
+            <summary>{0} was not found in NuGet feeds {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_PackageNotSupported">
+            <summary>The package {0} is not supported by installer {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_UninstallGeneric">
+            <summary>Failed to uninstall the package {0}.
+            Details: {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_UpdateCheck_Error_VulnerablePackage">
+            <summary>The checked package {0} has vulnerabilities.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.NuGetInstaller_InstallResult_Error_UpdateCheckGeneric">
+            <summary>Failed to check the update for the package {0}.
+            Details: {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.OSConstraint_Error_InvalidOSName">
+            <summary>'{0}' is not a valid operating system name. Allowed values are: {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.OSConstraint_Message_Restricted">
+            <summary>Running template on {0} is not supported, supported OS is/are: {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.OSConstraint_Name">
+            <summary>Operating System</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Scanner_Error_TemplatePackageLocationIsNotSupported">
+            <summary>Template package location {0} is not supported, or doesn't exist.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Validation_Error_Header">
+            <summary>The template {0} has the following validation errors:</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Validation_Info_Header">
+            <summary>The template {0} has the following validation messages:</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Validation_InvalidTemplate">
+            <summary>Failed to load the template {0}: the template is not valid.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Validation_InvalidTemplateLoc">
+            <summary>Failed to load the '{0}' localization the template {1}: the localization file is not valid. The localization will be skipped.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Validation_LocError_Header">
+            <summary>The template {0} has the following validation errors in '{1}' localization:</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Validation_LocInfo_Header">
+            <summary>The template {0} has the following validation messages in '{1}' localization:</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Validation_LocWarning_Header">
+            <summary>The template {0} has the following validation warnings in '{1}' localization:</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.Validation_Warning_Header">
+            <summary>The template {0} has the following validation warnings:</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.SdkConstraint_Error_InvalidVersion">
+            <summary>'{0}' is not a valid semver version.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.SdkConstraint_Error_MismatchedProviders">
+            <summary>Multiple 'ISdkInfoProvider' components provided by host ({0}), therefore 'SdkVersionConstraint' cannot be properly initialized.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.SdkConstraint_Error_MissingProvider">
+            <summary>No 'ISdkInfoProvider' component provided by host. 'SdkVersionConstraint' cannot be properly initialized.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.SdkConstraint_Message_Restricted">
+            <summary>Running template on current .NET SDK version ({0}) is unsupported. Supported version(s): {1}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.SdkVersionConstraint_Name">
+            <summary>.NET SDK version</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplateConstraintManager_Error_FailedToEvaluate">
+            <summary>The constraint '{0}' failed to be evaluated for the args '{1}', details: {2}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplateConstraintManager_Error_FailedToInitialize">
+            <summary>The constraint '{0}' failed to initialize: {1}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplateConstraintManager_Error_UnknownType">
+            <summary>The constraint '{0}' is unknown.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplateCreator_TemplateCreationResult_Error_CouldNotLoadTemplate">
+            <summary>Could not load template.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplateCreator_TemplateCreationResult_Error_CreationFailed">
+            <summary>Failed to create template.
+            Details: {0}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplateCreator_TemplateCreationResult_Error_NoDefaultName">
+            <summary>Failed to create template: the template name is not specified. Template configuration does not configure a default name that can be used when name is not specified. Specify the name for the template when instantiating or configure a default name in the tem ...</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplateCreator_TemplateCreationResult_Error_DestructiveChanges">
+            <summary>Destructive changes detected.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplateInfo_Warning_FailedToReadHostData">
+            <summary>Failed to load host data in {0} at {1}.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplatePackageManager_Error_FailedToGetTemplatePackages">
+            <summary>Failed to retrieve template packages from provider '{0}'.
+            Details: {1}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplatePackageManager_Error_FailedToFindPackage">
+            <summary>Failed to retrieve package with identifier '{0}'.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplatePackageManager_Error_FailedToScan">
+            <summary>Failed to scan {0}.
+            Details: {1}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplatePackageManager_Error_FailedToStoreCache">
+            <summary>Failed to store template cache, details: {0}
+            Template cache will be recreated on the next run.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.WorkloadConstraint_Error_MismatchedProviders">
+            <summary>Multiple 'IWorkloadsInfoProvider' components provided by host ({0}), therefore 'WorkloadConstraint' cannot be properly initialized.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.WorkloadConstraint_Error_MissingProvider">
+            <summary>No 'IWorkloadsInfoProvider' component provided by host. 'WorkloadConstraint' cannot be properly initialized.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.WorkloadConstraint_Message_Restricted">
+            <summary>Running template is not supported - required optional workload(s) not installed. Supported workload(s): {0}. Currently installed optional workloads: {1}</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.WorkloadConstraint_Name">
+            <summary>Workload</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.WorkloadConstraint_Warning_DuplicateWorkloads">
+            <summary>'IWorkloadsInfoProvider' component provided by host provided some duplicated workloads (duplicates: {0}). Duplicates will be skipped.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplatePackageManager_Warning_DetectedTemplatesIdentityConflict">
+            <summary>The following templates use the same identity '{0}':
+            {1}
+            The template from '{2}' will be used. To resolve this conflict, uninstall the conflicting template packages.</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplatePackageManager_Warning_DetectedTemplatesIdentityConflict_Subentry">
+            <summary>{0} '{1}' from '{2}'</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.GlobalSettings_Error_CorruptedSettings">
+            <summary>Failed to read installed template packages list at {0}. It might be due to the file is corrupted. Please review this file manually and fix the errors in JSON structure, or remove the file to clear up the list of list installed packages and reinstall them a ...</summary>
+        </member>
+        <member name="P:Microsoft.TemplateEngine.Edge.LocalizableStrings.TemplateCreator_TemplateCreationResult_Error_InvalidTemplate">
+            <summary>The template is invalid and cannot be instantiated.</summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToStringReadOnlyList(System.Text.Json.Nodes.JsonObject,System.String,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Reads <paramref name="propertyName"/> as read only string list/>.
+            Property value may be string or array.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetObjectProperties(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Enumerates the properties of a <see cref="T:System.Text.Json.Nodes.JsonObject"/>, handling duplicate keys gracefully.
+            </summary>
+            <remarks>
+            <see cref="T:System.Text.Json.Nodes.JsonObject"/> lazily initializes its internal dictionary when first accessed.
+            If the underlying JSON contains duplicate property keys, initialization throws
+            <see cref="T:System.ArgumentException"/>. In that case this method falls back to re-parsing via
+            <see cref="T:System.Text.Json.JsonDocument"/>, which supports duplicate keys (last-wins semantics, like Newtonsoft.Json).
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetObjectPropertiesViaDocument(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Enumerates the properties of a <see cref="T:System.Text.Json.Nodes.JsonObject"/> by re-parsing its JSON text via
+            <see cref="T:System.Text.Json.JsonDocument"/>, which tolerates duplicate keys.
+            </summary>
+            <remarks>
+            <see cref="M:System.Text.Json.Nodes.JsonObject.WriteTo(System.Text.Json.Utf8JsonWriter,System.Text.Json.JsonSerializerOptions)"/> falls back to the underlying <see cref="T:System.Text.Json.JsonElement"/>
+            when the internal dictionary has not yet been initialized, so <see cref="M:System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions)"/> is
+            safe to call even after a failed <see cref="T:System.Text.Json.Nodes.JsonObject"/> initialization.
+            Duplicate keys are de-duplicated with last-wins semantics to match normal JsonObject enumeration behavior.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonNodeDictionary(System.Text.Json.Nodes.JsonNode,System.StringComparer,System.String)">
+            <summary>
+            Converts properties of <paramref name="token"/> to dictionary.
+            Leaves the values as JsonNode.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonNodeStringDictionary(System.Text.Json.Nodes.JsonNode,System.StringComparer,System.String)">
+            <summary>
+            Converts properties of <paramref name="token"/> to dictionary.
+            Values are serialized to string (as JsonNode). Strings are serialized as JSON, i.e. needs to be parsed prior to be used.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ToJsonString(System.Object)">
+            <summary>
+            Converts <paramref name="obj"/> to valid JSON string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.TryGetValueCaseInsensitive(System.Text.Json.Nodes.JsonObject,System.String,System.Text.Json.Nodes.JsonNode@)">
+            <summary>
+            Tries to get a property value from a <see cref="T:System.Text.Json.Nodes.JsonObject"/> using case-insensitive key matching.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetPropertyCaseInsensitive(System.Text.Json.Nodes.JsonObject,System.String)">
+            <summary>
+            Gets a property from a JsonObject with case-insensitive key matching.
+            Handles duplicate keys gracefully by falling back to JsonDocument-based lookup.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.GetPropertyCaseInsensitiveViaDocument(System.Text.Json.Nodes.JsonObject,System.String)">
+            <summary>
+            Gets a property from a JsonObject by re-parsing via JsonDocument (tolerates duplicate keys).
+            Uses last-wins semantics for duplicate keys, consistent with Newtonsoft.Json behavior.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ParseJsonObject(System.String)">
+            <summary>
+            Parses a JSON string into a JsonObject (with comment/trailing comma support).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.ParseJsonNode(System.String)">
+            <summary>
+            Parses a JSON string into a JsonNode (with comment/trailing comma support).
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.FromObject(System.Object)">
+            <summary>
+            Serializes an object to a JsonObject via JSON round-trip.
+            Equivalent to Newtonsoft's JObject.FromObject().
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.DeepCloneObject(System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Creates a deep clone of a <see cref="T:System.Text.Json.Nodes.JsonObject"/> by round-tripping through JSON text.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.JExtensions.Merge(System.Text.Json.Nodes.JsonObject,System.Text.Json.Nodes.JsonObject)">
+            <summary>
+            Merges properties from <paramref name="source"/> into <paramref name="target"/>.
+            Equivalent to Newtonsoft's JObject.Merge() with default settings:
+            - Objects are recursively merged
+            - Arrays are concatenated
+            - Other values (including null) from source overwrite target.
+            </summary>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.CommandUtils.ArgumentEscaper.EscapeAndConcatenateArgArrayForProcessStart(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Undo the processing which took place to create string[] args in Main,
+            so that the next process will receive the same string[] args
+            See here for more info:
+            http://blogs.msdn.com/b/twistylittlepassagesallalike/archive/2011/04/23/everyone-quotes-arguments-the-wrong-way.aspx .
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.CommandUtils.ArgumentEscaper.EscapeAndConcatenateArgArrayForCmdProcessStart(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Undo the processing which took place to create string[] args in Main,
+            so that the next process will receive the same string[] args
+            See here for more info:
+            http://blogs.msdn.com/b/twistylittlepassagesallalike/archive/2011/04/23/everyone-quotes-arguments-the-wrong-way.aspx .
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.CommandUtils.ArgumentEscaper.EscapeArgForCmd(System.String)">
+            <summary>
+            Prepare as single argument to
+            roundtrip properly through cmd.
+            This prefixes every character with the '^' character to force cmd to
+            interpret the argument string literally. An alternative option would
+            be to do this only for cmd metacharacters.
+            See here for more info:
+            http://blogs.msdn.com/b/twistylittlepassagesallalike/archive/2011/04/23/everyone-quotes-arguments-the-wrong-way.aspx .
+            </summary>
+            <param name="argument"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.CommandUtils.ArgumentEscaper.EscapeArgArray(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Undo the processing which took place to create string[] args in Main,
+            so that the next process will receive the same string[] args
+            See here for more info:
+            http://blogs.msdn.com/b/twistylittlepassagesallalike/archive/2011/04/23/everyone-quotes-arguments-the-wrong-way.aspx .
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.TemplateEngine.CommandUtils.ArgumentEscaper.EscapeArgArrayForCmd(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            This prefixes every character with the '^' character to force cmd to
+            interpret the argument string literally. An alternative option would
+            be to do this only for cmd metacharacters.
+            See here for more info:
+            http://blogs.msdn.com/b/twistylittlepassagesallalike/archive/2011/04/23/everyone-quotes-arguments-the-wrong-way.aspx.
+            </summary>
+            <param name="arguments"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

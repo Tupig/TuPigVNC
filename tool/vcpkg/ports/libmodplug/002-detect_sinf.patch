@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2a8a8ce..1da53ff 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -44,7 +44,7 @@ include_directories(AFTER
+ 
+ if(UNIX AND NOT APPLE)
+   find_library(MATH_LIB m)
+-  if(MATH_LIB)
++  if(1)
+     set(CMAKE_REQUIRED_LIBRARIES m)
+   endif()
+ endif()

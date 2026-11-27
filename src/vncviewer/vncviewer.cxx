@@ -379,6 +379,15 @@ static void init_fltk()
   // 避免弹窗标题为空
   fl_message_title_default("TuPigVNC");
 
+  // ---- 全局暗色主题 ----
+  // FLTK 原生控件（浏览器、下拉菜单、滚动条、勾选框）默认是浅灰立体，
+  // 这里统一改暗，跟 Material 暗色界面保持一致。
+  Fl::background(28, 26, 36);        // 窗口/控件底
+  Fl::background2(20, 18, 26);       // 输入框/列表底
+  Fl::foreground(234, 230, 245);     // 文字
+  Fl::set_color(FL_SELECTION_COLOR, 180, 166, 255);  // 选中背景（紫）
+  Fl::set_color(FL_INACTIVE_COLOR, 110, 104, 128);   // 禁用文字
+
   // FLTK 暴露这些字符串以便我们翻译它们。
   fl_no     = _("No");
   fl_yes    = _("Yes");

@@ -38,6 +38,7 @@ extern Fl_Color Ok;          // --ok         #2E9E5B
 extern Fl_Color OkSoft;      // --ok-soft    #DCF6E5
 extern Fl_Color Err;         // --err        #E5484D
 extern Fl_Color ErrSoft;     // --err-soft   #FFE8EA
+extern Fl_Color OnAccent;    // --on-accent  强调色上的文字（暗色下是深紫）
 
 /* 初始化调色板（须在 Fl::scheme 之后调用） */
 void initColors();
@@ -58,6 +59,12 @@ void roundRectOutline(int x, int y, int w, int h, int r, Fl_Color c);
 /* 实心圆角矩形 + 1px 描边 */
 void roundRect(int x, int y, int w, int h, int r, Fl_Color fill,
                Fl_Color stroke);
+
+/* 实心圆（抗锯齿），替代 fl_circle / fl_pie 的硬边 */
+void circleFill(int cx, int cy, int radius, Fl_Color c);
+
+/* 抗锯齿直线，替代 fl_line（图标里的斜线） */
+void lineAA(int x1, int y1, int x2, int y2, Fl_Color c);
 
 /* 在 w×h 区域内居中绘制单行文字，返回实际宽度 */
 int textCentered(const char *s, int x, int y, int w, int h, Fl_Color c,

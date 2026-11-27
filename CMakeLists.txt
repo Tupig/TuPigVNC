@@ -7,7 +7,7 @@
 cmake_minimum_required(VERSION 3.21)
 
 # Internal cmake modules
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/build-support/cmake/Modules)
 
 include(CheckIncludeFiles)
 include(CheckFunctionExists)
@@ -35,7 +35,7 @@ endif()
 #   MINOR   —— 新增向后兼容的功能（如 0.1.0）
 #   MAJOR   —— 不兼容的变更（如 1.0.0）
 # 版本号仅在此处维护，其余位置统一引用 ${VERSION}。
-set(VERSION 0.0.5)
+set(VERSION 0.0.6)
 
 # The RC version must always be four comma-separated numbers
 string(REPLACE . , RCVERSION "${VERSION}.0")
@@ -501,11 +501,11 @@ endif()
 find_package(GTest)
 
 # Generate config.h and make sure the source finds it
-configure_file(config.h.in config.h)
+configure_file(build-support/config.h.in config.h)
 add_definitions(-DHAVE_CONFIG_H)
 include_directories(${CMAKE_BINARY_DIR})
 
-include(cmake/StaticBuild.cmake)
+include(build-support/cmake/StaticBuild.cmake)
 
 add_subdirectory(src/common)
 
@@ -519,27 +519,27 @@ else()
 endif()
 
 if(ENABLE_NLS)
-  add_subdirectory(i18n)
+  add_subdirectory(src/i18n i18n)
 endif()
 
 if(BUILD_VIEWER)
   add_subdirectory(src/vncviewer)
-  add_subdirectory(assets)
+  add_subdirectory(src/assets assets)
 endif()
 
 # WinUI 3 前端用的原生核心 DLL（C ABI，供 C# P/Invoke 调用）。
 # 与旧的 FLTK 客户端并行构建，重构验收通过后再移除 BUILD_VIEWER。
-add_subdirectory(ui/TuPigVNC.Core)
+add_subdirectory(src/ui/TuPigVNC.Core ui/TuPigVNC.Core)
 
-add_subdirectory(tests)
+add_subdirectory(src/tests tests)
 
 
 if(BUILD_VIEWER)
-  add_subdirectory(release)
+  add_subdirectory(build-support/release release)
 endif()
 
 # uninstall
-configure_file("${CMAKE_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
+configure_file("${CMAKE_SOURCE_DIR}/build-support/cmake/cmake_uninstall.cmake.in"
   "cmake_uninstall.cmake" IMMEDIATE @ONLY)
 
 add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P cmake_uninstall.cmake)

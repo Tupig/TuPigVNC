@@ -4,3 +4,13 @@
 *.ico binary
 *.png binary
 *.jpg binary
+*.nupkg binary
+*.zip binary
+*.pdb binary
+*.lib binary
+*.winmd binary
+
+# 离线依赖按原始字节保存，避免换行转换导致完整性校验失败
+/tool/sdk/** -text
+/tool/packages/** -text
+/tool/packaging/** -text

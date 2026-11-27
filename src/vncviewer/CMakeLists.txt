@@ -12,6 +12,7 @@ add_executable(vncviewer
   fltk/event_dispatch_handler.cxx
   fltk/theme.cxx
   fltk/material.cxx
+  fltk/nativedialog.cxx
   AuthDialog.cxx
   BaseTouchHandler.cxx
   CConn.cxx
@@ -105,10 +106,10 @@ install(TARGETS vncviewer DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
 if(UNIX)
   install(FILES vncviewer.man DESTINATION ${CMAKE_INSTALL_FULL_MANDIR}/man1 RENAME vncviewer.1)
 
-  file(STRINGS ${CMAKE_SOURCE_DIR}/i18n/LINGUAS LINGUAS)
+  file(STRINGS ${CMAKE_SOURCE_DIR}/src/i18n/LINGUAS LINGUAS)
   set(po_FILES "")
   foreach(lang ${LINGUAS})
-    list(APPEND po_FILES "${CMAKE_SOURCE_DIR}/i18n/${lang}.po")
+    list(APPEND po_FILES "${CMAKE_SOURCE_DIR}/src/i18n/${lang}.po")
   endforeach()
 
   configure_file(vncviewer.desktop.in.in vncviewer.desktop.in)
@@ -117,7 +118,7 @@ if(UNIX)
     add_custom_command(OUTPUT vncviewer.desktop
       COMMAND ${GETTEXT_MSGFMT_EXECUTABLE}
                 --desktop --template vncviewer.desktop.in
-                -d ${CMAKE_SOURCE_DIR}/i18n -o vncviewer.desktop
+                -d ${CMAKE_SOURCE_DIR}/src/i18n -o vncviewer.desktop
       DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/vncviewer.desktop.in
               ${po_FILES}
     )
@@ -128,7 +129,7 @@ if(UNIX)
                 -e 's/^Comment/_Comment/'
                 vncviewer.desktop.in > vncviewer.desktop.intl
       COMMAND ${INTLTOOL_MERGE_EXECUTABLE}
-                -d ${CMAKE_SOURCE_DIR}/i18n
+                -d ${CMAKE_SOURCE_DIR}/src/i18n
                 vncviewer.desktop.intl vncviewer.desktop
       DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/vncviewer.desktop.in
               ${po_FILES}
@@ -146,7 +147,7 @@ if(UNIX)
     add_custom_command(OUTPUT org.tigervnc.vncviewer.metainfo.xml
       COMMAND ${GETTEXT_MSGFMT_EXECUTABLE}
                 --xml --template ${CMAKE_CURRENT_SOURCE_DIR}/org.tigervnc.vncviewer.metainfo.xml.in
-                -d ${CMAKE_SOURCE_DIR}/i18n -o org.tigervnc.vncviewer.metainfo.xml
+                -d ${CMAKE_SOURCE_DIR}/src/i18n -o org.tigervnc.vncviewer.metainfo.xml
       DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/org.tigervnc.vncviewer.metainfo.xml.in
               ${po_FILES}
     )
@@ -158,7 +159,7 @@ if(UNIX)
                   -e 's@<p>@<_p>@g\;s@</p>@</_p>@g'
                 ${CMAKE_CURRENT_SOURCE_DIR}/org.tigervnc.vncviewer.metainfo.xml.in > org.tigervnc.vncviewer.metainfo.xml.intl
       COMMAND ${INTLTOOL_MERGE_EXECUTABLE}
-                -x ${CMAKE_SOURCE_DIR}/i18n
+                -x ${CMAKE_SOURCE_DIR}/src/i18n
                 org.tigervnc.vncviewer.metainfo.xml.intl org.tigervnc.vncviewer.metainfo.xml
       DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/org.tigervnc.vncviewer.metainfo.xml.in
               ${po_FILES}
@@ -173,7 +174,7 @@ if(UNIX)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.tigervnc.vncviewer.metainfo.xml DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/metainfo)
 
   foreach(res 16 22 24 32 48 64 128)
-    install(FILES ../../assets/icons/tupigvnc_${res}.png DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/${res}x${res}/apps RENAME tupigvnc.png)
+    install(FILES ${CMAKE_SOURCE_DIR}/src/assets/icons/tupigvnc_${res}.png DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/${res}x${res}/apps RENAME tupigvnc.png)
   endforeach()
-  install(FILES ../../assets/icons/tupigvnc.svg DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/scalable/apps)
+  install(FILES ${CMAKE_SOURCE_DIR}/src/assets/icons/tupigvnc.svg DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/scalable/apps)
 endif()

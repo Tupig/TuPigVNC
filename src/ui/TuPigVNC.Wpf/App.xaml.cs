@@ -15,6 +15,12 @@ public partial class App : Application
         // 具体环境是否可用仍需实际启动验证，不保证所有驱动或系统均可显示。
         RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
 
+        // UI 线程上的未处理异常不能静默吞掉——那会让「点了按钮没反应」
+        // 变成无从排查的幽灵问题。写到用户临时目录下的日志里，
+        // 同时在界面上给出可见提示后退出。
+        DispatcherUnhandledException += OnDispatcherUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += OnDomainUnhandledException;
+
         base.OnStartup(e);
 
         // 命令行：-h / -v 直接输出到控制台并退出，不建窗口。
@@ -37,6 +43,45 @@ public partial class App : Application
 
         MainWindow = new MainWindow(options);
         MainWindow.Show();
+    }
+
+    /// <summary>
+    /// UI 线程未处理异常：记日志 + 提示用户，然后继续运行而不是静默崩溃。
+    /// 崩溃现场比「窗口突然没了」有用得多。
+    /// </summary>
+    private void OnDispatcherUnhandledException(
+        object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+    {
+        string log = WriteCrashLog("UI", e.Exception);
+        MessageBox.Show(
+            $"发生未处理的界面错误：\n\n{e.Exception.Message}\n\n详细信息已写入：\n{log}",
+            "TuPigVNC · 错误", MessageBoxButton.OK, MessageBoxImage.Error);
+        e.Handled = true;
+    }
+
+    private static void OnDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+    {
+        if (e.ExceptionObject is Exception ex)
+            WriteCrashLog("Domain", ex);
+    }
+
+    /// <summary>把异常写到 %TEMP%\TuPigVNC\crash-*.log，返回路径。</summary>
+    private static string WriteCrashLog(string source, Exception ex)
+    {
+        try
+        {
+            string dir = Path.Combine(Path.GetTempPath(), "TuPigVNC");
+            Directory.CreateDirectory(dir);
+            string file = Path.Combine(dir, $"crash-{DateTime.Now:yyyyMMdd-HHmmss}-{source}.log");
+            File.WriteAllText(file,
+                $"[{DateTime.Now:O}] 来源={source}\n{ex}\n");
+            return file;
+        }
+        catch (Exception)
+        {
+            // 连日志都写不了（磁盘满/权限）时不能再抛——否则递归崩溃。
+            return "(无法写入日志)";
+        }
     }
 
     private static string GetProgramName() =>

@@ -1,0 +1,29 @@
+{
+  "name": "qtlocation",
+  "version": "6.12.0",
+  "description": "The Qt Location API helps you create viable mapping solutions using the data available from some of the popular location services.",
+  "homepage": "https://www.qt.io",
+  "license": null,
+  "dependencies": [
+    {
+      "name": "qtbase",
+      "default-features": false,
+      "features": [
+        "gui",
+        "network",
+        "testlib"
+      ]
+    },
+    {
+      "name": "qtdeclarative",
+      "default-features": false
+    },
+    {
+      "name": "qtpositioning",
+      "default-features": false,
+      "features": [
+        "qml"
+      ]
+    }
+  ]
+}

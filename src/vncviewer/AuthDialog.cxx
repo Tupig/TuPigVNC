@@ -44,8 +44,8 @@
 /* xpm 数组早于 const 关键字出现，因此它们的定义不符合规范 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wwrite-strings"
-#include "../../assets/secure.xpm"
-#include "../../assets/insecure.xpm"
+#include "../assets/secure.xpm"
+#include "../assets/insecure.xpm"
 #pragma GCC diagnostic pop
 
 static Fl_Pixmap secure_icon(secure);
