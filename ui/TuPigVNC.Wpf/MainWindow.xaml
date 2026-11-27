@@ -1,0 +1,567 @@
+<Window x:Class="TuPigVNC.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TuPigVNC"
+        Width="540"
+        SizeToContent="Height"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BgBrush}"
+        FontFamily="Microsoft YaHei UI"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True"
+        SourceInitialized="Window_SourceInitialized">
+
+    <StackPanel Margin="20,18,20,22">
+
+        <!-- ================= 标题 ================= -->
+        <TextBlock Text="连接 VNC 服务器"
+                   FontSize="17" FontWeight="SemiBold"
+                   Foreground="{StaticResource TextBrush}"/>
+        <TextBlock Text="输入地址，回车即可连接"
+                   FontSize="12.5" Foreground="{StaticResource Text2Brush}"
+                   Margin="0,4,0,0"/>
+
+        <!-- ================= 地址输入 + 连接 ================= -->
+        <Grid Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="84"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <TextBox x:Name="ServerInput" Style="{StaticResource DarkTextBox}"
+                         KeyDown="ServerInput_KeyDown"
+                         TextChanged="ServerInput_TextChanged"
+                         GotKeyboardFocus="ServerInput_FocusChanged"
+                         LostKeyboardFocus="ServerInput_FocusChanged"/>
+                <TextBlock x:Name="ServerPlaceholder" Text="主机地址:端口"
+                           IsHitTestVisible="False"
+                           Foreground="{StaticResource Text3Brush}" FontSize="13"
+                           VerticalAlignment="Center" Margin="13,0,0,0"/>
+            </Grid>
+
+            <Button x:Name="ConnectButton" Grid.Column="2" Content="连接"
+                    Style="{StaticResource AccentButton}" Click="Connect_Click"/>
+        </Grid>
+
+        <!-- ================= 行内错误提示 ================= -->
+        <TextBlock x:Name="ErrorText" FontSize="11"
+                   Foreground="{StaticResource ErrBrush}"
+                   Margin="0,3,0,0" MinHeight="16" TextWrapping="Wrap"/>
+
+        <!-- ================= 最近连接 ================= -->
+        <Grid Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="最近" FontSize="11" VerticalAlignment="Center"
+                       Foreground="{StaticResource Text3Brush}"/>
+            <WrapPanel x:Name="RecentChips" Grid.Column="1"
+                       Orientation="Horizontal" Margin="6,0,0,0"/>
+        </Grid>
+
+        <!-- ================= 载入 / 另存为 ================= -->
+        <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
+            <Button Content="载入配置" Style="{StaticResource GhostButton}"
+                    Width="90" Height="28" Click="LoadConfig_Click"/>
+            <Button Content="另存为" Style="{StaticResource GhostButton}"
+                    Width="80" Height="28" Margin="8,0,0,0" Click="SaveAs_Click"/>
+        </StackPanel>
+
+        <!-- ================= 2×2 功能入口 ================= -->
+        <Grid Margin="0,22,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 连接历史 -->
+            <Button Grid.Row="0" Grid.Column="0" Margin="0,0,4,8"
+                    Style="{StaticResource EntryCardButton}"
+                    Click="Entry_Click" Tag="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Width="30" Height="30" CornerRadius="8"
+                            Background="{StaticResource AccentSoftBrush}"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="&#xE81C;" FontFamily="Segoe MDL2 Assets"
+                                   FontSize="15" Foreground="{StaticResource AccentBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="连接历史" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"/>
+                        <TextBlock x:Name="HistoryEntrySubtitle" Text="最近连接记录"
+                                   FontSize="10" Foreground="{StaticResource Text3Brush}"
+                                   Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <!-- 选项设置 -->
+            <Button Grid.Row="0" Grid.Column="1" Margin="4,0,0,8"
+                    Style="{StaticResource EntryCardButton}"
+                    Click="Entry_Click" Tag="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Width="30" Height="30" CornerRadius="8"
+                            Background="{StaticResource AccentSoftBrush}"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets"
+                                   FontSize="15" Foreground="{StaticResource AccentBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="选项设置" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"/>
+                        <TextBlock Text="压缩 · 安全 · 输入 · 显示"
+                                   FontSize="10" Foreground="{StaticResource Text3Brush}"
+                                   Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <!-- 自动更新 -->
+            <Button Grid.Row="1" Grid.Column="0" Margin="0,0,4,0"
+                    Style="{StaticResource EntryCardButton}"
+                    Click="Entry_Click" Tag="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Width="30" Height="30" CornerRadius="8"
+                            Background="{StaticResource AccentSoftBrush}"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="&#xE896;" FontFamily="Segoe MDL2 Assets"
+                                   FontSize="15" Foreground="{StaticResource AccentBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="自动更新" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"/>
+                        <TextBlock Text="检查是否有新版本"
+                                   FontSize="10" Foreground="{StaticResource Text3Brush}"
+                                   Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <!-- 关于 -->
+            <Button Grid.Row="1" Grid.Column="1" Margin="4,0,0,0"
+                    Style="{StaticResource EntryCardButton}"
+                    Click="Entry_Click" Tag="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Width="30" Height="30" CornerRadius="8"
+                            Background="{StaticResource AccentSoftBrush}"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="&#xE946;" FontFamily="Segoe MDL2 Assets"
+                                   FontSize="15" Foreground="{StaticResource AccentBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="关于" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"/>
+                        <TextBlock Text="v0.0.5 · x64"
+                                   FontSize="10" Foreground="{StaticResource Text3Brush}"
+                                   Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+        </Grid>
+
+        <!-- ================= 展开面板区 ================= -->
+        <StackPanel x:Name="PanelHost" Margin="0,10,0,0">
+
+            <!-- 连接历史 -->
+            <Border x:Name="PanelHistory" Style="{StaticResource PanelBorder}"
+                    Visibility="Collapsed">
+                <StackPanel>
+                    <Grid Height="34" Margin="16,0,10,0">
+                        <TextBlock Text="连接历史" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <Border Background="{StaticResource AccentSoftBrush}" CornerRadius="6"
+                                Padding="7,2" Margin="74,0,0,0"
+                                HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <TextBlock Text="上限 250 台" FontSize="10"
+                                       Foreground="{StaticResource AccentBrush}"/>
+                        </Border>
+                        <Button Content="收起" Style="{StaticResource GhostButton}"
+                                Width="46" Height="24" HorizontalAlignment="Right"
+                                VerticalAlignment="Center" Click="Collapse_Click"/>
+                    </Grid>
+
+                    <Grid Margin="16,2,16,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="34*"/>
+                            <ColumnDefinition Width="18*"/>
+                            <ColumnDefinition Width="12*"/>
+                            <ColumnDefinition Width="24*"/>
+                            <ColumnDefinition Width="12*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="主机" FontSize="11"
+                                   Foreground="{StaticResource Text2Brush}"/>
+                        <TextBlock Grid.Column="1" Text="名称" FontSize="11"
+                                   Foreground="{StaticResource Text2Brush}"/>
+                        <TextBlock Grid.Column="2" Text="次数" FontSize="11"
+                                   Foreground="{StaticResource Text2Brush}"/>
+                        <TextBlock Grid.Column="3" Text="最后连接" FontSize="11"
+                                   Foreground="{StaticResource Text2Brush}"/>
+                        <TextBlock Grid.Column="4" Text="操作" FontSize="11"
+                                   Foreground="{StaticResource Text2Brush}"/>
+                    </Grid>
+
+                    <ScrollViewer MaxHeight="272" Margin="16,2,16,0"
+                                  VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="HistoryList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Padding="0,3" Background="Transparent"
+                                            MouseLeftButtonDown="HistoryRow_MouseLeftButtonDown"
+                                            MouseRightButtonUp="HistoryRow_MouseRightButtonUp"
+                                            ToolTip="双击连接 · 右键删除">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background"
+                                                                Value="{StaticResource CardHoverBrush}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="34*"/>
+                                                <ColumnDefinition Width="18*"/>
+                                                <ColumnDefinition Width="12*"/>
+                                                <ColumnDefinition Width="24*"/>
+                                                <ColumnDefinition Width="12*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Host}"
+                                                       FontSize="12" Foreground="{StaticResource TextBrush}"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Name}"
+                                                       FontSize="12" Foreground="{StaticResource Text2Brush}"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding UseCount}"
+                                                       FontSize="12" Foreground="{StaticResource Text2Brush}"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="3" Text="{Binding AgoText}"
+                                                       FontSize="12" Foreground="{StaticResource Text2Brush}"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                            <Button Grid.Column="4" Content="删除"
+                                                    Style="{StaticResource GhostButton}"
+                                                    Height="22" Padding="6,0"
+                                                    HorizontalAlignment="Left"
+                                                    Click="HistoryDelete_Click"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <TextBlock Text="双击连接 · 右键删除 · 超出 250 台自动淘汰"
+                               FontSize="10" Foreground="{StaticResource Text3Brush}"
+                               Margin="16,6,16,12"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 选项设置 -->
+            <Border x:Name="PanelOptions" Style="{StaticResource PanelBorder}"
+                    Visibility="Collapsed">
+                <StackPanel>
+                    <Grid Height="34" Margin="16,0,10,0">
+                        <TextBlock Text="选项设置" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <Button Content="收起" Style="{StaticResource GhostButton}"
+                                Width="46" Height="24" HorizontalAlignment="Right"
+                                VerticalAlignment="Center" Click="Collapse_Click"/>
+                    </Grid>
+
+                    <UniformGrid Columns="6" Margin="16,2,16,0">
+                        <RadioButton GroupName="OptionTabs" Content="压缩" Tag="0"
+                                     Style="{StaticResource OptionTab}" IsChecked="True"
+                                     Checked="OptionTab_Checked"/>
+                        <RadioButton GroupName="OptionTabs" Content="安全" Tag="1"
+                                     Style="{StaticResource OptionTab}"
+                                     Checked="OptionTab_Checked"/>
+                        <RadioButton GroupName="OptionTabs" Content="输入" Tag="2"
+                                     Style="{StaticResource OptionTab}"
+                                     Checked="OptionTab_Checked"/>
+                        <RadioButton GroupName="OptionTabs" Content="键盘快捷键" Tag="3"
+                                     Style="{StaticResource OptionTab}"
+                                     Checked="OptionTab_Checked"/>
+                        <RadioButton GroupName="OptionTabs" Content="显示" Tag="4"
+                                     Style="{StaticResource OptionTab}"
+                                     Checked="OptionTab_Checked"/>
+                        <RadioButton GroupName="OptionTabs" Content="杂项" Tag="5"
+                                     Style="{StaticResource OptionTab}"
+                                     Checked="OptionTab_Checked"/>
+                    </UniformGrid>
+
+                    <Grid Margin="16,12,16,16">
+                        <!-- 压缩 -->
+                        <StackPanel x:Name="OptPane0">
+                            <CheckBox Content="自动选择" Style="{StaticResource DarkCheckBox}"
+                                      IsChecked="True" Margin="0,0,0,8"/>
+                            <CheckBox Content="允许 JPEG 压缩" Style="{StaticResource DarkCheckBox}"
+                                      IsChecked="True" Margin="0,0,0,12"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="首选编码" Style="{StaticResource SectionCaption}"/>
+                                    <ComboBox Style="{StaticResource DarkComboBox}" SelectedIndex="0">
+                                        <ComboBoxItem Content="Tight"/>
+                                        <ComboBoxItem Content="JPEG"/>
+                                        <ComboBoxItem Content="ZRLE"/>
+                                        <ComboBoxItem Content="Hextile"/>
+                                        <ComboBoxItem Content="Raw"/>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="颜色级别" Style="{StaticResource SectionCaption}"/>
+                                    <ComboBox Style="{StaticResource DarkComboBox}" SelectedIndex="0">
+                                        <ComboBoxItem Content="全部"/>
+                                        <ComboBoxItem Content="中"/>
+                                        <ComboBoxItem Content="低"/>
+                                        <ComboBoxItem Content="非常低"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                <CheckBox Content="自定义压缩级别" Style="{StaticResource DarkCheckBox}"
+                                          VerticalAlignment="Center"/>
+                                <TextBox Style="{StaticResource DarkTextBox}" Width="46" Height="24"
+                                         Margin="10,0,0,0" Padding="8,0" Text="0"/>
+                                <TextBlock Text="（0=最快，9=最好）" FontSize="11"
+                                           Foreground="{StaticResource Text3Brush}"
+                                           VerticalAlignment="Center" Margin="8,0,0,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="质量级别" FontSize="11" Width="60"
+                                           Foreground="{StaticResource Text3Brush}"
+                                           VerticalAlignment="Center"/>
+                                <TextBox Style="{StaticResource DarkTextBox}" Width="46" Height="24"
+                                         Padding="8,0" Text="0"/>
+                                <TextBlock Text="（0=最差，9=最好）" FontSize="11"
+                                           Foreground="{StaticResource Text3Brush}"
+                                           VerticalAlignment="Center" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- 安全 -->
+                        <StackPanel x:Name="OptPane1" Visibility="Collapsed">
+                            <TextBlock Text="加密" Style="{StaticResource SectionCaption}"/>
+                            <ComboBox Style="{StaticResource DarkComboBox}" SelectedIndex="0"
+                                      Width="220" HorizontalAlignment="Left">
+                                <ComboBoxItem Content="无"/>
+                                <ComboBoxItem Content="RSA-AES"/>
+                            </ComboBox>
+                            <TextBlock Text="认证" Style="{StaticResource SectionCaption}"
+                                       Margin="0,14,0,4"/>
+                            <ComboBox Style="{StaticResource DarkComboBox}" SelectedIndex="1"
+                                      Width="260" HorizontalAlignment="Left">
+                                <ComboBoxItem Content="无"/>
+                                <ComboBoxItem Content="标准 VNC（不安全且无加密）"/>
+                                <ComboBoxItem Content="用户名及密码（不安全且无加密）"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- 输入 -->
+                        <StackPanel x:Name="OptPane2" Visibility="Collapsed">
+                            <CheckBox Content="仅显示（忽略鼠标及键盘）"
+                                      Style="{StaticResource DarkCheckBox}" Margin="0,0,0,14"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="鼠标" Style="{StaticResource SectionCaption}"/>
+                                    <ComboBox Style="{StaticResource DarkComboBox}" SelectedIndex="0">
+                                        <ComboBoxItem Content="默认（都不启用）"/>
+                                        <ComboBoxItem Content="模拟鼠标中键"/>
+                                        <ComboBoxItem Content="服务器未提供光标时，显示本地光标"/>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="光标类型" Style="{StaticResource SectionCaption}"/>
+                                    <ComboBox Style="{StaticResource DarkComboBox}" SelectedIndex="0">
+                                        <ComboBoxItem Content="点"/>
+                                        <ComboBoxItem Content="系统"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+                            <CheckBox Content="全屏时始终发送所有键盘输入"
+                                      Style="{StaticResource DarkCheckBox}" Margin="0,14,0,0"/>
+                            <TextBlock Text="剪贴板" Style="{StaticResource SectionCaption}"
+                                       Margin="0,14,0,4"/>
+                            <CheckBox Content="接受来自服务器的剪切板内容"
+                                      Style="{StaticResource DarkCheckBox}" Margin="0,0,0,8"/>
+                            <CheckBox Content="发送剪切板内容到服务器"
+                                      Style="{StaticResource DarkCheckBox}"/>
+                        </StackPanel>
+
+                        <!-- 键盘快捷键 -->
+                        <StackPanel x:Name="OptPane3" Visibility="Collapsed">
+                            <TextBlock Text="键盘快捷键的修饰键："
+                                       Style="{StaticResource SectionCaption}"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                <ToggleButton Content="Ctrl" Style="{StaticResource DarkToggle}"/>
+                                <ToggleButton Content="Shift" Style="{StaticResource DarkToggle}"/>
+                                <ToggleButton Content="Alt" Style="{StaticResource DarkToggle}"/>
+                                <ToggleButton Content="Win" Style="{StaticResource DarkToggle}"/>
+                            </StackPanel>
+                            <TextBlock FontSize="11" Foreground="{StaticResource Text2Brush}"
+                                       TextWrapping="Wrap" Margin="0,14,0,0" LineHeight="19">
+                                要从会话释放键盘控制权，请按 Ctrl+Alt。&#10;
+                                要将所有键盘输入传递给会话，请按 Ctrl+Alt+G。&#10;
+                                要切换全屏模式，请按 Ctrl+Alt+Enter。&#10;
+                                要打开会话的上下文菜单，请按 Ctrl+Alt+M。&#10;
+                                要将包含 Ctrl+Alt 的组合键直接发送给会话，请按 Ctrl+Alt+Space，&#10;
+                                在不松开 Ctrl+Alt 的情况下松开空格键，然后按下所需的按键。
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- 显示 -->
+                        <StackPanel x:Name="OptPane4" Visibility="Collapsed">
+                            <TextBlock Text="显示模式" Style="{StaticResource SectionCaption}"/>
+                            <ComboBox Style="{StaticResource DarkComboBox}" SelectedIndex="0"
+                                      Width="240" HorizontalAlignment="Left">
+                                <ComboBoxItem Content="窗口化"/>
+                                <ComboBoxItem Content="在当前显示器上全屏显示"/>
+                                <ComboBoxItem Content="为所有显示器开启全屏模式"/>
+                                <ComboBoxItem Content="为选定显示器开启全屏模式"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- 杂项 -->
+                        <StackPanel x:Name="OptPane5" Visibility="Collapsed">
+                            <CheckBox Content="共享（不要断开其他查看器）"
+                                      Style="{StaticResource DarkCheckBox}" Margin="0,0,0,10"/>
+                            <CheckBox Content="连接错误时询问是否重新连接"
+                                      Style="{StaticResource DarkCheckBox}" Margin="0,0,0,10"/>
+                            <CheckBox Content="播放来自服务器的音频"
+                                      Style="{StaticResource DarkCheckBox}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 自动更新 -->
+            <Border x:Name="PanelUpdate" Style="{StaticResource PanelBorder}"
+                    Visibility="Collapsed">
+                <StackPanel>
+                    <Grid Height="34" Margin="16,0,10,0">
+                        <TextBlock Text="自动更新" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <Button Content="收起" Style="{StaticResource GhostButton}"
+                                Width="46" Height="24" HorizontalAlignment="Right"
+                                VerticalAlignment="Center" Click="Collapse_Click"/>
+                    </Grid>
+
+                    <TextBlock x:Name="UpdateVersion" Text="v0.0.5  ·  点击下方按钮检查更新"
+                               FontSize="14" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextBrush}"
+                               HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                    <TextBlock x:Name="UpdateStage" Text="当前阶段：待检查"
+                               FontSize="11" Foreground="{StaticResource Text2Brush}"
+                               Margin="16,12,16,0"/>
+                    <TextBlock Text="下载速度：—" FontSize="11"
+                               Foreground="{StaticResource Text2Brush}" Margin="16,4,16,0"/>
+                    <TextBlock Text="剩余时间：—" FontSize="11"
+                               Foreground="{StaticResource Text2Brush}" Margin="16,4,16,0"/>
+
+                    <Border Margin="16,10,16,0" MinHeight="120" CornerRadius="8"
+                            Background="{StaticResource CardBrush}"
+                            BorderBrush="{StaticResource StrokeBrush}"
+                            BorderThickness="1" Padding="10">
+                        <TextBlock x:Name="UpdateChangelog" Text="尚未检查更新。"
+                                   FontSize="11" Foreground="{StaticResource Text2Brush}"
+                                   TextWrapping="Wrap"/>
+                    </Border>
+
+                    <Button Content="检查更新" Style="{StaticResource AccentButton}"
+                            Width="140" Height="32" HorizontalAlignment="Center"
+                            Margin="0,12,0,16" Click="CheckUpdate_Click"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 关于 -->
+            <Border x:Name="PanelAbout" Style="{StaticResource PanelBorder}"
+                    Visibility="Collapsed">
+                <StackPanel>
+                    <Grid Height="34" Margin="16,0,10,0">
+                        <TextBlock Text="关于" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <Button Content="收起" Style="{StaticResource GhostButton}"
+                                Width="46" Height="24" HorizontalAlignment="Right"
+                                VerticalAlignment="Center" Click="Collapse_Click"/>
+                    </Grid>
+
+                    <TextBlock Text="TuPigVNC  v0.0.5 · x64"
+                               FontSize="14" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextBrush}"
+                               HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                    <TextBlock HorizontalAlignment="Center" TextAlignment="Center"
+                               FontSize="11" Foreground="{StaticResource Text2Brush}"
+                               Margin="16,8,16,0">
+                        跨平台 VNC 远程桌面客户端&#10;基于 TigerVNC
+                    </TextBlock>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                Margin="0,14,0,16">
+                        <Button Content="项目主页" Style="{StaticResource GhostButton}"
+                                Width="72" Height="28" Padding="0"
+                                Tag="https://github.com/TuPig/TuPigVNC"
+                                Click="OpenLink_Click"/>
+                        <Button Content="问题反馈" Style="{StaticResource GhostButton}"
+                                Width="72" Height="28" Margin="6,0,0,0" Padding="0"
+                                Tag="https://github.com/TuPig/TuPigVNC/issues"
+                                Click="OpenLink_Click"/>
+                        <Button Content="版本发布" Style="{StaticResource GhostButton}"
+                                Width="72" Height="28" Margin="6,0,0,0" Padding="0"
+                                Tag="https://github.com/TuPig/TuPigVNC/releases"
+                                Click="OpenLink_Click"/>
+                        <Button Content="许可证" Style="{StaticResource GhostButton}"
+                                Width="72" Height="28" Margin="6,0,0,0" Padding="0"
+                                Tag="https://github.com/TuPig/TuPigVNC/blob/main/LICENCE.TXT"
+                                Click="OpenLink_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </StackPanel>
+</Window>

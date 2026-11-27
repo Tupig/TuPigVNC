@@ -527,6 +527,10 @@ if(BUILD_VIEWER)
   add_subdirectory(assets)
 endif()
 
+# WinUI 3 前端用的原生核心 DLL（C ABI，供 C# P/Invoke 调用）。
+# 与旧的 FLTK 客户端并行构建，重构验收通过后再移除 BUILD_VIEWER。
+add_subdirectory(ui/TuPigVNC.Core)
+
 add_subdirectory(tests)
 
 

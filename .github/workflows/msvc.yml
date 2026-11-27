@@ -137,6 +137,30 @@ jobs:
       - name: Build
         run: cmake --build build --config Release
 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Publish WPF frontend
+        shell: pwsh
+        run: |
+          dotnet publish ui/TuPigVNC.Wpf/TuPigVNC.Wpf.csproj `
+            -c Release -p:Platform=x64 --self-contained true `
+            "-p:TupigVncBuildDir=$env:GITHUB_WORKSPACE/build" `
+            -o build/publish
+          if ($LASTEXITCODE -ne 0) { throw "WPF publish failed" }
+          foreach ($name in @('TuPigVNC.exe', 'TuPigVNC.dll', 'TuPigVNC.Core.dll')) {
+            if (-not (Test-Path "build/publish/$name")) { throw "Missing artifact: $name" }
+          }
+
+      - name: Upload WPF verification build
+        uses: actions/upload-artifact@v7
+        with:
+          name: TuPigVNC-wpf-verification-x64
+          path: build/publish/
+          if-no-files-found: error
+
       - name: Test
         working-directory: build
         run: |

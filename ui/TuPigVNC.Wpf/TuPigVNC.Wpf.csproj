@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    TuPigVNC · WPF 前端
+
+    为什么是 WPF 而不是 WinUI 3：
+    WinUI 3 依赖 D3D11 + DirectComposition + DWM 合成，且没有软件渲染回退。
+    在本机（Win11 26300 + 4 个显示适配器含 2 个虚拟屏）上渲染管线是坏的，
+    微软自家的 Windows Terminal 也全空白。WPF 有 SoftwareOnly 回退，任何环境都能显示。
+
+    - UseWPF=true
+    - 统一配置见顶层 Directory.Build.props
+    - 原生核心 TuPigVNC.Core.dll 放 exe 同目录（P/Invoke 加载）
+  -->
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>TuPigVNC</AssemblyName>
+    <RootNamespace>TuPigVNC.Wpf</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+
+    <!-- 自包含：目标机无需预装 .NET 运行时 -->
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>false</PublishSingleFile>
+
+    <!-- WPF 不需要 MSIX 工具链 -->
+    <EnableDefaultApplicationDefinition>true</EnableDefaultApplicationDefinition>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 原生核心 DLL 所在目录（CMake 构建产物）。
+         本地默认 E:\Agent\build；CI / 其他机器可用 -p:TupigVncBuildDir=... 覆盖。 -->
+    <TupigVncBuildDir Condition="'$(TupigVncBuildDir)' == ''">E:\Agent\build</TupigVncBuildDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 原生核心 DLL 必须与 exe 同目录，P/Invoke 才能找到 -->
+    <None Include="$(TupigVncBuildDir)\ui\TuPigVNC.Core\Release\TuPigVNC.Core.dll"
+          Condition="Exists('$(TupigVncBuildDir)\ui\TuPigVNC.Core\Release\TuPigVNC.Core.dll')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>TuPigVNC.Core.dll</Link>
+    </None>
+  </ItemGroup>
+
+</Project>
