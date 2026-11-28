@@ -80,9 +80,6 @@ public:
   void signalStop() { stop_.store(true); }
   int copyFrame(uint8_t* data, size_t capacity, int stride,
                 int* width, int* height);
-  std::vector<uint8_t> snapshot_;
-  int snapshotWidth_ = 0;
-  int snapshotHeight_ = 0;
 
   /* 设置 C# 侧的像素缓冲（非托管内存，DLL 不释放）。 */
   void setFramebuffer(uint8_t* data, int width, int height, int stride);
@@ -231,7 +228,11 @@ private:
   network::Socket* sock_ = nullptr;   /* 拥有：析构时释放 */
 
   /* 音频播放后端。只在 setAudioEnabled(true) 且后端可用时创建；
-     回调运行在系统音频线程上，__play 本身是线程安全的。 */
+     回调运行在系统音频线程上，play 本身是线程安全的。
+
+     红线：setAudioEnabled() / ~VncSession 之外的任何地方都不得写
+     audio_。可用性必须在 startLoop() 之前定好——线程创建构成同步
+     边界，之后再赋值就是和事件循环线程的数据竞态。 */
   AudioOutput* audio_ = nullptr;
   /* 托管侧（UI 线程）写、事件循环线程读：必须原子，否则是数据竞态。 */
   std::atomic<bool> audioEnabled_{false};
@@ -250,6 +251,11 @@ private:
   std::chrono::steady_clock::time_point updateStartTime_;
   std::atomic<bool> autoSelectQuality_{false};
 
+  /* loopThread_ 会被两个线程碰：调用方（vnc_start_loop）赋值创建、
+     vnc_stop / vnc_destroy 里 joinable()/join()。std::thread 对象本身
+     不是线程安全的，必须用锁串行化，否则是标准未定义行为。
+     loopStarted_ 跟随同一把锁读写，保证「先看标志再动线程」是原子的。 */
+  std::mutex loopMutex_;
   std::thread loopThread_;
   std::atomic<bool> stop_{false};
   std::atomic<bool> loopStarted_{false};
@@ -260,6 +266,12 @@ private:
   /* 内部解码用帧缓冲；所有权交给 rfb::CConnection::setFramebuffer，
    * 这里只保留裸指针用于拷贝。 */
   rfb::ManagedPixelBuffer* internalFb_ = nullptr;
+
+  /* 发布给 UI 的快照。三者必须一起改、一起读，全部由 fbMutex_ 保护；
+     声明成 private 是为了让「忘了加锁」在编译期就暴露出来。 */
+  std::vector<uint8_t> snapshot_;
+  int snapshotWidth_ = 0;
+  int snapshotHeight_ = 0;
 
   /* C# 提供的像素缓冲（非托管，不释放）。 */
   uint8_t* fb_ = nullptr;

@@ -82,10 +82,20 @@ VNC_API void vnc_start_loop(VncSession* s)
       s->startLoop();
   } catch (const std::exception& e) {
     /* 线程起不来时事件循环完全不动，必须让调用方知道，
-       否则界面会一直停在「连接中」。 */
-    s->reportFatalError(std::string("failed to start event loop: ") + e.what());
+       否则界面会一直停在「连接中」。
+
+       catch 块里的异常不会被兄弟 catch 接住，会直接冲出 C ABI 边界。
+       拼字符串可能 bad_alloc、reportFatalError 里也可能抛，再包一层。 */
+    try {
+      s->reportFatalError(std::string("failed to start event loop: ") +
+                          e.what());
+    } catch (...) {
+    }
   } catch (...) {
-    s->reportFatalError("failed to start event loop: unknown exception");
+    try {
+      s->reportFatalError("failed to start event loop: unknown exception");
+    } catch (...) {
+    }
   }
 }
 
@@ -129,16 +139,20 @@ VNC_API void vnc_destroy(VncSession* s)
      C# 侧最自然的写法就是「收到致命错误回调 → 销毁会话」，正好踩中。
 
      这里退化成「只请求停止 + 标记待销毁」，由事件循环线程退出前自己释放。
-     宁可晚一点释放，也不能崩进程。 */
-  if (s->isOnEventLoopThread()) {
-    s->requestStop();
-    s->markForDeferredDelete();
-    return;
-  }
+     宁可晚一点释放，也不能崩进程。
 
+     requestStop() 内部会 join 事件循环线程，join() 是可抛的
+     （std::system_error），所以整段都必须包在 try 里——
+     异常一旦越过 C ABI 边界就是 std::terminate。 */
   try {
+    if (s->isOnEventLoopThread()) {
+      s->requestStop();
+      s->markForDeferredDelete();
+      return;
+    }
     delete s;
   } catch (...) {
+    /* 销毁失败也绝不能把异常放出去 */
   }
 }
 

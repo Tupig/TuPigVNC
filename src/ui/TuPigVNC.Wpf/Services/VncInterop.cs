@@ -880,6 +880,28 @@ internal sealed class VncSession : IDisposable
         return System.Text.Encoding.UTF8.GetString(buffer, 0, end);
     }
 
+    /// <summary>
+    /// 兜底释放：调用方忘了 Dispose 时，GC 在回收本对象前把原生会话
+    /// 关掉。没有这一层的话，原生事件循环会继续跑并调用早已被回收的
+    /// 委托——那是野指针，进程直接崩。
+    ///
+    /// 注意：终结器运行在专门的 GC 线程上，不能碰任何托管对象
+    /// （包括锁），所以这里只做「取句柄 + 调 vnc_destroy」。
+    /// </summary>
+    ~VncSession()
+    {
+        IntPtr handle = Interlocked.Exchange(ref _handle, IntPtr.Zero);
+        if (handle == IntPtr.Zero)
+            return;
+        try
+        {
+            VncInterop.vnc_destroy(handle);
+        }
+        catch
+        {
+        }
+    }
+
     public void Dispose()
     {
         // 原子地「取走」句柄：并发 Dispose 时只有一个线程拿到非零值，
@@ -888,6 +910,9 @@ internal sealed class VncSession : IDisposable
         IntPtr handle = Interlocked.Exchange(ref _handle, IntPtr.Zero);
         if (handle == IntPtr.Zero)
             return;
+
+        // 已经走正常释放路径，别让终结器再跑一遍
+        GC.SuppressFinalize(this);
 
         try
         {

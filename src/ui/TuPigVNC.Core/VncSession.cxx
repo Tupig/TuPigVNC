@@ -98,7 +98,14 @@ VncSession::VncSession(const VncCallbacks* cb)
 
 VncSession::~VncSession()
 {
-  requestStop();
+  /* 析构函数默认 noexcept，里面任何一次抛出都会 std::terminate。
+     requestStop() 内部会 join 事件循环线程，而 join() 是可抛的
+     （std::system_error：并发 join、系统资源错误等），必须在这里兜住。
+     就算停不下来也要继续往下走，把能释放的资源释放掉。 */
+  try {
+    requestStop();
+  } catch (...) {
+  }
 
   /* 在流仍然有效时释放协议对象（reader/writer/framebuffer）。 */
   try {
@@ -131,6 +138,15 @@ bool VncSession::connectTo(const char* host, int port, std::string* error)
   if (host == nullptr || *host == '\0' || port <= 0 || port > 65535) {
     if (error != nullptr)
       *error = "invalid host or port";
+    return false;
+  }
+
+  /* 事件循环还在跑时替换 sock_：runLoop 正拿同一个指针
+     select()/getFd()，这里 delete 掉就是明确的 use-after-free。
+     重连必须先用 vnc_stop 停掉旧循环再 connect。 */
+  if (loopStarted_.load()) {
+    if (error != nullptr)
+      *error = "session is already running; stop it before reconnecting";
     return false;
   }
 
@@ -190,6 +206,14 @@ bool VncSession::listenAndAccept(int port, int acceptTimeoutMs, std::string* err
 {
   if (port <= 0 || port > 65535) {
     if (error != nullptr) *error = "invalid port";
+    return false;
+  }
+
+  /* 同 connectTo：循环运行期间替换 sock_ 会和 runLoop 抢同一个指针，
+     是 use-after-free。要换连接先停旧循环。 */
+  if (loopStarted_.load()) {
+    if (error != nullptr)
+      *error = "session is already running; stop it before listening again";
     return false;
   }
 
@@ -294,9 +318,20 @@ bool VncSession::listenAndAccept(int port, int acceptTimeoutMs, std::string* err
     auto* tcp = dynamic_cast<network::TcpSocket*>(accepted);
     if (tcp != nullptr)
       tcp->enableKeepAlive(true);
-    sock_ = accepted;
 
-    host_ = "listen";
+    /* 复用同一个 VncSession 先 connect 再 listen（或 listen 两次）时，
+       旧的 sock_ 会被这行直接覆盖，fd 和对象全部泄漏。
+       和 connectTo 里一样，先关掉再替换。 */
+    if (sock_ != nullptr) {
+      try {
+        sock_->shutdownRead();
+        sock_->shutdownWrite();
+      } catch (...) {
+      }
+      delete sock_;
+      sock_ = nullptr;
+    }
+    sock_ = accepted;
     port_ = port;
 
     setServerName(host_.c_str());
@@ -362,8 +397,20 @@ void VncSession::startLoop()
   if (sock_ == nullptr)
     return;
 
-  if (loopStarted_.exchange(true))
+  std::lock_guard<std::mutex> lock(loopMutex_);
+
+  if (loopStarted_.load())
     return;
+
+  /* 上一个循环已经退出（joinable 但已结束）时必须先回收，
+     否则新线程赋值给 joinable 的 std::thread 会直接 std::terminate。 */
+  if (loopThread_.joinable()) {
+    /* 只有线程已经跑完才可能走到这里（loopStarted_ 为 false 说明
+       runLoop 已退出）；若还在跑，join 会等它结束，语义也正确。 */
+    loopThread_.join();
+  }
+
+  stop_.store(false);  /* 复用句柄重连时，清掉上一轮的停止标志 */
 
   try {
     loopThread_ = std::thread([this]() { runLoop(); });
@@ -373,11 +420,14 @@ void VncSession::startLoop()
     loopStarted_.store(false);
     throw;
   }
+  loopStarted_.store(true);
 }
 
 void VncSession::requestStop()
 {
   stop_.store(true);
+
+  std::lock_guard<std::mutex> lock(loopMutex_);
 
   if (!loopThread_.joinable())
     return;
@@ -460,6 +510,11 @@ void VncSession::runLoop()
   }
 
   vlog.debug("Event loop stopped");
+
+  /* 循环已退出：复位标志，让同一个句柄还能再 start_loop 重连。
+     注意这里只能用原子 store，不能去拿 loopMutex_——
+     requestStop() 正持着那把锁在 join 本线程，抢锁必然死锁。 */
+  loopStarted_.store(false);
 
   /* 有人在回调里销毁了会话：现在循环已经退出，由本线程负责释放。
      detach 再 delete —— joinable 的 thread 直接析构会 terminate，
@@ -838,8 +893,13 @@ void VncSession::setX509CRL(const char* path)
 void VncSession::requestScreenLayout(int width, int height,
                                      const int* screens, int count)
 {
+  /* screens 是调用方给的非托管数组，C ABI 拿不到真实长度。
+     count 传错（或被恶意值撑大）就是越界读，直接读进别人的内存。
+     现实里屏幕数不可能超过 64 个（每屏 4 个 int），超过的一律拒绝。 */
+  constexpr int kMaxScreens = 64;
+
   std::vector<int> copy;
-  if (screens != nullptr && count > 0)
+  if (screens != nullptr && count > 0 && count <= kMaxScreens)
     copy.assign(screens, screens + static_cast<size_t>(count) * 4);
 
   enqueue([this, width, height, copy]() {
