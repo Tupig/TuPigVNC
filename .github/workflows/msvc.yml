@@ -184,6 +184,15 @@ jobs:
           ctest --test-dir tests/unit/ -C Release `
             --output-junit test-results.xml
 
+      # WPF 功能测试：本地 build.ps1 -Test 会跑，CI 也必须跑，
+      # 否则界面回归全靠本地自觉，等于没有防线。
+      # 测的就是上面刚发布的那份产物（引用 publish/TuPigVNC.dll）。
+      - name: WPF functional tests
+        shell: pwsh
+        run: |
+          dotnet run --project src/tests/wpf/WpfFunctionalTests.csproj -c Release
+          if ($LASTEXITCODE -ne 0) { throw "WPF functional tests failed" }
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v7
