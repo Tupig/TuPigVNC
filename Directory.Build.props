@@ -31,7 +31,7 @@
     那会让"检查更新"永远认为有新版本。发布脚本会用 -p:Version= 覆盖。
   -->
   <PropertyGroup>
-    <Version Condition="'$(Version)' == ''">0.0.6</Version>
+    <Version Condition="'$(Version)' == ''">0.0.7</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
   </PropertyGroup>
