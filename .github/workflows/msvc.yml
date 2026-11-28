@@ -69,10 +69,27 @@ jobs:
       - name: Bump version in tree
         if: steps.version.outputs.release == 'true'
         shell: pwsh
+        # 版本号有两处副本要一起改，否则 WPF 程序集版本会和原生 Core
+        # 漂移，「检查更新」就会拿着旧版本号误判。
+        #   CMakeLists.txt          —— 原生侧唯一来源
+        #   Directory.Build.props   —— .NET 侧 fallback
         run: |
           $content = Get-Content CMakeLists.txt -Raw
           $content = $content -replace 'set\(VERSION [\d.]+\)', "set(VERSION ${{ steps.version.outputs.next }})"
           Set-Content CMakeLists.txt $content -NoNewline
+
+          # .NET 侧 fallback 用逐行替换，别用带大量转义引号的正则——
+          # 那种写法在 YAML 里几乎没法维护也没法读。
+          $next = '${{ steps.version.outputs.next }}'
+          $propsLines = Get-Content Directory.Build.props
+          $propsLines = $propsLines | ForEach-Object {
+            if ($_ -match '^\s*<Version Condition=') {
+              "    <Version Condition=`"'`$(Version)' == ''`">$next</Version>"
+            } else {
+              $_
+            }
+          }
+          Set-Content Directory.Build.props $propsLines
 
       - name: Restore vcpkg cache
         id: vcpkg-cache
@@ -224,7 +241,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add CMakeLists.txt
+          # 两处版本号都要提交，否则下次构建时 .NET 侧又落后一格
+          git add CMakeLists.txt Directory.Build.props
           git commit -m "chore: 自动发布 v${{ steps.version.outputs.next }} [skip ci]"
           git tag -a "v${{ steps.version.outputs.next }}" -m "TuPigVNC v${{ steps.version.outputs.next }}"
           git push origin main
